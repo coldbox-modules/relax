@@ -143,14 +143,14 @@ link = The link to use for paging, including a placeholder for the page @page@
 					
 					<!--- PREVIOUS PAGE --->
 					<cfif currentPage-1 gt 0>
-						<a href="#replace(theLink,"@page@",currentPage-1)#">&lt;&lt;</a>
+						<a href="#replace(theLink,"@page@",currentPage-1)#" title="Previous Page">&lt;&lt;</a>
 					</cfif>
 					
 					<!--- Calcualte PageFrom Carrousel --->
 					<cfset pageFrom=1>
 					<cfif (currentPage-bandGap) gt 1>
 						<cfset pageFrom=currentPage-bandgap>
-						<a href="#replace(theLink,"@page@",1)#">1</a>
+						<a href="#replace(theLink,"@page@",1)#" title="Goto Page 1">1</a>
 						...
 					</cfif>
 					
@@ -161,18 +161,18 @@ link = The link to use for paging, including a placeholder for the page @page@
 					</cfif>
 					<cfloop index="pageIndex" from="#pageFrom#" to="#pageTo#">
 						<a href="#replace(theLink,"@page@",pageIndex)#"
-						   <cfif currentPage eq pageIndex>class="selected"</cfif>>#pageIndex#</a>
+						   <cfif currentPage eq pageIndex>class="selected"</cfif> title="Goto Page #pageIndex#">#pageIndex#</a>
 					</cfloop>
 					
 					<!--- End Token --->
 					<cfif (currentPage+bandgap) lt totalPages>
 						...
-						<a href="#replace(theLink,"@page@",totalPages)#">#totalPages#</a>
+						<a href="#replace(theLink,"@page@",totalPages)#" title="Goto Page #totalPages#">#totalPages#</a>
 					</cfif>
 					
 					<!--- NEXT PAGE --->
 					<cfif (currentPage+bandgap) lt totalPages >
-						<a href="#replace(theLink,"@page@",currentPage+1)#">&gt;&gt;</a>
+						<a href="#replace(theLink,"@page@",currentPage+1)#" title="Next Page">&gt;&gt;</a>
 					</cfif>
 					
 				</div>

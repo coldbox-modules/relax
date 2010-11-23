@@ -14,6 +14,13 @@
 	<link href="#rc.root#/includes/css/teal.css" 		rel="stylesheet" type="text/css"/>
 	<link href="#rc.root#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
     <link href="#rc.root#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
+	<!--- loop around the cssAppendList, to add page specific css --->
+	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
+		<cfset addAsset("#rc.root#/includes/styles/#css#.css")>
+	</cfloop>
+	<cfloop list="#event.getValue("cssFullAppendList","")#" index="css">
+		<cfset addAsset("#css#.css")>
+	</cfloop>
 	        
 <!--========= JAVASCRIPT -->
 	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery-1.4.4.min.js"></script> <!--Import jquery tools-->
@@ -22,6 +29,14 @@
 	<script type="text/javascript" src="#rc.root#/includes/javascript/metadata.pack.js"></script>
 	<script type="text/javascript" src="#rc.root#/includes/javascript/tablesorter.min.js"></script>
 	<script type="text/javascript" src="#rc.root#/includes/javascript/relax.js"></script>
+	<!--- loop around the jsAppendList, to add page specific js --->
+	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">
+		<cfset addAsset("#rc.root#/includes/javascript/#js#.js")>
+	</cfloop>
+	<cfloop list="#event.getValue("jsFullAppendList", "")#" index="js">
+		<cfset addAsset("#js#.js")>
+	</cfloop>
+
 </head>
 <!--End Head-->
 <!--============================Body============================-->

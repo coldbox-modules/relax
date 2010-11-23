@@ -31,7 +31,7 @@
 		<cfquery name="q" datasource="#getDatasource()#">
 		SELECT *
 		FROM #getTable()#
-		ORDER BY logdate
+		ORDER BY logdate desc
 		<cfif arguments.startRow AND arguments.maxRow>
 		LIMIT #arguments.startRow-1#,#(arguments.startRow-1)+arguments.maxRow#
 		</cfif>

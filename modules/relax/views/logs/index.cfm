@@ -4,13 +4,33 @@
 	<!--=========Users Box=========-->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/users_icon.png" alt="History" width="24" height="24" />LogBox Viewer
+			<img src="#rc.root#/includes/images/settings.png" alt="History" width="24" height="24" />LogBox Settings
 		</div>
 		<div class="body">
-			<p>Log Viewer Details:</p>
 			
+			<table class="tablelisting" width="100%">
+				<tr>
+					<th width="55" class="textRight">Datasource:</th>
+					<td>#rc.logSettings.datasource#</td>
+				</tr>
+				<tr>
+					<th  class="textRight">Adapter:</th>
+					<td>#rc.logSettings.adapter#</td>
+				</tr>
+				<tr>
+					<th  class="textRight">Table:</th>
+					<td>#rc.logSettings.table#</td>
+				</tr>
+				<tr>
+					<th  class="textRight">Max Rows:</th>
+					<td>#rc.maxRows#</td>
+				</tr>
+			</table>			
+			
+			<!--- Purge Commands --->
 			<p class="center">
 			<a href="#event.buildLink(rc.xehPurge)#" class="button confirmIt" 
+			   title="Purge the entire log database"
 			   data-message="Do you really want to purge all the monitor logs?">
 				<span>
 					<img src="#rc.root#/includes/images/database_refresh.png" border="0" align="absmiddle" alt="purge logs" />
@@ -28,8 +48,8 @@
 <div class="main_column">
 	<div class="box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/tables_icon.png" alt="Accordion" width="30" height="30" />
-			DB Log Viewer
+			<img src="#rc.root#/includes/images/database.png" alt="Database" width="30" height="30" />
+			Log Viewer
 		</div>
 		
 		<div class="body">
@@ -48,18 +68,29 @@
 					<input size="60" type="text" name="logFilter" id="logFilter" value="" />
 					
 					<!--- Image Filters --->
-					<img src="#rc.root#/includes/images/fatal.png"		alt="fatal" 	title="fatal" id="filter_fatal"	onClick="filter('fatal')" /> 
-					<img src="#rc.root#/includes/images/error.gif" 		alt="error" 	title="error" id="filter_error"	onClick="filter('error')" />
-					<img src="#rc.root#/includes/images/warning.png" 		alt="warning" 	title="warning" id="filter_warn"	onClick="filter('warn')" />
-					<img src="#rc.root#/includes/images/information.png" 	alt="info" 		title="info" id="filter_info"	onClick="filter('info')" />
-					<img src="#rc.root#/includes/images/debug.gif" 		alt="debug" 	title="debug" id="filter_debug"	onClick="filter('debug')" />
+					<img src="#rc.root#/includes/images/fatal.png"		alt="fatal" 	title="fatal filter" id="filter_fatal"	onClick="filter('fatal')" /> 
+					<img src="#rc.root#/includes/images/error.gif" 		alt="error" 	title="error filter" id="filter_error"	onClick="filter('error')" />
+					<img src="#rc.root#/includes/images/warning.png" 		alt="warning" 	title="warning filter" id="filter_warn"	onClick="filter('warn')" />
+					<img src="#rc.root#/includes/images/information.png" 	alt="info" 		title="info filter" id="filter_info"	onClick="filter('info')" />
+					<img src="#rc.root#/includes/images/debug.gif" 		alt="debug" 	title="debug filter" id="filter_debug"	onClick="filter('debug')" />
 					<img src="#rc.root#/includes/images/arrow_refresh_small.png" 	alt="reset filter" title="reset filter"	onClick="filter('')" />
 				</fieldset>
 			</div>
 		</div>
 		
+		<!--- Show DropDown --->
+		<div class="floatRight" style="margin-top:10px">
+			<em>Max Records</em>
+			<select name="maxRows" id="maxRows" title="Choose how many records to display per window">
+				<option <cfif rc.maxRows eq 25>selected="selected"</cfif>>25</option>
+				<option <cfif rc.maxRows eq 50>selected="selected"</cfif>>50</option>
+				<option <cfif rc.maxRows eq 100>selected="selected"</cfif>>100</option>
+				<option <cfif rc.maxRows eq 200>selected="selected"</cfif>>200</option>
+			</select>
+		</div>
+		
 		<!--- Paging --->
-		#rc.pagingPlugin.renderit(rc.totalLogCount,rc.pagingLink)#
+		#rc.pagingPlugin.renderit(rc.totalLogCount,rc.pagingLink,rc.maxRows)#
 		
 		<!--- Logs Table --->
 		<table class="tablesorter" id="logsTable" width="100%" cellspacing="1" cellpadding="0" border="0">
@@ -68,7 +99,7 @@
 					<th class="center" width="50">Type</th>
 					<th class="center" width="115">Logdate</th>
 					<th class="{sorter: false}">Message</th>
-					<th class="tableActions center{sorter: false}">Actions</th>
+					<th class="center {sorter: false}">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -80,11 +111,16 @@
 					</td>
 					<td class="center">#dateformat(rc.qLogs.logdate,"short")# #timeFormat(rc.qLogs.logDate,"medium")#</td>
 					<td>#left(rc.qLogs.Message,95)#<cfif len(rc.qLogs.message) gt 95>...</cfif></td>
-					<td class="tableActions"><a href="javascript:quickViewer('#rc.qlogs.id#')" title="quick viewer"><img src="#rc.root#/includes/images/info.png" alt="view" border="0"></a></td>
+					<td class="center"><a href="javascript:quickViewer('#rc.qlogs.id#')" title="quick log entry viewer"><img src="#rc.root#/includes/images/info.png" alt="view" border="0"></a></td>
 				</tr>
 				</cfloop>
 			</tbody>
 		</table>
+		
+		<!--- No Records Found --->
+		<cfif rc.qLogs.recordcount eq 0>
+			#getPlugin("Messagebox").renderMessage("warning","No Log Records Found!")#
+		</cfif>
 		
 		<!--- Legend --->
 		<div id="legend" class="floatRight">
@@ -96,8 +132,9 @@
 			<img src="#rc.root#/includes/images/debug.gif" alt="debug" /> Debug
 		</div>
 		
+		<br/><br/>
 		<!--- Paging --->
-		#rc.pagingPlugin.renderit(rc.totalLogCount,rc.pagingLink)#
+		#rc.pagingPlugin.renderit(rc.totalLogCount,rc.pagingLink,rc.maxRows)#
 	</div>
 </div>
 
@@ -116,6 +153,10 @@ $(document).ready(function() {
 	})
 	// current type filter
 	curFilter = '';
+	// show records
+	$("##maxRows").change(function(e){
+		window.location = '#event.buildLink(rc.xehStoreMaxRows)#/maxRows/'+this.value;
+	});
 });
 function filter(incomingFilter){
 	// if the same filter, then toggle to reset.

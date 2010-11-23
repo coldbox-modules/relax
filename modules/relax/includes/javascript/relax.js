@@ -84,6 +84,7 @@ function openRemoteModal(url,params,w,h){
 		},
 		onClose: function(){ closeRemoteModal(); }
 	});
+	$remoteModal.find("a.close").attr("title","Close Window");
 	// Set data for this remote modal
 	$remoteModal.data("url",url).data("params",params);
 	// width/height

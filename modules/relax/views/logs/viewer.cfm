@@ -9,7 +9,7 @@
 	</tr>
 	<tr>
 		<td class="center">
-		<img src="includes/images/#severityLookup(rc.qlog.severity)#" alt="#rc.qlog.severity#" /> #rc.qLog.severity#
+		<img src="#rc.root#/includes/images/#severityLookup(rc.qlog.severity)#" alt="#rc.qlog.severity#" /> #rc.qLog.severity#
 		</td>
 		<td  class="center">#dateformat(rc.qlog.logdate,"medium")# at #timeFormat(rc.qLog.logdate,"medium")#</td>
 		<td>#rc.qlog.category#</td>
