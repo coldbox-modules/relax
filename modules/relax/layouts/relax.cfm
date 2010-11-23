@@ -9,6 +9,7 @@
 	<base href="#getSetting('htmlBaseURL')#" />
 <!--=========Title=========-->
     <title>ColdBox Relax - RESTful Tools For Lazy Experts</title> 
+	<link href="#rc.root#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 <!--=========Stylesheets=========-->
 	<link href="#rc.root#/includes/css/style.css"	 	rel="stylesheet" type="text/css"/>
 	<link href="#rc.root#/includes/css/teal.css" 		rel="stylesheet" type="text/css"/>
@@ -72,13 +73,16 @@
       
 		<!--=========Main Navigation=========-->
 		<ul id="main_nav">
-			<li> <a href="##" <cfif event.getCurrentHandler() eq "relax:home"> class="current"</cfif>>Dashboard</a>
+			<li> 
+				<a href="##" title="Relax Dashboard" <cfif event.getCurrentHandler() eq "relax:home"> class="current"</cfif>>Dashboard</a>
 				<ul>
 					<li><a href="#event.buildLink(rc.xehHome)#"  <cfif event.getCurrentAction() eq "index"> class="current"</cfif>>Home</a></li>
-					<li><a href="##" class="confirmIt">Open Modal</a></li>
+					
+					<li><a title="Pronounced 'Relax-ER'" href="#event.buildLink(rc.xehRelaxer)#"  <cfif event.getCurrentAction() eq "relaxer"> class="current"</cfif>>RelaxURL</a></li>
 				</ul>
 			</li>
-			<li><a href="##" <cfif event.getCurrentHandler() eq "relax:logs"> class="current"</cfif>>LogBox</a>
+			<li>
+				<a href="##" title="LogBox Integration" <cfif event.getCurrentHandler() eq "relax:logs"> class="current"</cfif>>LogBox</a>
 				<ul>
 					<li><a href="#event.buildLink(rc.xehLogViewer)#" <cfif event.getCurrentAction() eq "index"> class="current"</cfif>>Log Viewer</a></li>
 				</ul>

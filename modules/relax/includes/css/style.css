@@ -104,7 +104,7 @@ form p small { 			font-size: 0.75em;
 						}
 form input.textfield, form select, form textarea, form .wysiwyg {
 						padding:6px;
-						margin-right:10px;
+						margin-right:5px;
 						}
 form input.small { 		width:40%; }
 form input.med { 		width:60%; }
@@ -375,7 +375,7 @@ form input[type="checkbox"], form input[type="radio"] {
 						position:relative;
 						margin-right: 10px;
 						}
-.box .body { 			padding: 20px; }
+.box .body { padding: 0px 20px 20px 20px;}
 
 /** ============================== Footer ============================== **/
 #footer { 				text-align:center;

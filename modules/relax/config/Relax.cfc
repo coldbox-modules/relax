@@ -2,7 +2,10 @@
 <cfscript>
 
 	function configure(){
-	
+		
+		// This is where we define our RESTful service, this is usually
+		// our first place before even building it, we spec it out.
+		
 		// Global Headers
 		relax.globalHeaders = [];
 	

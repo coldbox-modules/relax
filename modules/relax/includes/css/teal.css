@@ -403,6 +403,16 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 	text-align: center;
 	width: 60px;
 }
+/**============================== UNIQUE CSS ==============================**/
+#bottomCenteredBar{
+	margin: 20px 0px 0px 0px;
+	text-align: right;	
+}
+#bottomCenteredLoader{
+	margin: 10px 0px 0px 0px;
+	text-align:center;		
+	display: none;
+}
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
