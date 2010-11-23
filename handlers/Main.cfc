@@ -1,0 +1,2 @@
+<cfcomponent output="false"><!------------------------------------------- GLOBAL IMPLICIT EVENTS ONLY ------------------------------------------>
+<!--- In order for these events to fire, you must declare them in the coldbox.xml.cfm --->		<cffunction name="index" returntype="void" output="false">		<cfargument name="event" required="true">		<cfset event.setView("home")>	</cffunction></cfcomponent>

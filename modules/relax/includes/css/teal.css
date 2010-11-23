@@ -1,0 +1,346 @@
+@charset "utf-8";
+/** ============================== Blue ============================== **/
+html { color: #3b3b3b;				/** Overall font body color **/ }
+/** ============================== background for main content area ============================== **/
+#content_bg { background: #004d84 url(../images/content_bg.jpg) repeat-x; }
+/**  ============================== Anchor Styling  ============================== **/
+a { color: #00339b; }
+a:hover { color: #000; }
+/** ============================== Element Styling ============================== **/
+h1 { color: #202020; }
+h2 { color: #4d4d4d; }
+h3 { color: #161616; }
+h4 { color: #373737; }
+h5 { color: #727272; }
+h6 { color: #373737; }
+hr { color: #c0c0c0; border-bottom-color: #c0c0c0;}
+blockquote { color: #000; background-image: url(../images/blockquote_bg.gif);}
+/** ============================== Form Styling ============================== **/
+fieldset { 
+	border:1px solid #d2d1d1;
+	background-color: #f5f5f5;
+	padding: 10px;
+	margin: 15px 5px;
+	-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; 
+}
+fieldset legend { color: #3a3a3a; }
+form label { color: #585858; }
+form p small { color: #777; }
+form textarea, form .wysiwyg { color:#111111; }
+form input.textfield, form select, form textarea, form .wysiwyg {
+	background: #ffffff url(../images/textfield_bg.gif) repeat-x top; /*Define background for input elements here*/
+	border: 1px solid #d2d1d1;
+}
+/************** Focus styles **************/ 
+form input.textfield:focus, form select:focus, form textarea:focus {
+	background: #fbfafb url(../images/textfield_active_bg.gif) repeat-x top; /*Define bacground for focussed form elements here*/
+	border: 1px solid #aeaeae;
+}
+/************** Error styles ***************/ 
+form input.error, form select.error, form textarea.error, form .wysiwyg.error, form input.error:focus, form select.error:focus, form textarea.error:focus, form .wysiwyg.error:focus { 	
+	border: 1px solid #ff8388; }
+/************** Disabled form Elements *************/
+button[disabled]:active, button[disabled], input[type="reset"][disabled]:active, input[type="reset"][disabled], input[type="button"][disabled]:active, input[type="button"][disabled], select[disabled] > input[type="button"], select[disabled] > input[type="button"]:active, input[type="submit"][disabled]:active, input[type="submit"][disabled], .textfield[disabled], .textfield_large[disabled] {
+	border: 1px solid #d6d6d6;
+	color: GrayText;
+	cursor: inherit;
+	background: #dbdbdb url(none);
+}
+/************** Form Hints and Errors *********/
+.form_error { 
+	color: #ca0000;
+	background: url(../images/form_error.png) no-repeat;
+}
+.form_hint { 
+	color: #7c7c7c;
+	background: url(../images/form_info.png) no-repeat;
+}		
+/** ============================== Buttons ============================== **/
+.button { 				
+	background: #fff url(../images/button_bg.gif) repeat-x left bottom;
+	border: 1px solid #c6c6c6;
+	color: #595959;
+}
+.button:hover { 
+	background: #fff url(../images/button_bg_hover.gif) repeat-x left bottom;
+	border: 1px solid #c6c6c6;
+}
+.button2 { 
+	background: #0074c6 url(../images/button2_bg.gif) repeat-x left bottom;
+	border: 1px solid #a9cbf3;
+	color: #fff;
+}
+.button2:hover { 
+	background: #0063a8 url(../images/button2_bg_hover.gif) repeat-x left bottom;
+	border: 1px solid #a9c8ed;
+}
+.button:active, .button2:active, .buttonred:active {
+	color:#000; 
+}
+.buttonred { 	
+	background: #0074c6 url(../images/buttonred_bg.gif) repeat-x left bottom;
+	border: 1px solid #c6c6c6;
+	color: #fff;
+}
+.buttonred:hover { 
+	background: #0063a8 url(../images/buttonred_bg_hover.gif) repeat-x left bottom;
+	border: 1px solid #a9c8ed;
+}
+/** ============================== Header ============================== **/
+#header_bg { background: url(../images/header_bg.png) repeat-x; }
+#header_top { color: #ffffff; }
+#header_top a { color:#fff; }
+#header_main{
+	height: 80px;
+}
+#header_main h1{
+	font-family: Serif, Georgia;
+	font-weight: bold;
+	font-size: 6em;
+	margin:15px 0px 0px 0px;	
+}
+#header_main h1 span{
+	font-size: 18px;	
+}
+/********* Logo *********/
+#logo { 
+	float:right; 
+	clear:both;
+	margin: 3px 0px 0px 0px;
+}
+/********* Search field in header ***/
+.search_field { 		border: 1px solid #a2a2a2; }
+/** ============================== Main Navigation ============================== **/
+#main_nav a { color:#242424; }			/* main navigation link color */
+#main_nav a:hover {	color: #000; }				/* main navigation hover link color */
+#main_nav li a.current { 	
+	/* main navigation active link color */
+	color:#fff !important;
+	background: #004e86 url(../images/nav_active_tab_bg.gif) repeat-x left top;
+}
+/** ============================== Sub Navigation ============================== **/
+#main_nav li ul li a { color: #b6e1ff; } /* Sub navigation link color */
+#main_nav li ul li a:hover { color: #fff; }/* Sub navigation hover link color */
+#main_nav li ul li a.current {
+	background:url(../images/active_sub_menu_bg.gif) no-repeat center bottom; /* Pointer for active link in Sub navigation */
+	color:#fff;/* Sub navigation active link color */
+}					
+/** ============================== Navigation in box header ============================== **/
+.box .header .sub_nav li a {
+						color:#494949; }
+.box .header .sub_nav li a:hover {
+						color:#000; }
+.sub_nav .current, .sub_nav .current:hover, .sub_nav .current a {
+						background:#FFF;
+						color:#004a7e !important;
+						}
+/** ============================== Vertical Nav ============================== **/
+.vertical_nav li a { 	color:#333; }
+.vertical_nav li a:hover {
+						color:#000; }
+.vertical_nav li .current {
+						background:url(../images/vertical_nav_bg.gif) no-repeat left top;
+						color:#000 !important;
+						}
+/*****Box body with vertical Navigation *****/
+.body_vertical_nav { 	background: url(../images/vertical_nav_bg.jpg) repeat-y left top; }
+/** ============================== Horizontal Nav ============================== **/
+.horizontal_nav { 		background: #FFF url(../images/horizontal_nav_bg.gif) repeat-x left bottom; }
+.horizontal_nav li a { 	color:#006ab7; }
+.horizontal_nav li a:hover {
+						color:#000; }
+.horizontal_nav li.active {
+						background:#FFF;
+						border-top: 1px solid #006ab7;
+						border-right: 1px solid #006ab7;
+						border-left: 1px solid #006ab7;
+						border-bottom-style: none;
+						}
+.horizontal_nav li.active a {
+						color:#006ab7 !important; }
+/** ============================== Accordion ============================== **/
+#accordion { 			background-color:#fff;
+						border:1px solid #e6e6e6;
+						}
+/* accordion header */
+#accordion h2 { 		background:#f7f8f8 url(../images/accordion_heading_bg.gif) repeat-x bottom;
+						color:#111010;
+						border:1px solid #fff;
+						border-bottom:1px solid #ddd;
+						}
+/* currently active header */
+#accordion h2.current { background-color:#fff; }
+/* Accordion pane */
+#accordion div.pane { 	color:#5e5e5e;
+						background: url(../images/pane_bg.gif) repeat-x top;
+						}
+/** ============================== Small Box ============================== **/
+
+.small_box { 			background:#fdfdfd; }
+.small_box .header { 	background: url(../images/small_box_header_bg.gif) repeat-x bottom;
+						color:#004A7E;
+						}
+/** ============================== Box ============================== **/
+
+.box { background:#fdfdfd; }
+.box .header {
+						background: url(../images/box_header_bg.gif) repeat-x bottom;
+						color:#004A7E;
+						}
+/** ============================== Footer ============================== **/
+#footer { 				background:url(../images/footer_bg.gif) repeat-x top #282828;
+						color:#CCC;
+	}
+#footer a {				color:#fff;
+						text-decoration:underline;
+						}
+/** ==============================  Bulleted List ============================== **/
+.bulleted_list li { 	background: url(../images/bullet_right.png) no-repeat 0px 7px; /* List with custom bullets */ }
+/**  ==============================  Users List  ============================== **/
+.user_list li { 		border-bottom: 1px solid #CCC; }
+/**  ==============================  Borders  ============================== **/
+.border_blue { border-bottom: solid 1px #393939; }
+.border_lt_blue { border-bottom: solid 6px #bebebe; }
+.border_grey { 			border-bottom: solid 6px #e7e7e7; }
+/** ============================== Tooltip ============================== **/
+.tooltip, .tooltip.bottom {
+						background:#000;
+						color:#fff;
+						}
+/** ============================== Jump Menu ============================== **/
+.jump_menu_btn { 		background:url(../images/jump_menu.png) top left;  /*Sprite for jump button 158 x 28px*/ }
+.jump_menu_list { 		background:#f5f5f5;
+						border:solid 1px #d5d5d5;
+						}
+.jump_menu_list li a{
+						color:#333;
+	}
+.jump_menu_list li a:hover {
+						color:#000;
+						background:#fff;
+						}
+/** ============================== ConfirmIt ============================== **/
+#exposeMask { background:#000 !important; }/* background color for overlay and expose mask */ 
+#confirmIt, #remoteModal { 
+	border:10px solid #666;
+	display:none;
+	text-align:left;
+	-moz-box-shadow: 0 0 15px #ccc;
+	-webkit-box-shadow: 0 0 15px #ccc;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	width: 700px;
+}
+#confirmIt div{ 	
+	border:1px solid #3B5998;
+	background-color:#fff;
+	padding:10px;
+	font-size:1.2em;
+	margin:0px
+}
+#confirmIt h2 , #remoteModal h2{ 
+	background: #FFF url(../images/box_header_bg.gif) repeat-x;
+	margin:-10px;
+	margin-bottom:1em;
+	padding: 5px 10px !important;
+	color: inherit;
+}
+#confirmIt p{
+	font-size: 12px;
+}
+#confirmIt hr, #remoteModelContent hr{ 
+	border-bottom-color:#C0C0C0;
+	color:#C0C0C0;
+	border-bottom:1px solid;
+	border-style:none none solid;
+	height:1px;
+	margin: 2em 0;
+}
+#confirmIt a.close, #remoteModal a.close{ 
+	background: url(../images/x.png) no-repeat scroll 0 0;
+	position:absolute;
+	right: -5px;
+	top: -5px;
+	width: 25px;
+	height:29px;
+	cursor: pointer;
+}
+/** ============================== REmoteModal ============================== **/
+#remoteModelContent{
+	background-color:#fff;
+	padding:10px;
+	font-size:1.2em;
+	margin:0px;
+	height: 95%;
+	max-height: 600px;
+	overflow-y: auto;
+}
+/** ============================== PAGING TABS =============================== **/
+.pagingTabs{font-size:.8em;text-align:left;}
+.pagingTabs a{color:#000;padding:2px 4px;background-color:#fff;border:1px solid #ccc;margin-left:2px;}
+.pagingTabs a:hover{color:#000;background-color:#FCF9C3;border:1px solid black;}
+.pagingTabs a.selected{color:#000;background-color:#FCF9C3;border:1px solid #AF3D15;}
+.pagingTabsCarrousel{margin-top:5px;}
+/**============================== Utility Classes ==============================**/
+.inline{
+	display: inline;
+	margin: 5px 0px 5px 0px;
+}
+.floatLeft{
+	float: left;
+}
+.floatRight{
+	float: right;
+}
+.textRight{
+	text-align: right;
+}
+.textLeft{
+	text-align: left;
+}
+.textCenter{
+	text-align: center;
+}
+.center{
+	text-align:center;
+	margin: auto;
+}
+.padding10{
+	padding: 10px;
+}
+.margin10{
+	margin: 10px;
+}
+.hidden{
+	display: none;
+}
+/**============================== ColdBox MessageBox ==============================**/
+.cbox_messagebox{
+	/* font-size: 13px; */
+	font-weight: bold;
+	margin: 10px;
+}
+.cbox_messagebox_info{
+	background: #D1E6EF url(../images/iinfo_icon.png) no-repeat scroll .5em 50%;
+	color: #3760b5;
+	border: 1px solid #c3d7ff;
+	margin: 0.3em auto;
+	padding: 0pt 1em 0pt 3.5em;
+}
+.cbox_messagebox_warning{
+	background: #FFF2CF url(../images/warning_icon.png) no-repeat scroll .5em 50%;
+	color: #bc6c34;
+	border: 1px solid #bc6c34;
+	margin: 0.3em auto;
+	padding: 0pt 1em 0pt 3.5em;
+}
+.cbox_messagebox_error{
+	background: #FFFFE0 url(../images/error_icon.png) no-repeat scroll .5em 50%;
+	color: #b22723;
+	border: 1px solid #ff0606;
+	margin: 0.3em auto;
+	padding: 0pt 1em 0pt 3.5em;
+}
+/**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
+/**==================             End of Theme                     ==================**/
+/**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
