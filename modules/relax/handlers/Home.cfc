@@ -21,6 +21,10 @@
 		event.paramValue("httpResource","");
 		event.paramValue("httpFormat","");
 		event.paramValue("httpMethod","GET");
+		event.paramValue("headerNames","");
+		event.paramValue("headerValues","");
+		event.paramValue("parameterNames","");
+		event.paramValue("parameterValues","");
 		event.paramValue("sendRequest",false);
 		
 		// custom css/js

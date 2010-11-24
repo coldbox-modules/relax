@@ -29,14 +29,6 @@
 				<input type="hidden" name="sendrequest" value="true" />
 				
 				<fieldset>
-					<legend>Defined Resources</legend>
-					<p>Here are your relaxed resources. Choose one in order to populate the RelaxURL console with the resource's defintion.</p>
-					<select name="resource" id="resource">
-						<option>None Defined</option>
-					</select>
-				</fieldset>
-				
-				<fieldset>
 					<legend>Method-Destination-Format</legend>
 				
 				<!--- HTTP Method --->
@@ -75,13 +67,15 @@
 					
 					<!--- Headers Holder --->
 					<div id="httpHeaders">
+						<cfloop from="1" to="#listLen(rc.headerNames)#" index="i">
 						<p style="margin:0px">
-							<input title="Header Name"  type="text" class="textfield" name="headerNames"  size="30" />
-							<input title="Header Value" type="text" class="textfield" name="headerValues" size="50" />
+							<input title="Header Name"  type="text" class="textfield" name="headerNames"  size="30" value="#listGetAt(rc.headerNames,i)#" />
+							<input title="Header Value" type="text" class="textfield" name="headerValues" size="50" value="#listGetAt(rc.headerValues,i)#"/>
 							<button class="button dynamicRemove"><img src="#rc.root#/includes/images/delete.png" alt="delete"/></button>
 						</p>
+						</cfloop>						
 						<!--- Add Header --->
-						<button class="button dynamicAdd" title="Add Header" id="addHeaderButton"><img src="#rc.root#/includes/images/add.png" /></button>
+						<button class="button dynamicAdd" data-type="header" title="Add Header" id="addHeaderButton"><img src="#rc.root#/includes/images/add.png" /></button>
 					</div>
 				</fieldset>
 				
@@ -91,13 +85,15 @@
 					
 					<!--- Parameters Holder --->
 					<div id="httpParameters">
+						<cfloop from="1" to="#listLen(rc.parameterNames)#" index="i">
 						<p style="margin:0px">
-							<input title="Parameter Name"  type="text" class="textfield" name="parameterNames"  size="30" />
-							<input title="Parameter Value" type="text" class="textfield" name="parameterValues" size="50" />
+							<input title="Parameter Name"  type="text" class="textfield" name="parameterNames"  size="30" value="#listGetAt(rc.parameterNames,i)#" />
+							<input title="Parameter Value" type="text" class="textfield" name="parameterValues" size="50" value="#listGetAt(rc.parameterValues,i)#" />
 							<button class="button dynamicRemove"><img src="#rc.root#/includes/images/delete.png" alt="delete"/></button>
 						</p>
+						</cfloop>
 						<!--- Add Header --->
-						<button class="button dynamicAdd" title="Add Parameter" id="addHeaderButton"><img src="#rc.root#/includes/images/add.png" /></button>
+						<button class="button dynamicAdd" data-type="parameter" title="Add Parameter" id="addHeaderButton"><img src="#rc.root#/includes/images/add.png" /></button>
 					</div>
 				</fieldset>
 				
@@ -134,58 +130,30 @@
 		</div>
 		
 		<div class="body">
-			<h3>Response</h3>
-			<!--- Results Table --->
-			<table class="tablelisting" width="100%">
-				<tr>
-					<th width="100" class="textRight">URL:</th>
-					<td><a href="#rc.httpResource#" target="_blank">#rc.httpResource#</a></td>
-				</tr>
-				<tr>
-					<th class="textRight">Request Headers:</th>
-					<td>
-						<cfif len(rc.headerNames)>
-							<cfloop from="1" to="#listLen(rc.headerNames)#" index="i">
-							#listGetAt(rc.headerNames, i)#=#listGetAt(rc.headerValues,i)#;
-							</cfloop>
-						<cfelse>
-						<em>None Sent</em>
-						</cfif>
-					</td>
-				</tr>
-				<tr>
-					<th class="textRight">Request Params:</th>
-					<td>
-						<cfif len(rc.parameterNames)>
-							<cfloop from="1" to="#listLen(rc.parameterNames)#" index="i">
-							#listGetAt(rc.parameterNames, i)#=#listGetAt(rc.parameterValues,i)#;
-							</cfloop>
-						<cfelse>
-						<em>None Sent</em>
-						</cfif>
-					</td>
-				</tr>
-				<tr>
-					<th class="textRight">Status Code:</th>
-					<td>#rc.results.statusCode#</td>
-				</tr>
-				<tr>
-					<th class="textRight">Response Header</th>
-					<td>#rc.results.header#</td>
-				</tr>			
-				
-			</table>
-			
 			<h3>Raw Results:</h3>
 			<form>
-			<textarea class="textfield" rows="10" style="width:100%">#rc.results.fileContent#</textarea>
+			<textarea class="textfield" rows="10" style="width:100%">#rc.results.fileContent.toString()#</textarea>
 			</form>
 			
 			<h3>Semi-Pretty Results:</h3>
-			
 			<pre class="brush: #getBrush(rc.results.fileContent)#">#getTreatedContent(rc.results.fileContent)#
 			</pre>
 			
+			<h3>Response Header</h3>
+			<table class="tablelisting" width="100%">
+				<cfloop collection="#rc.results.responseHeader#" item="header">
+				<tr>
+					<th width="125" class="textRight">#header#</th>
+					<td>
+						<cfif isSimpleValue(rc.results.responseHeader[header])>
+						#rc.results.responseHeader[header]#
+						<cfelse>
+						<cfdump var="#rc.results.responseHeader[header]#">
+						</cfif>
+					</td>
+				</tr>
+				</cfloop>							
+			</table>
 			
 		</div>
 	</div>
@@ -193,6 +161,12 @@
 	<!--- end Results Box --->
 </div>
 
+<!--- Fields Template --->
+<p id="fieldsTemplate" style="display:none;margin:0px">
+	<input type="text" data-title="::fieldType:: name"  name="::fieldType::Names"  class="textfield" size="30" />
+	<input type="text" data-title="::fieldType:: value" name="::fieldType::Values" class="textfield" size="50" />
+	<button class="button dynamicRemove"><img src="#rc.root#/includes/images/delete.png" alt="delete"/></button>
+</p>
 <script language="javascript">
 $(document).ready(function() {
 	$relaxerForm = $("##relaxerForm");
@@ -207,17 +181,28 @@ $(document).ready(function() {
 	
 	// Dynamic Add
 	$(".dynamicAdd").click(function() {
-		var $trigger = $(this);
-		$trigger.prev().clone(true).insertBefore( $trigger );
-		$trigger.prev().find("button").fadeIn();
+		var $trigger  = $(this);
+		var fieldType = $trigger.attr("data-type");
+		
+		$("##fieldsTemplate").clone(true).attr("id","").insertBefore( $trigger ).toggle();
+		
+		$trigger.prev().find("input").each(function(index){
+			var $this = $(this);
+			var fieldTitle = $this.attr("data-title");
+			var fieldName  = $this.attr("name");
+			
+			$this.attr("title", fieldTitle.replace(/::fieldType::/,fieldType) )
+				.attr("name", fieldName.replace(/::fieldType::/,fieldType));
+			
+			$this.tooltip(toolTipSettings);
+		});
+		
 		return false;
 	});
 	// Removal Dynamic
 	$(".dynamicRemove").click(function() {
 		$container = $(this).parent().parent();
-		if ($container.find("p").size() > 1) {
-			$(this).parent().remove();
-		}	
+		$(this).parent().remove();
 		return false;
 	});
 });

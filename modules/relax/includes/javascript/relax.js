@@ -5,6 +5,15 @@ $(document).ready(function() {
 	$remoteModalContent	= $remoteModal.find("#remoteModelContent");
 	$remoteModalLoading	= $remoteModalContent.html();
 	
+	// Tooltip settings
+	toolTipSettings	= {	//will make a tooltip of all elements having a title property
+		 opacity: 0.8,
+		 effect: 'slide',
+		 predelay: 200,
+		 delay: 10,
+		 offset:[5, 0]
+	};
+	
 	// activate confirmations
 	activateConfirmations();
 	
@@ -38,14 +47,8 @@ $(document).ready(function() {
 	});
 	
 	//Tooltip 
-	$("[title]").tooltip({	//will make a tooltip of all elements having a title property
-			 opacity: 0.8,
-			 effect: 'slide',
-			 predelay: 200,
-			 delay: 10,
-			 offset:[5, 0]
-			 })
-			 .dynamic({bottom: { direction: 'down', bounce: true}   //made it dynamic so it will show on bottom if there isnt space on the top
+	$("[title]").tooltip(toolTipSettings)
+		 .dynamic({bottom: { direction: 'down', bounce: true}   //made it dynamic so it will show on bottom if there isnt space on the top
 	});
 	
 	//Tabs in box header 

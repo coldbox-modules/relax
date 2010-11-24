@@ -28,7 +28,7 @@
 			
 			// Format Extension detected? If so, add it to resource.
 			if( len(arguments.httpFormat) ){
-				arguments.httpResource & arguments.httpFormat;
+				arguments.httpResource = arguments.httpResource & "." & arguments.httpFormat;
 			}
 			
 			// Log what we are sending out

@@ -1,10 +1,10 @@
 <cfscript>
 function getTreatedContent(content){
-	arguments.content = htmlEditFormat(trim(arguments.content));
-	if( isXML(rc.results.fileContent) ){
-		return xmlHumanReadable(arguments.content);
+	var rawContent = arguments.content;
+	if( isXML(rawContent) ){
+		return xmlHumanReadable(rawContent);
 	}
-	
+	arguments.content = htmlEditFormat(trim(arguments.content));
 	arguments.content = Replace(arguments.content,":{",":{#chr(13)#","all");
 	arguments.content = Replace(arguments.content,"}:","{:#chr(13)#","all");
 	arguments.content = Replace(arguments.content,":[",":[#chr(13)#","all");
@@ -13,7 +13,6 @@ function getTreatedContent(content){
 	return arguments.content;
 }
 function getBrush(content){
-
 	if(isXML(trim(arguments.content)) ){
 		return "xml";
 	}

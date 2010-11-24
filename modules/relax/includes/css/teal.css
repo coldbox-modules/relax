@@ -20,7 +20,7 @@ fieldset {
 	border:1px solid #d2d1d1;
 	background-color: #f5f5f5;
 	padding: 10px;
-	margin: 15px 5px;
+	margin: 5px 5px;
 	-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; 
 }
 fieldset legend { color: #3a3a3a; }
