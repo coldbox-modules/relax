@@ -17,7 +17,7 @@
     <link href="#rc.root#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
-		<cfset addAsset("#rc.root#/includes/styles/#css#.css")>
+		<cfset addAsset("#rc.root#/includes/css/#css#.css")>
 	</cfloop>
 	<cfloop list="#event.getValue("cssFullAppendList","")#" index="css">
 		<cfset addAsset("#css#.css")>
@@ -63,11 +63,11 @@
     
 		<!--=========Header Area including search field and logo=========-->
 		<div id="logo">
-			<a title="Go Relax!" href="#event.buildLink(rc.xehHome)#"><img src="#rc.root#/includes/images/ColdBoxLogoSquare_125.png" border="0" alt="logo" /></a>
+			<a title="Wanna Relax? Click Me!" href="javascript:openRemoteModal('#event.buildLink(rc.xehRelax)#')"><img src="#rc.root#/includes/images/ColdBoxLogoSquare_125.png" border="0" alt="logo" /></a>
 		</div>
 		
 		<div id="header_main" class="clearfix">
-           	<h1>Relax <span>v.#getModuleSettings('relax').version#</span></h1>		
+           	<a href="#event.buildLink(rc.xehHome)#"><h1>Relax <span>v.#getModuleSettings('relax').version#</span></h1></a>		
 		</div>
 		<!--End Search field and logo Header Area-->
       
@@ -146,7 +146,7 @@
 <!--- ============================ Remote Modal Window ============================ --->
 <div id="remoteModal">
 	<div id="remoteModelContent">
-		<img src="includes/images/ajax-loader-horizontal.gif" title="loading" alt="title" />
+		<img src="#rc.root#/includes/images/ajax-loader-blue.gif" alt="loader" />
 	</div>
 </div>
 <!--- ============================ end Confirmit ============================ --->

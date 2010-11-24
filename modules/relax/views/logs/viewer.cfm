@@ -23,9 +23,16 @@
 	<tr>
 		<th colspan="3">Extra Info:</th>
 	</tr>
+	<tr>
+		<td colspan="3">
+			<cfif NOT len(rc.qLog.extraInfo)>
+				<em>Null</em>
+			<cfelse>
+				#rc.qLog.extraInfo#
+			</cfif>
+		</td>
+	</tr>
 </table>
-
-<cfdump var="#getPlugin("JSON").decode(rc.qLog.extraInfo)#">
 
 <hr/>
 

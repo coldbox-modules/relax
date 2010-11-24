@@ -22,20 +22,29 @@
 		<cfargument name="parameterValues" 	type="string" required="false" default="" hint="HTTP parameters values (list)"/>
 		
 		<cfscript>
-			var results 	= "";
+			var results 	= structnew();
 			var response 	= "";
 			var i			= 1;
 			
-			// infalte headers
+			// Format Extension detected? If so, add it to resource.
+			if( len(arguments.httpFormat) ){
+				arguments.httpResource & arguments.httpFormat;
+			}
+			
+			// Log what we are sending out
+			instance.log.debug("Relaxed URL Request to #arguments.httpMethod#:#arguments.httpResource#:#arguments.httpFormat#",
+							   "Headers: #arguments.headerNames#->#arguments.headerValues#; Parameters: #arguments.parameterNames#->#arguments.parameterValues#");
+			
+			// inflate headers
 			arguments.headerNames  = listToArray(arguments.headerNames);
 			arguments.headerValues = listToArray(arguments.headerValues);
 			
 			// inflate parameters
 			arguments.parameterNames  = listToArray(arguments.parameterNames);
 			arguments.parameterValues = listToArray(arguments.parameterValues);
-			
 		</cfscript>
 		
+		<!--- Make cfhttp call --->
 		<cfhttp method="#arguments.httpMethod#" 
 				url="#arguments.httpResource#" 
 				result="results"  
@@ -52,7 +61,7 @@
 			</cfloop>		
 			
 		</cfhttp> 
-		
+				
 	 	<cfreturn results>
 	</cffunction>
 

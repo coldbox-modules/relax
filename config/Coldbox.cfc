@@ -9,15 +9,15 @@
 			appName 				= "Relax Shell",
 			
 			//Development Settings
-			debugMode				= true,
+			debugMode				= false,
 			debugPassword			= "",
 			reinitPassword			= "",
 			handlersIndexAutoReload = true,
 			configAutoReload		= false,
 			
 			//Implicit Events
-			defaultEvent			= "Main.index",
-			requestStartHandler		= "",
+			defaultEvent			= "relax:home",
+			requestStartHandler		= "Main.onRequestStart",
 			requestEndHandler		= "",
 			applicationStartHandler = "",
 			applicationEndHandler	= "",
@@ -73,10 +73,16 @@
 		logBox = {
 			// Define Appenders
 			appenders = {
-				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" }
+				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" },
+				dbAppender = {
+					class="coldbox.system.logging.appenders.DBAppender",
+					properties = {
+						dsn = "relax", table="api_logs", autocreate=true, textDBType="longtext"
+					}
+				}
 			},
 			// Root Logger
-			root = { levelmax="INFO", appenders="*" },
+			root = { levelmax="DEBUG", appenders="*" },
 			// Implicit Level Categories
 			info = [ "coldbox.system" ] 
 		};

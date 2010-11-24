@@ -62,10 +62,11 @@
 		<!--- Filter Bar --->
 		<div id="logFilterBar" style="margin-bottom:15px">
 			<div>
+				<form>
 				<fieldset>
 					<!--- Log Filter --->
 					<label for="logFilter" class="inline">Log Filter: </label>
-					<input size="60" type="text" name="logFilter" id="logFilter" value="" />
+					<input size="60" type="text" class="textfield" name="logFilter" id="logFilter" value="" />
 					
 					<!--- Image Filters --->
 					<img src="#rc.root#/includes/images/fatal.png"		alt="fatal" 	title="fatal filter" id="filter_fatal"	onClick="filter('fatal')" /> 
@@ -75,6 +76,7 @@
 					<img src="#rc.root#/includes/images/debug.gif" 		alt="debug" 	title="debug filter" id="filter_debug"	onClick="filter('debug')" />
 					<img src="#rc.root#/includes/images/arrow_refresh_small.png" 	alt="reset filter" title="reset filter"	onClick="filter('')" />
 				</fieldset>
+				</form>
 			</div>
 		</div>
 		
@@ -119,7 +121,7 @@
 		
 		<!--- No Records Found --->
 		<cfif rc.qLogs.recordcount eq 0>
-			#getPlugin("Messagebox").renderMessage("warning","No Log Records Found!")#
+			#getPlugin("MessageBox").renderMessage("warning","No Log Records Found!")#
 		</cfif>
 		
 		<!--- Legend --->
@@ -132,9 +134,11 @@
 			<img src="#rc.root#/includes/images/debug.gif" alt="debug" /> Debug
 		</div>
 		
-		<br/><br/>
 		<!--- Paging --->
 		#rc.pagingPlugin.renderit(rc.totalLogCount,rc.pagingLink,rc.maxRows)#
+		
+		<br/><br/>
+		
 	</div>
 </div>
 

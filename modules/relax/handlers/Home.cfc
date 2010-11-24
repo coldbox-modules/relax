@@ -10,14 +10,32 @@
 		event.setView("home/index");
 	}
 	
+	function relax(event){
+		event.setView(name="home/relax",layout="Ajax");
+	}
+	
 	function relaxer(event){
 		var rc = event.getCollection();
-		event.paramValue("format","json");
+		
+		// some defaults
+		event.paramValue("httpResource","");
+		event.paramValue("httpFormat","");
+		event.paramValue("httpMethod","GET");
 		event.paramValue("sendRequest",false);
 		
+		// custom css/js
+		rc.jsAppendList  = "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
+		rc.cssAppendList = "shCore,shThemeDefault";
 		
+		// send request
 		if( rc.sendRequest ){
-			rc.results = relaxerService.send(argumentCollection=rc);
+			try{
+				rc.results = relaxerService.send(argumentCollection=rc);
+			}
+			catch(Any e){
+				log.error("Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#", e);
+				getPlugin("MessageBox").error("Error sending relaxed request! #e.message# #e.detail#.");
+			}
 		}
 		
 		// display relaxer

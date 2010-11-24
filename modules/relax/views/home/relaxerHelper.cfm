@@ -1,4 +1,24 @@
 <cfscript>
+function getTreatedContent(content){
+	arguments.content = htmlEditFormat(trim(arguments.content));
+	if( isXML(rc.results.fileContent) ){
+		return xmlHumanReadable(arguments.content);
+	}
+	
+	arguments.content = Replace(arguments.content,":{",":{#chr(13)#","all");
+	arguments.content = Replace(arguments.content,"}:","{:#chr(13)#","all");
+	arguments.content = Replace(arguments.content,":[",":[#chr(13)#","all");
+	arguments.content = Replace(arguments.content,"]:","]:#chr(13)#","all");
+
+	return arguments.content;
+}
+function getBrush(content){
+
+	if(isXML(trim(arguments.content)) ){
+		return "xml";
+	}
+	return "js";
+}
 function xmlHumanReadable(XmlDoc) {
     var elem = "";
     var result = "";
@@ -8,6 +28,8 @@ function xmlHumanReadable(XmlDoc) {
     var temp = "";
     var cr = createObject("java","java.lang.System").getProperty("line.separator");
     
+	arguments.XmlDoc = trim(arguments.XmlDoc);
+	
 	if( NOT isXMLDoc(xmlDoc) AND NOT isXML(xmlDoc) ){
 		return xmlDoc;
 	}

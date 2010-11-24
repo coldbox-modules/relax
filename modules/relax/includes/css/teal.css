@@ -229,7 +229,10 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 	-webkit-box-shadow: 0 0 15px #ccc;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
-	width: 700px;
+	width: 600px;
+}
+#remoteModal{
+	width: 950px;	
 }
 #confirmIt div{ 	
 	border:1px solid #3B5998;
@@ -287,23 +290,23 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 	margin: 5px 0px 5px 0px;
 }
 .floatLeft{
-	float: left;
+	float: left !important;
 }
 .floatRight{
-	float: right;
+	float: right !important;
 }
 .textRight{
-	text-align: right;
+	text-align: right !important;
 }
 .textLeft{
-	text-align: left;
+	text-align: left !important;
 }
 .textCenter{
-	text-align: center;
+	text-align: center !important;
 }
 .center{
-	text-align:center;
-	margin: auto;
+	text-align:center !important;
+	margin: auto !important;
 }
 .padding10{
 	padding: 10px;
@@ -312,7 +315,7 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 	margin: 10px;
 }
 .hidden{
-	display: none;
+	display: none !important;
 }
 /**============================== ColdBox MessageBox ==============================**/
 .cbox_messagebox{
