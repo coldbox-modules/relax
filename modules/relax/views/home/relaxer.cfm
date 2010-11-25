@@ -52,7 +52,7 @@
 				
 				<!--- Format --->
 				<select name="httpFormat" id="httpFormat" title="The resource format extension (if available)">
-					<option <cfif rc.httpFormat eq "">selected="selected"</cfif>>none</option>
+					<option value="" <cfif rc.httpFormat eq "">selected="selected"</cfif>>none</option>
 					<option <cfif rc.httpFormat eq "xml">selected="selected"</cfif>>xml</option>
 					<option <cfif rc.httpFormat eq "json">selected="selected"</cfif>>json</option>
 					<option <cfif rc.httpFormat eq "jsont">selected="selected"</cfif>>jsont</option>
@@ -130,15 +130,6 @@
 		</div>
 		
 		<div class="body">
-			<h3>Raw Results:</h3>
-			<form>
-			<textarea class="textfield" rows="10" style="width:100%">#rc.results.fileContent.toString()#</textarea>
-			</form>
-			
-			<h3>Semi-Pretty Results:</h3>
-			<pre class="brush: #getBrush(rc.results.fileContent)#">#getTreatedContent(rc.results.fileContent)#
-			</pre>
-			
 			<h3>Response Header</h3>
 			<table class="tablelisting" width="100%">
 				<cfloop collection="#rc.results.responseHeader#" item="header">
@@ -155,6 +146,15 @@
 				</cfloop>							
 			</table>
 			
+			<h3>Raw Results:</h3>
+			<form>
+			<textarea class="textfield" rows="10" style="width:100%">#rc.results.fileContent.toString()#</textarea>
+			</form>
+			
+			<h3>Semi-Pretty Results:</h3>
+			<pre class="brush: #getBrush(rc.results.fileContent)#">#getTreatedContent(rc.results.fileContent)#
+			</pre>
+					
 		</div>
 	</div>
 	</cfif>
