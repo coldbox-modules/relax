@@ -49,24 +49,12 @@
 	
 		// custom settings
 		settings = {
-			
-		};
-		
-		// environment settings, create a detectEnvironment() method to detect it yourself.
-		// create a function with the name of the environment so it can be executed if that environment is detected
-		// the value of the environment is a list of regex patterns to match the cgi.http_host.
-		environments = {
-			//development = "^cf8.,^railo."
 		};
 		
 		// Module Directives
 		modules = {
-			//Turn to false in production
-			autoReload = true,
-			// An array of modules names to load, empty means all of them
-			include = [],
-			// An array of modules names to NOT load, empty means none
-			exclude = [] 
+			//Turn to false in production, on for dev
+			autoReload = true
 		};
 		
 		//LogBox DSL
@@ -74,6 +62,7 @@
 			// Define Appenders
 			appenders = {
 				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" },
+				// DB appender so we can see the logbox log reader work
 				dbAppender = {
 					class="coldbox.system.logging.appenders.DBAppender",
 					properties = {

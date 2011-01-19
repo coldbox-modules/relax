@@ -7,10 +7,10 @@
 	<meta name="robots" content="noindex,nofollow" />	
 	<!--- SES --->
 	<base href="#getSetting('htmlBaseURL')#" />
-<!--=========Title=========-->
+	<!--=========Title=========-->
     <title>ColdBox Relax - RESTful Tools For Lazy Experts</title> 
 	<link href="#rc.root#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-<!--=========Stylesheets=========-->
+	<!--=========Stylesheets=========-->
 	<link href="#rc.root#/includes/css/style.css"	 	rel="stylesheet" type="text/css"/>
 	<link href="#rc.root#/includes/css/teal.css" 		rel="stylesheet" type="text/css"/>
 	<link href="#rc.root#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
@@ -23,7 +23,7 @@
 		<cfset addAsset("#css#.css")>
 	</cfloop>
 	        
-<!--========= JAVASCRIPT -->
+	<!--========= JAVASCRIPT -->
 	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery-1.4.4.min.js"></script> <!--Import jquery tools-->
 	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery.tools.min.js"></script> <!--Import jquery tools-->
 	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery.uitablefilter.js"></script>

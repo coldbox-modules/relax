@@ -1,3 +1,13 @@
+<!-----------------------------------------------------------------------
+********************************************************************************
+Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
+www.coldbox.org | www.luismajano.com | www.ortussolutions.com
+********************************************************************************
+
+Author     :	Luis Majano
+Description :
+	The DAO implementation for the logbox viewer for MSSQL
+----------------------------------------------------------------------->
 <cfcomponent output="false" implements="ILogDAO" extends="AbstractDAO">
 
 	<!--- Constructor --->
@@ -12,7 +22,7 @@
 	</cffunction>
 	
 	<!--- getTotalLogs --->
-    <cffunction name="getTotalLogs" output="false" access="public" returntype="numeric" hint="Get the total number of log entries">
+    <cffunction name="getTotalLogs" output="false" access="public" returntype="any" hint="Get the total number of log entries">
     	<cfset var q = "">
 		
 		<cfquery name="q" datasource="#getDatasource()#">
@@ -25,8 +35,8 @@
 	
 	<!--- get logs --->
     <cffunction name="getLogs" output="false" access="public" returntype="query" hint="Get the log files">
-    	<cfargument name="startRow" type="numeric" required="false" default="0" hint="The start row"/>
-    	<cfargument name="maxRow" 	type="numeric" required="false" default="0" hint="The end row"/>
+    	<cfargument name="startRow" required="false" default="0" hint="The start row"/>
+    	<cfargument name="maxRow" 	required="false" default="0" hint="The end row"/>
 		<cfset var q = "">
 		
 		<cfquery name="q" datasource="#getDatasource()#">
@@ -45,8 +55,8 @@
     </cffunction>
 	
 	<!--- getLog --->
-	<cffunction name="getLog" output="false" access="public" returntype="query" hint="Get a log entry">
-	 	<cfargument name="logid" type="string">
+	<cffunction name="getLog" output="false" access="public" returntype="any" hint="Get a log entry">
+	 	<cfargument name="logid">
    		<cfset var q = "">
 		
 		<cfquery name="q" datasource="#getDatasource()#">

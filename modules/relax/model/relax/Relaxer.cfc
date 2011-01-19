@@ -1,4 +1,14 @@
-<cfcomponent output="false">
+<!-----------------------------------------------------------------------
+********************************************************************************
+Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
+www.coldbox.org | www.luismajano.com | www.ortussolutions.com
+********************************************************************************
+
+Author     :	Luis Majano
+Description :
+	The Relaxer service
+----------------------------------------------------------------------->
+<cfcomponent output="false" hint="The Relaxer service">
 
 	<!--- Constructor --->
 	<cffunction name="init" hint="Constructor" access="public" returntype="Relaxer" output="false">
@@ -13,13 +23,13 @@
 	
 	<!--- Send Request --->
 	<cffunction name="send" output="false" access="public" returntype="any" hint="Send a Relaxer Request">
-		<cfargument name="httpMethod" 		type="string" required="false" default="GET" hint="HTTP Method"/>
-		<cfargument name="httpResource" 	type="string" required="false" default="" hint="HTTP Resource to hit"/>
-		<cfargument name="httpFormat" 		type="string" required="false" default="" hint="HTTP Format extension if used."/>
-		<cfargument name="headerNames" 		type="string" required="false" default="" hint="HTTP header names (list)"/>
-		<cfargument name="headerValues" 	type="string" required="false" default="" hint="HTTP header values (list)"/>
-		<cfargument name="parameterNames" 	type="string" required="false" default="" hint="HTTP parameters names (list)"/>
-		<cfargument name="parameterValues" 	type="string" required="false" default="" hint="HTTP parameters values (list)"/>
+		<cfargument name="httpMethod" 		required="false" default="GET" hint="HTTP Method"/>
+		<cfargument name="httpResource" 	required="false" default="" hint="HTTP Resource to hit"/>
+		<cfargument name="httpFormat" 		required="false" default="" hint="HTTP Format extension if used."/>
+		<cfargument name="headerNames" 		required="false" default="" hint="HTTP header names (list)"/>
+		<cfargument name="headerValues" 	required="false" default="" hint="HTTP header values (list)"/>
+		<cfargument name="parameterNames" 	required="false" default="" hint="HTTP parameters names (list)"/>
+		<cfargument name="parameterValues" 	required="false" default="" hint="HTTP parameters values (list)"/>
 		
 		<cfscript>
 			var results 	= structnew();
@@ -32,8 +42,10 @@
 			}
 			
 			// Log what we are sending out
-			instance.log.debug("Relaxed URL Request to #arguments.httpMethod#:#arguments.httpResource#:#arguments.httpFormat#",
-							   "Headers: #arguments.headerNames#->#arguments.headerValues#; Parameters: #arguments.parameterNames#->#arguments.parameterValues#");
+			if( instance.log.canDebug() ){
+				instance.log.debug("Relaxed URL Request to #arguments.httpMethod#:#arguments.httpResource#:#arguments.httpFormat#",
+							   	   "Headers: #arguments.headerNames#->#arguments.headerValues#; Parameters: #arguments.parameterNames#->#arguments.parameterValues#");
+			}
 			
 			// inflate headers
 			arguments.headerNames  = listToArray(arguments.headerNames);

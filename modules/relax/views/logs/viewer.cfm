@@ -28,7 +28,11 @@
 			<cfif NOT len(rc.qLog.extraInfo)>
 				<em>Null</em>
 			<cfelse>
+				<cfif isJSON(rc.qLog.extraInfo)>
+				<cfdump var="#deserializeJSON(rc.qLog.extraInfo)#">
+				<cfelse>
 				#rc.qLog.extraInfo#
+				</cfif>
 			</cfif>
 		</td>
 	</tr>
