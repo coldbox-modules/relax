@@ -1,13 +1,13 @@
 <cfoutput>
 <!--============================Sidebar============================-->
 <div class="sidebar">
-	<!--=========Users Box=========-->
+	<!--=========Settings Box=========-->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/settings.png" alt="History" width="24" height="24" />LogBox Settings
+			<img src="#rc.root#/includes/images/settings.png" alt="History" width="24" height="24" />RelaxLogs Settings
 		</div>
 		<div class="body">
-			
+			<p>The following are the settings the RelaxLogs are configured with:</p>
 			<table class="tablelisting" width="100%">
 				<tr>
 					<th width="55" class="textRight">Datasource:</th>
@@ -40,7 +40,35 @@
 			</p>
 		</div>
 	</div>
-	<!--End Users Box-->	
+	
+	<!--=========Settings Box=========-->
+	<div class="small_box">
+		<div class="header">
+			<img src="#rc.root#/includes/images/help.png" alt="Help" width="24" height="24" />RelaxLogs Setup
+		</div>
+		<div class="body">
+			<p>
+			 In order to configure the Relax LogViewer you need to create a 
+			 <strong>relaxLogs</strong> setting in the Relax <em>ModuleConfig.cfc</em>. 
+			 Below is a simple example:
+			 
+			 <pre class="brush: coldfusion">
+			  relaxLogs = {
+				datasource = "relax",
+				adapter = "mysql",
+				table 	= "api_logs",
+				maxRows = 50,
+				bandGap = 3
+			  }
+			 </pre>
+			 
+			 The supported log adapters are: <em>mysql, mssql and postgres</em>.
+			 Please note that this logviewer only reads tables that used the  
+			 <a href="http://wiki.coldbox.org/wiki/LogBox.cfm##DBAppender">LogBox DBAppender</a>.  
+			 To read more about LogBox, <a href="http://wiki.coldbox.org/wiki/LogBox.cfm">visit our wiki</a>.
+			</p>
+		</div>
+	</div>	
 </div>
 <!--End sidebar-->
 
@@ -49,7 +77,7 @@
 	<div class="box">
 		<div class="header">
 			<img src="#rc.root#/includes/images/database.png" alt="Database" width="30" height="30" />
-			Log Viewer
+			RelaxLogs
 		</div>
 		
 		<div class="body">
@@ -149,6 +177,9 @@ $(document).ready(function() {
 	$logsTable 			= $("##logsTable");
 	$logFilterBar 		= $("##logFilterBar");
 	$logsRecordcount 	= $("##logsRecordcount");
+	
+	// syntax highlight
+	SyntaxHighlighter.all();
 	
 	// setup sorting and filtering
 	$logsTable.tablesorter();

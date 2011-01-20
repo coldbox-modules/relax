@@ -56,5 +56,10 @@ Description :
 		event.setView("home/relaxer");
 	}
 
+	function help(event){
+		var rc = event.getCollection();
+		
+		event.setView("home/help");
+	}
 </cfscript>
 </cfcomponent>

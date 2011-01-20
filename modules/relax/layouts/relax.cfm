@@ -52,10 +52,10 @@
 		<!--=======Top Header area======-->
 		<div id="header_top">
 			<span class="fr">
-		  		<a href="http://www.ortussolutions.com">OrtusSolutions.com</a>
-				<a href="http://www.coldbox.org">ColdBox.org</a>
-				<a href="http://www.github.com/coldbox/coldbox-relax">Github Repo</a>
-				<a href="http://www.twitter.com/coldbox">Twitter</a>
+		  		<a href="http://www.ortussolutions.com" title="The experts behind ColdBox">www.ortussolutions.com</a>
+				<a href="http://www.coldbox.org" title="The premier ColdFusion development platform">www.coldbox.org</a>
+				<a href="http://www.github.com/coldbox/coldbox-relax" title="The Relax Source Code">Github Repo</a>
+				<a href="http://www.twitter.com/coldbox" title="Follow me!">Tweet</a>
 			</span>
 		  RESTful Tools For Lazy Experts
 		</div>
@@ -77,14 +77,17 @@
 				<a href="##" title="Relax Dashboard" <cfif event.getCurrentHandler() eq "relax:home"> class="current"</cfif>>Dashboard</a>
 				<ul>
 					<li><a href="#event.buildLink(rc.xehHome)#"  <cfif event.getCurrentAction() eq "index"> class="current"</cfif>>Home</a></li>
-					
 					<li><a title="Pronounced 'Relax-ER'" href="#event.buildLink(rc.xehRelaxer)#"  <cfif event.getCurrentAction() eq "relaxer"> class="current"</cfif>>RelaxURL</a></li>
+					<li><a title="Learn to Relax" href="#event.buildLink(rc.xehHelp)#"  <cfif event.getCurrentAction() eq "help"> class="current"</cfif>>Relax Help</a></li>
 				</ul>
 			</li>
 			<li>
 				<a href="##" title="LogBox Integration" <cfif event.getCurrentHandler() eq "relax:logs"> class="current"</cfif>>LogBox</a>
 				<ul>
-					<li><a href="#event.buildLink(rc.xehLogViewer)#" <cfif event.getCurrentAction() eq "index"> class="current"</cfif>>Log Viewer</a></li>
+					<li>
+						<a href="#event.buildLink(rc.xehLogViewer)#" <cfif event.getCurrentAction() eq "index"> class="current"</cfif>
+						   title="The Most Relaxed Log Viewer On Earth!">RelaxLogs</a>
+					</li>
 				</ul>
 			</li>
 		</ul>

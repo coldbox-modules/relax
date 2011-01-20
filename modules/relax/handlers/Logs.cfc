@@ -33,6 +33,11 @@ Description :
 		rc.paging 		= rc.pagingPlugin.getBoundaries(rc.maxRows);
 		rc.pagingLink 	= event.buildLink('relax:logs.index.page.@page@');
 		
+		// JS/CSS Append
+		rc.jsAppendList  = "shCore,brushes/shBrushColdFusion";
+		rc.cssAppendList = "shCore,shThemeDefault";
+		
+		
 		// exit handlers
 		rc.xehStoreMaxRows = "relax:logs.saveMaxRows";
 		
