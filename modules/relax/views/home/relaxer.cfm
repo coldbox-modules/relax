@@ -81,7 +81,7 @@
 			<!--- MessageBox --->
 			#getPlugin("messagebox").renderit()#	
 			
-			<form name="relaxerForm" id="relaxerForm" action="#event.buildLink(event.getCurrentEvent())#" method="post">
+			<form name="relaxerForm" id="relaxerForm" action="#event.buildLink(rc.xehRelaxer)#" method="post">
 				<input type="hidden" name="sendrequest" value="true" />
 				
 				<fieldset>
@@ -179,37 +179,54 @@
 	
 	<!--- results --->
 	<cfif structKeyExists(rc,"results")>
+	<a name="results"></a> 
 	<div class="box" id="resultsBox">
 		<div class="header">
 			<img src="#rc.root#/includes/images/web.png" alt="Database" width="30" height="30" title="Go Relax!" />
 			RelaxURL Results
 		</div>
-		
+		<br/>
 		<div class="body">
-			<h3>Response Header</h3>
-			<table class="tablelisting" width="100%">
-				<cfloop collection="#rc.results.responseHeader#" item="header">
-				<tr>
-					<th width="125" class="textRight">#header#</th>
-					<td>
-						<cfif isSimpleValue(rc.results.responseHeader[header])>
-						#rc.results.responseHeader[header]#
-						<cfelse>
-						<cfdump var="#rc.results.responseHeader[header]#">
-						</cfif>
-					</td>
-				</tr>
-				</cfloop>							
-			</table>
 			
-			<h3>Raw Results:</h3>
-			<form>
-			<textarea class="textfield" rows="10" style="width:100%">#rc.results.fileContent.toString()#</textarea>
-			</form>
+			<!--- Tabs --->
+			<ul class="tabs" id="tabs">
+				<li><a href="##" onclick="showTab(0);return false">Response Headers</a></li>
+				<li><a href="##" onclick="showTab(1);return false">Raw Results</a></li>
+				<li><a href="##" onclick="showTab(2);return false">Pretty Results</a></li>
+			</ul>
+		
+			<!--- Panes --->
+			<div class="panes" id="tabPanes">
 			
-			<h3>Semi-Pretty Results:</h3>
-			<pre class="brush: #getBrush(rc.results.fileContent)#">#getTreatedContent(rc.results.fileContent)#
-			</pre>
+				<div class="pane">
+					<table class="tablelisting" width="100%">
+						<cfloop collection="#rc.results.responseHeader#" item="header">
+						<tr>
+							<th width="125" class="textRight">#header#</th>
+							<td>
+								<cfif isSimpleValue(rc.results.responseHeader[header])>
+								#rc.results.responseHeader[header]#
+								<cfelse>
+								<cfdump var="#rc.results.responseHeader[header]#">
+								</cfif>
+							</td>
+						</tr>
+						</cfloop>							
+					</table>
+				</div>
+				
+				<div class="pane">
+					<form>
+					<textarea class="textfield" rows="30" style="width:100%">#rc.results.fileContent.toString()#</textarea>
+					</form>
+				</div>
+				
+				<div class="pane">
+					<pre class="brush: #getBrush(rc.results.fileContent)#">#getTreatedContent(rc.results.fileContent)#
+					</pre>
+				</div>
+			
+			</div>
 			
 			<p class="center">
 				<button class="button" onclick="toTop()">^ Back To Top ^</button>
@@ -233,10 +250,15 @@ $(document).ready(function() {
 	$resultsBox  	= $("##resultsBox");
 	$relaxerHeader 	= $("##relaxerHeader");
 	
+	<cfif structKeyExists(rc,"results")>
+	$tabPanes		= $("##tabPanes");
+	$tabRoot		= $("##tabs");
 	// syntax highlight
 	SyntaxHighlighter.all();
-	
-	<cfif structKeyExists(rc,"results")>
+	// tabs
+	currentTabIndex = 0;
+	// init tab
+	showTab(currentTabIndex);
 	// scroll to results
 	$.scrollTo($resultsBox, 800, {axis:'y'});
 	</cfif>
@@ -259,6 +281,13 @@ $(document).ready(function() {
 	requestHistory[#x-1#] = #serializeJSON(rc.requestHistory[x])#;
 	</cfloop>
 });
+function showTab(index){
+	$tabRoot.find("li:eq("+currentTabIndex+")").removeClass("current");
+	$tabRoot.find("li:eq("+index+")").addClass("current");
+	$tabPanes.find("div:eq("+currentTabIndex+")").fadeOut('fast');
+	$tabPanes.find("div:eq("+index+")").fadeIn('fast');
+	currentTabIndex = index;
+}
 function addDynamicItem(_this, inData){
 	var $trigger  = _this;
 	var fieldType = $trigger.attr("data-type");

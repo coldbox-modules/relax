@@ -16,7 +16,7 @@
 			configAutoReload		= false,
 			
 			//Implicit Events
-			defaultEvent			= "relax:home",
+			defaultEvent			= "relax:home.index",
 			requestStartHandler		= "Main.onRequestStart",
 			requestEndHandler		= "",
 			applicationStartHandler = "",
