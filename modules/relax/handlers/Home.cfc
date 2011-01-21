@@ -41,6 +41,9 @@ Description :
 		rc.jsAppendList  = "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
 		rc.cssAppendList = "shCore,shThemeDefault";
 		
+		// exit handlers
+		rc.xehPurgeHistory = "relax/Home.purgeHistory";
+		
 		// send request
 		if( rc.sendRequest ){
 			try{
@@ -52,8 +55,29 @@ Description :
 			}
 		}
 		
+		// Get request history
+		rc.requestHistory = relaxerService.getHistory();
+		
 		// display relaxer
 		event.setView("home/relaxer");
+	}
+	
+	function purgeHistory(event){
+		var results = {
+			error = false,
+			messages = "History cleaned!"
+		};
+		try{
+			relaxerService.clearHistory();
+		}
+		catch(Any e){
+			results.error = true;
+			results.messages = "error clearing history: #e.detail# #e.message#";
+			if( log.canError() ){
+				log.error("Error clearing history: #e.message# #e.detail#",e);
+			}
+		}
+		event.renderData(type="jsont",data=results);
 	}
 
 	function help(event){

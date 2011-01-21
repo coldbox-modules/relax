@@ -317,6 +317,14 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 .hidden{
 	display: none !important;
 }
+.flickerMessages{
+	margin: 0px 0px 10px 0px;	
+	padding: 15px 15px 15px 40px;
+	font-weight: bold;
+	display: none;
+	background: #EFD1D8 URL(../images/iinfo_icon.png) no-repeat 2% 50%;
+	
+}
 /**============================== ColdBox MessageBox ==============================**/
 .cbox_messagebox{
 	/* font-size: 13px; */
@@ -415,6 +423,11 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 	margin: 10px 0px 0px 0px;
 	text-align:center;		
 	display: none;
+}
+.loaders{
+	margin: 10px;
+	display:none;
+	text-align: center;	
 }
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/

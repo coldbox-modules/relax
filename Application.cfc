@@ -18,7 +18,7 @@ Description :
 	<!--- APPLICATION CFC PROPERTIES --->
 	<cfset this.name = "RelaxShell" & hash(getCurrentTemplatePath())> 
 	<cfset this.sessionManagement = true>
-	<cfset this.sessionTimeout = createTimeSpan(0,0,30,0)>
+	<cfset this.sessionTimeout = createTimeSpan(0,0,45,0)>
 	<cfset this.setClientCookies = true>
 	
 	<!--- COLDBOX STATIC PROPERTY, DO NOT CHANGE UNLESS THIS IS NOT THE ROOT OF YOUR COLDBOX APP --->

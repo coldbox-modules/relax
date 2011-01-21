@@ -26,6 +26,8 @@ Description :
 		settings = {
 			// module version reference
 			version = this.version,
+			// History stack size
+			maxHistory = 10,
 			// logbox integration information needed for log viewer to work
 			// this means that it can read tables that are written using the logbox's DB Appender.
 			relaxLogs = {

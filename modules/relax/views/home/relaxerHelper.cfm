@@ -1,4 +1,7 @@
 <cfscript>
+function printDate(inDate){
+	return dateFormat(inDate,"medium") & " " & timeformat(inDate,"medium");
+}
 function getTreatedContent(content){
 	var rawContent = arguments.content;
 	if( isXML(rawContent) ){
@@ -9,6 +12,7 @@ function getTreatedContent(content){
 	arguments.content = Replace(arguments.content,"}:","{:#chr(13)#","all");
 	arguments.content = Replace(arguments.content,":[",":[#chr(13)#","all");
 	arguments.content = Replace(arguments.content,"]:","]:#chr(13)#","all");
+	arguments.content = Replace(arguments.content,',"',',#chr(13)#"',"all");
 
 	return arguments.content;
 }
