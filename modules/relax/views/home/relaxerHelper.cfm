@@ -12,7 +12,7 @@ function getTreatedContent(content){
 	arguments.content = Replace(arguments.content,"}:","{:#chr(13)#","all");
 	arguments.content = Replace(arguments.content,":[",":[#chr(13)#","all");
 	arguments.content = Replace(arguments.content,"]:","]:#chr(13)#","all");
-	arguments.content = Replace(arguments.content,',"',',#chr(13)#"',"all");
+	arguments.content = Replace(arguments.content,',',',#chr(13)#',"all");
 
 	return arguments.content;
 }

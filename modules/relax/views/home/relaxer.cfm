@@ -304,28 +304,30 @@ function rebuildRequest(){
 	var index = $("##requestHistory").val();
 	if( index != "null" ){
 		var item = requestHistory[index].DATA;
-		console.log(item);
+		//console.log(item);
 		// main options
 		selectOption("httpMethod",item.HTTPMETHOD);
 		$("##httpResource").val(item.HTTPRESOURCE);
 		selectOption("httpFormat",item.HTTPFORMAT);
 		// headers
-		var headerNames  = item.HEADERNAMES.split(",");
-		var headerValues = item.HEADERVALUES.split(",");
-		$("##httpHeaders p").remove();
-		$.each(headerNames,function(index,objValue){
-			addDynamicItem( $("##addHeaderButton"), [ objValue, headerValues[index] ]);
-			
-		})
+		if (item.HEADERNAMES.length) {
+			var headerNames = item.HEADERNAMES.split(",");
+			var headerValues = item.HEADERVALUES.split(",");
+			$("##httpHeaders p").remove();
+			$.each(headerNames, function(index, objValue){
+				addDynamicItem($("##addHeaderButton"), [objValue, headerValues[index]]);
+			})
+		}
 		// params
-		var paramNames  = item.PARAMETERNAMES.split(",");
-		var paramValues = item.PARAMETERVALUES.split(",");
-		$("##httpParameters p").remove();
-		$.each(headerNames,function(index,objValue){
-			addDynamicItem( $("##addParameterButton"), [ objValue, paramValues[index] ]);
-			
-		})
-		
+		if (item.PARAMETERNAMES.length) {
+			var paramNames = item.PARAMETERNAMES.split(",");
+			var paramValues = item.PARAMETERVALUES.split(",");
+			$("##httpParameters p").remove();
+			$.each(headerNames, function(index, objValue){
+				addDynamicItem($("##addParameterButton"), [objValue, paramValues[index]]);
+				
+			})
+		}
 		
 	}
 }
