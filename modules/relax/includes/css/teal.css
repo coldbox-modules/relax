@@ -355,7 +355,7 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 /**============================== Table Listings ==============================**/
 .tablelisting{
 	background-color: #CDCDCD;
-	margin:10px 0pt 15px;
+	margin: 5px 0pt 5px;
 	border-spacing: 1px;
 	font-size: 8pt;
 	border-collapse: inherit !important;
@@ -370,7 +370,7 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 .tablelisting th {
 	text-align: left;
 	background-color: #E0EFEF;
-	padding: 5px;
+	padding: 3px;
 }
 .tablelisting th.center{
 	text-align:center;
@@ -402,7 +402,7 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 	background-color: inherit;	
 }
 .tablelisting td{
-	padding: 5px;
+	padding: 3px;
 }
 .tablelisting td.center{
 	text-align: center;

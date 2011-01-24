@@ -197,30 +197,26 @@
 		
 			<!--- Panes --->
 			<div class="panes" id="tabPanes">
-			
+				<!--- headers --->
 				<div class="pane">
 					<table class="tablelisting" width="100%">
 						<cfloop collection="#rc.results.responseHeader#" item="header">
 						<tr>
 							<th width="125" class="textRight">#header#</th>
 							<td>
-								<cfif isSimpleValue(rc.results.responseHeader[header])>
-								#rc.results.responseHeader[header]#
-								<cfelse>
-								<cfdump var="#rc.results.responseHeader[header]#">
-								</cfif>
+								#rc.results.responseHeader[header].toString()#
 							</td>
 						</tr>
 						</cfloop>							
 					</table>
 				</div>
-				
+				<!--- Raw Content --->
 				<div class="pane">
 					<form>
 					<textarea class="textfield" rows="30" style="width:100%">#rc.results.fileContent.toString()#</textarea>
 					</form>
 				</div>
-				
+				<!--- Pretty Content --->
 				<div class="pane">
 					<pre class="brush: #getBrush(rc.results.fileContent)#">#getTreatedContent(rc.results.fileContent)#
 					</pre>
