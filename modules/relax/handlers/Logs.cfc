@@ -47,12 +47,21 @@ Description :
 		// Get Logs
 		rc.qLogs = logService.getLogs(startRow=rc.paging.startRow,maxRow=rc.paging.maxRow);
 		rc.totalLogCount = logService.getTotalLogs();
+		rc.qStats = logService.getLogStats();
 		
 		// Exit handlers
 		rc.xehPurge 	= "relax:logs.purgeLogs";
 		rc.xehQuickView = "relax:logs.viewer";
 		
 		event.setView("logs/index");
+	}
+	
+	function help(event){
+		var rc = event.getCollection();
+		// JS/CSS Append
+		rc.jsAppendList  = "shCore,brushes/shBrushColdFusion";
+		rc.cssAppendList = "shCore,shThemeDefault";
+		event.setView("logs/help");
 	}
 	
 	function saveMaxRows(event){

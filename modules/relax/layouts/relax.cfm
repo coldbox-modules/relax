@@ -73,20 +73,25 @@
       
 		<!--=========Main Navigation=========-->
 		<ul id="main_nav">
+			<!--- Main Nav --->
 			<li> 
 				<a href="##" title="Relax Dashboard" <cfif event.getCurrentHandler() eq "relax:home"> class="current"</cfif>>Dashboard</a>
 				<ul>
 					<li><a href="#event.buildLink(rc.xehHome)#"  <cfif event.getCurrentAction() eq "index"> class="current"</cfif>>Home</a></li>
 					<li><a title="Pronounced 'Relax-ER'" href="#event.buildLink(rc.xehRelaxer)#"  <cfif event.getCurrentAction() eq "relaxer"> class="current"</cfif>>RelaxURL</a></li>
-					<li><a title="Learn to Relax" href="#event.buildLink(rc.xehHelp)#"  <cfif event.getCurrentAction() eq "help"> class="current"</cfif>>Relax Help</a></li>
 				</ul>
 			</li>
+			<!--- LogBox Nav --->
 			<li>
 				<a href="##" title="LogBox Integration" <cfif event.getCurrentHandler() eq "relax:logs"> class="current"</cfif>>LogBox</a>
 				<ul>
 					<li>
 						<a href="#event.buildLink(rc.xehLogViewer)#" <cfif event.getCurrentAction() eq "index"> class="current"</cfif>
 						   title="The Most Relaxed Log Viewer On Earth!">RelaxLogs</a>
+					</li>
+					<li>
+						<a href="#event.buildLink(rc.xehLogHelp)#" <cfif event.getCurrentAction() eq "help"> class="current"</cfif>
+						   title="Get some setup help!">Help</a>
 					</li>
 				</ul>
 			</li>

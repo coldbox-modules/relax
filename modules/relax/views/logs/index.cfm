@@ -41,6 +41,29 @@
 		</div>
 	</div>
 	
+	<!--- Severity Showdown --->
+	<div class="small_box">
+		<div class="header">
+			<img src="#rc.root#/includes/images/line_chart.png" alt="Help" width="24" height="24" />Severity Showdown!
+		</div>
+		<div class="body">
+			<p>
+			Checkout your Log Severity Showdown
+			</p>
+			<cfchart format="flash" 
+					 show3d="true" 
+					 chartwidth="240">
+				<cfchartseries type="bar" colorlist="##B22222,##FF69B4,##FF8C00, ##1E90FF,##ADFF2F"   >
+					<cfchartdata item="fatal"  value="#rc.qStats.fatalCount#">
+					<cfchartdata item="error"  value="#rc.qStats.errorCount#">
+					<cfchartdata item="warn"  value="#rc.qStats.warnCount#">
+					<cfchartdata item="info"  value="#rc.qStats.infoCount#">
+					<cfchartdata item="debug"  value="#rc.qStats.debugCount#">
+				</cfchartseries>
+			</cfchart>
+		</div>
+	</div>	
+	
 	<!--=========Settings Box=========-->
 	<div class="small_box">
 		<div class="header">
@@ -48,25 +71,19 @@
 		</div>
 		<div class="body">
 			<p>
-			 In order to configure the Relax LogViewer you need to create a 
-			 <strong>relaxLogs</strong> setting in the Relax <em>ModuleConfig.cfc</em>. 
-			 Below is a simple example:
-			 
-			 <pre class="brush: coldfusion">
-			  relaxLogs = {
-				datasource = "relax",
-				adapter = "mysql",
-				table 	= "api_logs",
-				maxRows = 50,
-				bandGap = 3
-			  }
-			 </pre>
-			 
-			 The supported log adapters are: <em>mysql, mssql and postgres</em>.
-			 Please note that this logviewer only reads tables that used the  
-			 <a href="http://wiki.coldbox.org/wiki/LogBox.cfm##DBAppender">LogBox DBAppender</a>.  
-			 To read more about LogBox, <a href="http://wiki.coldbox.org/wiki/LogBox.cfm">visit our wiki</a>.
+			To learn more how to configure Relax to read your LogBox logs then visit our help section.
 			</p>
+			
+			<p class="center">
+			<a href="#event.buildLink(rc.xehLogHelp)#" class="button" 
+			   title="Visit our LogBox Help section">
+				<span>
+					<img src="#rc.root#/includes/images/help_small.png" border="0" align="absmiddle" alt="help" />
+					Help
+				</span>
+			</a>
+			
+			
 		</div>
 	</div>	
 </div>

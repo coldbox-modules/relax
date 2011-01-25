@@ -52,7 +52,7 @@ html {
 #content_bg { padding-bottom:20px; }
 .content { 				
 	font-size:1.3em;
-	padding-top: 35px;
+	padding-top: 20px;
 }
 /**============================== Element Styling ==============================**/
 a { text-decoration:none; }
@@ -269,7 +269,7 @@ form input[type="checkbox"], form input[type="radio"] {
 /************* Box body with vertical Navigation *************/
 .body_vertical_nav { 	padding:20px 0px; }
 .body_vertical_nav .main_column {
-						margin: 0px 0px 0px 180px;
+						margin: -25px 0px 0px 180px;
 						padding:0px 15px;
 						}
 .panes .pane { 			display:none; }					/* Hide Panes */
@@ -330,7 +330,7 @@ form input[type="checkbox"], form input[type="radio"] {
 
 /**============================== Page Layout with Sidebar ==============================**/	
 
-.sidebar { 				width:250px;                     /*specify sidebar width here*/
+.sidebar { 				width:260px;                     /*specify sidebar width here*/
 						float:right;
 						margin:0px 0px 0px 25px;
 						}
@@ -380,7 +380,7 @@ form input[type="checkbox"], form input[type="radio"] {
 /** ============================== Footer ============================== **/
 #footer { 				text-align:center;
 						padding:20px 0px;
-						height:50px;
+						height:45px;
 						position:absolute;
 						width:100%;
 						bottom:0px;

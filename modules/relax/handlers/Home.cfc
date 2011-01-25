@@ -80,10 +80,5 @@ Description :
 		event.renderData(type="jsont",data=results);
 	}
 
-	function help(event){
-		var rc = event.getCollection();
-		
-		event.setView("home/help");
-	}
 </cfscript>
 </cfcomponent>

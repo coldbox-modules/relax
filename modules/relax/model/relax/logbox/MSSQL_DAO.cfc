@@ -21,6 +21,23 @@ Description :
 		</cfscript>
 	</cffunction>
 	
+	<!--- getLogStats --->
+    <cffunction name="getLogStats" output="false" access="public" returntype="any" hint="Get some log statistics">
+    	<cfset var q = "">
+		
+		<cfquery name="q" datasource="#getDatasource()#">
+		SELECT 
+			SUM(CASE lower(severity) WHEN 'fatal' THEN 1 ELSE 0 END) fatalCount,
+			SUM(CASE lower(severity) WHEN 'error' THEN 1 ELSE 0 END) errorCount,
+			SUM(CASE lower(severity) WHEN 'warn' THEN 1 ELSE 0 END) warnCount,
+			SUM(CASE lower(severity) WHEN 'info' THEN 1 ELSE 0 END) infoCount,
+			SUM(CASE lower(severity) WHEN 'debug' THEN 1 ELSE 0 END) debugCount
+		FROM api_logs
+		</cfquery>
+		
+		<cfreturn q>
+    </cffunction>
+	
 	<!--- getTotalLogs --->
     <cffunction name="getTotalLogs" output="false" access="public" returntype="any" hint="Get the total number of log entries">
     	<cfset var q = "">

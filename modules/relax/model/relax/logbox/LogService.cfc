@@ -34,6 +34,13 @@ Description :
     	</cfscript>
     </cffunction>
 	
+	<!--- getLogStats --->
+    <cffunction name="getLogStats" output="false" access="public" returntype="any" hint="Get some log statistics">
+    	<cfscript>
+    		return instance.dao.getLogStats();
+    	</cfscript>
+    </cffunction>
+	
 	<!--- get logs --->
     <cffunction name="getLogs" output="false" access="public" returntype="any" hint="Get the log files">
     	<cfargument name="startRow" required="false" default="0" hint="The start row"/>

@@ -21,8 +21,8 @@ Description :
 		rc.xehHome 		= "relax/home";
 		rc.xehRelax		= "relax/home.relax";
 		rc.xehRelaxer	= "relax/home.relaxer";
-		rc.xehHelp		= "relax/home.help";
 		rc.xehLogViewer = "relax/logs";
+		rc.xehLogHelp	= "relax/logs.help";
 	}
 
 </cfscript>
