@@ -82,6 +82,7 @@ Description :
 			var results 	= structnew();
 			var response 	= "";
 			var i			= 1;
+			var tmpValue	= "";
 			var history		= {
 				httpMethod 		= arguments.httpMethod,
 				httpResource 	= arguments.httpResource,
@@ -123,12 +124,20 @@ Description :
 			
 			<!--- Headers --->
 			<cfloop from="1" to="#arrayLen(arguments.headerNames)#" index="i">
-				<cfhttpparam type="header" name="#arguments.headerNames[i]#" value="#arguments.headerValues[i]#">
+				<cfset tmpValue = "">
+				<cfif arrayIsDefined(arguments.headerValues,i)>
+					<cfset tmpValue = arguments.headerValues[i]>
+				</cfif>
+				<cfhttpparam type="header" name="#arguments.headerNames[i]#" value="#tmpValue#">							 
 			</cfloop>
 			
 			<!--- Parameters --->
 			<cfloop from="1" to="#arrayLen(arguments.parameterNames)#" index="i">
-				<cfhttpparam type="url" name="#arguments.parameterNames[i]#" value="#arguments.parameterValues[i]#">
+				<cfset tmpValue = "">
+				<cfif arrayIsDefined(arguments.parameterValues,i)>
+					<cfset tmpValue = arguments.parameterValues[i]>
+				</cfif>
+				<cfhttpparam type="url" name="#arguments.parameterNames[i]#" value="#tmpValue#">
 			</cfloop>		
 			
 		</cfhttp> 

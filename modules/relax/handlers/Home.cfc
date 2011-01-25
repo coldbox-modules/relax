@@ -51,7 +51,7 @@ Description :
 			}
 			catch(Any e){
 				log.error("Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#", e);
-				getPlugin("MessageBox").error("Error sending relaxed request! #e.message# #e.detail#.");
+				getPlugin("MessageBox").error("Error sending relaxed request! #e.message# #e.detail#");
 			}
 		}
 		

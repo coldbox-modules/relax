@@ -22,11 +22,11 @@ Description :
 	
 	function configure(){
 		
-		// module settings
+		// Relax Configuration Settings
 		settings = {
-			// module version reference
+			// Relax Version
 			version = this.version,
-			// History stack size
+			// History stack size, the number of history items to keep on requests
 			maxHistory = 10,
 			// logbox integration information needed for log viewer to work
 			// this means that it can read tables that are written using the logbox's DB Appender.

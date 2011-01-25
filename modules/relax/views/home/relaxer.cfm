@@ -126,7 +126,8 @@
 						<cfloop from="1" to="#listLen(rc.headerNames)#" index="i">
 						<p style="margin:0px">
 							<input title="Header Name"  type="text" class="textfield" name="headerNames"  size="30" value="#listGetAt(rc.headerNames,i)#" />
-							<input title="Header Value" type="text" class="textfield" name="headerValues" size="50" value="#listGetAt(rc.headerValues,i)#"/>
+							<input title="Header Value" type="text" class="textfield" name="headerValues" size="50" 
+								   value="<cfif listLen(rc.headerValues)>#listGetAt(rc.headerValues,i)#</cfif>"/>
 							<button class="button dynamicRemove"><img src="#rc.root#/includes/images/delete.png" alt="delete"/></button>
 						</p>
 						</cfloop>						
@@ -144,7 +145,8 @@
 						<cfloop from="1" to="#listLen(rc.parameterNames)#" index="i">
 						<p style="margin:0px">
 							<input title="Parameter Name"  type="text" class="textfield" name="parameterNames"  size="30" value="#listGetAt(rc.parameterNames,i)#" />
-							<input title="Parameter Value" type="text" class="textfield" name="parameterValues" size="50" value="#listGetAt(rc.parameterValues,i)#" />
+							<input title="Parameter Value" type="text" class="textfield" name="parameterValues" size="50" 
+								   value="<cfif listLen(rc.parameterValues)>#listGetAt(rc.parameterValues,i)#</cfif>" />
 							<button class="button dynamicRemove"><img src="#rc.root#/includes/images/delete.png" alt="delete"/></button>
 						</p>
 						</cfloop>
