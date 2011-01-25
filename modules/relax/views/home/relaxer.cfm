@@ -274,9 +274,9 @@ $(document).ready(function() {
 	});
 	
 	//json history
-	requestHistory = new Array(#arrayLen(rc.requestHistory)#);
+	reqHistory = [];
 	<cfloop from="1" to="#arrayLen(rc.requestHistory)#" index="x">
-	requestHistory[#x-1#] = #serializeJSON(rc.requestHistory[x])#;
+	reqHistory[#x-1#] = #serializeJSON(rc.requestHistory[x])#;
 	</cfloop>
 });
 function showTab(index){
@@ -330,7 +330,7 @@ function clearHistory(){
 function rebuildRequest(){
 	var index = $("##requestHistory").val();
 	if( index != "null" ){
-		var item = requestHistory[index].DATA;
+		var item = reqHistory[index].DATA;
 		//console.log(item);
 		// main options
 		selectOption("httpMethod",item.HTTPMETHOD);
@@ -383,4 +383,4 @@ function submitForm(){
 	$relaxerForm.submit();
 }
 </script>
-</cfoutput>="#
+</cfoutput>
