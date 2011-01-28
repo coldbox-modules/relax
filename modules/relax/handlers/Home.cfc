@@ -17,7 +17,19 @@ Description :
 
 	function index(event){
 		var rc = event.getCollection();
+		
+		// module settings
+		rc.settings = getModuleSettings("relax").settings;
+		rc.dsl		= rc.settings.dsl;
+		// JS/CSS Append
+		rc.jsAppendList  = "shCore,brushes/shBrushColdFusion,brushes/shBrushJScript,brushes/shBrushXml";
+		rc.cssAppendList = "shCore,shThemeDefault";
+		
 		event.setView("home/index");
+	}
+	
+	function test(event){
+		event.setView(name="test",layout="template");
 	}
 	
 	function relax(event){

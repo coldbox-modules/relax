@@ -497,6 +497,9 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 .panes .pane {
 	display:none;		
 }
+.resourceDiv {
+display:none;
+}
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/

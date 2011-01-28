@@ -6,32 +6,40 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 Author     :	Luis Majano
 Description :
-	Relax Resource Definition
+	Relax Resources Definition
 ----------------------------------------------------------------------->
 <cfcomponent output="false">
 <cfscript>
 
-	function configure(){
+	// This is where we define our RESTful service, this is usually
+	// our first place before even building it, we spec it out.
+	this.relax = {
+		// Service Title
+		title = "My RESTFul Service",
+		// Service Description
+		description = "A very cool RESTFul Service",
+		// Service entry point
+		entryPoint = "http://www.myapi.com",
+		// Does it have extension detection via ColdBox
+		extensionDetection = true,
+		// Valid format extensions
+		validExtensions = "xml,json,jsont,wddx",
+		// Does it throw exceptions when invalid extensions are detected
+		throwOnInvalidExtension = false		
+	};
 		
-		// This is where we define our RESTful service, this is usually
-		// our first place before even building it, we spec it out.
+	// Global API Headers
+	this.globalHeaders = [
+		//{name="",type="string",required=true,default="",description=""}
+	];
 		
-		// Global Headers
-		relax.globalHeaders = [];
-	
-		// Valid Extensions
-		relax.extensions = "xml,json,jsont";
-		
-		// Resources
-		relax.resources = [
-			// users
-			{pattern="/api/users/:user",
-			 handler="api.users",
-			 action={GET="list", PUT="update", POST="create", DELETE="remove"},
-			 methods="GET"
-			 }		
-		];
-	}
-
+	// Define our Relaxed RESTful resources in order just like you are defining routes
+	// Each header, parameter or placeholder is a structure with the following keys:
+	// {name="",type="",required="",default="",description=""}
+	this.resources = [
+		{pattern="/rest/users",handler="rest.user",action="list",
+		 description="Returns all users",
+		 methods="GET",headers=[],parameters=[],placeholders=[]}
+	];
 </cfscript>
 </cfcomponent>
