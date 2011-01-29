@@ -498,7 +498,11 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 	display:none;		
 }
 .resourceDiv {
-display:none;
+	display:none;
+}
+#exportBar{
+	float: right;
+	margin: 10px 10px 0px 0px;	
 }
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/

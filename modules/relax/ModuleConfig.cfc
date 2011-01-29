@@ -27,7 +27,7 @@ Description :
 			// Relax Version
 			version = this.version,
 			// Relax DSL component that has the resource definitions, this is an instanatiation path
-			configCFC = "Relax2",
+			configCFC = "Relax",
 			// History stack size, the number of history items to keep on requests
 			maxHistory = 10,
 			// logbox integration information needed for log viewer to work
@@ -67,7 +67,28 @@ Description :
 		}
 		// Process resources
 		for(x=1; x lte arrayLen(dataCFC.resources); x++){
-			dataCFC.resources[x].id = createUUID();		
+			dataCFC.resources[x].resourceID = createUUID();
+			if( NOT structKeyExists(dataCFC.resources[x],"headers") ){
+				dataCFC.resources[x].headers = [];
+			}
+			if( NOT structKeyExists(dataCFC.resources[x],"placeholders") ){
+				dataCFC.resources[x].placeholders = [];
+			}
+			if( NOT structKeyExists(dataCFC.resources[x],"parameters") ){
+				dataCFC.resources[x].parameters = [];
+			}
+			if( NOT structKeyExists(dataCFC.resources[x],"methods") ){
+				dataCFC.resources[x].methods = "GET";
+			}
+			if( NOT structKeyExists(dataCFC.resources[x],"description") ){
+				dataCFC.resources[x].description = "";
+			}
+			if( NOT structKeyExists(dataCFC.resources[x],"handler") ){
+				dataCFC.resources[x].handler = "";
+			}
+			if( NOT structKeyExists(dataCFC.resources[x],"action") ){
+				dataCFC.resources[x].action = "index";
+			}
 		}		
 		// Create the Relax.cfc configuration object and load it as a module setting.
 		controller.getSetting('modules').relax.settings.dsl = dataCFC;

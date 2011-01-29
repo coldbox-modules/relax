@@ -84,8 +84,26 @@
 			<form name="relaxerForm" id="relaxerForm" action="#event.buildLink(rc.xehRelaxer)#" method="post">
 				<input type="hidden" name="sendrequest" value="true" />
 				
+				<!--- Restful Resources --->
+				<cfif arrayLen(rc.dsl.resources)>
 				<fieldset>
-					<legend>Method-Destination-Format</legend>
+					<legend>Your RESTful Resources</legend>
+					<select name="myResource" id="myResource" title="Your defined RESTful resources">
+						<option value="null" selected="selected">Pick One To Test</option>
+						<cfloop array="#rc.dsl.resources#" index="thisResource">
+							<option value="#thisResource.resourceID#;#rc.dsl.relax.entryPoint##thisResource.pattern#">#rc.dsl.relax.entryPoint##thisResource.pattern#</option>
+						</cfloop>
+					</select>
+					
+					<!--- Help button --->
+					<button class="button" onclick="return showResourceHelp()" title="Get Resource Documentation"> Resource Help</button>
+				
+				</fieldset>
+				
+				</cfif>
+				
+				<fieldset>
+					<legend>Method-Resource-Format</legend>
 				
 				<!--- HTTP Method --->
 				<select name="httpMethod" id="httpMethod" title="Choose your HTTP Method">
@@ -278,7 +296,29 @@ $(document).ready(function() {
 	<cfloop from="1" to="#arrayLen(rc.requestHistory)#" index="x">
 	reqHistory[#x-1#] = #serializeJSON(rc.requestHistory[x])#;
 	</cfloop>
+	
+	// resource pick
+	$("##myResource").change(function(){
+		if( this.value != 'null' ){
+			var values = this.value.split(";");
+			$("##httpResource").val( values[1] );
+		}
+		else{
+			$("##httpResource").val('');
+		}
+	})
 });
+function showResourceHelp(){
+	var val = $("##myResource").val();
+	if( val != "null"){
+		var values = val.split(";");	
+		openRemoteModal('#event.buildLink(rc.xehResourceDoc)#',{
+			resourceID: values[0]
+		});	
+	}
+	
+	return false;
+}
 function showTab(index){
 	$tabRoot.find("li:eq("+currentTabIndex+")").removeClass("current");
 	$tabRoot.find("li:eq("+index+")").addClass("current");
