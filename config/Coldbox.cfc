@@ -54,7 +54,7 @@
 		// Module Directives
 		modules = {
 			//Turn to false in production, on for dev
-			autoReload = true
+			autoReload = false
 		};
 		
 		//LogBox DSL
