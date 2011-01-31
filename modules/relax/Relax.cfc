@@ -30,16 +30,28 @@ Description :
 		
 	// Global API Headers
 	this.globalHeaders = [
-		//{name="",type="string",required=true,default="",description=""}
+		// Sample global header, Available keys: name,description,required,default,type
+		{name="apikey",description="The apikey needed for request authentication.",required=true}
 	];
 		
 	// Define our Relaxed RESTful resources in order just like you are defining routes
 	// Each header, parameter or placeholder is a structure with the following keys:
 	// {name="",type="",required="",default="",description=""}
 	this.resources = [
-		{pattern="/rest/users",handler="rest.user",action="list",
+		{pattern="/api/users",handler="rest.user",action="list",
 		 description="Returns all users",
-		 methods="GET",headers=[],parameters=[],placeholders=[]}
+		 methods="GET",headers=[],parameters=[],placeholders=[]},
+		 
+		 {pattern="/api/user/:username",handler="rest.user",action="{'get':'view','post':'create','put':'update','delete','remove'}",
+		  description="The representation for system users.  You can also interact with creation, updating and deletion via this resource",
+		  methods="GET,POST,PUT,DELETE",
+		  headers=[],
+		  parameters=[
+		  	{name="firstName",description="The user firstname. Only used on PUT and POST operations",required="false"},
+			{name="lastName",description="The user lastname. Only used on PUT and POST operations",required="false"},
+			{name="email",description="The user email. Only used on PUT and POST operations",required="false"}
+		  ],
+		  placeholders=[{name="username",description="The resource username to interact with",required=true}]}
 	];
 </cfscript>
 </cfcomponent>
