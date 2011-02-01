@@ -50,7 +50,7 @@
 			<p>
 			Checkout your Log Severity Showdown
 			</p>
-			<cfchart format="flash" 
+			<cfchart format="png" 
 					 show3d="true" 
 					 chartwidth="240">
 				<cfchartseries type="bar" colorlist="##B22222,##FF69B4,##FF8C00, ##1E90FF,##ADFF2F"   >
