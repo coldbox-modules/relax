@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<project name="build" basedir="." default="do.archive">
+	<!-- dynamic values for build -->
+	<tstamp prefix="start"/>
+	<property name="project.name" value="ColdBox-Relax" />
+	<property name="build.label" value="${project.name}-${start.DSTAMP}${start.TSTAMP}"/>
+	
+	<target name="cleanALL">
+  		<delete>
+			<fileset dir="." includes="${project.name}-*.zip"/>
+		</delete>
+	</target>
+		
+	<target name="do.archive" depends="cleanALL">
+		<!-- Copy Readme -->	
+      	<copy todir=".">
+        	<fileset file="../../README.txt" />
+        </copy>
+		<zip destfile="${build.label}.zip">
+			<fileset dir=".">
+				<exclude name="build.xml"/>
+				<exclude name="java/**"/>
+			</fileset>
+		</zip>
+		<delete file="./README.txt" />
+	</target>
+
+</project>
