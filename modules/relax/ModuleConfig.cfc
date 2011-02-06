@@ -35,8 +35,8 @@ Description :
 			relaxLogs = {
 				// THE CF DATASOURCE NAME
 				datasource = "relax",
-				// THE DB TO USE FOR LOGS, AVAILABLE ADAPTERS ARE: mysql, mssql, postgres
-				adapter = "mysql",
+				// THE DB TO USE FOR LOGS, AVAILABLE ADAPTERS ARE: mysql, mssql, postgres, oracle
+				adapter = "oracle",
 				// THE TABLE WHERE THE LOGS ARE
 				table 	= "api_logs",
 				// PAGING MAX ROWS

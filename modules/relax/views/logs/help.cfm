@@ -211,6 +211,7 @@ component name="Awesome REST Handler"{
 							<li>mysql</li>
 							<li>mssql</li>
 							<li>postgres</li>
+							<li>oracle</li>
 						</ul>
 						If you would like to contribute more adapters, please send them to
 						<a href="mailto:info@coldbox.org">info@coldbox.org</a>
