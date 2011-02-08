@@ -13,16 +13,16 @@
 		
 	<target name="do.archive" depends="cleanALL">
 		<!-- Copy Readme -->	
-      	<copy todir=".">
-        	<fileset file="../../README.txt" />
+      	<copy todir="./relax">
+        	<fileset file="../README.txt" />
         </copy>
 		<zip destfile="${build.label}.zip">
-			<fileset dir=".">
+			<fileset dir="./relax">
 				<exclude name="build.xml"/>
 				<exclude name="java/**"/>
 			</fileset>
 		</zip>
-		<delete file="./README.txt" />
+		<delete file="./relax/README.txt" />
 	</target>
 
 </project>
