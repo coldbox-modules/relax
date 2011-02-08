@@ -17,7 +17,7 @@
         	<fileset file="../README.txt" />
         </copy>
 		<zip destfile="${build.label}.zip">
-			<fileset dir="./relax">
+			<fileset dir=".">
 				<exclude name="build.xml"/>
 				<exclude name="java/**"/>
 			</fileset>
