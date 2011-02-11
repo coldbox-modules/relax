@@ -15,7 +15,7 @@ Description :
 	this.author 			= "Luis Majano";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "RESTful Tools For Lazy Experts";
-	this.version			= "1.0";
+	this.version			= "1.1";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "relax:home.index";
@@ -36,7 +36,7 @@ Description :
 				// THE CF DATASOURCE NAME
 				datasource = "relax",
 				// THE DB TO USE FOR LOGS, AVAILABLE ADAPTERS ARE: mysql, mssql, postgres, oracle
-				adapter = "oracle",
+				adapter = "mysql",
 				// THE TABLE WHERE THE LOGS ARE
 				table 	= "api_logs",
 				// PAGING MAX ROWS

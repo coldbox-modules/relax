@@ -37,7 +37,25 @@ Description :
 	<!--- getLogStats --->
     <cffunction name="getLogStats" output="false" access="public" returntype="any" hint="Get some log statistics">
     	<cfscript>
-    		return instance.dao.getLogStats();
+    		var qStats = instance.dao.getLogStats();
+			// check if empty values, no records
+			if( not isNumeric(qStats.debugCount) ){
+				qStats.debugCount = 0;
+			}
+			if( not isNumeric(qStats.infoCount) ){
+				qStats.infoCount = 0;
+			}
+			if( not isNumeric(qStats.warnCount) ){
+				qStats.warnCount = 0;
+			}
+			if( not isNumeric(qStats.errorCount) ){
+				qStats.errorCount = 0;
+			}
+			if( not isNumeric(qStats.fatalCount) ){
+				qStats.fatalCount = 0;
+			}
+			
+			return qStats;
     	</cfscript>
     </cffunction>
 	

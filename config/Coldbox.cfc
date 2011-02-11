@@ -51,6 +51,9 @@
 		settings = {
 		};
 		
+		// Activate WireBox
+		wirebox = { enabled = true, singletonReload=true };
+		
 		// Module Directives
 		modules = {
 			//Turn to false in production, on for dev
