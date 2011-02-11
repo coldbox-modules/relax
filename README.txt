@@ -58,6 +58,9 @@ SYSTEM REQUIREMENTS
 ********************************************************************************
 CHANGELOG
 ********************************************************************************
+== Version 1.1 ==
+#1 Fixes to logs when reports give 0 records
+#2 Updates to resource id calculations so autoreloading does not corrupt them.
 
 == Version 1.0 ==
 
