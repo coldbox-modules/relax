@@ -67,7 +67,7 @@ Description :
 		}
 		// Process resources
 		for(x=1; x lte arrayLen(dataCFC.resources); x++){
-			dataCFC.resources[x].resourceID = createUUID();
+			dataCFC.resources[x].resourceID = hash(dataCFC.resources[x].toString());
 			if( NOT structKeyExists(dataCFC.resources[x],"headers") ){
 				dataCFC.resources[x].headers = [];
 			}
