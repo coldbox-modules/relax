@@ -67,7 +67,7 @@
 		</div>
 		
 		<div id="header_main" class="clearfix">
-           	<a href="#event.buildLink(rc.xehHome)#"><h1>Relax <span>v.#getModuleSettings('relax').version#</span></h1></a>		
+           	<a href="#event.buildLink(rc.xehHome)#"><h1>Relax <span>v.#getModuleSettings('relax').version#</span></h1></a>
 		</div>
 		<!--End Search field and logo Header Area-->
       
@@ -79,6 +79,7 @@
 				<ul>
 					<li><a href="#event.buildLink(rc.xehHome)#"  <cfif event.getCurrentAction() eq "index"> class="current"</cfif>>Home</a></li>
 					<li><a title="Pronounced 'Relax-ER'" href="#event.buildLink(rc.xehRelaxer)#"  <cfif event.getCurrentAction() eq "relaxer"> class="current"</cfif>>RelaxURL</a></li>
+					<li><a href="javascript:openRemoteModal('#event.buildLink(rc.xehRelaxUpdates)#')" title="Check For Relax Updates">Check For Updates</a></li>
 				</ul>
 			</li>
 			<!--- LogBox Nav --->

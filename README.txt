@@ -58,6 +58,11 @@ SYSTEM REQUIREMENTS
 ********************************************************************************
 CHANGELOG
 ********************************************************************************
+== Version 1.2 ==
+#3 Critical fix for MSSQl users on wrong interface type
+#4 Updated logos and images and promos
+#5 Check for updates feature
+
 == Version 1.1 ==
 #1 Fixes to logs when reports give 0 records
 #2 Updates to resource id calculations so autoreloading does not corrupt them.

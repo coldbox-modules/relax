@@ -147,6 +147,15 @@ Description :
 		}
 		event.renderData(type="jsont",data=results);
 	}
+	
+	function checkUpdates(event){
+		var rc = event.getCollection();
+		
+		// check updates
+		rc.entry = getMyPlugin(plugin="ForgeBox",module="Relax").getEntry('coldbox-relax');
+		
+		event.setView(name="home/checkUpdates",layout="Ajax");
+	}
 
 </cfscript>
 </cfcomponent>

@@ -72,6 +72,15 @@
 			code reviews, custom development or anything ColdFusion, ColdBox related? 
 			<a href="mailto:help@ortussolutions.com">Contact us</a>, we are here
 			to help!</p>
+			
+			<p class="center">
+			<a href="javascript:openRemoteModal('#event.buildLink(rc.xehRelaxUpdates)#')" class="button" 
+			   title="Check for Updates">
+				<span>
+					<img src="#rc.root#/includes/images/download.png" border="0" align="absmiddle" alt="updates" />
+					Check For Updates
+				</span>
+			</a>
 		</div>
 	</div>	
 	
