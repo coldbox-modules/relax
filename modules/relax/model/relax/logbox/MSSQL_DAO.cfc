@@ -51,7 +51,7 @@ Description :
     </cffunction>
 	
 	<!--- get logs --->
-    <cffunction name="getLogs" output="false" access="public" returntype="query" hint="Get the log files">
+    <cffunction name="getLogs" output="false" access="public" returntype="any" hint="Get the log files">
     	<cfargument name="startRow" required="false" default="0" hint="The start row"/>
     	<cfargument name="maxRow" 	required="false" default="0" hint="The end row"/>
 		<cfset var q = "">
