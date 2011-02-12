@@ -15,7 +15,7 @@ Description :
 	this.author 			= "Luis Majano";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "RESTful Tools For Lazy Experts";
-	this.version			= "1.1";
+	this.version			= "1.2";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "relax:home.index";

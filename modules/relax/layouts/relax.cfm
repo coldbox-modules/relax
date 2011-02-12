@@ -63,7 +63,7 @@
     
 		<!--=========Header Area including search field and logo=========-->
 		<div id="logo">
-			<a title="Wanna Relax? Click Me!" href="javascript:openRemoteModal('#event.buildLink(rc.xehRelax)#')"><img src="#rc.root#/includes/images/ColdBoxLogoSquare_125.png" border="0" alt="logo" /></a>
+			<a title="Wanna Relax? Click Me!" href="javascript:openRemoteModal('#event.buildLink(rc.xehRelax)#')"><img src="#rc.root#/includes/images/Coldbox-Relax_125.png" height="120" border="0" alt="logo" /></a>
 		</div>
 		
 		<div id="header_main" class="clearfix">
@@ -97,22 +97,6 @@
 			</li>
 		</ul>
 		<!--End Main Navigation-->
-        
-		
-		<!--=========Jump Menu=========-->
-		<!---
-        <div class="jump_menu">
-            <a href="##" class="jump_menu_btn">Jump To</a>
-            <ul class="jump_menu_list">
-                <li><a href="##"><img src="#rc.root#/includes/images/users2_icon.png" alt="" width="24" height="24" />Users</a></li>
-                <li><a href="##"><img src="#rc.root#/includes/images/tools_icon.png" alt="" width="24" height="24" />Settings</a></li>
-                <li><a href="##"><img src="#rc.root#/includes/images/messages_icon.png" alt="" width="24" height="24" />Messages</a></li>
-                <li><a href="##"><img src="#rc.root#/includes/images/key_icon.png" alt="" width="24" height="24" />Credentials</a></li>
-                <li><a href="##"><img src="#rc.root#/includes/images/documents_icon.png" alt="" width="24" height="24" />Pages</a></li>
-            </ul>
-        </div>
-		--->
-		<!--End Jump Menu-->
     
   	</div>
   <!--End Wrapper-->
@@ -132,7 +116,8 @@
 <!--============================Footer============================-->
 <div id="footer">
 	<div class="wrapper">
-	Copyright (C) #dateformat(now(),"yyyy")# <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a>  . All Rights Reserved.
+	Copyright (C) #dateformat(now(),"yyyy")# <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a>  . All Rights Reserved.<br/>
+	<a href="http://www.ortussolutions.com">Need Professional ColdFusion/ColdBox Support, Architecture, Design, or Development?</a>
 	</div>
 </div>
 <!--End Footer-->
