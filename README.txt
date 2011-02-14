@@ -58,6 +58,10 @@ SYSTEM REQUIREMENTS
 ********************************************************************************
 CHANGELOG
 ********************************************************************************
+== Version 1.3 ==
+#7 MSSQL adapter bug when reading mssql db
+#8 Ability to define API global parameters now and also document them
+
 == Version 1.2 ==
 #3 Critical fix for MSSQl users on wrong interface type
 #4 Updated logos and images and promos

@@ -33,6 +33,12 @@ Description :
 		// Sample global header, Available keys: name,description,required,default,type
 		{name="apikey",description="The apikey needed for request authentication.",required=true}
 	];
+	
+	// Global API Parameters
+	this.globalParameters = [
+		// Sample global parameter, Available keys: name,description,required,default,type
+		{name="paramKey",description="The parameter key needed for request authentication.",required=true}
+	];
 		
 	// Define our Relaxed RESTful resources in order just like you are defining routes
 	// Each header, parameter or placeholder is a structure with the following keys:

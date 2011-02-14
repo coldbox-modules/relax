@@ -15,7 +15,7 @@ Description :
 	this.author 			= "Luis Majano";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "RESTful Tools For Lazy Experts";
-	this.version			= "1.2";
+	this.version			= "1.3";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "relax:home.index";
@@ -61,6 +61,9 @@ Description :
 		// Cleanup of data
 		if( NOT structKeyExists(dataCFC,"globalHeaders") ){
 			dataCFC.globalHeaders = [];
+		}
+		if( NOT structKeyExists(dataCFC,"globalParameters") ){
+			dataCFC.globalParameters = [];
 		}
 		if( NOT structKeyExists(dataCFC,"resources") ){
 			dataCFC.resources = [];

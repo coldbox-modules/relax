@@ -51,4 +51,27 @@
 	</tr>
 	</cfloop>
 </table>
+
+<h3>API Global Parameters</h3>
+<cfif NOT arrayLen(rc.dsl.globalParameters)>
+	<em>No global parameters</em>
+</cfif>
+<table class="tablelisting" width="100%">
+	<tr>
+		<th>Parameter</th>
+		<th width="75">Type</th>
+		<th width="40">Required</th>
+		<th>Default</th>
+		<th>Description</th>
+	</tr>
+	<cfloop array="#rc.dsl.globalParameters#" index="thisParam">
+	<tr>
+		<td><strong>#thisParam.name#</strong></td>
+		<td><cfif structKeyExists(thisParam,"type")>#thisParam.type#<cfelse>string</cfif></td>
+		<td><cfif structKeyExists(thisParam,"required")>#thisParam.required#<cfelse>false</cfif></td>
+		<td><cfif structKeyExists(thisParam,"default")>#thisParam.default#<cfelse>---</cfif></td>
+		<td><cfif structKeyExists(thisParam,"description")>#thisParam.description#<cfelse>---</cfif></td>							
+	</tr>
+	</cfloop>
+</table>
 </cfoutput>
