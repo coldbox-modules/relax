@@ -15,8 +15,7 @@ Description :
 		<cfargument name="configBean" inject="coldbox:configBean"/>
 		<cfargument name="logBox" 	  inject="logBox"/>
 		<cfscript>
-			// get module settings
-			instance.logSettings = arguments.configBean.getKey("modules").relax.relaxLogs;
+			super.init(argumentCollection=arguments);
 			return this;
 		</cfscript>
 	</cffunction>
