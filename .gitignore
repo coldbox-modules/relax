@@ -1,4 +1,5 @@
 settings.xml
+.DS_Store
 .settings/
 .project
 /ignore/

@@ -31,7 +31,7 @@ Description :
 			SUM(CASE lower(severity) WHEN 'warn' THEN 1 ELSE 0 END) warnCount,
 			SUM(CASE lower(severity) WHEN 'info' THEN 1 ELSE 0 END) infoCount,
 			SUM(CASE lower(severity) WHEN 'debug' THEN 1 ELSE 0 END) debugCount
-		FROM api_logs
+		FROM #getTable()#
 		</cfquery>
 		
 		<cfreturn q>
