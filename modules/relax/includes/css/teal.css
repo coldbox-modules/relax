@@ -19,8 +19,8 @@ blockquote { color: #000; background-image: url(../images/blockquote_bg.gif);}
 fieldset { 
 	border:1px solid #d2d1d1;
 	background-color: #f5f5f5;
-	padding: 10px;
-	margin: 5px 5px;
+	padding: 8px;
+	margin: 2px 2px;
 	-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; 
 }
 fieldset legend { color: #3a3a3a; }
@@ -78,7 +78,7 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 	color:#000; 
 }
 .buttonred { 	
-	background: #0074c6 url(../images/buttonred_bg.gif) repeat-x left bottom;
+	background: #c6c6c6 url(../images/buttonred_bg.gif) repeat-x left bottom;
 	border: 1px solid #c6c6c6;
 	color: #fff;
 }
@@ -498,16 +498,10 @@ button[disabled]:active, button[disabled], input[type="reset"][disabled]:active,
 .tabs .w4:hover 	{ background-position: -0px -31px; }
 .tabs .w4.current { background-position: -0px -62px; }
 /* initially all panes are hidden */ 
-.panes .pane {
-	display:none;		
-}
-.resourceDiv {
-	display:none;
-}
-#exportBar{
-	float: right;
-	margin: 10px 10px 0px 0px;	
-}
+.panes .pane { display:none;}
+.resourceDiv { display:none; }
+#exportBar{ float: right; margin: 10px 10px 0px 0px;}
+#advancedSettings{ display: none; }
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/

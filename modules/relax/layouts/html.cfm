@@ -46,4 +46,10 @@
 	</div>
 </div>
 </body>
+<script language="javascript">
+$(document).ready(function() {
+	// syntax highlight
+	SyntaxHighlighter.all();
+});
+</script>
 </cfoutput>

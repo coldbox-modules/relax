@@ -58,6 +58,14 @@ SYSTEM REQUIREMENTS
 ********************************************************************************
 CHANGELOG
 ********************************************************************************
+== Version 1.4 ==
+#14 api_logs direct usage reference removed
+#15 basic http authentication added to relaxer console
+#10 entry points can now be a structure of name value pairs for multiple tiers
+#16 new browser results tab window
+#17 addition http proxy as advanced settings to relaxer console
+#11 Route Auto Generation - Method security fixes so implicit structures are generated alongside json structures
+
 == Version 1.3 ==
 #7 MSSQL adapter bug when reading mssql db
 #8 Ability to define API global parameters now and also document them

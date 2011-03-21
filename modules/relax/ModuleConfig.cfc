@@ -15,7 +15,7 @@ Description :
 	this.author 			= "Luis Majano";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "RESTful Tools For Lazy Experts";
-	this.version			= "1.3";
+	this.version			= "1.4";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "relax:home.index";
@@ -68,6 +68,10 @@ Description :
 		if( NOT structKeyExists(dataCFC,"resources") ){
 			dataCFC.resources = [];
 		}
+		// cleanup entry point
+		if( isSimpleValue(dataCFC.relax.entryPoint) ){
+			dataCFC.relax.entryPoint = { production = dataCFC.relax.entryPoint };
+		}
 		// Process resources
 		for(x=1; x lte arrayLen(dataCFC.resources); x++){
 			dataCFC.resources[x].resourceID = hash(dataCFC.resources[x].toString());
@@ -90,7 +94,7 @@ Description :
 				dataCFC.resources[x].handler = "";
 			}
 			if( NOT structKeyExists(dataCFC.resources[x],"action") ){
-				dataCFC.resources[x].action = "index";
+				dataCFC.resources[x].action = "";
 			}
 		}		
 		// Create the Relax.cfc configuration object and load it as a module setting.

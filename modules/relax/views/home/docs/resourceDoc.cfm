@@ -15,7 +15,8 @@
 	</a>
 </div>
 </cfif>
-<!--- Header --->
+
+<!--- Pattern Title --->
 <h3>
 <img src="#rc.root#/includes/images/website.png" alt="resource"/> 
 <cfif rc.expandedDiv>
@@ -32,14 +33,22 @@
 		<legend>Description</legend>
 		<p>#rc.thisResource.description#</p>
 	</fieldset>
+	<!--- Entry Points --->
+	<fieldset>
+		<legend>Service Entry Point(s)</legend>
+		<cfloop collection="#rc.dsl.relax.entryPoint#" item="entryPoint">
+		<p>#entryPoint#</p>
+		<pre class="brush: xml; ruler: false">#rc.dsl.relax.entryPoint[entryPoint]#</pre>
+		</cfloop>
+	</fieldset>
 	<!--- URL --->
 	<fieldset>
 		<legend>Resource URL & Event Translations</legend>
-		<pre class="brush: html; auto-links:false">#rc.dsl.relax.entryPoint##rc.thisResource.pattern#<cfif rc.dsl.relax.extensionDetection>.{format}</cfif></pre>
+		<pre class="brush: html; auto-links:false">#rc.thisResource.pattern#<cfif rc.dsl.relax.extensionDetection>.{format}</cfif></pre>
 		<p>
 			<strong>Pattern</strong>: #rc.thisResource.pattern#<br/>
 			<strong>Handler</strong>: <cfif structKeyExists(rc.thisResource,"handler")>#rc.thisResource.handler#<cfelse>---</cfif><br/>
-			<strong>Action</strong>: <cfif structKeyExists(rc.thisResource,"action")>#rc.thisResource.action#<cfelse>---</cfif><br/>
+			<strong>Action</strong>:  <cfif structKeyExists(rc.thisResource,"action")>#rc.thisResource.action.toString()#<cfelse>---</cfif><br/>
 		</p>
 	</fieldset>
 	<!--- PlaceHolder Definitions --->
@@ -48,7 +57,7 @@
 		<p>The following patterns are part of the RESTful resource and must be passed in the exact
 		position shown in the URL resource. Usually placeholders start with a <strong>(:)</strong> colon.</p>
 		
-		<pre class="brush: html; auto-links:false">#rc.dsl.relax.entryPoint##rc.thisResource.pattern#<cfif rc.dsl.relax.extensionDetection>.{format}</cfif></pre>
+		<pre class="brush: html; auto-links:false">#rc.thisResource.pattern#<cfif rc.dsl.relax.extensionDetection>.{format}</cfif></pre>
 		
 		<cfif NOT structKeyExists(rc.thisResource,"placeholders") or NOT arrayLen(rc.thisResource.placeholders)>
 			<em>Route Pattern has no Placeholders</em>

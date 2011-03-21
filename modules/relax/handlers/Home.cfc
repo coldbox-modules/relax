@@ -60,6 +60,11 @@ Description :
 		event.paramValue("parameterNames","");
 		event.paramValue("parameterValues","");
 		event.paramValue("sendRequest",false);
+		event.paramValue("username","");
+		event.paramValue("password","");
+		event.paramValue("httpProxy","");
+		event.paramValue("httpProxyPort","");
+		event.paramValue("entryTier","production");
 		
 		// module settings
 		rc.settings = getModuleSettings("relax").settings;
@@ -80,7 +85,7 @@ Description :
 			}
 			catch(Any e){
 				log.error("Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#", e);
-				getPlugin("MessageBox").error("Error sending relaxed request! #e.message# #e.detail#");
+				getPlugin("MessageBox").error("Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#");
 			}
 		}
 		
@@ -100,6 +105,10 @@ Description :
 		rc.dsl				= rc.settings.dsl;
 		rc.xehResourceDoc  	= "relax/Home.resourceDoc";
 		rc.expandedDiv 		= true;
+		
+		// custom css/js
+		rc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
+		rc.cssAppendList = "shCore,shThemeDefault";
 		
 		// select layout
 		if( structKeyExists(rc,"print") ){ layout = lcase(rc.print); }

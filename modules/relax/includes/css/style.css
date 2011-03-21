@@ -6,9 +6,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	outline: 0px;
 	vertical-align: baseline;
 }
-img {
-	vertical-align: middle;	
-}
+img { vertical-align: middle; }
 body { 					
 	margin:0px;
 	width:100%;
@@ -17,10 +15,7 @@ body {
 	padding-bottom:80px;
 }
 blockquote, q { quotes: none; }
-blockquote:before, blockquote:after, q:before, q:after {
-	content: '';
-	content: none;
-}
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
 :focus { outline: 0; }
 ins { text-decoration: none; }
 del { text-decoration: line-through; }
@@ -40,19 +35,16 @@ table {	border-collapse: collapse; }
 						height: 0;
 						}
 /**============================== Body Styles & Wrapper ==============================**/
-html { 
-	font: 62.5% Arial, Helvetica, sans-serif;
-	line-height: 2.4em;
-}
+html { font: 62.5% Arial, Helvetica, sans-serif; line-height: 2.4em; }
 .wrapper { 				
-	width:95%;				/** Change this to px to make the layout fixed! **/
+	width:98%;				/** Change this to px to make the layout fixed! **/
 	margin: 0px auto;
 	position:relative;
 }
 #content_bg { padding-bottom:20px; }
 .content { 				
 	font-size:1.3em;
-	padding-top: 20px;
+	padding-top: 5px;
 }
 /**============================== Element Styling ==============================**/
 a { text-decoration:none; }
@@ -91,8 +83,8 @@ blockquote {
 
 /**============================== Form Styling ==============================**/
 
-fieldset { 				padding: 1em; }
-fieldset legend { 		font-weight: bold; }
+fieldset { padding: 1em; }
+fieldset legend { font-weight: bold; }
 form label { 			font-size:1.0em;
 						font-weight:bold;
 						display:block;
@@ -135,10 +127,10 @@ form input[type="checkbox"], form input[type="radio"] {
 /**============================== Buttons ==============================**/
 
 .button, .button2, .buttonred { 	
-	padding: 4px 15px 7px 15px;
+	padding: 4px 7px 7px 7px;
 	cursor: pointer;
 	font-weight:bold;
-	margin-right:10px;
+	margin-right: 3px;
 	text-decoration:none;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -362,8 +354,7 @@ form input[type="checkbox"], form input[type="radio"] {
 						}
 
 /**============================== Box ==============================**/
-
-.box { 					margin-bottom:15px; }
+.box { margin-bottom:15px; }
 .box .header {
 						height: 40px;
 						font-size:1.5em;
@@ -371,12 +362,8 @@ form input[type="checkbox"], form input[type="radio"] {
 						padding:0px 15px;
 						position:relative;
 						}
-.box .header img {
-						position:relative;
-						margin-right: 10px;
-						}
-.box .body { padding: 0px 20px 20px 20px;}
-
+.box .header img { position:relative; margin-right: 10px; }
+.box .body { padding: 0px 15px 10px 15px;}
 /** ============================== Footer ============================== **/
 #footer { 				text-align:center;
 						padding:20px 0px;
@@ -386,7 +373,6 @@ form input[type="checkbox"], form input[type="radio"] {
 						bottom:0px;
 						font-size:1.1em;
 						}
-
 /** ============================== Bulleted List ============================== **/		
 
 .bulleted_list li { 	list-style: none;
@@ -395,7 +381,6 @@ form input[type="checkbox"], form input[type="radio"] {
 						margin-bottom: 15px;
 						list-style-position:outside;																														
 						}
-
 /** ============================== User List ============================== **/
 .user_list {
 						margin:0px;

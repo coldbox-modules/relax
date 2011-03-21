@@ -18,8 +18,12 @@ Description :
 		title = "My RESTFul Service",
 		// Service Description
 		description = "A very cool RESTFul Service",
-		// Service entry point
-		entryPoint = "http://www.myapi.com",
+		// Service entry point, can be a single string or name value pairs to denote tiers
+		//entryPoint = "http://www.myapi.com",
+		entryPoint = {
+			dev  = "http://dev.myapi.com",
+			production = "http://www.myapi.com"
+		},
 		// Does it have extension detection via ColdBox
 		extensionDetection = true,
 		// Valid format extensions
@@ -47,7 +51,11 @@ Description :
 		{pattern="/api/users",handler="rest.user",action="list",
 		 description="Returns all users",
 		 methods="GET",headers=[],parameters=[],placeholders=[]},
-		 
+		
+		{pattern="/api/myResource",handler="rest.myUser",action={POST = 'create', GET = 'getResources'},
+		 description="Returns of my available resources",
+		 methods="GET,POST",headers=[],parameters=[],placeholders=[]},
+		  
 		 {pattern="/api/user/:username",handler="rest.user",action="{'get':'view','post':'create','put':'update','delete','remove'}",
 		  description="The representation for system users.  You can also interact with creation, updating and deletion via this resource",
 		  methods="GET,POST,PUT,DELETE",
@@ -57,7 +65,12 @@ Description :
 			{name="lastName",description="The user lastname. Only used on PUT and POST operations",required="false"},
 			{name="email",description="The user email. Only used on PUT and POST operations",required="false"}
 		  ],
-		  placeholders=[{name="username",description="The resource username to interact with",required=true}]}
+		  placeholders=[{name="username",description="The resource username to interact with",required=true}]
+		 },
+		  
+		 {pattern="/api/tables/:action",handler="rest.table",
+		 description="Returns table actions",
+		 methods="GET",headers=[],parameters=[],placeholders=[]}
 	];
 </cfscript>
 </cfcomponent>

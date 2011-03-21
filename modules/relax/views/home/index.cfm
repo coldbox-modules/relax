@@ -145,11 +145,10 @@
 						<cfif rc.dsl.relax.extensionDetection>
 						// Throw exception 406 when an invalid extension is detected?
 						setThrowOnInvalidExtension( #rc.dsl.relax.throwOnInvalidExtension# );
-						</cfif>
-						
+						</cfif>						
 						// Route Definitions
 						<cfloop array="#rc.dsl.resources#" index="thisResource">
-						addRoute(pattern="#thisResource.pattern#"<cfif len(thisResource.handler)>,handler="#thisResource.handler#"</cfif><cfif len(thisResource.action)>,action="#thisResource.action#"</cfif>));
+						addRoute(pattern="#thisResource.pattern#"<cfif len(thisResource.handler)>,handler="#thisResource.handler#"</cfif>#flattenActions(thisResource.action)#);
 						</cfloop>
 						</pre>
 					</div>
@@ -170,6 +169,5 @@ function toggleResource(id){
 	var $div = $("##resource_"+id);
 	$div.slideToggle();	
 }
-
 </script>
 </cfoutput>

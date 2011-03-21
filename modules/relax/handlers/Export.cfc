@@ -30,6 +30,11 @@ Description :
 		rc.eventArguments = {
 			expandedDiv = true
 		};
+		
+		// custom css/js
+		rc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
+		rc.cssAppendList = "shCore,shThemeDefault";
+		
 		event.setView(name="export/html",layout="html");
 	}
 	

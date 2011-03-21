@@ -56,7 +56,7 @@ $(document).ready(function() {
 	//Vertical Navigation	
 	$("ul.vertical_nav").tabs("div.panes_vertical> div", {effect: 'fade'});
 	//Accordion
-	$("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'slide'});			
+	$("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'slide', initialIndex:null});			
 });
 /**
  * A-la-Carte closing of remote modal windows

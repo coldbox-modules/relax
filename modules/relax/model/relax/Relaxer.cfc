@@ -77,12 +77,16 @@ Description :
 		<cfargument name="headerValues" 	required="false" default="" hint="HTTP header values (list)"/>
 		<cfargument name="parameterNames" 	required="false" default="" hint="HTTP parameters names (list)"/>
 		<cfargument name="parameterValues" 	required="false" default="" hint="HTTP parameters values (list)"/>
-		
+		<cfargument name="username" 		required="false" default="" hint="HTTP Basic Auth Username"/>
+		<cfargument name="password" 		required="false" default="" hint="HTTP Basic Auth password"/>
+		<cfargument name="httpProxy" 		required="false" default="" hint="HTTP Proxy server host"/>
+		<cfargument name="httpProxyPort" 	required="false" default="" hint="HTTP Proxy server host port"/>
 		<cfscript>
 			var results 	= structnew();
 			var response 	= "";
 			var i			= 1;
 			var tmpValue	= "";
+			var attribs		= structnew();
 			var history		= {
 				httpMethod 		= arguments.httpMethod,
 				httpResource 	= arguments.httpResource,
@@ -90,7 +94,11 @@ Description :
 				headerNames 	= arguments.headerNames,
 				headerValues 	= arguments.headerValues,
 				parameterNames 	= arguments.parameterNames,
-				parameterValues = arguments.parameterValues
+				parameterValues = arguments.parameterValues,
+				username		= arguments.username,
+				password		= arguments.password,
+				httpProxy		= arguments.httpProxy,
+				httpProxyPort	= arguments.httpProxyPort
 			};
 			
 			// Record History
@@ -114,13 +122,23 @@ Description :
 			// inflate parameters
 			arguments.parameterNames  = listToArray(arguments.parameterNames);
 			arguments.parameterValues = listToArray(arguments.parameterValues);
+			
+			// optional attribs
+			if( len(arguments.username) ){ attribs.username = arguments.username; }
+			if( len(arguments.password) ){ attribs.password = arguments.password; }
+			if( len(arguments.httpProxy) ){ attribs.proxyServer = arguments.httpProxy; }
+			if( len(arguments.httpProxyPort) ){ attribs.proxyPort = arguments.httpProxyPort; }
+			
 		</cfscript>
 		
 		<!--- Make cfhttp call --->
 		<cfhttp method="#arguments.httpMethod#" 
 				url="#arguments.httpResource#" 
 				result="results"  
-				timeout="20">
+				timeout="20" 
+				resolveURL="true"
+				userAgent="ColdBox Relax"
+				attributecollection="#attribs#">
 			
 			<!--- Headers --->
 			<cfloop from="1" to="#arrayLen(arguments.headerNames)#" index="i">

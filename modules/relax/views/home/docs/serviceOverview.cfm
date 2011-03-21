@@ -1,17 +1,22 @@
 <cfoutput>
 <h1>#rc.dsl.relax.title#</h1>
 <p>#rc.dsl.relax.description#</p>
-<h3>Main Entry Point</h3>
-<pre class="brush: xml; ruler: false">#rc.dsl.relax.entryPoint#</pre>
+
+<!--- Entry Points --->
+<h3>Service Entry Point(s)</h3>
+<cfloop collection="#rc.dsl.relax.entryPoint#" item="entryPoint">
+<p>#entryPoint#</p>
+<pre class="brush: xml; ruler: false">#rc.dsl.relax.entryPoint[entryPoint]#</pre>
+</cfloop>
+
 <h3>API Return Formats</h3>
 <p>
-	Below is the API information concerning return formats the service can return back.
-	These are done via format extensions that are attached to the entry point resources:
-	ex:
+	This service can detect the incoming resource extension in order to provide to you the resource represented
+	according to the extension:
 	<pre class="brush: html; auto-links:false">
-	#rc.dsl.relax.entryPoint#/resource.{format}
-	#rc.dsl.relax.entryPoint#/resource.json
-	#rc.dsl.relax.entryPoint#/resource.xml</pre>
+	resource.{format}
+	resource.json
+	resource.xml</pre>
 
 </p>
 <table class="tablelisting" width="100%">
