@@ -27,7 +27,7 @@ Description :
 			// Relax Version
 			version = this.version,
 			// Relax DSL component that has the resource definitions, this is an instanatiation path
-			configCFC = "Relax",
+			configCFC = "resources.myapi.Relax",
 			// History stack size, the number of history items to keep on requests
 			maxHistory = 10,
 			// logbox integration information needed for log viewer to work

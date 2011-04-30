@@ -69,7 +69,7 @@
 				dbAppender = {
 					class="coldbox.system.logging.appenders.DBAppender",
 					properties = {
-						dsn = "relax", table="api_logs", autocreate=false, textDBType="clob"
+						dsn = "relax", table="api_logs", autocreate=true, textDBType="longtext"
 					}
 				}
 			},
