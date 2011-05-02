@@ -1,4 +1,5 @@
 <cfoutput>
+<!--- Service Title and Description --->
 <h1>#rc.dsl.relax.title#</h1>
 <p>#rc.dsl.relax.description#</p>
 
@@ -9,6 +10,7 @@
 <pre class="brush: xml; ruler: false">#rc.dsl.relax.entryPoint[entryPoint]#</pre>
 </cfloop>
 
+<!--- API Return Formats --->
 <h3>API Return Formats</h3>
 <p>
 	This service can detect the incoming resource extension in order to provide to you the resource represented
@@ -34,6 +36,7 @@
 	</tr>
 </table>
 
+<!--- API Global Headers --->
 <h3>API Global Headers</h3>
 <cfif NOT arrayLen(rc.dsl.globalHeaders)>
 	<em>No global headers</em>
@@ -57,6 +60,7 @@
 	</cfloop>
 </table>
 
+<!--- API Global Parameters --->
 <h3>API Global Parameters</h3>
 <cfif NOT arrayLen(rc.dsl.globalParameters)>
 	<em>No global parameters</em>

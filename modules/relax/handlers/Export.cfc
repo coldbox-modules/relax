@@ -25,11 +25,9 @@ Description :
 	}
 
 	function html(event){
-		var rc = event.getCollection();
-		rc.print = "true";
-		rc.eventArguments = {
-			expandedDiv = true
-		};
+		var rc 					= event.getCollection();
+		rc.print 				= "true";
+		rc.expandedResourceDivs = true;
 		
 		// custom css/js
 		rc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";

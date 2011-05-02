@@ -6,12 +6,13 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 Author     :	Luis Majano
 Description :
-	Relax Resources Definition
+	Relax Resources Definition.  For documentation on how to build this CFC
+	look at our documenation here: http://wiki.coldbox.org/wiki/Projects:Relax.cfm
 ----------------------------------------------------------------------->
 <cfcomponent output="false">
 <cfscript>
 	
-	// I save the location of this CFC path to use resources here
+	// I save the location of this CFC path to use resources located here
 	variables.dirPath = getDirectoryFromPath( getMetadata(this).path ); 
 
 	// This is where we define our RESTful service, this is usually
@@ -47,9 +48,16 @@ Description :
 		{name="paramKey",description="The parameter key needed for request authentication.",required=true}
 	];
 		
-	// Define our Relaxed RESTful resources in order just like you are defining routes
-	// Each header, parameter or placeholder is a structure with the following keys:
-	// {name="",type="",required="",default="",description=""}
+	/** Define our Relaxed RESTful resources in order just like you are defining routes
+	 Each resource has the following keys that are used for documentation and testing.
+	 {
+	 	pattern="", handler="", action="", description="", methods="", headers=[], parameters=[], placeholders[],
+	 	response={ schemas=[{format="",description="",body=""}], samples=[{format="",description="",body=""}] }
+	 }
+	 
+	 Each header, parameter or placeholder is a structure with the following keys:
+	 {name="",type="",required="",default="",description=""}
+	**/
 	this.resources = [
 		// api users resource
 		{pattern="/api/users",handler="rest.user",action="list",
@@ -87,20 +95,10 @@ Description :
  				{name="userID", description="The userID of the User record.", required=false},
  				{name="username", description="The username of the User record.", required=false}
  			],
-			/**
-			response = {
-				schemas = [
-					{format="XXX", description="The text goes here", body="text goes here or use fileRead( expandPath('resource') ) for file content" }
-				],
-				samples=[
-					{format="XXX", description="The text goes here", body="text goes here or use fileRead( expandPath('resource') ) for file content" }
-				]
-			}
-			**/
  			response={
  				schemas=[
- 					{format="json", description="The following will be returned when the format requested is JSON.", body=fileRead("#dirPath#schemas/user.json") },
- 					{format="xml", description="The following will be returned when the format requested is XML.", body=fileRead("#dirPath#schemas/user.xsd") }
+ 					{format="json", description="The following will be returned when the format requested is JSON.", body=fileRead("#dirPath#schemas/user/user.json") },
+ 					{format="xml", description="The following will be returned when the format requested is XML.", body=fileRead("#dirPath#schemas/user/user.xsd") }
  				],
  				samples=[
  					{format="json", description="The basic user information will be returned in a flat object.", body=fileRead("#dirPath#samples/user/user.json")},

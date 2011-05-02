@@ -15,7 +15,7 @@ Description :
 	this.author 			= "Luis Majano";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "RESTful Tools For Lazy Experts";
-	this.version			= "1.4";
+	this.version			= "1.5";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "relax:home.index";
@@ -24,8 +24,9 @@ Description :
 		
 		// Relax Configuration Settings
 		settings = {
-			// Relax Version
+			// Relax Version: DO NOT ALTER
 			version = this.version,
+			
 			// Relax DSL component that has the resource definitions, this is an instanatiation path
 			configCFC = "resources.myapi.Relax",
 			// History stack size, the number of history items to keep on requests
@@ -95,6 +96,9 @@ Description :
 			}
 			if( NOT structKeyExists(dataCFC.resources[x],"action") ){
 				dataCFC.resources[x].action = "";
+			}
+			if( NOT structKeyExists(dataCFC.resources[x],"response") ){
+				dataCFC.resources[x].response = {};
 			}
 		}		
 		// Create the Relax.cfc configuration object and load it as a module setting.

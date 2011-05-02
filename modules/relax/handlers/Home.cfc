@@ -32,11 +32,9 @@ Description :
 		rc.xehExportwiki 		= "relax/Export.mediawiki";
 		rc.xehExportTrac 		= "relax/Export.trac";
 		
-		// viewlet argument passholder
-		rc.eventArguments 	= {
-			expandedDiv = false
-		};
-		// View
+		// Expanded div for resource holders
+		rc.expandedResourceDivs = false;
+		
 		event.setView("home/index");
 	}
 	
@@ -100,11 +98,11 @@ Description :
 		var rc = event.getCollection();
 		var layout = "Ajax";
 		
-		// module settings
+		// event setup
 		rc.settings 		= getModuleSettings("relax").settings;
 		rc.dsl				= rc.settings.dsl;
 		rc.xehResourceDoc  	= "relax/Home.resourceDoc";
-		rc.expandedDiv 		= true;
+		rc.expandedResourceDivs = true;
 		
 		// custom css/js
 		rc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
@@ -112,15 +110,6 @@ Description :
 		
 		// select layout
 		if( structKeyExists(rc,"print") ){ layout = lcase(rc.print); }
-		
-		// Resource ID Override?
-		if( structKeyExists(arguments,"resourceID") ){ 
-			rc.resourceID = arguments.resourceID;
-		}
-		
-		// Expanded Div Override?
-		if( structKeyExists(arguments, "expandedDiv") ){ rc.expandedDiv = arguments.expandedDiv; }
-		else{ rc.expandedDiv = true; }
 		
 		// selected ID for resource display
 		for(x=1; x lte arrayLen(rc.dsl.resources);x++){
@@ -130,13 +119,8 @@ Description :
 			}
 		}
 		
-		// viewlet or not?
-		if( structKeyExists(arguments,"resourceID") ){ 
-			return renderView("home/docs/resourceDoc");
-		}
-		else{
-			event.setView(name="home/docs/resourceDoc",layout="#layout#");
-		}
+		// set view for Rendering
+		event.setView(name="home/docs/resourceDoc",layout="#layout#");
 	}
 	
 	function purgeHistory(event){
