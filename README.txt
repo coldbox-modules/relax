@@ -58,6 +58,10 @@ SYSTEM REQUIREMENTS
 ********************************************************************************
 CHANGELOG
 ********************************************************************************
+== Version 1.5 ==
+#19 Ability to define response schemas and response samples
+#6 Auto-created fields are now shown on a resource when testing it and it requires parameters or headers
+
 == Version 1.4 ==
 #14 api_logs direct usage reference removed
 #15 basic http authentication added to relaxer console

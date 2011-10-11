@@ -57,7 +57,7 @@ Description :
 	*/
 	function onLoad(){
 		var dataCFC = createObject("component",settings.configCFC);
-		var x	= 1;
+		var x = 1;
 		
 		// Cleanup of data
 		if( NOT structKeyExists(dataCFC,"globalHeaders") ){

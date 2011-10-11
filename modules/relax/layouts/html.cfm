@@ -38,13 +38,11 @@
 	</cfloop>
 </head>
 <body>
-<!--============================ Template Content Background ============================-->
-<div>
-	<!--============================ Main Content Area ============================-->
-	<div class="content wrapper clearfix">
-		#renderView(arguments.view)#
+	<div>
+		<div class="content wrapper clearfix">
+			#renderView(arguments.view)#
+		</div>
 	</div>
-</div>
 </body>
 <script language="javascript">
 $(document).ready(function() {

@@ -309,6 +309,11 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	// resource js models
+	$resources = {};
+	<cfloop array="#rc.dsl.resources#" index="thisResource">
+		$resources['#thisResource.resourceID#'] = #serializeJSON( thisResource )#;
+ 	</cfloop>
 	//json history
 	reqHistory = [];
 	<cfloop from="1" to="#arrayLen(rc.requestHistory)#" index="x">
@@ -324,15 +329,46 @@ function showBrowserResults(){
 	c.document.write( $("##resultsRAW").val() );
 }
 function resourceSelect(rData,tier){
+	var resourceID = 0;
+	
 	if( rData != 'null' ){
 		var values = rData.split(";");
-		$("##resourceID").val( values[0] );
+		resourceID = values[0];
+		$("##resourceID").val( resourceID );
 		$("##httpResource").val( values[1] );
 	}
 	else{
 		$("##httpResource").val('');
 	}
 	$("##entryTier").val(tier);
+	
+	// Check for required parameters
+	var openAdvanced = false;
+	// Clean header values and params
+	cleanHeaders(); cleanParams();
+	$("##httpParameters p").remove();
+	// params required?
+	$.each($resources[resourceID].PARAMETERS, function(index, objValue){
+		if( objValue.REQUIRED == "true" ) {
+			openAdvanced = true;
+			addDynamicItem($("##addParameterButton"), [objValue.NAME, objValue.DEFAULT]);
+		}
+	});
+	// headers required?
+	$.each($resources[resourceID].HEADERS, function(index, objValue){
+		if( objValue.REQUIRED == "true" ) {
+			openAdvanced = true;
+			addDynamicItem($("##addHeaderButton"), [objValue.NAME, objValue.DEFAULT]);
+		}
+	});
+	// open advanced dialog
+	if( openAdvanced ){ $("##advancedSettings").slideDown(); } else { $("##advancedSettings").slideUp(); }
+}
+function cleanHeaders(){
+	$("##httpHeaders p").remove();
+}
+function cleanParams(){
+	$("##httpParameters p").remove();
 }
 function showResourceHelp(){
 	var val = $("##resourceID").val();
@@ -411,8 +447,7 @@ function rebuildRequest(){
 		$("##httpProxy").val(item.HTTPPROXY);
 		$("##httpProxyPort").val(item.HTTPPROXYPORT);
 		// Clean header values and params
-		$("##httpHeaders p").remove();
-		$("##httpParameters p").remove();
+		cleanHeaders();cleanParams();
 		
 		// headers
 		if (item.HEADERNAMES.toString().length) {

@@ -31,7 +31,7 @@ Description :
 		// Does it have extension detection via ColdBox
 		extensionDetection = true,
 		// Valid format extensions
-		validExtensions = "xml,json,jsont,wddx",
+		validExtensions = "xml,json,jsont,wddx,html",
 		// Does it throw exceptions when invalid extensions are detected
 		throwOnInvalidExtension = false		
 	};
@@ -59,24 +59,24 @@ Description :
 	 {name="",type="",required="",default="",description=""}
 	**/
 	this.resources = [
+	
 		// api users resource
-		{pattern="/api/users",handler="rest.user",action="list",
-		 description="Returns all users",
-		 methods="GET",headers=[],parameters=[],placeholders=[]},
+		{pattern="/api/users",handler="rest.user",action="list",description="Returns all users",methods="GET",headers=[],parameters=[],placeholders=[]},
 		
 		// api my resource
-		{pattern="/api/myResource",handler="rest.myUser",action={POST = 'create', GET = 'getResources'},
-		 description="Returns of my available resources",
+		{pattern="/api/myResource",handler="rest.myUser",action={POST = 'create', GET = 'getResources'},description="Returns of my available resources",
 		 methods="GET,POST",headers=[],parameters=[],placeholders=[]},
 		  
 		  // api user username
 		 {pattern="/api/user/:username",handler="rest.user",action="{'get':'view','post':'create','put':'update','delete','remove'}",
 		  description="The representation for system users.  You can also interact with creation, updating and deletion via this resource",
 		  methods="GET,POST,PUT,DELETE",
-		  headers=[],
+		  headers=[
+		  	{name="x-test",description="Return test in a header",required="true"}
+		  ],
 		  parameters=[
-		  	{name="firstName",description="The user firstname. Only used on PUT and POST operations",required="false"},
-			{name="lastName",description="The user lastname. Only used on PUT and POST operations",required="false"},
+		  	{name="firstName",description="The user firstname. Only used on PUT and POST operations",required="true"},
+			{name="lastName",description="The user lastname. Only used on PUT and POST operations",required="true"},
 			{name="email",description="The user email. Only used on PUT and POST operations",required="false"}
 		  ],
 		  placeholders=[{name="username",description="The resource username to interact with",required=true}]
@@ -88,7 +88,7 @@ Description :
 		 methods="GET",headers=[],parameters=[],placeholders=[]},
 		 
 		 // api user resource with response tags
-		  {
+		 {
  			pattern="/api/user", handler="rest.user", description="User resource.",
  			methods="GET,POST",
  			parameters=[

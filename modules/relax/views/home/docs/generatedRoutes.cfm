@@ -5,8 +5,8 @@
 </p>
 
 <pre class="brush: coldfusion;">
-// AutoReload defautls to true since you must be developing, else true for production
-setAutoReload( true );
+// AutoReload the routing table on each request? Great for dev
+// setAutoReload( true );
 
 // Sets automatic route extension detection and places the extension in the rc.format variable
 setExtensionDetection( #rc.dsl.relax.extensionDetection# );

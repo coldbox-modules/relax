@@ -1,21 +1,19 @@
 <cfoutput>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<!--============================Head============================-->
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="robots" content="noindex,nofollow" />	
 	<!--- SES --->
 	<base href="#getSetting('htmlBaseURL')#" />
-<!--=========Title=========-->
+	<!--- Title --->
     <title>ColdBox Relax - RESTful Tools For Lazy Experts</title> 
-<!--=========Stylesheets=========-->
+	<!--- CSS --->
 	<link href="#rc.root#/includes/css/style.css"	 	rel="stylesheet" type="text/css"/>
 	<link href="#rc.root#/includes/css/teal.css" 		rel="stylesheet" type="text/css"/>
 	<link href="#rc.root#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
     <link href="#rc.root#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
-	        
-<!--========= JAVASCRIPT -->
+	<!--- JS --->
 	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery-1.4.4.min.js"></script> <!--Import jquery tools-->
 	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery.tools.min.js"></script> <!--Import jquery tools-->
 	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery.uitablefilter.js"></script>
@@ -23,8 +21,6 @@
 	<script type="text/javascript" src="#rc.root#/includes/javascript/tablesorter.min.js"></script>
 	<script type="text/javascript" src="#rc.root#/includes/javascript/relax.js"></script>
 </head>
-<!--End Head-->
-<!--============================Body============================-->
 <body>
 
 <!--==================== Header =======================-->
@@ -102,10 +98,9 @@
 </div>
 <!--End Header-->
 
-<!--============================ Template Content Background ============================-->
+
 <div id="content_bg" class="clearfix">
 
-<!--============================ Main Content Area ============================-->
 <div class="content wrapper clearfix">
 	<!--============================Sidebar============================-->
 	<div class="sidebar">

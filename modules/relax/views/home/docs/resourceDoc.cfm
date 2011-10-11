@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- Is resource coming from RC? Means direct view rendering and not collection rendering. --->
-<cfif structKeyExists(rc,"thisResource")><cfset thisResource = thisResource></cfif>
+<cfif structKeyExists(rc,"thisResource")><cfset variables.thisResource = rc.thisResource></cfif>
 
 <!--- Print Buttons --->
 <cfif NOT structKeyExists(rc,"print")>
