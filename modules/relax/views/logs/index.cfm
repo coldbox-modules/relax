@@ -98,11 +98,25 @@
 		</div>
 		
 		<div class="body">
-		<p>This is the contents of the log table you configured Relax with.  You can page through it
-		and also do dynamic filtering of the current viewable window.</p>
+		<p>This is the contents of the log table you configured Relax with.  You can page through it, search and also do dynamic filtering of the current viewable window.</p>
 		
 		<!--- MessageBox --->
-		#getPlugin("messagebox").renderit()#	
+		#getPlugin("messagebox").renderit()#
+		
+		<!--- Filter Bar --->
+		<div id="logFilterBar" style="margin-bottom:15px">
+			<div>
+				#html.startForm(action="relax/logs")#
+				<fieldset>
+					<!--- Log Filter --->
+					<label for="search" class="inline">Log Search: </label>
+					<input size="60" type="text" class="textfield" name="search" id="search" value="#rc.search#" />
+					#html.submitButton(value="Search")#
+					#html.href(href=event.buildLink(rc.xehLogViewer), text=html.button(value="Clear"))#
+				</fieldset>
+				#html.endForm()#
+			</div>
+		</div>	
 		
 		<!--- Filter Bar --->
 		<div id="logFilterBar" style="margin-bottom:15px">

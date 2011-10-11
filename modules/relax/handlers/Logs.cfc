@@ -26,12 +26,21 @@ Description :
 	function index(event){
 		var rc = event.getCollection();
 		
+		// search
+		event.paramvalue("search","");
+		rc.search = urlDecode( rc.search );
+		
 		//paging
 		event.paramValue("page",1);
 		event.paramValue("maxRows", sessionStorage.getVar("maxRows") );
 		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="relax");
 		rc.paging 		= rc.pagingPlugin.getBoundaries(rc.maxRows);
-		rc.pagingLink 	= event.buildLink('relax:logs.index.page.@page@');
+		rc.pagingLink 	= event.buildLink('relax/logs.index.page.@page@');
+		
+		// alter paging for search
+		if( len(rc.search) ){
+			rc.pagingLink 	= event.buildLink('relax/logs.index.search.#urlEncodedFormat(rc.search)#.page.@page@');
+		}
 		
 		// JS/CSS Append
 		rc.jsAppendList  = "shCore,brushes/shBrushColdFusion";
@@ -45,8 +54,8 @@ Description :
 		rc.logSettings = getModuleSettings("relax").settings.relaxLogs;
 		
 		// Get Logs
-		rc.qLogs = logService.getLogs(startRow=rc.paging.startRow,maxRow=rc.paging.maxRow);
-		rc.totalLogCount = logService.getTotalLogs();
+		rc.qLogs = logService.getLogs(startRow=rc.paging.startRow,maxRow=rc.paging.maxRow,search=rc.search);
+		rc.totalLogCount = logService.getTotalLogs(search=rc.search);
 		rc.qStats = logService.getLogStats();
 		
 		// Exit handlers

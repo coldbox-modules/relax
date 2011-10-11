@@ -29,8 +29,9 @@ Description :
 	
 	<!--- getTotalLogs --->
     <cffunction name="getTotalLogs" output="false" access="public" returntype="any" hint="Get the total number of log entries">
-    	<cfscript>
-    		return instance.dao.getTotalLogs();
+    	<cfargument name="search"   required="false" default=""  hint="A search criteria to filter on: message OR extrainfo fields">
+		<cfscript>
+    		return instance.dao.getTotalLogs(argumentCollection=arguments);
     	</cfscript>
     </cffunction>
 	
@@ -63,6 +64,7 @@ Description :
     <cffunction name="getLogs" output="false" access="public" returntype="any" hint="Get the log files">
     	<cfargument name="startRow" required="false" default="0" hint="The start row"/>
     	<cfargument name="maxRow" 	required="false" default="0" hint="The end row"/>
+		<cfargument name="search"   required="false" default=""  hint="A search criteria to filter on: message OR extrainfo fields">
 		<cfscript>
     		return instance.dao.getLogs(argumentCollection=arguments);
     	</cfscript>

@@ -39,11 +39,16 @@ Description :
 	
 	<!--- getTotalLogs --->
     <cffunction name="getTotalLogs" output="false" access="public" returntype="any" hint="Get the total number of log entries">
-    	<cfset var q = "">
+    	<cfargument name="search"   required="false" default=""  hint="A search criteria to filter on: message OR extrainfo fields">
+		<cfset var q = "">
 		
 		<cfquery name="q" datasource="#getDatasource()#">
 		SELECT count(id) as TotalCount
 		  FROM #getTable()#
+		<cfif len(arguments.search)>
+			WHERE message like <cfqueryparam cfsqltype="cf_sql_longvarchar" value="%#arguments.search#%"> OR
+			      extrainfo like <cfqueryparam cfsqltype="cf_sql_longvarchar" value="%#arguments.search#%">
+		</cfif>
 		</cfquery>
 		
 		<cfreturn q.TotalCount>
@@ -53,12 +58,17 @@ Description :
     <cffunction name="getLogs" output="false" access="public" returntype="any" hint="Get the log files">
     	<cfargument name="startRow" required="false" default="0" hint="The start row"/>
     	<cfargument name="maxRow" 	required="false" default="0" hint="The end row"/>
+		<cfargument name="search"   required="false" default=""  hint="A search criteria to filter on: message OR extrainfo fields">
 		<cfset var q = "">
 		
 		<cfquery name="q" datasource="#getDatasource()#">
 		SELECT * FROM(
 			  SELECT a.*, rownum rnum FROM(
 				SELECT * FROM #getTable()#
+				<cfif len(arguments.search)>
+				WHERE message like <cfqueryparam cfsqltype="cf_sql_longvarchar" value="%#arguments.search#%"> OR
+			      	extrainfo like <cfqueryparam cfsqltype="cf_sql_longvarchar" value="%#arguments.search#%">
+				</cfif>
 				ORDER BY logdate desc
 			  ) a
 			  WHERE rownum <= (#arguments.maxrow#)
