@@ -1,9 +1,11 @@
 <cfoutput>
 <h1>Generated ColdBox Routes</h1>
 <p>The following are the generated ColdBox URL Mapping routes that you can use to 
-	copy and paste into your application.
+	copy and paste into your application or a specific module.
 </p>
 
+<h2>Parent App Routes</h2>
+<p>Use the following when creating the routes for a parent application</p>
 <pre class="brush: coldfusion;">
 // AutoReload the routing table on each request? Great for dev
 // setAutoReload( true );
@@ -22,5 +24,17 @@ setThrowOnInvalidExtension( #rc.dsl.relax.throwOnInvalidExtension# );
 <cfloop array="#rc.dsl.resources#" index="thisResource">
 addRoute(pattern="#thisResource.pattern#"<cfif len(thisResource.handler)>,handler="#thisResource.handler#"</cfif>#flattenActions(thisResource.action)#);
 </cfloop>
+</pre>
+
+<h2>Module Routes</h2>
+<p>Use the following when creating the routes for a module</p>
+<pre class="brush: coldfusion;">
+// Module Route Definitions
+routes = [
+<cfset index = 1>
+<cfloop array="#rc.dsl.resources#" index="thisResource">
+	{ pattern="#thisResource.pattern#"<cfif len(thisResource.handler)>,handler="#thisResource.handler#"</cfif>#flattenActions(thisResource.action)# }<cfif index++ lt arrayLen(rc.dsl.resources)>,</cfif>
+</cfloop>
+];
 </pre>
 </cfoutput>
