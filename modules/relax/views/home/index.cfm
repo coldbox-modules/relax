@@ -4,18 +4,37 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/iinfo_icon.png" alt="info" width="24" height="24" />RelaxURL
+			<img src="#rc.root#/includes/images/iinfo_icon.png" alt="info" width="24" height="24" />API Export/Import
 		</div>
 		<div class="body">
-			<strong>RelaxURL</strong>, pronounced "Relax-ER", is a utility to help you test against your Relaxed
-			RESTful service definitions or any other RESTful web service.
+			You can export your Relaxed Service API to JSON and also import one.<br/><br/>
+			
+			<p class="center">
+				<!--- Export --->
+				<a href="javascript:openRemoteModal('#event.buildLink(rc.xehExportAPI)#')" 
+					class="button" 
+				   	title="Export API">
+					<span>
+						<img src="#rc.root#/includes/images/export_16.png" alt="export"/> Export
+					</span>
+				</a>
+				<!--- Import --->
+				<a href="##" 
+					target="_blank"
+					class="button" 
+				   	title="Import API">
+					<span>
+						<img src="#rc.root#/includes/images/import_16.png" alt="import"/> Import
+					</span>
+				</a>
+			</p>
 		</div>
 	</div>	
 	
 	<!--- Export Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/export.png" alt="info" width="24" height="24" />Export Lounge
+			<img src="#rc.root#/includes/images/export.png" alt="info" width="24" height="24" />Docs Export Lounge
 		</div>
 		<div class="body">
 			<p>You can export your Relaxed Service Documentation in several formats: <br/></p>

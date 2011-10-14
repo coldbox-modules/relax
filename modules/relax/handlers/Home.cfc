@@ -31,6 +31,7 @@ Description :
 		rc.xehExportPDF 		= "relax/Export.pdf";
 		rc.xehExportwiki 		= "relax/Export.mediawiki";
 		rc.xehExportTrac 		= "relax/Export.trac";
+		rc.xehExportAPI			= "relax/Export.api";
 		
 		// Expanded div for resource holders
 		rc.expandedResourceDivs = false;
