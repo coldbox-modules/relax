@@ -38,7 +38,6 @@ Description :
 	}
 
 	function html(event,rc,prc){
-		var rc 					= event.getCollection();
 		rc.print 				= "true";
 		rc.expandedResourceDivs = true;
 		
@@ -50,7 +49,6 @@ Description :
 	}
 	
 	function pdf(event,rc,prc){
-		var rc = event.getCollection();
 		html(event);
 		event.setLayout("pdf");
 	}
@@ -64,7 +62,6 @@ Description :
 	}
 
 	function wikiMarkup(event,rc,prc,type){
-		var rc = event.getCollection();
 		var converter = getPlugin(plugin="WikiText",module="relax");
 		var data = "";
 		

@@ -1,17 +1,14 @@
 <cfoutput>
-<h2>ColdBox Relax Exported API!</h2>
+<h2>ColdBox Relax Exported Console!</h2>
 
-<!--- Export --->
+<!--- Export Console --->
 <div>
-<p>
-	Below you can see the JSON representation of your ColdBox Relax Service DSL.  You can use it for safe keeping, versioning,
-	or giving it to your friends! You can also click on the download button below.
-</p>
-
-<textarea cols="100" rows="25">#prc.jsonAPI#</textarea>
-
-
-
+	<p>
+		Below you can see the JSON representation of your ColdBox Relax Service DSL.  You can use it for safe keeping, versioning,
+		or giving it to your friends! You can also click on the download button below.
+	</p>
+	
+	<textarea cols="100" rows="20">#prc.jsonAPI#</textarea>
 </div>
 <hr/>
 
