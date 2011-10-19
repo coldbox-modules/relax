@@ -13,13 +13,13 @@ Description :
 	<!--- Constructor --->
 	<cffunction name="init" hint="Constructor" access="public" returntype="LogService" output="false">
 		<cfargument name="configBean" inject="coldbox:configBean"/>
-		<cfargument name="injector"	  inject="coldbox:plugin:BeanFactory"/>
+		<cfargument name="injector"	  inject="wirebox"/>
 		<cfargument name="logBox" 	  inject="logBox"/>
 		<cfscript>
 			// get module settings
 			instance.logSettings = arguments.configBean.getKey("modules").relax.settings.relaxLogs;
 			// retrieve DAO
-			instance.dao = arguments.injector.getModel("relax.logbox.#ucase(instance.logSettings.adapter)#_DAO");
+			instance.dao = arguments.injector.getInstance("#ucase(instance.logSettings.adapter)#_DAO@relaxlogs");
 			// Logger
 			instance.log = arguments.logBox.getLogger(this);
 			

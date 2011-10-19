@@ -19,8 +19,7 @@
 					</span>
 				</a>
 				<!--- Import --->
-				<a href="##" 
-					target="_blank"
+				<a href="javascript:openRemoteModal('#event.buildLink(rc.xehImportAPI)#')" 
 					class="button" 
 				   	title="Import API">
 					<span>
@@ -115,6 +114,9 @@
 		</div>
 		<!--- Body --->
 		<div class="body">
+			<!--- MessageBox --->
+			#getPlugin("MessageBox").renderit()#
+			<!--- Body --->
 			<p>Welcome to your Relax Console.  We have succesfully read the <em>Relax DSL CFC</em>
 				you configured at <strong>#rc.settings.configCFC#.cfc</strong>.  Below is the RESTful 
 				documentation.  From here you can also tap into our <strong>RelaxURL</strong> console to test the resources or any web 

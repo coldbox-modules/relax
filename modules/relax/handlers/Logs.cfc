@@ -11,7 +11,7 @@ Description :
 <cfcomponent output="false" extends="BaseHandler">
 
 	<!--- Dependencies --->
-	<cfproperty name="logService" 		inject="model:relax.logBox.logService" >
+	<cfproperty name="logService" 		inject="id:logService@relaxlogs" >
 	<cfproperty name="sessionStorage" 	inject="coldbox:plugin:SessionStorage">
 
 <cfscript>

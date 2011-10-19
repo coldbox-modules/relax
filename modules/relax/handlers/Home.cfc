@@ -11,7 +11,7 @@ Description :
 <cfcomponent output="false" extends="BaseHandler">
 
 	<!--- dependencies --->
-	<cfproperty name="relaxerService" inject="model:relax.Relaxer" >
+	<cfproperty name="relaxerService" inject="id:Relaxer@relax" >
 	
 <cfscript>
 
@@ -32,6 +32,7 @@ Description :
 		rc.xehExportwiki 		= "relax/Export.mediawiki";
 		rc.xehExportTrac 		= "relax/Export.trac";
 		rc.xehExportAPI			= "relax/Export.api";
+		rc.xehImportAPI			= "relax/Import.api";
 		
 		// Expanded div for resource holders
 		rc.expandedResourceDivs = false;

@@ -26,10 +26,11 @@ Description :
 		settings = {
 			// Relax Version: DO NOT ALTER
 			version = this.version,
-			
+			// The location of the relaxed APIs, in instantiation path
+			apiLocationPath = "#moduleMapping#.resources",
 			// Relax DSL component that has the resource definitions, this is an instanatiation path
 			configCFC = "resources.myapi.Relax",
-			// History stack size, the number of history items to keep on requests
+			// History stack size, the number of history items to track in the RelaxURL
 			maxHistory = 10,
 			// logbox integration information needed for log viewer to work
 			// this means that it can read tables that are written using the logbox's DB Appender.
@@ -46,10 +47,30 @@ Description :
 				bandGap = 3
 			}
 		};
+		
+		// expand the location path
+		settings.apiLocationExpandedPath = expandPath("/#replace(settings.apiLocationPath,".","/","all")#");
+		
 		// Layout Settings
 		layoutSettings = { defaultLayout = "relax.cfm" };
+		
 		// SES Routes
-		routes = [];				
+		routes = [
+			// Module Entry Point
+			{pattern="/", handler="home",action="index"},
+			// Convention Route
+			{pattern="/:handler/:action?"}	
+		];			
+		
+		// Model Bindings
+		binder.map("DSLService@relax").to("#moduleMapping#.model.DSLService");
+		binder.map("Relaxer@relax").to("#moduleMapping#.model.Relaxer");
+		// RelaxLogs Bindings
+		binder.map("logService@relaxlogs").to("#moduleMapping#.model.logbox.LogService");
+		binder.map("MSSQL_DAO@relaxlogs").to("#moduleMapping#.model.logbox.MSSQL_DAO");
+		binder.map("MYSQL_DAO@relaxlogs").to("#moduleMapping#.model.logbox.MYSQL_DAO");
+		binder.map("ORACLE_DAO@relaxlogs").to("#moduleMapping#.model.logbox.ORACLE_DAO");
+		binder.map("POSTGRES_DAO@relaxlogs").to("#moduleMapping#.model.logbox.POSTGRES_DAO");	
 	}
 	
 	/**
