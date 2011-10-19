@@ -22,14 +22,22 @@ component output="false" hint="Main filebrowser module handler"{
 		prc.xehNewFolder 	= "filebrowser/createfolder";
 		prc.xehRemove 		= "filebrowser/remove";
 		prc.xehDownload		= "filebrowser/download";
+		prc.xehUpload		= "filebrowser/upload";
 		
 		// Load CSS and JS only if not in Ajax Mode
 		if( NOT event.isAjax() ){
 			addAsset("#prc.modRoot#/includes/css/style.css");
+			// load jquery if needed
 			if( prc.settings.loadJquery ){
 				addAsset("#prc.modRoot#/includes/javascript/jquery-1.4.4.min.js");
 			}
 			addAsset("#prc.modRoot#/includes/javascript/jquery.uidivfilter.js");
+			// uploadify if uploads enabled
+			if( prc.settings.allowUploads ){
+				addAsset("#prc.modRoot#/includes/uploadify/uploadify.css");
+				addAsset("#prc.modRoot#/includes/uploadify/swfobject.js");
+				addAsset("#prc.modRoot#/includes/uploadify/jquery.uploadify.v2.1.4.min.js");
+			}
 		}
 		
 		// Inflate flash params
@@ -197,6 +205,55 @@ component output="false" hint="Main filebrowser module handler"{
 			data.messages = "Error downloading file: #e.message# #e.detail#";
 			log.error(data.messages, e);
 		}
+		// render stuff out
+		event.renderData(data=data,type="json");
+	}
+	
+	/**
+	* Upload File
+	*/
+	function upload(event,rc,prc){
+		// param values
+		event.paramValue("folder","");
+		
+		// clean incoming path
+		rc.folder = URLDecode( trim( antiSamy.clean( rc.folder ) ) );
+		
+		// traversal test
+		if( prc.settings.traversalSecurity AND NOT findNoCase(prc.settings.directoryRoot, rc.folder) ){
+			data.errors = true;
+			data.messages = "Traversal security activated, path not allowed!";
+			event.renderData(data=data,type="json");
+			return;
+		}
+		
+		// Verify credentials else return invalid
+		if( !prc.settings.allowUploads ){
+			data.errors = false;
+			data.messages = "Uploads not allowed!";
+			event.renderData(data=data,type="json");
+			return;
+		}
+		
+		// download
+		try{
+			var results = fileUtils.uploadFile(fileField="FILEDATA",
+											   destination=rc.folder,
+											   nameConflict="Overwrite",
+											   accept=prc.settings.acceptMimeTypes);
+			// debug log file
+			if( log.canDebug() ){
+				log.debug("File Uploaded!", results);
+			}
+			data.errors = false;
+			data.messages = "File uploaded successfully!";
+		}
+		catch(Any e){
+			data.errors = true;
+			data.messages = "Error uploading file: #e.message# #e.detail#";
+			log.error(data.messages, e);
+		}
+		
 		// render stuff out
 		event.renderData(data=data,type="json");
 	}

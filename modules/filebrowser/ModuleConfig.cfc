@@ -45,6 +45,8 @@ The arguments you can use are:
 			allowDownload = true,
 			// Allow uploads
 			allowUploads = true,
+			// CFFile Upload accepted mime types, blank means all.
+			acceptMimeTypes = "",
 			// Name filtering applies to both files and directories. This is also a regex
 			nameFilter = ".*",
 			// Extension filtering that applies to file extensions to display, matches the filter argument to directoryList()
@@ -52,7 +54,15 @@ The arguments you can use are:
 			// Volume Chooser, display the volume navigator
 			volumeChooser = true,
 			// Load jQuery
-			loadJQuery = true
+			loadJQuery = true,
+			// Uploadify Settings
+			uploadify = {
+				fileDesc = "All Files",
+				fileExt	 = "*.*;",
+				multi 	 = true,
+				sizeLimit = 0,
+				customJSONOptions = ""
+			}
 		};
 		
 		// clean directory root
@@ -71,6 +81,8 @@ The arguments you can use are:
 			{pattern="/remove", handler="home",action="remove"},
 			// download
 			{pattern="/download/:path", handler="home",action="download"},
+			// upload
+			{pattern="/upload", handler="home",action="upload"},
 			// traversal paths
 			{pattern="/d/:path", handler="home",action="index"},
 			// Module Entry Point

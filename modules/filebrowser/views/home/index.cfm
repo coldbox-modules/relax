@@ -18,28 +18,42 @@
 		<div id="titleBar">
 			#announceInterception("preTitleBar")#
 			<div id="title">#prc.settings.title#</div>
+			
 			<!--- Refresh --->
 			<a href="javascript:fbRefresh()" title="Refresh Listing"><img src="#prc.modRoot#/includes/images/arrow_refresh.png"  border="0"></a>&nbsp;&nbsp;
+			
 			<!--- Home --->
 			<a href="javascript:fbDrilldown()" title="Go Home"><img src="#prc.modRoot#/includes/images/home.png"  border="0"></a>&nbsp;&nbsp;
+			
 			<!--- New Folder --->
 			<cfif prc.settings.createFolders>
 			<a href="javascript:fbNewFolder()" title="Create Folder"><img src="#prc.modRoot#/includes/images/folder_new.png" border="0"></a>&nbsp;&nbsp;
 			</cfif>
+			
 			<!--- Delete --->
 			<cfif prc.settings.deleteStuff>
 			<a href="javascript:fbDelete()" title="Delete File-Folder"><img src="#prc.modRoot#/includes/images/cancel.png"  border="0"></a>&nbsp;&nbsp;
 			</cfif>
+			
 			<!--- Upload --->
-			<a href="javascript:fbDrilldown()" title="Upload"><img src="#prc.modRoot#/includes/images/upload.png"  border="0"></a>&nbsp;&nbsp;
-			<cfif prc.settings.allowDownload>
+			<cfif prc.settings.allowUploads>
+			<a href="javascript:fbUpload()" title="Upload"><img src="#prc.modRoot#/includes/images/upload.png"  border="0"></a>&nbsp;&nbsp;
+			</cfif>
+			
 			<!--- Download --->
+			<cfif prc.settings.allowDownload>
 			<a href="javascript:fbDownload()" title="Download File"><img src="#prc.modRoot#/includes/images/download.png"  border="0"></a>&nbsp;
 			</cfif>
 			#announceInterception("postTitleBar")#
 		</div>
-		
-		
+
+		<!--- UploadBar --->
+		<div id="uploadBar" style="display:none;">
+			#announceInterception("preUploadBar")#
+			<input id="file_upload" name="file_upload" type="file" />
+			#announceInterception("postUploadBar")#
+		</div>		
+
 		<!--- Show the File Listing --->
 		<div id="fileListing">
 			#announceInterception("preFileListing")#
@@ -214,4 +228,32 @@ function fbChoose(){
 }
 </cfif>
 </script>
+<!--- Uploads Scripts --->
+<cfif prc.settings.allowUploads>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('##file_upload').uploadify({
+    'uploader'  : '#prc.modRoot#/includes/uploadify/uploadify.swf',
+    'cancelImg' : '#prc.modRoot#/includes/uploadify/cancel.png',
+   	'script'    : '#event.buildLink(prc.xehUpload)#?folder=#prc.safeCurrentRoot#&#$safe(session.URLToken)#',
+    'auto'      : true,
+	'multi'  	: #prc.settings.uploadify.multi#,
+	fileDesc	: '#prc.settings.uploadify.fileDesc#',
+    fileExt		: '#prc.settings.uploadify.fileExt#',
+	<cfif isNumeric( prc.settings.uploadify.sizeLimit )>
+	sizeLimit	: #prc.settings.uploadify.sizeLimit#,
+	</cfif>
+	onAllComplete: function(event, data){
+		alert(data.filesUploaded + ' files uploaded successfully!');
+		$("##uploadBar").slideUp();
+		fbRefresh();
+	}
+	<cfif len( prc.settings.uploadify.customJSONOptions )>#prc.settings.uploadify.customJSONOptions#</cfif>
+	});
+});
+function fbUpload(){
+	$("##uploadBar").slideToggle();
+}
+</script>
+</cfif>
 </cfoutput>
