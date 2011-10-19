@@ -7,14 +7,10 @@
 	<!--- SES --->
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--- Title --->
-    <title>ColdBox FileBrowser</title> 
-	<!--- CSS --->
-	<link href="#prc.modRoot#/includes/css/style.css" rel="stylesheet" type="text/css"/>
-	<!--- JS --->
+    <title>#prc.settings.title#</title> 
+	<!--- JQuery --->
 	<cfset addAsset("#prc.modRoot#/includes/javascript/jquery-1.4.4.min.js")>
 </head>
-<body>
-	#renderView()#
-</body>
+<body>#renderView()#</body>
 </html>
 </cfoutput>

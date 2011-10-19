@@ -1,12 +1,12 @@
-component output="false" hint="The file chooser handler"{
+component output="false" hint="Main filebrowser module handler"{
 	
-	// dependencies
-	property name="sessionStorage" 	inject="coldbox:plugin:SessionStorage";
+	// DI
 	property name="antiSamy"		inject="coldbox:plugin:AntiSamy";
+	property name="fileUtils"		inject="coldbox:plugin:FileUtils";
 	
 	function preHandler(event,currentAction){
 		var prc = event.getCollection(private=true);
-		
+		// place root in prc and also module settings
 		prc.modRoot	 = event.getModuleRoot();
 		prc.settings = getModuleSettings("filebrowser").settings;
 	}
@@ -20,8 +20,19 @@ component output="false" hint="The file chooser handler"{
 		// exit handlers
 		prc.xehBrowser 		= "filebrowser/";
 		prc.xehNewFolder 	= "filebrowser/createfolder";
+		prc.xehRemove 		= "filebrowser/remove";
+		prc.xehDownload		= "filebrowser/download";
 		
-		// Inflat flash params
+		// Load CSS and JS only if not in Ajax Mode
+		if( NOT event.isAjax() ){
+			addAsset("#prc.modRoot#/includes/css/style.css");
+			if( prc.settings.loadJquery ){
+				addAsset("#prc.modRoot#/includes/javascript/jquery-1.4.4.min.js");
+			}
+			addAsset("#prc.modRoot#/includes/javascript/jquery.uidivfilter.js");
+		}
+		
+		// Inflate flash params
 		inflateFlashParams(event,rc,prc);
 		
 		// clean incoming path
@@ -86,7 +97,7 @@ component output="false" hint="The file chooser handler"{
 		
 		// creation
 		try{
-			directoryCreate( rc.path & "/" & rc.dName );
+			fileUtils.directoryCreate( rc.path & "/" & rc.dName );
 			data.errors = false;
 			data.messages = "Folder '#rc.path#/#rc.dName#' created successfully!";
 		}
@@ -96,7 +107,98 @@ component output="false" hint="The file chooser handler"{
 			log.error(data.messages, e);
 		}
 		// render stuff out
-		event.renderData(data=data,type="jsont");
+		event.renderData(data=data,type="json");
+	}
+	
+	/**
+	* Removes folders + files asynchrounsly return json information: 
+	*/
+	function remove(event,rc,prc){
+		var data = {
+			errors = false,
+			messages = ""
+		};
+		// param value
+		event.paramValue("path","");
+		
+		// Verify credentials else return invalid
+		if( !prc.settings.deleteStuff ){
+			data.errors = true;
+			data.messages = "Delete Stuff permission is disabled.";
+			event.renderData(data=data,type="json");
+			return;
+		}
+		
+		// clean incoming path and names
+		rc.path = URLDecode( trim( antiSamy.clean( rc.path ) ) );
+		if( !len(rc.path) ){
+			data.errors = true;
+			data.messages = "The path sent is invalid!";
+			event.renderData(data=data,type="json");
+			return;
+		}
+		
+		// removal
+		try{
+			if( fileExists( rc.path ) ){
+				fileUtils.removeFile( rc.path );
+			}
+			else if( directoryExists( rc.path ) ){
+				fileUtils.directoryRemove(path=rc.path,recurse=true);
+			}
+			data.errors = false;
+			data.messages = "'#rc.path#' removed successfully!";
+		}
+		catch(Any e){
+			data.errors = true;
+			data.messages = "Error removing stuff: #e.message# #e.detail#";
+			log.error(data.messages, e);
+		}
+		// render stuff out
+		event.renderData(data=data,type="json");
+	}
+	
+	/**
+	* download file
+	*/
+	function download(event,rc,prc){
+		var data = {
+			errors = false,
+			messages = ""
+		};
+		// param value
+		event.paramValue("path","");
+		
+		// Verify credentials else return invalid
+		if( !prc.settings.allowDownload ){
+			data.errors = true;
+			data.messages = "Download permission is disabled.";
+			event.renderData(data=data,type="json");
+			return;
+		}
+		
+		// clean incoming path and names
+		rc.path = URLDecode( trim( antiSamy.clean( rc.path ) ) );
+		if( !len(rc.path) ){
+			data.errors = true;
+			data.messages = "The path sent is invalid!";
+			event.renderData(data=data,type="json");
+			return;
+		}
+		
+		// download
+		try{
+			fileUtils.sendFile(file=rc.path);
+			data.errors = false;
+			data.messages = "'#rc.path#' sent successfully!";
+		}
+		catch(Any e){
+			data.errors = true;
+			data.messages = "Error downloading file: #e.message# #e.detail#";
+			log.error(data.messages, e);
+		}
+		// render stuff out
+		event.renderData(data=data,type="json");
 	}
 	
 	/**

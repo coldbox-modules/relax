@@ -1,6 +1,6 @@
 <cfscript>
 	function $safe(str){ return urlEncodedFormat(arguments.str); }
-	function $validIDName(str){return JSStringFormat(replace(arguments.str,".","_","all")); }
+	function $validIDName(str){return JSStringFormat( html.slugify( arguments.str )); }
 	function $getBackPath(inPath){
 		arguments.inPath = replace(arguments.inPath,"\","/","all");
 		var lFolder = listLast( arguments.inPath,"/" );

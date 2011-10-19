@@ -1,9 +1,12 @@
 #FileBrowser #container{
-    width: 700px;
+    width: 98%;
     margin: 10px auto 10px auto; 
     border: 2px solid #ddd;
     background-color: #FFFFFF;
     -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+#FileBrowser img{
+	vertical-align: middle;	
 }
 #FileBrowser #titleBar{
     border-bottom:1px solid #ddd; 
@@ -23,10 +26,7 @@
 #FileBrowser #fileListing{
     line-height:15px;
     font-weight:bold;
-    min-height: 400px;
-    /* 
-	width: 545px;
-	*/
+    min-height: 200px;
 	padding: 5px;
     overflow: auto;
 }
