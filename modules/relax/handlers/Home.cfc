@@ -120,8 +120,12 @@ Description :
 		
 		// event setup
 		rc.settings 		= getModuleSettings("relax").settings;
-		rc.dsl				= rc.settings.dsl;
+		// DSL Settings
+		rc.dsl				= DSLService.getLoadedAPI();
+		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
+		// exit handlers
 		rc.xehResourceDoc  	= "relax/Home.resourceDoc";
+		// expanded divs
 		rc.expandedResourceDivs = true;
 		
 		// custom css/js

@@ -7,7 +7,7 @@
 			<img src="#rc.root#/includes/images/sofa.png" alt="info" width="24" height="24" />Loaded Relaxed APIs
 		</div>
 		<div class="body">
-			From here you can switch to another Relaxed API:<br/>
+			From here you can switch to another Relaxed API in your <strong>resources</strong> folder:<br/>
 			
 			<p class="center">
 				<!--- My Apis --->

@@ -76,7 +76,7 @@ Description :
 		  ],
 		  parameters=[
 		  	{name="firstName",description="The user firstname. Only used on PUT and POST operations",required="true"},
-			{name="lastName",description="The user lastname. Only used on PUT and POST operations",required="true"},
+			{name="lastName",description="The user lastname. Only used on PUT and POST operations",required=true},
 			{name="email",description="The user email. Only used on PUT and POST operations",required="false"}
 		  ],
 		  placeholders=[{name="username",description="The resource username to interact with",required=true}]

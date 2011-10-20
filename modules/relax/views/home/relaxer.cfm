@@ -355,7 +355,7 @@ function resourceSelect(rData,tier){
 	$("##httpParameters p").remove();
 	// params required?
 	$.each($resources[resourceID].PARAMETERS, function(index, objValue){
-		if( objValue.REQUIRED == "true" ) {
+		if( objValue.REQUIRED == "true" || objValue.REQUIRED == true) {
 			openAdvanced = true;
 			addDynamicItem($("##addParameterButton"), [objValue.NAME, objValue.DEFAULT]);
 		}

@@ -23,9 +23,7 @@ Description :
 		}
 	}
 
-	function index(event){
-		var rc = event.getCollection();
-		
+	function index(event,rc,prc){
 		// search
 		event.paramvalue("search","");
 		rc.search = urlDecode( rc.search );
@@ -65,28 +63,35 @@ Description :
 		event.setView("logs/index");
 	}
 	
-	function help(event){
-		var rc = event.getCollection();
+	function help(event,rc,prc){
 		// JS/CSS Append
 		rc.jsAppendList  = "shCore,brushes/shBrushColdFusion";
 		rc.cssAppendList = "shCore,shThemeDefault";
 		event.setView("logs/help");
 	}
 	
-	function saveMaxRows(event){
-		var rc = event.getCollection();
+	function saveMaxRows(event,rc,prc){
 		sessionStorage.setVar("maxRows", rc.maxRows);
 		getPlugin("MessageBox").setMessage(type="info", message="Max Rows Preference Saved!");
 		setNextEvent('relax:logs');
 	}
 	
-	function viewer(event){
-		var rc = event.getCollection();
+	function viewer(event,rc,prc){
+		event.paramValue("print",false);
+		// exit handlers
+		rc.xehQuickView = "relax:logs.viewer";
+		// get logs
 		rc.qLog = logService.getLog(rc.logid);
-		event.setView(name="logs/viewer",layout="Ajax");
+		// print or normal
+		if( rc.print ){
+			event.setView(name="logs/viewer",layout="html");
+		}
+		else{
+			event.setView(name="logs/viewer",layout="Ajax");
+		}
 	}
 	
-	function purgeLogs(event){
+	function purgeLogs(event,rc,prc){
 		logService.purgeLogs();
 		getPlugin("MessageBox").setMessage(type="info", message="All Logs Purged");
 		setNextEvent('relax:logs');

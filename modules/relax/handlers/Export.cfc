@@ -55,7 +55,7 @@ Description :
 	}
 	
 	function pdf(event,rc,prc){
-		html(event);
+		html(event,rc,prc);
 		event.setLayout("pdf");
 	}
 	

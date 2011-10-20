@@ -83,7 +83,7 @@ function openRemoteModal(url,params,w,h){
 			loadSpeed: 200,
 			opacity: 0.6
 		},
-		closeOnClick:false,
+		closeOnClick: true,
 		onBeforeLoad : function(){
 			$remoteModalContent.load( $remoteModal.data("url"),$remoteModal.data("params") );
 		},
@@ -143,10 +143,10 @@ function activateConfirmations(){
 	});
 }
 function toggleFlickers(){
-	$(".flickerMessages").slideToggle();
-	$(".cbox_messagebox_info").slideToggle();
-	$(".cbox_messagebox_warn").slideToggle();
-	$(".cbox_messagebox_error").slideToggle();
+	$(".flickerMessages").slideUp();
+	$(".cbox_messagebox_info").slideUp();
+	$(".cbox_messagebox_warn").slideUp();
+	$(".cbox_messagebox_error").slideUp();
 }
 function formatJSON(id){
 	$("#"+id).val( formatJSONRaw( $("#"+id).val() ) ); 
