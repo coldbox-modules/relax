@@ -4,7 +4,7 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/iinfo_icon.png" alt="info" width="24" height="24" />Relaxed Resources
+			<img src="#rc.root#/includes/images/iinfo_icon.png" alt="info" width="24" height="24" />#rc.loadedAPIName# API
 		</div>
 		<div class="body">
 			<p>Choose a tier+resource to test:</p>
@@ -258,7 +258,7 @@
 						</div>
 						<!--- Pretty Content --->
 						<div class="pane">
-							<pre class="brush: #getBrush(rc.results.fileContent)#">#getTreatedContent(rc.results.fileContent)#
+							<pre id="resultsPretty" class="brush: #getBrush(rc.results.fileContent)#">#getTreatedContent(rc.results.fileContent)#
 							</pre>
 						</div>				
 					</div>
@@ -295,6 +295,12 @@ $(document).ready(function() {
 	showTab(currentTabIndex);
 	// scroll to results
 	$.scrollTo($resultsBox, 800, {axis:'y'});
+	// some formatting
+	formatJSON('resultsRAW');
+	<cfif( NOT isXML(rc.results.fileContent) )>
+		$("##resultsPretty").html( formatJSONRaw('#rc.results.fileContent#') );	
+	</cfif>
+	
 	</cfif>
 	
 	// Dynamic Add
@@ -349,7 +355,7 @@ function resourceSelect(rData,tier){
 	$("##httpParameters p").remove();
 	// params required?
 	$.each($resources[resourceID].PARAMETERS, function(index, objValue){
-		if( objValue.REQUIRED == "true" ) {
+		if( objValue.REQUIRED == "true" || objValue.REQUIRED == true) {
 			openAdvanced = true;
 			addDynamicItem($("##addParameterButton"), [objValue.NAME, objValue.DEFAULT]);
 		}

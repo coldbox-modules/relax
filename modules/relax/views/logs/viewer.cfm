@@ -38,11 +38,15 @@
 	</tr>
 </table>
 
+<cfif not rc.print>
+
 <hr/>
 
 <!--- Button Bar --->
 <div id="bottomCenteredBar" class="textRight">
+	<a href="#event.buildLink(rc.xehQuickView)#?logID=#rc.logID#&print=true" target="_blank"><button class="button2"> Print Format </button></a>
 	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
 </div>
+</cfif>
 
 </cfoutput>

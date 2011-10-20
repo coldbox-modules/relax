@@ -30,6 +30,7 @@
 	<script type="text/javascript" src="#rc.root#/includes/javascript/metadata.pack.js"></script>
 	<script type="text/javascript" src="#rc.root#/includes/javascript/tablesorter.min.js"></script>
 	<script type="text/javascript" src="#rc.root#/includes/javascript/relax.js"></script>
+	<script type="text/javascript" src="#rc.root#/includes/javascript/jsonlint.js"></script>
 	<!--- loop around the jsAppendList, to add page specific js --->
 	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">
 		<cfset addAsset("#rc.root#/includes/javascript/#js#.js")>

@@ -56,7 +56,9 @@ $(document).ready(function() {
 	//Vertical Navigation	
 	$("ul.vertical_nav").tabs("div.panes_vertical> div", {effect: 'fade'});
 	//Accordion
-	$("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'slide', initialIndex:null});			
+	$("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'slide', initialIndex:null});	
+	// flicker messages
+	var t=setTimeout("toggleFlickers()",5000);
 });
 /**
  * A-la-Carte closing of remote modal windows
@@ -81,7 +83,7 @@ function openRemoteModal(url,params,w,h){
 			loadSpeed: 200,
 			opacity: 0.6
 		},
-		closeOnClick:false,
+		closeOnClick: true,
 		onBeforeLoad : function(){
 			$remoteModalContent.load( $remoteModal.data("url"),$remoteModal.data("params") );
 		},
@@ -139,4 +141,27 @@ function activateConfirmations(){
 		// prevent default action
 		e.preventDefault();
 	});
+}
+function toggleFlickers(){
+	$(".flickerMessages").slideUp();
+	$(".cbox_messagebox_info").slideUp();
+	$(".cbox_messagebox_warn").slideUp();
+	$(".cbox_messagebox_error").slideUp();
+}
+function formatJSON(id){
+	$("#"+id).val( formatJSONRaw( $("#"+id).val() ) ); 
+}
+function formatJSONRaw(json){
+	if( !json.length ){ return false; }
+	try{
+		var result = jsonlint.parse( json );
+		if (result) {
+			// Reformat and replace double-escaped slashes:
+			return JSON.stringify(result, false, 4).replace(/\\\\/g, "\\");
+		}
+	}
+	catch(e){
+		console.log(e);
+		return '';
+	}
 }

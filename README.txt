@@ -59,8 +59,17 @@ SYSTEM REQUIREMENTS
 CHANGELOG
 ********************************************************************************
 == Version 1.5 ==
-#19 Ability to define response schemas and response samples
-#6 Auto-created fields are now shown on a resource when testing it and it requires parameters or headers
+#19 Ability to define response schemas and response samples for resources with different formats
+#6 RelaxURL now pre-populates required paramters or headers on the specific resources to test
+# Ability to export your API's in JSON format
+# Ability to import and register API's in JSON format
+# You can now define your APIs in JSON format that mimicks the ColdFusion structures
+# Ability to switch between API implementations for testing and documentation
+# You can now search your Relax Logs for specific content
+# Migrated the model to use WireBox instead
+# Added JSONLint capabilities to pretty format JSON content
+# Ability to print log entries from the relax logs
+# Generated routes are now generated for both parent application and module routing
 
 == Version 1.4 ==
 #14 api_logs direct usage reference removed

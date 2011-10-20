@@ -183,7 +183,7 @@ Settings:
 			if( len(HTTPResults.errorDetail) ){ results.error = true; }
 			
 			// Try to inflate JSON
-			results.response = getPlugin("JSON").decode(results.rawResponse);
+			results.response = getMyPlugin(plugin="JSON",module="relax").decode(results.rawResponse);
 			
 			return results;
 		</cfscript>	

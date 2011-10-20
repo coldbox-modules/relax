@@ -14,7 +14,6 @@ Description :
 	<cfproperty name="sessionStorage" 	inject="coldbox:plugin:SessionStorage">
 	<cfproperty name="configBean" 		inject="coldbox:configBean">
 		
-
 	<!--- Constructor --->
 	<cffunction name="init" hint="Constructor" access="public" returntype="Relaxer" output="false">
 		<cfargument name="logBox" 	  inject="logBox"/>
