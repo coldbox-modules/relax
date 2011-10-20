@@ -51,6 +51,11 @@ Description :
 		event.setView(name="home/relax",layout="Ajax");
 	}
 	
+	function clearUserData(event,rc,prc){
+		DSLService.clearUserData();
+		setNextEVent(rc.xehHome);
+	}
+	
 	function loadAPI(event,rc,prc){
 		event.paramValue("apiName","");
 		// load the api if it has length else ignored.

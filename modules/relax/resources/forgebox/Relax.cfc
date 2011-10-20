@@ -53,21 +53,25 @@ Description :
 	 Each header, parameter or placeholder is a structure with the following keys:
 	 {name="",type="",required="",default="",description=""}
 	**/
-	this.resources = [
+	this.resources = [];
 	
-		// Types
-		{ pattern="/:format/types",description="Returns a listing of all available ForgeBox code entry types",
-		  placeholders=[ {name="format",type="xml,json",required=true,description="The return format for the resource"} ] },
+	// Types
+	arrayAppend( this.resources, { 
+		pattern="/:format/types",description="Returns a listing of all available ForgeBox code entry types",
+		placeholders=[ {name="format",type="xml,json",required=true,description="The return format for the resource"} ] 
+	} );
 		
-		// Entries
-		{ pattern="/:format/entries",description="Returns code entries according to passed in parameters or using default values.",
-		  placeholders=[ {name="format",type="xml,json",required=true,description="The return format for the resource"} ],
-		  paramters=[ 
-		  	{name="orderby",	required=false, default="recent",	type="new,recent,popular", description="The ordering to impose in the results"},
-		  	{name="maxrows",	required=false, default="0", 		type="numeric",	description="The max records to retrieve"},
-			{name="startrow",	required=false, default="0", 		type="numeric",	description="The offset to use when paging records"},
-			{name="type",		required=false, default="", 		type="string",	description="he type slug to filter the results with"}
-		  ] }
-	];
+	// Entries
+	arrayAppend( this.resources, { 
+		pattern="/:format/entries",description="Returns code entries according to passed in parameters or using default values.",
+	  	placeholders=[ {name="format",type="xml,json",required=true,description="The return format for the resource"} ],
+	  	paramters=[ 
+	  		{name="orderby",	required="false", default="recent",	type="new,recent,popular", description="The ordering to impose in the results"},
+	  		{name="maxrows",	required="false", default="0", 		type="numeric",	description="The max records to retrieve"},
+			{name="startrow",	required="false", default="0", 		type="numeric",	description="The offset to use when paging records"},
+			{name="type",		required="false", default="", 		type="string",	description="he type slug to filter the results with"}
+	  	]
+	});
+	
 </cfscript>
 </cfcomponent>

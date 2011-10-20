@@ -32,7 +32,7 @@ Description :
 	
 	function api(event,rc,prc){
 		prc.xehExportAPI = "relax/export/api";
-		prc.jsonAPI = serializeJSON( rc.settings.dsl );
+		prc.jsonAPI = serializeJSON( rc.dsl );
 		if( event.valueExists("download") ){
 			var title = getPlugin("HTMLHelper").slugify( rc.dsl.relax.title );
 			event.setHTTPHeader(name="content-disposition",value='attachment; filename="#title#.json"');

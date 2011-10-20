@@ -72,14 +72,30 @@ Description :
 			return false;   
     	</cfscript>    
     </cffunction>
+    
+    <!--- clearUserData --->    
+    <cffunction name="clearUserData" output="false" access="public" returntype="any" hint="Clears user data">    
+    	<cfscript>	    
+			userStorage.clearAll();
+			return this;
+    	</cfscript>    
+    </cffunction>
 	
 	<!--- loadAPI --->    
     <cffunction name="loadAPI" output="false" access="public" returntype="any" hint="Load an API into the service and get its representation">    
     	<cfargument name="name" type="string" required="true" hint="The name of the API to load"/>
     	<cfscript>
-			var dataCFC = createObject("component",instance.settings.apiLocationPath & ".#arguments.name#.Relax");
-			var x = 1;
+			var dataCFC = "";
+			var x 		= 1;
 			
+			// Determine if we have CFC or JSON
+			if( fileExists( instance.settings.apiLocationExpandedPath & "/#arguments.name#/Relax.cfc" ) ){
+				dataCFC = createObject("component",instance.settings.apiLocationPath & ".#arguments.name#.Relax");	
+			}
+			else if ( fileExists( instance.settings.apiLocationExpandedPath & "/#arguments.name#/Relax.json" ) ){
+				dataCFC = deserializeJSON( fileUtils.readFile( instance.settings.apiLocationExpandedPath & "/#arguments.name#/Relax.json" ) );
+			}
+						
 			// cleanup relax data
 			if( NOT structKeyExists(dataCFC.relax,"validExtensions") ){
 				dataCFC.relax.validExtensions = "";
@@ -159,7 +175,6 @@ Description :
 			
 			return this;
     	</cfscript>    
-    </cffunction>
-	
+    </cffunction>	
 
 </cfcomponent>
