@@ -9,6 +9,10 @@ Description :
 	Home Handler Section
 ----------------------------------------------------------------------->
 <cfcomponent output="false" extends="BaseHandler">
+	<!--- dependencies --->
+	<cfproperty name="relaxerService" 	inject="id:Relaxer@relax" >
+	<cfproperty name="DSLService"		inject="id:DSLService@relax" >
+	
 <cfscript>
 
 	function preHandler(event){
@@ -16,7 +20,9 @@ Description :
 		super.preHandler(argumentCollection=arguments);
 		// module settings
 		rc.settings = getModuleSettings("relax").settings;
-		rc.dsl		= rc.settings.dsl;
+		// Get the loaded API for the user
+		rc.dsl				= DSLService.getLoadedAPI();
+		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
 		// custom css/js
 		rc.jsAppendList  = "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
 		rc.cssAppendList = "shCore,shThemeDefault";

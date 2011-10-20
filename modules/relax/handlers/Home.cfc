@@ -11,16 +11,18 @@ Description :
 <cfcomponent output="false" extends="BaseHandler">
 
 	<!--- dependencies --->
-	<cfproperty name="relaxerService" inject="id:Relaxer@relax" >
+	<cfproperty name="relaxerService" 	inject="id:Relaxer@relax" >
+	<cfproperty name="DSLService"		inject="id:DSLService@relax" >
 	
 <cfscript>
 
-	function index(event){
-		var rc = event.getCollection();
-		
+	function index(event,rc,prc){
 		// module settings
 		rc.settings = getModuleSettings("relax").settings;
-		rc.dsl		= rc.settings.dsl;
+		// Get the loaded API for the user
+		rc.dsl				= DSLService.getLoadedAPI();
+		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
+		rc.loadedAPIs		= DSLService.listAPIs();
 		// JS/CSS Append
 		rc.jsAppendList  = "shCore,brushes/shBrushColdFusion,brushes/shBrushJScript,brushes/shBrushXml";
 		rc.cssAppendList = "shCore,shThemeDefault";
@@ -33,6 +35,7 @@ Description :
 		rc.xehExportTrac 		= "relax/Export.trac";
 		rc.xehExportAPI			= "relax/Export.api";
 		rc.xehImportAPI			= "relax/Import.api";
+		rc.xehLoadAPI			= "relax/Home.loadAPI";
 		
 		// Expanded div for resource holders
 		rc.expandedResourceDivs = false;
@@ -40,17 +43,25 @@ Description :
 		event.setView("home/index");
 	}
 	
-	function test(event){
+	function test(event,rc,prc){
 		event.setView(name="test",layout="template");
 	}
 	
-	function relax(event){
+	function relax(event,rc,prc){
 		event.setView(name="home/relax",layout="Ajax");
 	}
 	
-	function relaxer(event){
-		var rc = event.getCollection();
-		
+	function loadAPI(event,rc,prc){
+		event.paramValue("apiName","");
+		// load the api if it has length else ignored.
+		if( len(rc.apiName) ){
+			test = DSLService.loadAPI( rc.apiName );
+			getPlugin("MessageBox").info("API: #rc.apiName# loaded!");
+		}
+		setNextEvent(rc.xehHome);
+	}
+	
+	function relaxer(event,rc,prc){
 		// some defaults
 		event.paramValue("httpResource","");
 		event.paramValue("httpFormat","");
@@ -67,16 +78,19 @@ Description :
 		event.paramValue("entryTier","production");
 		
 		// module settings
-		rc.settings = getModuleSettings("relax").settings;
-		rc.dsl		= rc.settings.dsl;
+		rc.settings 		= getModuleSettings("relax").settings;
+		// DSL Settings
+		rc.dsl				= DSLService.getLoadedAPI();
+		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
 		
 		// custom css/js
 		rc.jsAppendList  = "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
 		rc.cssAppendList = "shCore,shThemeDefault";
 		
 		// exit handlers
-		rc.xehPurgeHistory = "relax/Home.purgeHistory";
-		rc.xehResourceDoc  = "relax/Home.resourceDoc";
+		rc.xehPurgeHistory 	= "relax/Home.purgeHistory";
+		rc.xehResourceDoc  	= "relax/Home.resourceDoc";
+		rc.xehLoadAPI		= "relax/Home.loadAPI";
 		
 		// send request
 		if( rc.sendRequest ){
@@ -96,8 +110,7 @@ Description :
 		event.setView("home/relaxer");
 	}
 		
-	function resourceDoc(event,resourceID,expandedDiv){
-		var rc = event.getCollection();
+	function resourceDoc(event,rc,prc,resourceID,expandedDiv){
 		var layout = "Ajax";
 		
 		// event setup
@@ -125,7 +138,7 @@ Description :
 		event.setView(name="home/docs/resourceDoc",layout="#layout#");
 	}
 	
-	function purgeHistory(event){
+	function purgeHistory(event,rc,prc){
 		var results = {
 			error = false,
 			messages = "History cleaned!"
@@ -143,9 +156,7 @@ Description :
 		event.renderData(type="jsont",data=results);
 	}
 	
-	function checkUpdates(event){
-		var rc = event.getCollection();
-		
+	function checkUpdates(event,rc,prc){
 		// check updates
 		rc.entry = getMyPlugin(plugin="ForgeBox",module="Relax").getEntry('coldbox-relax');
 		

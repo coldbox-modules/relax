@@ -28,8 +28,8 @@ Description :
 			version = this.version,
 			// The location of the relaxed APIs, in instantiation path
 			apiLocationPath = "#moduleMapping#.resources",
-			// Relax DSL component that has the resource definitions, this is an instanatiation path
-			configCFC = "resources.myapi.Relax",
+			// Default API to load
+			defaultAPI = "myapi",
 			// History stack size, the number of history items to track in the RelaxURL
 			maxHistory = 10,
 			// logbox integration information needed for log viewer to work
@@ -77,53 +77,8 @@ Description :
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		var dataCFC = createObject("component",settings.configCFC);
-		var x = 1;
-		
-		// Cleanup of data
-		if( NOT structKeyExists(dataCFC,"globalHeaders") ){
-			dataCFC.globalHeaders = [];
-		}
-		if( NOT structKeyExists(dataCFC,"globalParameters") ){
-			dataCFC.globalParameters = [];
-		}
-		if( NOT structKeyExists(dataCFC,"resources") ){
-			dataCFC.resources = [];
-		}
-		// cleanup entry point
-		if( isSimpleValue(dataCFC.relax.entryPoint) ){
-			dataCFC.relax.entryPoint = { production = dataCFC.relax.entryPoint };
-		}
-		// Process resources
-		for(x=1; x lte arrayLen(dataCFC.resources); x++){
-			dataCFC.resources[x].resourceID = hash(dataCFC.resources[x].toString());
-			if( NOT structKeyExists(dataCFC.resources[x],"headers") ){
-				dataCFC.resources[x].headers = [];
-			}
-			if( NOT structKeyExists(dataCFC.resources[x],"placeholders") ){
-				dataCFC.resources[x].placeholders = [];
-			}
-			if( NOT structKeyExists(dataCFC.resources[x],"parameters") ){
-				dataCFC.resources[x].parameters = [];
-			}
-			if( NOT structKeyExists(dataCFC.resources[x],"methods") ){
-				dataCFC.resources[x].methods = "GET";
-			}
-			if( NOT structKeyExists(dataCFC.resources[x],"description") ){
-				dataCFC.resources[x].description = "";
-			}
-			if( NOT structKeyExists(dataCFC.resources[x],"handler") ){
-				dataCFC.resources[x].handler = "";
-			}
-			if( NOT structKeyExists(dataCFC.resources[x],"action") ){
-				dataCFC.resources[x].action = "";
-			}
-			if( NOT structKeyExists(dataCFC.resources[x],"response") ){
-				dataCFC.resources[x].response = {};
-			}
-		}		
-		// Create the Relax.cfc configuration object and load it as a module setting.
-		controller.getSetting('modules').relax.settings.dsl = dataCFC;
+		// load the default API
+		loadDefaultAPI();		
 	}
 	
 	/**
@@ -132,5 +87,22 @@ Description :
 	function onUnload(){
 		
 	}	
+	
+	/**
+	* Pre process for relax, makes sure an API is loaded
+	*/
+	function preProcess(event,interceptData) eventPattern="^relax.*"{
+		// load the default API
+		loadDefaultAPI();
+	}
+	
+	// Load default API Checks
+	function loadDefaultAPI(){
+		var DSLService = controller.getWireBox().getInstance("DSLService@relax");
+		// check if the api is loaded or not, else, load the default one
+		if( NOT DSLService.isLoadedAPI() ){
+			DSLService.loadAPI( settings.defaultAPI );
+		}
+	}
 </cfscript>
 </cfcomponent>

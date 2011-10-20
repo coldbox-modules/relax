@@ -1,10 +1,29 @@
 <cfoutput>
 <!--============================Sidebar============================-->
 <div class="sidebar">
-	<!--- Info Box --->
+	<!--- Loaded API --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/iinfo_icon.png" alt="info" width="24" height="24" />API Export/Import
+			<img src="#rc.root#/includes/images/sofa.png" alt="info" width="24" height="24" />Loaded Relaxed APIs
+		</div>
+		<div class="body">
+			From here you can switch to another Relaxed API:<br/>
+			
+			<p class="center">
+				<!--- My Apis --->
+				<select name="myAPI" id="myAPI" title="Your defined Relaxed APIs" onchange="window.location='#event.buildLink(rc.xehLoadAPI)#?apiName='+this.value">
+					<cfloop query="rc.loadedAPIs">
+						<option value="#rc.loadedAPis.name#" <cfif rc.loadedAPIs.name eq rc.loadedAPIName>selected="selected"</cfif>>#rc.loadedAPis.name#</option>
+					</cfloop>
+				</select>
+			</p>
+		</div>
+	</div>	
+	
+	<!--- Import/Export Box --->
+	<div class="small_box">
+		<div class="header">
+			<img src="#rc.root#/includes/images/export.png" alt="info" width="24" height="24" />API Export/Import
 		</div>
 		<div class="body">
 			You can export your Relaxed Service API to JSON and also import one.<br/><br/>
@@ -33,7 +52,7 @@
 	<!--- Export Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/export.png" alt="info" width="24" height="24" />Docs Export Lounge
+			<img src="#rc.root#/includes/images/documents_icon.png" alt="info" width="24" height="24" />Docs Export Lounge
 		</div>
 		<div class="body">
 			<p>You can export your Relaxed Service Documentation in several formats: <br/></p>
@@ -117,8 +136,8 @@
 			<!--- MessageBox --->
 			#getPlugin("MessageBox").renderit()#
 			<!--- Body --->
-			<p>Welcome to your Relax Console.  We have succesfully read the <em>Relax DSL CFC</em>
-				you configured at <strong>#rc.settings.configCFC#.cfc</strong>.  Below is the RESTful 
+			<p>Welcome to your Relax Console.  We have succesfully read the <em>Relax DSL</em>
+				for your loaded API: <strong>#rc.loadedAPIName#</strong>.  Below is the RESTful 
 				documentation.  From here you can also tap into our <strong>RelaxURL</strong> console to test the resources or any web 
 				RESTful service or view our awesome <strong>RelaxLogs</strong> log viewer.
 			</p>			
