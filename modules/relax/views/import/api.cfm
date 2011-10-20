@@ -16,8 +16,13 @@
 
 <!--- Button Bar --->
 <div id="bottomCenteredBar" class="textRight">
-	<input type="submit" class="button2" value="Start Import" />
+	<button class="button" onclick="formatJSON('apiJSON');return false"> Format JSON </button>
+	<input type="submit" class="button2" value="Start Import" onClick="formatJSON('apiJSON')" />
 	<button class="buttonred" onclick="closeRemoteModal();return false"> Close </button>
 </div>
 #html.endForm()#
+
+<script language="javascript">
+
+</script>
 </cfoutput>

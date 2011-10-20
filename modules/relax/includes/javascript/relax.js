@@ -148,3 +148,20 @@ function toggleFlickers(){
 	$(".cbox_messagebox_warn").slideToggle();
 	$(".cbox_messagebox_error").slideToggle();
 }
+function formatJSON(id){
+	$("#"+id).val( formatJSONRaw( $("#"+id).val() ) ); 
+}
+function formatJSONRaw(json){
+	if( !json.length ){ return false; }
+	try{
+		var result = jsonlint.parse( json );
+		if (result) {
+			// Reformat and replace double-escaped slashes:
+			return JSON.stringify(result, false, 4).replace(/\\\\/g, "\\");
+		}
+	}
+	catch(e){
+		console.log(e);
+		return '';
+	}
+}

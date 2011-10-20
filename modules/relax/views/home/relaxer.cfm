@@ -258,7 +258,7 @@
 						</div>
 						<!--- Pretty Content --->
 						<div class="pane">
-							<pre class="brush: #getBrush(rc.results.fileContent)#">#getTreatedContent(rc.results.fileContent)#
+							<pre id="resultsPretty" class="brush: #getBrush(rc.results.fileContent)#">#getTreatedContent(rc.results.fileContent)#
 							</pre>
 						</div>				
 					</div>
@@ -295,6 +295,12 @@ $(document).ready(function() {
 	showTab(currentTabIndex);
 	// scroll to results
 	$.scrollTo($resultsBox, 800, {axis:'y'});
+	// some formatting
+	formatJSON('resultsRAW');
+	<cfif( NOT isXML(rc.results.fileContent) )>
+		$("##resultsPretty").html( formatJSONRaw('#rc.results.fileContent#') );	
+	</cfif>
+	
 	</cfif>
 	
 	// Dynamic Add
