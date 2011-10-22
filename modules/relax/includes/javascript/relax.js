@@ -162,6 +162,6 @@ function formatJSONRaw(json){
 	}
 	catch(e){
 		console.log(e);
-		return '';
+		return json;
 	}
 }
