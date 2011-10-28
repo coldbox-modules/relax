@@ -295,10 +295,10 @@ $(document).ready(function() {
 	showTab(currentTabIndex);
 	// scroll to results
 	$.scrollTo($resultsBox, 800, {axis:'y'});
+	
 	// some formatting
-	formatJSON('resultsRAW');
 	<cfif( NOT isXML(rc.results.fileContent) )>
-		$("##resultsPretty").html( formatJSONRaw('#rc.results.fileContent#') );	
+		$("##resultsPretty").html( formatJSONRaw('#JSStringFormat(rc.results.fileContent)#') );	
 	</cfif>
 	
 	</cfif>

@@ -151,17 +151,18 @@ function toggleFlickers(){
 function formatJSON(id){
 	$("#"+id).val( formatJSONRaw( $("#"+id).val() ) ); 
 }
-function formatJSONRaw(json){
-	if( !json.length ){ return false; }
+function formatJSONRaw(jsonData){
+	if( !jsonData.length ){ return ''; }
 	try{
-		var result = jsonlint.parse( json );
+		var result = jsonlint.parse( jsonData );
 		if (result) {
 			// Reformat and replace double-escaped slashes:
 			return JSON.stringify(result, false, 4).replace(/\\\\/g, "\\");
 		}
+		return jsonData;
 	}
 	catch(e){
 		console.log(e);
-		return json;
+		return jsonData;
 	}
 }
