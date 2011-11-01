@@ -53,11 +53,16 @@ SYSTEM REQUIREMENTS
 ********************************************************************************
 - Railo 3.1 and above
 - ColdFusion MX 8.X and above
-- Session scope enabled.
+- Session scope enabled for history items
 
 ********************************************************************************
 CHANGELOG
 ********************************************************************************
+
+== Version 1.6 ==
+# Fixes to JSONLint conversions
+# Fixes to JSON Import/Exporting
+
 == Version 1.5 ==
 #19 Ability to define response schemas and response samples for resources with different formats
 #6 RelaxURL now pre-populates required paramters or headers on the specific resources to test
