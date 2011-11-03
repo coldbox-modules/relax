@@ -166,7 +166,7 @@
 					<cfif structKeyExists(thisSample, "description")>
 						<p>#thisSample.description#</p>
 					</cfif>
-					<pre class="brush: #getBrushByType(thisSchema.format)#; auto-links:false">#htmlEditFormat(thisSample.body)#</pre>
+					<pre class="brush: #getBrushByType(thisSample.format)#; auto-links:false">#htmlEditFormat(thisSample.body)#</pre>
 				</cfloop>
 			</cfif>
 		</cfif>
