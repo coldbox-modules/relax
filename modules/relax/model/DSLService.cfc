@@ -95,6 +95,9 @@ Description :
 			else if ( fileExists( instance.settings.apiLocationExpandedPath & "/#arguments.name#/Relax.json" ) ){
 				dataCFC = deserializeJSON( fileUtils.readFile( instance.settings.apiLocationExpandedPath & "/#arguments.name#/Relax.json" ) );
 			}
+			else{
+				throw(message="The API you are trying to load: #arguments.name# does not exist",details="Path: #instance.settings.apiLocationExpandedPath#",type="Relax.InvalidDefaultAPI")
+			}
 						
 			// cleanup relax data
 			if( NOT structKeyExists(dataCFC.relax,"validExtensions") ){

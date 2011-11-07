@@ -83,6 +83,8 @@ Description :
 	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
+		var DSLService = controller.getWireBox().getInstance("DSLService@relax");
+		DSLService.clearUserData();
 	}	
 	
 	/**
