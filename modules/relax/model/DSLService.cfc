@@ -96,9 +96,14 @@ Description :
 				dataCFC = deserializeJSON( fileUtils.readFile( instance.settings.apiLocationExpandedPath & "/#arguments.name#/Relax.json" ) );
 			}
 			else{
-				throw(message="The API you are trying to load: #arguments.name# does not exist",details="Path: #instance.settings.apiLocationExpandedPath#",type="Relax.InvalidDefaultAPI")
+				throw(message="The API you are trying to load: #arguments.name# does not exist",detail="Path: #instance.settings.apiLocationExpandedPath#",type="Relax.InvalidDefaultAPI")
 			}
-						
+			
+			// If we have a configure() then call it
+			if( structKeyExists(dataCFC,"configure") ){
+				processConfiguration( dataCFC );
+			}			
+			
 			// cleanup relax data
 			if( NOT structKeyExists(dataCFC.relax,"validExtensions") ){
 				dataCFC.relax.validExtensions = "";
@@ -160,6 +165,38 @@ Description :
 			return dataCFC;	    
     	</cfscript>    
     </cffunction>
+    
+    <!--- processConfiguration --->    
+    <cffunction name="processConfiguration" output="false" access="public" returntype="any" hint="Process a relax configure method">    
+    	<cfargument name="dataCFC" type="any" required="true"/>
+    	<cfscript>
+			// create language object
+			var dsl = createObject("component","RelaxDSL");
+			var key = "";
+			
+			// decorate and mixin methods.
+			dataCFC.injectMixin = variables.injectMixin;
+			
+			for(key in dsl){
+				// only inject methods/properties that do not exist
+				if( not structKeyExists(dataCFC, key) ){
+					
+					// check if a UDF
+					if( isCustomFunction( dsl[ key ] ) ){
+						dataCFC.injectMixin( key, dsl[ key ] );
+					}
+					// else a property
+					else{
+						dataCFC[ key ] = dsl[ key ];
+					}
+					
+				}	
+			}
+			
+			// process configuration
+			dataCFC.configure();			
+    	</cfscript>    
+    </cffunction>
 	
 	<!--- import --->    
     <cffunction name="import" output="false" access="public" returntype="any" hint="Import a relax API">    
@@ -179,5 +216,23 @@ Description :
 			return this;
     	</cfscript>    
     </cffunction>	
+    
+    <!--- Throw Facade --->
+	<cffunction name="$throw" access="private" hint="Facade for cfthrow" output="false">
+		<cfargument name="message" 	type="string" 	required="yes">
+		<cfargument name="detail" 	type="string" 	required="no" default="">
+		<cfargument name="type"  	type="string" 	required="no" default="Framework">
+		<cfthrow type="#arguments.type#" message="#arguments.message#"  detail="#arguments.detail#">
+	</cffunction>
+	
+	<!--- injectMixin --->
+	<cffunction name="injectMixin" hint="Injects a method into the CFC" access="private" returntype="void" output="false">
+		<cfargument name="name" 	required="true"  hint="The name to inject the UDF as"/>
+		<cfargument name="UDF"		required="true"  hint="UDF to inject">
+		<cfscript>
+			variables[arguments.name] 	= arguments.UDF;
+			this[arguments.name] 		= arguments.UDF;
+		</cfscript>
+	</cffunction>
 
 </cfcomponent>
