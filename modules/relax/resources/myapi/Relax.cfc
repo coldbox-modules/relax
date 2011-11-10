@@ -46,7 +46,7 @@ Description :
 		globalHeader(name="apikey",description="The apikey needed for request authentication.",required=true);
 		
 		// Global API Parameters
-		globalParameter(name="paramKey",description="The parameter key needed for request authentication.",required=true);
+		globalParam(name="paramKey",description="The parameter key needed for request authentication.",required=true);
 		
 		/************************************** RESOURCES *********************************************/
 		
