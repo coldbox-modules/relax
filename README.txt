@@ -61,6 +61,7 @@ CHANGELOG
 == Version 1.7 ==
 # Fixes to unloading selected APIs on unLoad()
 # Throw exception when API not found
+# New programmatic DSL to configure Relax with.
 
 == Version 1.6 ==
 # Fixes to JSONLint conversions

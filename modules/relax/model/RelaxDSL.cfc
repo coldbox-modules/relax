@@ -21,11 +21,11 @@ Description :
 		this._definedResources	= {};
 	</cfscript>
 	
-	<!--- relax --->    
-    <cffunction name="relax" output="false" access="public" returntype="any" hint="The relaxed service information">
+	<!--- service --->    
+    <cffunction name="service" output="false" access="public" returntype="any" hint="The relaxed service information">
 		<cfargument name="title" 					required="true" hint="The title of the RESTful service"/>
 		<cfargument name="description" 				required="true" hint="The description of the RESTful service"/>
-		<cfargument name="entryPoints" 				required="true" hint="A simple URL or a structure of entry points"/>
+		<cfargument name="entryPoint" 				required="true" hint="A simple URL or a structure of entry points"/>
 		<cfargument name="extensionDetection" 		required="false" default="true" hint="Will this API do extension detection"/>
 		<cfargument name="validExtensions" 			required="false" default="json,jsont,xml,html,htm,rss" hint="The valid extensions to detect"/>    
     	<cfargument name="throwOnInvalidExtensions" required="false" default="false" hint="Throw on invalid extensions or not"/>    
