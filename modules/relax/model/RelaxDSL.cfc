@@ -229,6 +229,45 @@ Description :
     	</cfscript>    
     </cffunction>
     
+    <!--- setParams --->    
+    <cffunction name="setParams" output="false" access="public" returntype="any" hint="Set all the required parameters of a resource">    
+    	<cfargument name="params" type="array" required="true" hint="Set the parameters of a resource"/>
+    	<cfscript>
+			verifyResourcePivot();
+			
+			// verify parameters exist, else init it
+			this._definedResources[ this._currentResource ].parameters = arguments.params;
+			
+			return this;	    
+    	</cfscript>    
+    </cffunction>
+    
+    <!--- setPlaceHolders --->    
+    <cffunction name="setPlaceHolders" output="false" access="public" returntype="any" hint="Set all the required placeholders of a resource">    
+    	<cfargument name="placeholders" type="array" required="true" hint="Set the placeholders of a resource"/>
+    	<cfscript>
+			verifyResourcePivot();
+			
+			// verify parameters exist, else init it
+			this._definedResources[ this._currentResource ].placeholders = arguments.params;
+			
+			return this;	    
+    	</cfscript>    
+    </cffunction>
+    
+    <!--- setHeaders --->    
+    <cffunction name="setHeaders" output="false" access="public" returntype="any" hint="Set all the required headers of a resource">    
+    	<cfargument name="headers" type="array" required="true" hint="Set the headers of a resource"/>
+    	<cfscript>
+			verifyResourcePivot();
+			
+			// verify parameters exist, else init it
+			this._definedResources[ this._currentResource ].headers = arguments.params;
+			
+			return this;	    
+    	</cfscript>    
+    </cffunction>
+    
     <!--- appendData --->    
     <cffunction name="appendData" output="false" access="public" returntype="any" hint="Append Data elements">    
 		<cfargument name="args" 	type="struct" required="true" hint="The data arguments"/>
