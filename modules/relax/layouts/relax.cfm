@@ -81,6 +81,7 @@
 					<li><a href="#event.buildLink(rc.xehHome)#"  <cfif event.getCurrentAction() eq "index"> class="current"</cfif>>Home</a></li>
 					<li><a title="Pronounced 'Relax-ER'" href="#event.buildLink(rc.xehRelaxer)#"  <cfif event.getCurrentAction() eq "relaxer"> class="current"</cfif>>RelaxURL</a></li>
 					<li><a href="javascript:openRemoteModal('#event.buildLink(rc.xehRelaxUpdates)#')" title="Check For Relax Updates">Check For Updates</a></li>
+					<li><a href="#event.buildLink(rc.xehDSLDocs)#"  <cfif event.getCurrentAction() eq "DSLDocs"> class="current"</cfif>>RelaxDSL Docs</a></li>
 				</ul>
 			</li>
 			<!--- LogBox Nav --->

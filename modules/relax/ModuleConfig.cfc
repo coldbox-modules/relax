@@ -65,12 +65,14 @@ Description :
 		// Model Bindings
 		binder.map("DSLService@relax").to("#moduleMapping#.model.DSLService");
 		binder.map("Relaxer@relax").to("#moduleMapping#.model.Relaxer");
+		binder.map("DSLDoc@relax").to("#moduleMapping#.model.DSLDoc");
 		// RelaxLogs Bindings
 		binder.map("logService@relaxlogs").to("#moduleMapping#.model.logbox.LogService");
 		binder.map("MSSQL_DAO@relaxlogs").to("#moduleMapping#.model.logbox.MSSQL_DAO");
 		binder.map("MYSQL_DAO@relaxlogs").to("#moduleMapping#.model.logbox.MYSQL_DAO");
 		binder.map("ORACLE_DAO@relaxlogs").to("#moduleMapping#.model.logbox.ORACLE_DAO");
-		binder.map("POSTGRES_DAO@relaxlogs").to("#moduleMapping#.model.logbox.POSTGRES_DAO");	
+		binder.map("POSTGRES_DAO@relaxlogs").to("#moduleMapping#.model.logbox.POSTGRES_DAO");
+			
 	}
 	
 	/**

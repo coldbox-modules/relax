@@ -62,6 +62,7 @@ CHANGELOG
 # Fixes to unloading selected APIs on unLoad()
 # Throw exception when API not found
 # New programmatic DSL to configure Relax with.
+# New self-documenting DSL
 
 == Version 1.6 ==
 # Fixes to JSONLint conversions

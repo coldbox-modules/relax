@@ -171,6 +171,15 @@ Description :
 		
 		event.setView(name="home/checkUpdates",layout="Ajax");
 	}
+	
+	function dslDocs(event,rc,prc){
+		prc.docs = getModel("DSLDoc@relax").generate();
+		event.setView(name="home/DSLDocs");
+	}
+	
+	function dslDocsCodex(event,rc,prc){
+		event.renderData(data=getModel("DSLDoc@relax").generateCodex(),type="text");
+	}
 
 </cfscript>
 </cfcomponent>

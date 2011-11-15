@@ -8,7 +8,7 @@ Author     :	Luis Majano
 Description :
 	The Relax DSL configuration object which is mixed into a simple Relax CFC Definition Object
 ----------------------------------------------------------------------->
-<cfcomponent output="false" hint="The Relax DSL configuration object which is mixed into a simple Relax CFC Definition Object">
+<cfcomponent output="false" hint="The Relax DSL configuration object which is mixed into a simple Relax CFC Definition Object so you can use all the methods in this CFC to define RESTful web services.  All functions can be concatenated to create a nice programmatic DSL.">
 
 	<cfscript>
 		// setup defaults
@@ -22,7 +22,7 @@ Description :
 	</cfscript>
 	
 	<!--- service --->    
-    <cffunction name="service" output="false" access="public" returntype="any" hint="The relaxed service information">
+    <cffunction name="service" output="false" access="public" returntype="any" hint="The relaxed service information. From here you will define the RESTful service endpoints, extension detection, valid formats, and more.">
 		<cfargument name="title" 					required="true" hint="The title of the RESTful service"/>
 		<cfargument name="description" 				required="true" hint="The description of the RESTful service"/>
 		<cfargument name="entryPoint" 				required="true" hint="A simple URL or a structure of entry points"/>
