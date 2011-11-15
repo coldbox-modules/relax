@@ -110,6 +110,8 @@ Description :
 			// add reference to resources
 			arrayAppend(this.resources, this._definedResources[arguments.pattern]);
 			
+			defaultMethod("GET");
+			
 			return this;
     	</cfscript>    
     </cffunction>
@@ -121,6 +123,30 @@ Description :
 			verifyResourcePivot();
 			
 			this._definedResources[ this._currentResource ].methods = arguments.methods;
+			
+			return this;
+    	</cfscript>    
+    </cffunction>
+    
+    <!--- defaultMethod --->    
+    <cffunction name="defaultMethod" output="false" access="public" returntype="any" hint="Define a default HTTP method for a resource">    
+    	<cfargument name="method" required="true" hint="The HTTP method that will be the default"/>
+    	<cfscript>	    
+			verifyResourcePivot();
+			
+			this._definedResources[ this._currentResource ].defaultMethod = arguments.method;
+			
+			return this;
+    	</cfscript>    
+    </cffunction>
+    
+    <!--- defaultFormat --->    
+    <cffunction name="defaultFormat" output="false" access="public" returntype="any" hint="Define a default return format for a resource">    
+    	<cfargument name="format" required="true" hint="The format that will be the default"/>
+    	<cfscript>	    
+			verifyResourcePivot();
+			
+			this._definedResources[ this._currentResource ].defaultFormat = arguments.format;
 			
 			return this;
     	</cfscript>    

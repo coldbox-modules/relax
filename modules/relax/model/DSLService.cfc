@@ -130,7 +130,7 @@ Description :
 			}
 			// Process resources
 			for(x=1; x lte arrayLen(dataCFC.resources); x++){
-				dataCFC.resources[x].resourceID = hash(dataCFC.resources[x].toString());
+				dataCFC.resources[x].resourceID = hash( dataCFC.resources[x].toString() );
 				if( NOT structKeyExists(dataCFC.resources[x],"headers") ){
 					dataCFC.resources[x].headers = [];
 				}
@@ -142,6 +142,12 @@ Description :
 				}
 				if( NOT structKeyExists(dataCFC.resources[x],"methods") ){
 					dataCFC.resources[x].methods = "GET";
+				}
+				if( NOT structKeyExists(dataCFC.resources[x],"defaultMethod") ){
+					dataCFC.resources[x].defaultMethod = "GET";
+				}
+				if( NOT structKeyExists(dataCFC.resources[x],"defaultFormat") ){
+					dataCFC.resources[x].defaultFormat = "";
 				}
 				if( NOT structKeyExists(dataCFC.resources[x],"description") ){
 					dataCFC.resources[x].description = "";

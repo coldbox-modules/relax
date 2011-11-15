@@ -81,12 +81,15 @@ Description :
 		// api users resource
 		resource(pattern="/api/users",handler="rest.user",action="list")
 			.description("Returns all users")
-			.methods("GET");
+			.methods("GET,PUT,POST")
+			.defaultMethod("PUT")
+			.defaultFormat("json");
 			
 		// api my resource
 		resource(pattern="/api/myResource",handler="rest.myUser",action={POST = 'create', GET = 'getResources'})
 			.description("Returns of my available resources")
-			.methods("GET,POST");
+			.methods("GET,POST")
+			.defaultMethod("POST");
 			  
 		// api user username
 		resource(pattern="/api/user/:username",handler="rest.user",action="{'get':'view','post':'create','put':'update','delete','remove'}")

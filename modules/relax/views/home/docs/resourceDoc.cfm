@@ -87,8 +87,11 @@
 	</fieldset>
 	<!--- Methods --->
 	<fieldset>
-		<legend>Supported Request Methods</legend>
-		<p>#thisResource.methods#</p>
+		<legend>HTTP Request Methods</legend>
+		<p>
+			<strong>Supported: </strong> #thisResource.methods#<br/>
+			<strong>Default: </strong> #thisResource.defaultMethod#<br/>
+		</p>
 	</fieldset>
 	<!--- HTTP Headers --->
 	<fieldset>
@@ -146,6 +149,13 @@
 	<!--- Response & Samples --->
 	<fieldset>
 		<legend>Response</legend>
+		
+		<!--- Default Response --->
+		<cfif structKeyExists(thisResource,"defaultFormat")>
+			<strong>Default Response Format: </strong> #thisresource.defaultFormat# <br/>
+		</cfif>
+		
+		<!--- Check if we have response definitions --->
 		<cfif NOT structCount(thisResource.response)>
 			<em>No Response Definitions Defined</em>
 		<cfelse>

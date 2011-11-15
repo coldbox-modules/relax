@@ -336,7 +336,7 @@ function showBrowserResults(){
 }
 function resourceSelect(rData,tier){
 	var resourceID = 0;
-	
+	// tier and URL selection
 	if( rData != 'null' ){
 		var values = rData.split(";");
 		resourceID = values[0];
@@ -348,25 +348,35 @@ function resourceSelect(rData,tier){
 	}
 	$("##entryTier").val(tier);
 	
+	// Select default HTTP Method
+	selectOption("httpMethod", $resources[resourceID].DEFAULTMETHOD);
+	// Select default Format
+	selectOption("httpFormat", $resources[resourceID].DEFAULTFORMAT);
+	
 	// Check for required parameters
 	var openAdvanced = false;
 	// Clean header values and params
 	cleanHeaders(); cleanParams();
 	$("##httpParameters p").remove();
+	
 	// params required?
-	$.each($resources[resourceID].PARAMETERS, function(index, objValue){
-		if( objValue.REQUIRED == "true" || objValue.REQUIRED == true) {
-			openAdvanced = true;
-			addDynamicItem($("##addParameterButton"), [objValue.NAME, objValue.DEFAULT]);
-		}
-	});
+	if ($resources[resourceID].PARAMETERS != null) {
+		$.each($resources[resourceID].PARAMETERS, function(index, objValue){
+			if (objValue.REQUIRED == "true" || objValue.REQUIRED == true) {
+				openAdvanced = true;
+				addDynamicItem($("##addParameterButton"), [objValue.NAME, objValue.DEFAULT]);
+			}
+		});
+	}
 	// headers required?
-	$.each($resources[resourceID].HEADERS, function(index, objValue){
-		if( objValue.REQUIRED == "true" ) {
-			openAdvanced = true;
-			addDynamicItem($("##addHeaderButton"), [objValue.NAME, objValue.DEFAULT]);
-		}
-	});
+	if ($resources[resourceID].HEADERS != null) {
+		$.each($resources[resourceID].HEADERS, function(index, objValue){
+			if (objValue.REQUIRED == "true") {
+				openAdvanced = true;
+				addDynamicItem($("##addHeaderButton"), [objValue.NAME, objValue.DEFAULT]);
+			}
+		});
+	}
 	// open advanced dialog
 	if( openAdvanced ){ $("##advancedSettings").slideDown(); } else { $("##advancedSettings").slideUp(); }
 }

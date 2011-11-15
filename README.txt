@@ -63,6 +63,8 @@ CHANGELOG
 # Throw exception when API not found
 # New programmatic DSL to configure Relax with.
 # New self-documenting DSL
+# Addition of defaultFormat(), defaultMethod() for routes
+# Addition of JS filtering of default format and methods if defined
 
 == Version 1.6 ==
 # Fixes to JSONLint conversions
