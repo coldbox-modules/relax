@@ -60,11 +60,11 @@ CHANGELOG
 ********************************************************************************
 == Version 1.7 ==
 # Fixes to unloading selected APIs on unLoad()
-# Throw exception when API not found
+# Throw exception when API not found on disk
 # New programmatic DSL to configure Relax with.
 # New self-documenting DSL
-# Addition of defaultFormat(), defaultMethod() for routes
-# Addition of JS filtering of default format and methods if defined
+# Addition of defaultFormat(), defaultMethod() for resources
+# Addition of JS auto-select of default format and methods if defined in resource
 
 == Version 1.6 ==
 # Fixes to JSONLint conversions
