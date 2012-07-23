@@ -58,6 +58,9 @@ SYSTEM REQUIREMENTS
 ********************************************************************************
 CHANGELOG
 ********************************************************************************
+== Version 1.8 ==
+# Fixes to work with ColdBox 3.5.2
+
 == Version 1.7 ==
 # Fixes to unloading selected APIs on unLoad()
 # Throw exception when API not found on disk
