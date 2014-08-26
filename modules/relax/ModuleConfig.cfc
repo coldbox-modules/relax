@@ -15,13 +15,13 @@ Description :
 	this.author 			= "Luis Majano";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "RESTful Tools For Lazy Experts";
-	this.version			= "1.7";
+	this.version			= "1.8.0";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "relax:home.index";
-	
+
 	function configure(){
-		
+
 		// Relax Configuration Settings
 		settings = {
 			// Relax Version: DO NOT ALTER
@@ -47,21 +47,21 @@ Description :
 				bandGap = 3
 			}
 		};
-		
+
 		// expand the location path
 		settings.apiLocationExpandedPath = expandPath("/#replace(settings.apiLocationPath,".","/","all")#");
-		
+
 		// Layout Settings
 		layoutSettings = { defaultLayout = "relax.cfm" };
-		
+
 		// SES Routes
 		routes = [
 			// Module Entry Point
 			{pattern="/", handler="home",action="index"},
 			// Convention Route
-			{pattern="/:handler/:action?"}	
-		];			
-		
+			{pattern="/:handler/:action?"}
+		];
+
 		// Model Bindings
 		binder.map("DSLService@relax").to("#moduleMapping#.model.DSLService");
 		binder.map("Relaxer@relax").to("#moduleMapping#.model.Relaxer");
@@ -72,21 +72,21 @@ Description :
 		binder.map("MYSQL_DAO@relaxlogs").to("#moduleMapping#.model.logbox.MYSQL_DAO");
 		binder.map("ORACLE_DAO@relaxlogs").to("#moduleMapping#.model.logbox.ORACLE_DAO");
 		binder.map("POSTGRES_DAO@relaxlogs").to("#moduleMapping#.model.logbox.POSTGRES_DAO");
-			
+
 	}
-	
+
 	/**
 	* Fired when the module is registered and activated.
 	*/
-	function onLoad(){	
+	function onLoad(){
 	}
-	
+
 	/**
 	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
-	}	
-	
+	}
+
 	/**
 	* Pre process for relax, makes sure an API is loaded
 	*/
@@ -94,7 +94,7 @@ Description :
 		// load the default API
 		loadDefaultAPI();
 	}
-	
+
 	// Load default API Checks
 	function loadDefaultAPI(){
 		var DSLService = controller.getWireBox().getInstance("DSLService@relax");
