@@ -1,0 +1,26 @@
+{
+	"name" 		: "ColdBox Relax",
+	"version"	: "1.8.0",
+	"author" 	: "Luis Majano <lmajano@ortussolutions.com",
+	"slug"		: "relax",
+	"type"		: "modules",
+	"keywords"	: "RESTFul,modeling,web services",
+	"homepage"			: "http://wiki.coldbox.org/wiki/Projects:Relax.cfm",
+	"documentation"		: "http://wiki.coldbox.org/wiki/Projects:Relax.cfm",
+	"repository"		: { "type" : "git", "url" : "https://github.com/ColdBox/coldbox-relax" },
+	"bugs"				: "https://github.com/ColdBox/coldbox-relax/issues",
+	"shortDescription"	: "RESTFul Tools For Lazy Experts",
+	"engines"	: [
+		{ "type" : "railo", "version" : ">3.1" },
+		{ "type" : "adobe", "version" : ">9.0" },
+	],
+	"license"			: [ 
+		{ "type" : "Apache2", "url" : "http://www.apache.org/licenses/LICENSE-2.0.html" } 
+	],
+	"contributors"		: [
+		"Brad Wood <bdw429s@gmail.com>", "Curt Gratz <gratz@computerknowhow.com>"
+	],
+	"devdependencies" : {
+		"testbox" : ">1.1"		
+	}
+}
