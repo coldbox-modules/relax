@@ -18,7 +18,7 @@
 		{ "type" : "Apache2", "url" : "http://www.apache.org/licenses/LICENSE-2.0.html" } 
 	],
 	"contributors"		: [
-		"Brad Wood <bdw429s@gmail.com>", "Curt Gratz <gratz@computerknowhow.com>"
+		"Brad Wood <bdw429s@gmail.com>", "Curt Gratz <gratzc@compknowhow.com>"
 	],
 	"devdependencies" : {
 		"testbox" : ">1.1"		
