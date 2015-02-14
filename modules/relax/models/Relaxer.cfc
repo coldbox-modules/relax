@@ -14,7 +14,6 @@ Description :
 	<cfproperty name="log" 		inject="logbox:logger:{this}">
 	<cfproperty name="settings" inject="coldbox:setting:relax">
 
-
 	<!--- Constructor --->
 	<cffunction name="init" hint="Constructor" access="public" returntype="Relaxer" output="false">
 		<cfscript>
