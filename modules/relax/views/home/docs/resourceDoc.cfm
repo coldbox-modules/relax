@@ -3,7 +3,7 @@
 <cfif structKeyExists( prc, "thisResource")><cfset variables.thisResource = prc.thisResource></cfif>
 
 <!--- Print Buttons --->
-<cfif NOT structKeyExists(prc,"print")>
+<cfif NOT structKeyExists( rc, "print" )>
 <div id="exportBar">
 	<a title="Print HTML Document"
 	   target="_blank"

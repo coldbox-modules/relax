@@ -1,3 +1,10 @@
+/**
+********************************************************************************
+Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
+www.ortussolutions.com
+********************************************************************************
+* Main Handler
+*/
 component extends="BaseHandler"{
 
 	// DI
@@ -13,8 +20,8 @@ component extends="BaseHandler"{
 		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
 		prc.loadedAPIs		= DSLService.listAPIs();
 		// JS/CSS Append
-		prc.jsAppendList  = "shCore,brushes/shBrushColdFusion,brushes/shBrushJScript,brushes/shBrushXml";
-		prc.cssAppendList = "shCore,shThemeDefault";
+		prc.jsAppendList  	= "shCore,brushes/shBrushColdFusion,brushes/shBrushJScript,brushes/shBrushXml";
+		prc.cssAppendList 	= "shCore,shThemeDefault";
 		// Exit Handlers
 		prc.xehResourceDoc  	= "relax/Home.resourceDoc";
 		prc.xehResourceDocEvent = "relax:Home.resourceDoc";
@@ -27,8 +34,9 @@ component extends="BaseHandler"{
 		prc.xehLoadAPI			= "relax/Home.loadAPI";
 
 		// Expanded div for resource holders
-		rc.expandedResourceDivs = false;
+		prc.expandedResourceDivs = false;
 
+		// set view
 		event.setView( "home/index" );
 	}
 
@@ -113,38 +121,38 @@ component extends="BaseHandler"{
 	}
 
 	/**
-	* Home
+	* Export Resource Doc
 	*/
-	function resourceDoc(event,rc,prc,resourceID,expandedDiv){
-		var layout = "Ajax";
-
-		// event setup
-		rc.settings 		= getModuleSettings("relax");
+	function resourceDoc( event, rc, prc, resourceID, expandedDiv ){
 		// DSL Settings
-		rc.dsl				= DSLService.getLoadedAPI();
-		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
+		prc.dsl				= DSLService.getLoadedAPI();
+		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
 		// exit handlers
-		rc.xehResourceDoc  	= "relax/Home.resourceDoc";
+		prc.xehResourceDoc  	= "relax/Home.resourceDoc";
 		// expanded divs
-		rc.expandedResourceDivs = true;
+		prc.expandedResourceDivs = true;
 
 		// custom css/js
-		rc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		rc.cssAppendList = "shCore,shThemeDefault";
+		prc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
+		prc.cssAppendList = "shCore,shThemeDefault";
 
 		// select layout
-		if( structKeyExists(rc,"print") ){ layout = lcase(rc.print); }
+		event.paramValue( "print", "html" );
 
 		// selected ID for resource display
-		for(x=1; x lte arrayLen(rc.dsl.resources);x++){
-			if( rc.dsl.resources[x].resourceID eq rc.resourceID ){
-				rc.thisResource = rc.dsl.resources[x];
+		for(var x=1; x lte arrayLen( prc.dsl.resources ); x++ ){
+			if( prc.dsl.resources[ x ].resourceID eq rc.resourceID ){
+				prc.thisResource = prc.dsl.resources[x];
 				break;
 			}
 		}
 
 		// set view for Rendering
-		event.setView(name="home/docs/resourceDoc",layout="#layout#");
+		if( event.isAjax() ){
+			event.renderData( data=renderView( view="home/docs/resourceDoc", module="relax" ) );
+		} else {
+			event.setView( name="home/docs/resourceDoc", layout="#rc.print#" );
+		}
 	}
 
 	/**

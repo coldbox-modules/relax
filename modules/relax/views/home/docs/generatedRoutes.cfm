@@ -11,17 +11,17 @@
 // setAutoReload( true );
 
 // Sets automatic route extension detection and places the extension in the rc.format variable
-setExtensionDetection( #rc.dsl.relax.extensionDetection# );
-<cfif rc.dsl.relax.extensionDetection and len(rc.dsl.relax.validExtensions)>
+setExtensionDetection( #prc.dsl.relax.extensionDetection# );
+<cfif prc.dsl.relax.extensionDetection and len(prc.dsl.relax.validExtensions)>
 // Setup the list of valid extensions for this application
-setValidExtensions('#rc.dsl.relax.validExtensions#');
+setValidExtensions('#prc.dsl.relax.validExtensions#');
 </cfif>
-<cfif rc.dsl.relax.extensionDetection>
+<cfif prc.dsl.relax.extensionDetection>
 // Throw exception 406 when an invalid extension is detected?
-setThrowOnInvalidExtension( #rc.dsl.relax.throwOnInvalidExtension# );
+setThrowOnInvalidExtension( #prc.dsl.relax.throwOnInvalidExtension# );
 </cfif>						
 // Route Definitions
-<cfloop array="#rc.dsl.resources#" index="thisResource">
+<cfloop array="#prc.dsl.resources#" index="thisResource">
 addRoute(pattern="#thisResource.pattern#"<cfif len(thisResource.handler)>,handler="#thisResource.handler#"</cfif>#flattenActions(thisResource.action)#);
 </cfloop>
 </pre>
@@ -32,8 +32,8 @@ addRoute(pattern="#thisResource.pattern#"<cfif len(thisResource.handler)>,handle
 // Module Route Definitions
 routes = [
 <cfset index = 1>
-<cfloop array="#rc.dsl.resources#" index="thisResource">
-	{ pattern="#thisResource.pattern#"<cfif len(thisResource.handler)>,handler="#thisResource.handler#"</cfif>#flattenActions(thisResource.action)# }<cfif index++ lt arrayLen(rc.dsl.resources)>,</cfif>
+<cfloop array="#prc.dsl.resources#" index="thisResource">
+	{ pattern="#thisResource.pattern#"<cfif len(thisResource.handler)>,handler="#thisResource.handler#"</cfif>#flattenActions(thisResource.action)# }<cfif index++ lt arrayLen(prc.dsl.resources)>,</cfif>
 </cfloop>
 ];
 </pre>

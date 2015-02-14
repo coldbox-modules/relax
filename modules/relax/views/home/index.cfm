@@ -11,9 +11,9 @@
 
 			<p class="center">
 				<!--- My Apis --->
-				<select name="myAPI" id="myAPI" title="Your defined Relaxed APIs" onchange="window.location='#event.buildLink(rc.xehLoadAPI)#?apiName='+this.value">
-					<cfloop query="rc.loadedAPIs">
-						<option value="#rc.loadedAPis.name#" <cfif rc.loadedAPIs.name eq rc.loadedAPIName>selected="selected"</cfif>>#rc.loadedAPis.name#</option>
+				<select name="myAPI" id="myAPI" title="Your defined Relaxed APIs" onchange="window.location='#event.buildLink( prc.xehLoadAPI)#?apiName='+this.value">
+					<cfloop query="prc.loadedAPIs">
+						<option value="#prc.loadedAPis.name#" <cfif prc.loadedAPIs.name eq prc.loadedAPIName>selected="selected"</cfif>>#prc.loadedAPis.name#</option>
 					</cfloop>
 				</select>
 			</p>
@@ -30,7 +30,7 @@
 
 			<p class="center">
 				<!--- Export --->
-				<a href="javascript:openRemoteModal('#event.buildLink(rc.xehExportAPI)#')"
+				<a href="javascript:openRemoteModal('#event.buildLink( prc.xehExportAPI)#')"
 					class="button"
 				   	title="Export API">
 					<span>
@@ -38,7 +38,7 @@
 					</span>
 				</a>
 				<!--- Import --->
-				<a href="javascript:openRemoteModal('#event.buildLink(rc.xehImportAPI)#')"
+				<a href="javascript:openRemoteModal('#event.buildLink( prc.xehImportAPI)#')"
 					class="button"
 				   	title="Import API">
 					<span>
@@ -60,7 +60,7 @@
 			<!--- Export COmmands --->
 			<p class="center">
 				<!--- html --->
-				<a href="#event.buildLink(rc.xehExportHTML)#"
+				<a href="#event.buildLink( prc.xehExportHTML)#"
 					target="_blank"
 					class="button"
 				   	title="Export as HTML">
@@ -69,7 +69,7 @@
 					</span>
 				</a>
 				<!--- pdf --->
-				<a href="#event.buildLink(rc.xehExportPDF)#" class="button"
+				<a href="#event.buildLink( prc.xehExportPDF)#" class="button"
 				    target="_blank"
 					title="Export as PDF">
 					<span>
@@ -77,7 +77,7 @@
 					</span>
 				</a>
 				<!--- mediawiki --->
-				<a href="#event.buildLink(rc.xehExportwiki)#" class="button"
+				<a href="#event.buildLink( prc.xehExportwiki)#" class="button"
 				    target="_blank"
 					title="Export as MediaWiki">
 					<span>
@@ -85,7 +85,7 @@
 					</span>
 				</a>
 				<!--- trac --->
-				<a href="#event.buildLink(rc.xehExporttrac)#" class="button"
+				<a href="#event.buildLink( prc.xehExporttrac)#" class="button"
 				    target="_blank"
 					title="Export as TracMarkup">
 					<span>
@@ -131,7 +131,7 @@
 			</cfif>
 			<!--- Body --->
 			<p>Welcome to your Relax Console.  We have succesfully read the <em>Relax DSL</em>
-				for your loaded API: <strong>#rc.loadedAPIName#</strong>.  Below is the RESTful
+				for your loaded API: <strong>#prc.loadedAPIName#</strong>.  Below is the RESTful
 				documentation.  From here you can also tap into our <strong>RelaxURL</strong> console to test the resources or any web
 				RESTful service or view our awesome <strong>RelaxLogs</strong> log viewer.
 			</p>

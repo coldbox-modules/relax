@@ -64,11 +64,11 @@
 
 		<!--=========Header Area including search field and logo=========-->
 		<div id="logo">
-			<a title="Wanna Relax? Click Me!" href="javascript:openRemoteModal('#event.buildLink(rc.xehRelax)#')"><img src="#prc.root#/includes/images/Coldbox-Relax_125.png" height="120" border="0" alt="logo" /></a>
+			<a title="Wanna Relax? Click Me!" href="javascript:openRemoteModal('#event.buildLink(prc.xehRelax)#')"><img src="#prc.root#/includes/images/Coldbox-Relax_125.png" height="120" border="0" alt="logo" /></a>
 		</div>
 
 		<div id="header_main" class="clearfix">
-           	<a href="#event.buildLink(rc.xehHome)#"><h1>Relax <span>v.#getModuleConfig('relax').version#</span></h1></a>
+           	<a href="#event.buildLink(prc.xehHome)#"><h1>Relax <span>v.#getModuleConfig('relax').version#</span></h1></a>
 		</div>
 		<!--End Search field and logo Header Area-->
 
@@ -78,9 +78,9 @@
 			<li>
 				<a href="##" title="Relax Dashboard" <cfif event.getCurrentHandler() eq "relax:home"> class="current"</cfif>>Dashboard</a>
 				<ul>
-					<li><a href="#event.buildLink(rc.xehHome)#"  <cfif event.getCurrentAction() eq "index"> class="current"</cfif>>Home</a></li>
-					<li><a title="Pronounced 'Relax-ER'" href="#event.buildLink(rc.xehRelaxer)#"  <cfif event.getCurrentAction() eq "relaxer"> class="current"</cfif>>RelaxURL</a></li>
-					<li><a href="#event.buildLink(rc.xehDSLDocs)#"  <cfif event.getCurrentAction() eq "DSLDocs"> class="current"</cfif>>RelaxDSL Docs</a></li>
+					<li><a href="#event.buildLink(prc.xehHome)#"  <cfif event.getCurrentAction() eq "index"> class="current"</cfif>>Home</a></li>
+					<li><a title="Pronounced 'Relax-ER'" href="#event.buildLink(prc.xehRelaxer)#"  <cfif event.getCurrentAction() eq "relaxer"> class="current"</cfif>>RelaxURL</a></li>
+					<li><a href="#event.buildLink(prc.xehDSLDocs)#"  <cfif event.getCurrentAction() eq "DSLDocs"> class="current"</cfif>>RelaxDSL Docs</a></li>
 				</ul>
 			</li>
 		</ul>
