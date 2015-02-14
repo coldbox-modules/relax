@@ -1,14 +1,12 @@
 <cfsetting showdebugoutput="false">
-<!--- Content Disposition --->
-<cfheader name="Content-Disposition" value="inline; filename=ColdBoxRelaxDocument.pdf">
 <!--- CFFDocument --->
 <cfdocument pagetype="letter" format="pdf">
 
 	<!--- Header --->
 	<cfdocumentitem type="header">
 	<cfoutput>
-	<div style="font-size: 9px; text-align: left;">
-	ColdBoxRelax Docs - #dateformat(now(),"MMM DD, YYYY")# at #timeFormat(now(),"full")#
+	<div style="font-size: 9px; text-align: right;">
+	#prc.dsl.relax.title#
 	</div>
 	</cfoutput>
 	</cfdocumentitem>
@@ -22,7 +20,7 @@
 	</cfoutput>
 	</cfdocumentitem>
 
-<cfoutput>
-#renderLayout("html")#
-</cfoutput>
+	<cfoutput>
+	#renderLayout( "html" )#
+	</cfoutput>
 </cfdocument>

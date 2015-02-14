@@ -1,14 +1,14 @@
 <cfoutput>
 <!--- OverView Panel --->
 <div>
-	#renderView("home/docs/serviceOverview")#
+	#renderView( view="home/docs/serviceOverview", module="relax" )#
 </div>
 <!--- Resources Panel --->
 <div>
-	#renderView("home/docs/resourceDefinitions")#						
+	#renderView( view="home/docs/resourceDefinitions", module="relax" )#						
 </div>
 <!--- HTTP Codes Panel --->
 <div>
-	#renderView("home/docs/httpcodes")#
+	#renderView( view="home/docs/httpcodes", module="relax" )#
 </div>
 </cfoutput>

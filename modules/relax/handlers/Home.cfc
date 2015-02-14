@@ -1,50 +1,56 @@
 component extends="BaseHandler"{
 
+	// DI
 	property name="relaxerService" 	inject="Relaxer@relax";
 	property name="DSLService"		inject="DSLService@relax";
 
-
-	function index(event,rc,prc){
-		// module settings
-		rc.settings 		= getModuleSettings("relax");
+	/**
+	* Home
+	*/
+	function index( event, rc, prc ){
 		// Get the loaded API for the user
-		rc.dsl				= DSLService.getLoadedAPI();
-		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
-		rc.loadedAPIs		= DSLService.listAPIs();
+		prc.dsl				= DSLService.getLoadedAPI();
+		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
+		prc.loadedAPIs		= DSLService.listAPIs();
 		// JS/CSS Append
-		rc.jsAppendList  = "shCore,brushes/shBrushColdFusion,brushes/shBrushJScript,brushes/shBrushXml";
-		rc.cssAppendList = "shCore,shThemeDefault";
+		prc.jsAppendList  = "shCore,brushes/shBrushColdFusion,brushes/shBrushJScript,brushes/shBrushXml";
+		prc.cssAppendList = "shCore,shThemeDefault";
 		// Exit Handlers
-		rc.xehResourceDoc  		= "relax/Home.resourceDoc";
-		rc.xehResourceDocEvent  = "relax:Home.resourceDoc";
-		rc.xehExportHTML 		= "relax/Export.html";
-		rc.xehExportPDF 		= "relax/Export.pdf";
-		rc.xehExportwiki 		= "relax/Export.mediawiki";
-		rc.xehExportTrac 		= "relax/Export.trac";
-		rc.xehExportAPI			= "relax/Export.api";
-		rc.xehImportAPI			= "relax/Import.api";
-		rc.xehLoadAPI			= "relax/Home.loadAPI";
+		prc.xehResourceDoc  	= "relax/Home.resourceDoc";
+		prc.xehResourceDocEvent = "relax:Home.resourceDoc";
+		prc.xehExportHTML 		= "relax/Export.html";
+		prc.xehExportPDF 		= "relax/Export.pdf";
+		prc.xehExportwiki 		= "relax/Export.mediawiki";
+		prc.xehExportTrac 		= "relax/Export.trac";
+		prc.xehExportAPI		= "relax/Export.api";
+		prc.xehImportAPI		= "relax/Import.api";
+		prc.xehLoadAPI			= "relax/Home.loadAPI";
 
 		// Expanded div for resource holders
 		rc.expandedResourceDivs = false;
 
-		event.setView("home/index");
+		event.setView( "home/index" );
 	}
 
-	function test(event,rc,prc){
-		event.setView(name="test",layout="template");
-	}
-
-	function relax(event,rc,prc){
+	/**
+	* Home
+	*/
+	function relax( event, rc, prc ){
 		event.setView(name="home/relax",layout="Ajax");
 	}
 
-	function clearUserData(event,rc,prc){
+	/**
+	* Home
+	*/
+	function clearUserData( event, rc, prc ){
 		DSLService.clearUserData();
 		setNextEVent(rc.xehHome);
 	}
 
-	function loadAPI(event,rc,prc){
+	/**
+	* Home
+	*/
+	function loadAPI( event, rc, prc ){
 		event.paramValue("apiName","");
 		// load the api if it has length else ignored.
 		if( len(rc.apiName) ){
@@ -54,7 +60,10 @@ component extends="BaseHandler"{
 		setNextEvent(rc.xehHome);
 	}
 
-	function relaxer(event,rc,prc){
+	/**
+	* Home
+	*/
+	function relaxer( event, rc, prc ){
 		// some defaults
 		event.paramValue("httpResource","");
 		event.paramValue("httpFormat","");
@@ -103,6 +112,9 @@ component extends="BaseHandler"{
 		event.setView("home/relaxer");
 	}
 
+	/**
+	* Home
+	*/
 	function resourceDoc(event,rc,prc,resourceID,expandedDiv){
 		var layout = "Ajax";
 
@@ -135,7 +147,10 @@ component extends="BaseHandler"{
 		event.setView(name="home/docs/resourceDoc",layout="#layout#");
 	}
 
-	function purgeHistory(event,rc,prc){
+	/**
+	* Home
+	*/
+	function purgeHistory( event, rc, prc ){
 		var results = {
 			error = false,
 			messages = "History cleaned!"
@@ -153,12 +168,18 @@ component extends="BaseHandler"{
 		event.renderData(type="jsont",data=results);
 	}
 
-	function dslDocs(event,rc,prc){
+	/**
+	* Home
+	*/
+	function dslDocs( event, rc, prc ){
 		prc.docs = getModel("DSLDoc@relax").generate();
 		event.setView(name="home/DSLDocs");
 	}
 
-	function dslDocsCodex(event,rc,prc){
+	/**
+	* Home
+	*/
+	function dslDocsCodex( event, rc, prc ){
 		event.renderData(data=getModel("DSLDoc@relax").generateCodex(),type="text");
 	}
 

@@ -1,79 +1,93 @@
-<!-----------------------------------------------------------------------
+/**
 ********************************************************************************
-Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-www.coldbox.org | www.luismajano.com | www.ortussolutions.com
+Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
+www.ortussolutions.com
 ********************************************************************************
+* Export handler
+*/
+component extends="BaseHandler"{
+	
+	// DI
+	property name="DSLService"		inject="id:DSLService@relax";
+	property name="wikitext"		inject="wikitext@wikitext";
 
-Author     :	Luis Majano
-Description :
-	Home Handler Section
------------------------------------------------------------------------>
-<cfcomponent output="false" extends="BaseHandler">
-	<!--- dependencies --->
-	<cfproperty name="relaxerService" 	inject="id:Relaxer@relax" >
-	<cfproperty name="DSLService"		inject="id:DSLService@relax" >
-	<cfproperty name="wikitext"			inject="wikitext@wikitext">
-
-<cfscript>
-
+	/**
+	* pre handler
+	*/
 	function preHandler( event, rc, prc ){
 		super.preHandler( argumentCollection=arguments );
-		// module settings
-		rc.settings = getModuleSettings("relax");
 		// Get the loaded API for the user
-		rc.dsl				= DSLService.getLoadedAPI();
-		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
+		prc.dsl				= DSLService.getLoadedAPI();
+		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
 		// custom css/js
-		rc.jsAppendList  = "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		rc.cssAppendList = "shCore,shThemeDefault";
-		// Exit Handlers
-		rc.xehResourceDocEvent  = "relax:Home.resourceDoc";
+		prc.jsAppendList 	= "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
+		prc.cssAppendList 	= "shCore,shThemeDefault";
 	}
 
-	function api(event,rc,prc){
+	/**
+	* API Export
+	*/
+	function api( event, rc, prc ){
+		// exit handlers
 		prc.xehExportAPI = "relax/export/api";
-		prc.jsonAPI = serializeJSON( rc.dsl );
-		if( event.valueExists("download") ){
-			var title = getPlugin("htmlhelper@coldbox").slugify( rc.dsl.relax.title );
-			event.setHTTPHeader(name="content-disposition",value='attachment; filename="#title#.json"');
-			event.renderData(data=prc.jsonAPI,type="json");
-		}
-		else{
-			event.setView(name="export/api",layout="ajax");
+		// serialze the api
+		prc.jsonAPI = serializeJSON( prc.dsl );
+
+		if( event.valueExists( "download" ) ){
+			var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.relax.title );
+			event.setHTTPHeader( name="content-disposition", value='attachment; filename="#title#.json"')
+				.renderData( data=prc.jsonAPI, type="json" );
+		} else {
+			event.renderData( data=renderView( view="export/api", module="relax" ) );
 		}
 	}
 
-	function html(event,rc,prc){
-		rc.print 				= "true";
-		rc.expandedResourceDivs = true;
+	/**
+	* Export as HTML
+	*/
+	function html( event, rc, prc ){
+		prc.print 				 = "true";
+		prc.expandedResourceDivs = true;
 
 		// custom css/js
-		rc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		rc.cssAppendList = "shCore,shThemeDefault";
+		prc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
+		prc.cssAppendList = "shCore,shThemeDefault";
 
-		event.setView(name="export/html",layout="html");
+		// View
+		event.setView( name="export/html", layout="html" );
 	}
 
-	function pdf(event,rc,prc){
-		html(event,rc,prc);
-		event.setLayout("pdf");
+	/**
+	* Export as PDF
+	*/
+	function pdf( event, rc, prc ){
+		var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.relax.title );
+		html( event, rc, prc );
+		event.setLayout( "pdf" )
+			.setHTTPHeader( name="Content-Disposition", value="inline; filename=#title#.pdf" );
 	}
 
-	function mediawiki(event,rc,prc){
-		wikiMarkup(event,rc,prc,"WIKIPEDIA");
+	/**
+	* Export as media wiki
+	*/
+	function mediawiki( event, rc, prc ){
+		toWikiMarkup( event, rc, prc, "WIKIPEDIA" );
 	}
 
-	function trac(event,rc,prc){
-		wikiMarkup(event,rc,prc,"TRAC");
+	/**
+	* Export as Trac
+	*/
+	function trac( event, rc, prc ){
+		toWikiMarkup( event, rc, prc, "TRAC" );
 	}
 
-	function wikiMarkup(event,rc,prc,type){
-		var data = "";
-
-		html(event,rc,prc);
-		data = wikitext.toWiki(wikiTranslator=arguments.type,htmlString=renderView("export/html"));
-		event.renderData(type="text",data=data);
+	/**
+	* Export as wiki markup
+	*/
+	private function toWikiMarkup( event, rc, prc, type ){
+		html( event, rc, prc );
+		var data = wikitext.toWiki( wikiTranslator=arguments.type, htmlString=renderView( view="export/html", module="relax" ) );
+		event.renderData( type="text", data=data );
 	}
 
-</cfscript>
-</cfcomponent>
+}

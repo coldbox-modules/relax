@@ -1,28 +1,28 @@
 <cfoutput>
 <!--- Is resource coming from RC? Means direct view rendering and not collection rendering. --->
-<cfif structKeyExists(rc,"thisResource")><cfset variables.thisResource = rc.thisResource></cfif>
+<cfif structKeyExists( prc, "thisResource")><cfset variables.thisResource = prc.thisResource></cfif>
 
 <!--- Print Buttons --->
-<cfif NOT structKeyExists(rc,"print")>
+<cfif NOT structKeyExists(prc,"print")>
 <div id="exportBar">
 	<a title="Print HTML Document"
 	   target="_blank"
-	   href="#event.buildlink(linkTo=rc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=html")#">
-		<img src="#rc.root#/includes/images/print.png" alt="print" />
+	   href="#event.buildlink(linkTo=prc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=html")#">
+		<img src="#prc.root#/includes/images/print.png" alt="print" />
 	</a>
 	&nbsp;
 	<a title="Print PDF"
 	   target="_blank"
-	   href="#event.buildlink(linkTo=rc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=pdf")#">
-		<img src="#rc.root#/includes/images/pdf.png" alt="print" />
+	   href="#event.buildlink(linkTo=prc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=pdf")#">
+		<img src="#prc.root#/includes/images/pdf.png" alt="print" />
 	</a>
 </div>
 </cfif>
 
 <!--- Pattern Title --->
 <h3>
-<img src="#rc.root#/includes/images/website.png" alt="resource"/> 
-<cfif rc.expandedResourceDivs>
+<img src="#prc.root#/includes/images/website.png" alt="resource"/> 
+<cfif prc.expandedResourceDivs>
 	#thisResource.pattern#
 <cfelse>
 	<a href="javascript:toggleResource('#thisResource.resourceID#')">#thisResource.pattern#</a>
@@ -30,7 +30,7 @@
 </h3>
 
 <!--- Div Content --->
-<div id="resource_#thisResource.resourceID#" class="resourceDiv" <cfif rc.expandedResourceDivs>style="display:block"</cfif>>
+<div id="resource_#thisResource.resourceID#" class="resourceDiv" <cfif prc.expandedResourceDivs>style="display:block"</cfif>>
 	<!--- Description --->
 	<fieldset>
 		<legend>Description</legend>
@@ -39,15 +39,15 @@
 	<!--- Entry Points --->
 	<fieldset>
 		<legend>Service Entry Point(s)</legend>
-		<cfloop collection="#rc.dsl.relax.entryPoint#" item="entryPoint">
+		<cfloop collection="#prc.dsl.relax.entryPoint#" item="entryPoint">
 		<p>#entryPoint#</p>
-		<pre class="brush: xml; ruler: false">#rc.dsl.relax.entryPoint[entryPoint]#</pre>
+		<pre class="brush: xml; ruler: false">#prc.dsl.relax.entryPoint[ entryPoint ]#</pre>
 		</cfloop>
 	</fieldset>
 	<!--- URL --->
 	<fieldset>
 		<legend>Resource URL & Event Translations</legend>
-		<pre class="brush: html; auto-links:false">#thisResource.pattern#<cfif rc.dsl.relax.extensionDetection>.{format}</cfif></pre>
+		<pre class="brush: html; auto-links:false">#thisResource.pattern#<cfif prc.dsl.relax.extensionDetection>.{format}</cfif></pre>
 		<p>
 			<strong>Pattern</strong>: #thisResource.pattern#<br/>
 			<strong>Handler</strong>: <cfif structKeyExists(thisResource,"handler")>#thisResource.handler#<cfelse>---</cfif><br/>
@@ -60,7 +60,7 @@
 		<p>The following patterns are part of the RESTful resource and must be passed in the exact
 		position shown in the URL resource. Usually placeholders start with a <strong>(:)</strong> colon.</p>
 		
-		<pre class="brush: html; auto-links:false">#thisResource.pattern#<cfif rc.dsl.relax.extensionDetection>.{format}</cfif></pre>
+		<pre class="brush: html; auto-links:false">#thisResource.pattern#<cfif prc.dsl.relax.extensionDetection>.{format}</cfif></pre>
 		
 		<cfif NOT structKeyExists(thisResource,"placeholders") or NOT arrayLen(thisResource.placeholders)>
 			<em>Route Pattern has no Placeholders</em>

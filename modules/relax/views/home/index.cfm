@@ -4,7 +4,7 @@
 	<!--- Loaded API --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/sofa.png" alt="info" width="24" height="24" />Loaded Relaxed APIs
+			<img src="#prc.root#/includes/images/sofa.png" alt="info" width="24" height="24" />Loaded Relaxed APIs
 		</div>
 		<div class="body">
 			From here you can switch to another Relaxed API in your <strong>resources</strong> folder:<br/>
@@ -23,7 +23,7 @@
 	<!--- Import/Export Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/export.png" alt="info" width="24" height="24" />API Export/Import
+			<img src="#prc.root#/includes/images/export.png" alt="info" width="24" height="24" />API Export/Import
 		</div>
 		<div class="body">
 			You can export your Relaxed Service API to JSON and also import one.<br/><br/>
@@ -34,7 +34,7 @@
 					class="button"
 				   	title="Export API">
 					<span>
-						<img src="#rc.root#/includes/images/export_16.png" alt="export"/> Export
+						<img src="#prc.root#/includes/images/export_16.png" alt="export"/> Export
 					</span>
 				</a>
 				<!--- Import --->
@@ -42,7 +42,7 @@
 					class="button"
 				   	title="Import API">
 					<span>
-						<img src="#rc.root#/includes/images/import_16.png" alt="import"/> Import
+						<img src="#prc.root#/includes/images/import_16.png" alt="import"/> Import
 					</span>
 				</a>
 			</p>
@@ -52,7 +52,7 @@
 	<!--- Export Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/documents_icon.png" alt="info" width="24" height="24" />Docs Export Lounge
+			<img src="#prc.root#/includes/images/documents_icon.png" alt="info" width="24" height="24" />Docs Export Lounge
 		</div>
 		<div class="body">
 			<p>You can export your Relaxed Service Documentation in several formats: <br/></p>
@@ -65,7 +65,7 @@
 					class="button"
 				   	title="Export as HTML">
 					<span>
-						<img src="#rc.root#/includes/images/html.png" border="0" align="absmiddle" alt="html" />
+						<img src="#prc.root#/includes/images/html.png" border="0" align="absmiddle" alt="html" />
 					</span>
 				</a>
 				<!--- pdf --->
@@ -73,7 +73,7 @@
 				    target="_blank"
 					title="Export as PDF">
 					<span>
-						<img src="#rc.root#/includes/images/pdf.png" border="0" align="absmiddle" alt="html" />
+						<img src="#prc.root#/includes/images/pdf.png" border="0" align="absmiddle" alt="html" />
 					</span>
 				</a>
 				<!--- mediawiki --->
@@ -81,7 +81,7 @@
 				    target="_blank"
 					title="Export as MediaWiki">
 					<span>
-						<img src="#rc.root#/includes/images/wikipedia.png" border="0" align="absmiddle" alt="html" />
+						<img src="#prc.root#/includes/images/wikipedia.png" border="0" align="absmiddle" alt="html" />
 					</span>
 				</a>
 				<!--- trac --->
@@ -89,7 +89,7 @@
 				    target="_blank"
 					title="Export as TracMarkup">
 					<span>
-						<img src="#rc.root#/includes/images/trac.png" border="0" align="absmiddle" alt="html" />
+						<img src="#prc.root#/includes/images/trac.png" border="0" align="absmiddle" alt="html" />
 					</span>
 				</a>
 			</p>
@@ -99,25 +99,17 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/info.png" alt="info" width="24" height="24" />Need Help?
+			<img src="#prc.root#/includes/images/info.png" alt="info" width="24" height="24" />Need Help?
 		</div>
 		<div class="body">
 			<a href="http://www.ortussolutions.com" target="_blank" title="The Gurus behind ColdBox">
-			<img src="#rc.root#/includes/images/ortus-top-logo.png" alt="Ortus Solutions" border="0" /></a><br/>
+			<img src="#prc.root#/includes/images/ortus-top-logo.png" alt="Ortus Solutions" border="0" /></a><br/>
 
 			<p><strong>Ortus Solutions</strong> is the company behind anything ColdBox. Need professional support, architecture analysis,
 			code reviews, custom development or anything ColdFusion, ColdBox related?
 			<a href="mailto:help@ortussolutions.com">Contact us</a>, we are here
 			to help!</p>
 
-			<p class="center">
-			<a href="javascript:openRemoteModal('#event.buildLink(rc.xehRelaxUpdates)#')" class="button"
-			   title="Check for Updates">
-				<span>
-					<img src="#rc.root#/includes/images/download.png" border="0" align="absmiddle" alt="updates" />
-					Check For Updates
-				</span>
-			</a>
 		</div>
 	</div>
 
@@ -128,7 +120,7 @@
 <div class="main_column">
 	<div class="box">
 		<div class="header" id="relaxerHeader">
-			<img src="#rc.root#/includes/images/sofa.png" alt="Database" width="30" height="30" title="Go Relax!" />
+			<img src="#prc.root#/includes/images/sofa.png" alt="Database" width="30" height="30" title="Go Relax!" />
 			Welcome To Relax
 		</div>
 		<!--- Body --->

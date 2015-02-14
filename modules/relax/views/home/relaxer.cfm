@@ -4,7 +4,7 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.root#/includes/images/iinfo_icon.png" alt="info" width="24" height="24" />#rc.loadedAPIName# API
+			<img src="#prc.root#/includes/images/iinfo_icon.png" alt="info" width="24" height="24" />#rc.loadedAPIName# API
 		</div>
 		<div class="body">
 			<p>Choose a tier+resource to test:</p>
@@ -12,7 +12,7 @@
 			<div id="accordion" class="clearfix">
 				<!-- Accordion Items-->
 				<cfloop collection="#rc.dsl.relax.entryPoint#" item="entryPoint">
-				<h2><img src="#rc.root#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> <img src="#rc.root#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> <strong>#entryPoint#</strong> </h2>
+				<h2><img src="#prc.root#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> <img src="#prc.root#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> <strong>#entryPoint#</strong> </h2>
 				<div class="pane" <cfif rc.entryTier eq entryPoint>style="display:block"</cfif>>
 					<!--- My Resources --->
 					<select name="myResource" id="myResource" title="Your defined RESTful resources" onchange="resourceSelect(this.value,'#entrypoint#')">
@@ -29,14 +29,14 @@
 			<!--- Help button --->
 			<p class="center">
 				<br/>
-				<button class="button" onclick="return showResourceHelp()" title="Selected Resource Help"> <img src="#rc.root#/includes/images/help_small.png" alt="help"/> Resource Doc</button>
+				<button class="button" onclick="return showResourceHelp()" title="Selected Resource Help"> <img src="#prc.root#/includes/images/help_small.png" alt="help"/> Resource Doc</button>
 			</p>
 		</div>
 	</div>
 	<!--- Replay Button --->
 	<div class="small_box" id="requestHistoryContainer">
 		<div class="header">
-			<img src="#rc.root#/includes/images/history.png" alt="History" width="24" height="24" />Request History
+			<img src="#prc.root#/includes/images/history.png" alt="History" width="24" height="24" />Request History
 		</div>
 		<!--- MessageHolder --->
 		<div id="requestHistoryMessages" class="flickerMessages"></div>
@@ -62,14 +62,14 @@
 				   title="Clear the request history"
 				   data-message="Do you really want to clear your request history?">
 					<span>
-						<img src="#rc.root#/includes/images/edit-clear.png" border="0" align="absmiddle" alt="purge history" />
+						<img src="#prc.root#/includes/images/edit-clear.png" border="0" align="absmiddle" alt="purge history" />
 					</span>
 				</a>
 
 				<!--- Replay Command --->
 				<a href="javascript:rebuildRequest()" class="button" title="Rebuild the request">
 					<span>
-						<img src="#rc.root#/includes/images/play.png" border="0" align="absmiddle" alt="replay request" />
+						<img src="#prc.root#/includes/images/play.png" border="0" align="absmiddle" alt="replay request" />
 					</span>
 				</a>
 			</p>
@@ -77,7 +77,7 @@
 			<!--- Loader --->
 			<div id="historyLoader" class="loaders">
 				<p>
-					<img src="#rc.root#/includes/images/ajax-loader-blue.gif" alt="loader" />
+					<img src="#prc.root#/includes/images/ajax-loader-blue.gif" alt="loader" />
 				</p>
 			</div>
 
@@ -90,7 +90,7 @@
 <div class="main_column">
 	<div class="box">
 		<div class="header" id="relaxerHeader">
-			<img src="#rc.root#/includes/images/web.png" alt="Database" width="30" height="30" title="Go Relax!" />
+			<img src="#prc.root#/includes/images/web.png" alt="Database" width="30" height="30" title="Go Relax!" />
 			RelaxURL Console
 		</div>
 
@@ -121,13 +121,13 @@
 				</select>
 
 				<!--- Spacer --->
-				<img src="#rc.root#/includes/images/bullet_right.png" alt="right"/>
+				<img src="#prc.root#/includes/images/bullet_right.png" alt="right"/>
 
 				<!--- Resource or URL --->
 				<input title="The resource to hit" type="text" name="httpResource" id="httpResource" size="70" class="textfield" value="#rc.httpResource#" />
 
 				<!--- Spacer --->
-				<img src="#rc.root#/includes/images/bullet_right.png" alt="right"/>
+				<img src="#prc.root#/includes/images/bullet_right.png" alt="right"/>
 
 				<!--- Format --->
 				<select name="httpFormat" id="httpFormat" title="The resource format extension (if available)">
@@ -139,8 +139,8 @@
 				</select>
 
 				<!--- Button Bar --->
-				<button class="button" title="Advanced Settings" onClick="advancedSettings();return false;"> <img src="#rc.root#/includes/images/settings.png" alt="settings" height="16"/></button>
-				<button class="button" title="Send Request" onclick="submitForm();return false;"> <img src="#rc.root#/includes/images/send-receive.png" alt="settings" height="16"/> </button>
+				<button class="button" title="Advanced Settings" onClick="advancedSettings();return false;"> <img src="#prc.root#/includes/images/settings.png" alt="settings" height="16"/></button>
+				<button class="button" title="Send Request" onclick="submitForm();return false;"> <img src="#prc.root#/includes/images/send-receive.png" alt="settings" height="16"/> </button>
 
 				</fieldset>
 
@@ -180,11 +180,11 @@
 								<input title="Header Name"  type="text" class="textfield" name="headerNames"  size="30" value="#listGetAt(rc.headerNames,i)#" />
 								<input title="Header Value" type="text" class="textfield" name="headerValues" size="50"
 									   value="<cfif listLen(rc.headerValues)>#listGetAt(rc.headerValues,i)#</cfif>"/>
-								<button class="button dynamicRemove" onclick="return false;"><img src="#rc.root#/includes/images/delete.png" alt="delete"/></button>
+								<button class="button dynamicRemove" onclick="return false;"><img src="#prc.root#/includes/images/delete.png" alt="delete"/></button>
 							</p>
 							</cfloop>
 							<!--- Add Header --->
-							<button class="button dynamicAdd" data-type="header" title="Add Header" id="addHeaderButton" onclick="return false;"><img src="#rc.root#/includes/images/add.png" /></button>
+							<button class="button dynamicAdd" data-type="header" title="Add Header" id="addHeaderButton" onclick="return false;"><img src="#prc.root#/includes/images/add.png" /></button>
 						</div>
 					</fieldset>
 
@@ -199,11 +199,11 @@
 								<input title="Parameter Name"  type="text" class="textfield" name="parameterNames"  size="30" value="#listGetAt(rc.parameterNames,i)#" />
 								<input title="Parameter Value" type="text" class="textfield" name="parameterValues" size="50"
 									   value="<cfif listLen(rc.parameterValues)>#listGetAt(rc.parameterValues,i)#</cfif>" />
-								<button class="button dynamicRemove" onclick="return false;"><img src="#rc.root#/includes/images/delete.png" alt="delete"/></button>
+								<button class="button dynamicRemove" onclick="return false;"><img src="#prc.root#/includes/images/delete.png" alt="delete"/></button>
 							</p>
 							</cfloop>
 							<!--- Add Header --->
-							<button class="button dynamicAdd" data-type="parameter" title="Add Parameter" id="addParameterButton" onclick="return false;"><img src="#rc.root#/includes/images/add.png" /></button>
+							<button class="button dynamicAdd" data-type="parameter" title="Add Parameter" id="addParameterButton" onclick="return false;"><img src="#prc.root#/includes/images/add.png" /></button>
 						</div>
 					</fieldset>
 
@@ -215,7 +215,7 @@
 			<div id="bottomCenteredLoader">
 				<p>
 					Sending Request... <br/>
-					<img src="#rc.root#/includes/images/ajax-loader-blue.gif" alt="loader" />
+					<img src="#prc.root#/includes/images/ajax-loader-blue.gif" alt="loader" />
 				</p>
 			</div>
 
@@ -278,7 +278,7 @@
 <p id="fieldsTemplate" style="display:none;margin:0px">
 	<input type="text" data-title="::fieldType:: name"  name="::fieldType::Names"  class="textfield" size="30" />
 	<input type="text" data-title="::fieldType:: value" name="::fieldType::Values" class="textfield" size="50" />
-	<button class="button dynamicRemove" onclick="return false;"><img src="#rc.root#/includes/images/delete.png" alt="delete"/></button>
+	<button class="button dynamicRemove" onclick="return false;"><img src="#prc.root#/includes/images/delete.png" alt="delete"/></button>
 </p>
 <script language="javascript">
 $(document).ready(function() {

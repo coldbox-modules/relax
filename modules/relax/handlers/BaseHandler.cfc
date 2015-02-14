@@ -1,15 +1,27 @@
+/**
+********************************************************************************
+Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
+www.ortussolutions.com
+********************************************************************************
+*/
 component{
 
-	function preHandler( event, rc, prc ){
+	// DI
+	property name="settings" inject="coldbox:setting:relax";
 
+	/**
+	* Pre handler
+	*/
+	function preHandler( event, rc, prc ){
 		// module root
-		rc.root = event.getModuleRoot();
+		prc.root = event.getModuleRoot();
+		// settings
+		prc.settings = variables.settings;
 		// exit handlers
-		rc.xehHome 			= "relax/home";
-		rc.xehRelax			= "relax/home.relax";
-		rc.xehRelaxer		= "relax/home.relaxer";
-		rc.xehRelaxUpdates	= "relax/Home.checkUpdates";
-		rc.xehDSLDocs		= "relax/home.DSLDocs";
+		prc.xehHome 		= "relax/home";
+		prc.xehRelax		= "relax/home.relax";
+		prc.xehRelaxer		= "relax/home.relaxer";
+		prc.xehDSLDocs		= "relax/home.DSLDocs";
 	}
 
 }

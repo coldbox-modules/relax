@@ -1,13 +1,13 @@
 <cfoutput>
 <!--- Service Title and Description --->
-<h1>#rc.dsl.relax.title#</h1>
-<p>#rc.dsl.relax.description#</p>
+<h1>#prc.dsl.relax.title#</h1>
+<p>#prc.dsl.relax.description#</p>
 
 <!--- Entry Points --->
 <h3>Service Entry Point(s)</h3>
-<cfloop collection="#rc.dsl.relax.entryPoint#" item="entryPoint">
+<cfloop collection="#prc.dsl.relax.entryPoint#" item="entryPoint">
 <p>#entryPoint#</p>
-<pre class="brush: xml; ruler: false">#rc.dsl.relax.entryPoint[entryPoint]#</pre>
+<pre class="brush: xml; ruler: false">#prc.dsl.relax.entryPoint[entryPoint]#</pre>
 </cfloop>
 
 <!--- API Return Formats --->
@@ -24,21 +24,21 @@
 <table class="tablelisting" width="100%">
 	<tr>
 		<th width="200" class="textRight">Service Extension Detection:</th>
-		<td>#yesNoFormat(rc.dsl.relax.extensionDetection)#</td>
+		<td>#yesNoFormat(prc.dsl.relax.extensionDetection)#</td>
 	</tr>
 	<tr>
 		<th  class="textRight">Allowed Extensions:</th>
-		<td>#rc.dsl.relax.validExtensions#</td>
+		<td>#prc.dsl.relax.validExtensions#</td>
 	</tr>
 	<tr>
 		<th  class="textRight">Throw On Invalid Extension:</th>
-		<td>#yesNoFormaT(rc.dsl.relax.throwOnInvalidExtension)#</td>
+		<td>#yesNoFormaT(prc.dsl.relax.throwOnInvalidExtension)#</td>
 	</tr>
 </table>
 
 <!--- API Global Headers --->
 <h3>API Global Headers</h3>
-<cfif NOT arrayLen(rc.dsl.globalHeaders)>
+<cfif NOT arrayLen(prc.dsl.globalHeaders)>
 	<em>No global headers</em>
 </cfif>
 <table class="tablelisting" width="100%">
@@ -49,7 +49,7 @@
 		<th>Default</th>
 		<th>Description</th>
 	</tr>
-	<cfloop array="#rc.dsl.globalHeaders#" index="thisHeader">
+	<cfloop array="#prc.dsl.globalHeaders#" index="thisHeader">
 	<tr>
 		<td><strong>#thisHeader.name#</strong></td>
 		<td><cfif structKeyExists(thisHeader,"type")>#thisHeader.type#<cfelse>string</cfif></td>
@@ -62,7 +62,7 @@
 
 <!--- API Global Parameters --->
 <h3>API Global Parameters</h3>
-<cfif NOT arrayLen(rc.dsl.globalParameters)>
+<cfif NOT arrayLen(prc.dsl.globalParameters)>
 	<em>No global parameters</em>
 </cfif>
 <table class="tablelisting" width="100%">
@@ -73,7 +73,7 @@
 		<th>Default</th>
 		<th>Description</th>
 	</tr>
-	<cfloop array="#rc.dsl.globalParameters#" index="thisParam">
+	<cfloop array="#prc.dsl.globalParameters#" index="thisParam">
 	<tr>
 		<td><strong>#thisParam.name#</strong></td>
 		<td><cfif structKeyExists(thisParam,"type")>#thisParam.type#<cfelse>string</cfif></td>

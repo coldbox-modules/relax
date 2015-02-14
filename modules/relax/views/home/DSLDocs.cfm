@@ -1,7 +1,7 @@
 <cfoutput>
 <div class="box clear">
 	<div class="header">
-		<img src="#rc.root#/includes/images/help.png" alt="help" width="30" height="30" />Relax Logs DSL Help
+		<img src="#prc.root#/includes/images/help.png" alt="help" width="30" height="30" />Relax Logs DSL Help
 	</div>
 	<div class="body_vertical_nav clearfix">
 		

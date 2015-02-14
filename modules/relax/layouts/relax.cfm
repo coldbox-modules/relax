@@ -9,33 +9,33 @@
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--=========Title=========-->
     <title>ColdBox Relax - RESTful Tools For Lazy Experts</title>
-	<link href="#rc.root#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<link href="#prc.root#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--=========Stylesheets=========-->
-	<link href="#rc.root#/includes/css/style.css"	 	rel="stylesheet" type="text/css"/>
-	<link href="#rc.root#/includes/css/teal.css" 		rel="stylesheet" type="text/css"/>
-	<link href="#rc.root#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
-    <link href="#rc.root#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
+	<link href="#prc.root#/includes/css/style.css"	 	rel="stylesheet" type="text/css"/>
+	<link href="#prc.root#/includes/css/teal.css" 		rel="stylesheet" type="text/css"/>
+	<link href="#prc.root#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
+    <link href="#prc.root#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
 	<!--- loop around the cssAppendList, to add page specific css --->
-	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
-		<cfset addAsset("#rc.root#/includes/css/#css#.css")>
+	<cfloop list="#event.getPrivateValue("cssAppendList","")#" index="css">
+		<cfset addAsset("#prc.root#/includes/css/#css#.css")>
 	</cfloop>
-	<cfloop list="#event.getValue("cssFullAppendList","")#" index="css">
+	<cfloop list="#event.getPrivateValue("cssFullAppendList","")#" index="css">
 		<cfset addAsset("#css#.css")>
 	</cfloop>
 
 	<!--========= JAVASCRIPT -->
-	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery-1.4.4.min.js"></script> <!--Import jquery tools-->
-	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery.tools.min.js"></script> <!--Import jquery tools-->
-	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery.uitablefilter.js"></script>
-	<script type="text/javascript" src="#rc.root#/includes/javascript/metadata.pack.js"></script>
-	<script type="text/javascript" src="#rc.root#/includes/javascript/tablesorter.min.js"></script>
-	<script type="text/javascript" src="#rc.root#/includes/javascript/relax.js"></script>
-	<script type="text/javascript" src="#rc.root#/includes/javascript/jsonlint.js"></script>
+	<script type="text/javascript" src="#prc.root#/includes/javascript/jquery-1.4.4.min.js"></script> <!--Import jquery tools-->
+	<script type="text/javascript" src="#prc.root#/includes/javascript/jquery.tools.min.js"></script> <!--Import jquery tools-->
+	<script type="text/javascript" src="#prc.root#/includes/javascript/jquery.uitablefilter.js"></script>
+	<script type="text/javascript" src="#prc.root#/includes/javascript/metadata.pack.js"></script>
+	<script type="text/javascript" src="#prc.root#/includes/javascript/tablesorter.min.js"></script>
+	<script type="text/javascript" src="#prc.root#/includes/javascript/relax.js"></script>
+	<script type="text/javascript" src="#prc.root#/includes/javascript/jsonlint.js"></script>
 	<!--- loop around the jsAppendList, to add page specific js --->
-	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">
-		<cfset addAsset("#rc.root#/includes/javascript/#js#.js")>
+	<cfloop list="#event.getPrivateValue("jsAppendList", "")#" index="js">
+		<cfset addAsset("#prc.root#/includes/javascript/#js#.js")>
 	</cfloop>
-	<cfloop list="#event.getValue("jsFullAppendList", "")#" index="js">
+	<cfloop list="#event.getPrivateValue("jsFullAppendList", "")#" index="js">
 		<cfset addAsset("#js#.js")>
 	</cfloop>
 
@@ -64,7 +64,7 @@
 
 		<!--=========Header Area including search field and logo=========-->
 		<div id="logo">
-			<a title="Wanna Relax? Click Me!" href="javascript:openRemoteModal('#event.buildLink(rc.xehRelax)#')"><img src="#rc.root#/includes/images/Coldbox-Relax_125.png" height="120" border="0" alt="logo" /></a>
+			<a title="Wanna Relax? Click Me!" href="javascript:openRemoteModal('#event.buildLink(rc.xehRelax)#')"><img src="#prc.root#/includes/images/Coldbox-Relax_125.png" height="120" border="0" alt="logo" /></a>
 		</div>
 
 		<div id="header_main" class="clearfix">
@@ -127,7 +127,7 @@
 <!--- ============================ Remote Modal Window ============================ --->
 <div id="remoteModal">
 	<div id="remoteModelContent">
-		<img src="#rc.root#/includes/images/ajax-loader-blue.gif" alt="loader" />
+		<img src="#prc.root#/includes/images/ajax-loader-blue.gif" alt="loader" />
 	</div>
 </div>
 <!--- ============================ end Confirmit ============================ --->
