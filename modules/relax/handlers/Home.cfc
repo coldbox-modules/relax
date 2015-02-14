@@ -69,7 +69,7 @@ component extends="BaseHandler"{
 	}
 
 	/**
-	* Home
+	* The Awesome Relaxer
 	*/
 	function relaxer( event, rc, prc ){
 		// some defaults
@@ -103,15 +103,15 @@ component extends="BaseHandler"{
 		// send request
 		if( rc.sendRequest ){
 			try{
-				prc.results = relaxerService.send(argumentCollection=rc);
+				prc.results = relaxerService.send( argumentCollection=rc );
 			} catch( Any e ){
-				log.error("Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#", e);
+				log.error( "Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#", e );
 				flash.put( "notice", "Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#" );
 			}
 		}
 
 		// Get request history
-		rc.requestHistory = relaxerService.getHistory();
+		prc.requestHistory = relaxerService.getHistory();
 
 		// display relaxer
 		event.setView("home/relaxer");
@@ -161,33 +161,23 @@ component extends="BaseHandler"{
 	}
 
 	/**
-	* Home
+	* Purge relaxer history
 	*/
 	function purgeHistory( event, rc, prc ){
 		var results = {
-			error = false,
-			messages = "History cleaned!"
+			"error" 	= false,
+			"messages" 	= "History cleaned!"
 		};
 		try{
 			relaxerService.clearHistory();
-		}
-		catch(Any e){
-			results.error = true;
+		} catch( Any e ){
+			results.error 	 = true;
 			results.messages = "error clearing history: #e.detail# #e.message#";
 			if( log.canError() ){
-				log.error("Error clearing history: #e.message# #e.detail#",e);
+				log.error( "Error clearing history: #e.message# #e.detail#", e );
 			}
 		}
-		event.renderData(type="jsont",data=results);
-	}
-
-	
-
-	/**
-	* Home
-	*/
-	function dslDocsCodex( event, rc, prc ){
-		event.renderData(data=getModel("DSLDoc@relax").generateCodex(),type="text");
+		event.renderData( type="json", data=results );
 	}
 
 }

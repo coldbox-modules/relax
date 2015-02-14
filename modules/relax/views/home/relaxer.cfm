@@ -11,14 +11,14 @@
 			<!--=== Accordion ===-->
 			<div id="accordion" class="clearfix">
 				<!-- Accordion Items-->
-				<cfloop collection="#rc.dsl.relax.entryPoint#" item="entryPoint">
+				<cfloop collection="#prc.dsl.relax.entryPoint#" item="entryPoint">
 				<h2><img src="#prc.root#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> <img src="#prc.root#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> <strong>#entryPoint#</strong> </h2>
 				<div class="pane" <cfif rc.entryTier eq entryPoint>style="display:block"</cfif>>
 					<!--- My Resources --->
 					<select name="myResource" id="myResource" title="Your defined RESTful resources" onchange="resourceSelect(this.value,'#entrypoint#')">
 						<option value="null" selected="selected">Pick One To Test</option>
-						<cfloop array="#rc.dsl.resources#" index="thisResource">
-							<option value="#thisResource.resourceID#;#rc.dsl.relax.entryPoint[entryPoint]##thisResource.pattern#">#thisResource.pattern#</option>
+						<cfloop array="#prc.dsl.resources#" index="thisResource">
+							<option value="#thisResource.resourceID#;#prc.dsl.relax.entryPoint[entryPoint]##thisResource.pattern#">#thisResource.pattern#</option>
 						</cfloop>
 					</select>
 				</div>
@@ -43,14 +43,14 @@
 		<div class="body">
 			<p class="center">
 				<!--- Selection Box --->
-				<select name="requestHistory" id="requestHistory" <cfif arrayLen(rc.requestHistory) EQ 0>disabled="disabled"</cfif>>
-					<cfif arrayLen(rc.requestHistory) EQ 0>
+				<select name="requestHistory" id="requestHistory" <cfif arrayLen( prc.requestHistory ) EQ 0>disabled="disabled"</cfif>>
+					<cfif arrayLen( prc.requestHistory ) EQ 0>
 						<option value="null">No History</option>
 					<cfelse>
 						<option value="null">Select History Item</option>
 					</cfif>
-					<cfloop from="1" to="#arrayLen(rc.requestHistory)#" index="x">
-						<option value='#x-1#'>#printDate(rc.requestHistory[x].requestDate)#</option>
+					<cfloop from="1" to="#arrayLen( prc.requestHistory)#" index="x">
+						<option value='#x-1#'>#printDate( prc.requestHistory[x].requestDate)#</option>
 					</cfloop>
 				</select>
 				<br/>
@@ -100,7 +100,7 @@
 				#flash.get( "notice" )#
 			</cfif>
 
-			<form name="relaxerForm" id="relaxerForm" action="#event.buildLink(rc.xehRelaxer)#" method="post">
+			<form name="relaxerForm" id="relaxerForm" action="#event.buildLink( prc.xehRelaxer)#" method="post">
 				<input type="hidden" name="sendrequest" value="true" />
 
 				<fieldset>
@@ -221,7 +221,7 @@
 
 
 			<!--- results --->
-			<cfif structKeyExists(rc,"results")>
+			<cfif structKeyExists( prc, "results" )>
 				<a name="results"></a>
 				<div id="resultsBox">
 					<!--- Tabs --->
@@ -239,14 +239,14 @@
 								<tr>
 									<th width="125" class="textRight">Request Status</th>
 									<td>
-										#rc.results.statuscode#
+										#prc.results.statuscode#
 									</td>
 								</tr>
-								<cfloop collection="#rc.results.responseHeader#" item="header">
+								<cfloop collection="#prc.results.responseHeader#" item="header">
 								<tr>
 									<th width="125" class="textRight">#header#</th>
 									<td>
-										#rc.results.responseHeader[header].toString()#
+										#prc.results.responseHeader[header].toString()#
 									</td>
 								</tr>
 								</cfloop>
@@ -255,12 +255,12 @@
 						<!--- Raw Content --->
 						<div class="pane">
 							<form>
-							<textarea id="resultsRAW" class="textfield" rows="30" style="width:100%">#rc.results.fileContent.toString()#</textarea>
+							<textarea id="resultsRAW" class="textfield" rows="30" style="width:100%">#prc.results.fileContent.toString()#</textarea>
 							</form>
 						</div>
 						<!--- Pretty Content --->
 						<div class="pane">
-							<pre id="resultsPretty" class="brush: #getBrush(rc.results.fileContent)#">#getTreatedContent(rc.results.fileContent)#
+							<pre id="resultsPretty" class="brush: #getBrush(prc.results.fileContent)#">#getTreatedContent(prc.results.fileContent)#
 							</pre>
 						</div>
 					</div>
@@ -286,7 +286,7 @@ $(document).ready(function() {
 	$resultsBox  	= $("##resultsBox");
 	$relaxerHeader 	= $("##relaxerHeader");
 
-	<cfif structKeyExists(rc,"results")>
+	<cfif structKeyExists( prc, "results" )>
 	$tabPanes		= $("##tabPanes");
 	$tabRoot		= $("##tabs");
 	// syntax highlight
@@ -299,8 +299,8 @@ $(document).ready(function() {
 	$.scrollTo($resultsBox, 800, {axis:'y'});
 
 	// some formatting
-	<cfif( NOT isXML(rc.results.fileContent) )>
-		$("##resultsPretty").html( formatJSONRaw('#JSStringFormat(rc.results.fileContent)#') );
+	<cfif( NOT isXML( prc.results.fileContent) )>
+		$("##resultsPretty").html( formatJSONRaw('#JSStringFormat( prc.results.fileContent)#') );
 	</cfif>
 
 	</cfif>
@@ -319,13 +319,13 @@ $(document).ready(function() {
 
 	// resource js models
 	$resources = {};
-	<cfloop array="#rc.dsl.resources#" index="thisResource">
+	<cfloop array="#prc.dsl.resources#" index="thisResource">
 		$resources['#thisResource.resourceID#'] = #serializeJSON( thisResource )#;
  	</cfloop>
 	//json history
 	reqHistory = [];
-	<cfloop from="1" to="#arrayLen(rc.requestHistory)#" index="x">
-	reqHistory[#x-1#] = #serializeJSON(rc.requestHistory[x])#;
+	<cfloop from="1" to="#arrayLen( prc.requestHistory)#" index="x">
+	reqHistory[#x-1#] = #serializeJSON( prc.requestHistory[x] )#;
 	</cfloop>
 });
 function showBrowserResults(){
@@ -392,7 +392,7 @@ function showResourceHelp(){
 	var val = $("##resourceID").val();
 	if( val != "null"){
 		var values = val.split(";");
-		openRemoteModal('#event.buildLink(rc.xehResourceDoc)#',{
+		openRemoteModal( '#event.buildLink( prc.xehResourceDoc )#',{
 			resourceID: values[0]
 		});
 	}
@@ -430,7 +430,7 @@ function clearHistory(){
 	$("##historyLoader").fadeIn();
 	$("##requestHistoryContainer").css("opacity",".5");
 	// clean history
-	$.post('#event.buildLink(rc.xehPurgeHistory)#',{},
+	$.post( '#event.buildLink( prc.xehPurgeHistory )#',{},
 		   function(response){
 		   	// deactivate spinner
 			$("##historyLoader").fadeOut();
