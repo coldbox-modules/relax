@@ -1,0 +1,167 @@
+{
+    "_DEFINEDRESOURCES": {
+        "/:format/entries": {
+            "RESPONSE": {},
+            "placeholders": [
+                {
+                    "default": "",
+                    "required": true,
+                    "name": "format",
+                    "type": "xml,json",
+                    "description": "The return format for the resource"
+                }
+            ],
+            "pattern": "/:format/entries",
+            "RESOURCEID": "E533C56C6733171E7593C2F29C30760E",
+            "HEADERS": [],
+            "DEFAULTMETHOD": "GET",
+            "parameters": [
+                {
+                    "default": "recent",
+                    "required": "false",
+                    "name": "orderby",
+                    "type": "new,recent,popular",
+                    "description": "The ordering to impose in the results"
+                },
+                {
+                    "default": "0",
+                    "required": "false",
+                    "name": "maxrows",
+                    "type": "numeric",
+                    "description": "The max records to retrieve"
+                },
+                {
+                    "default": "0",
+                    "required": "false",
+                    "name": "startrow",
+                    "type": "numeric",
+                    "description": "The offset to use when paging records"
+                },
+                {
+                    "default": "",
+                    "required": "false",
+                    "name": "type",
+                    "type": "string",
+                    "description": "he type slug to filter the results with"
+                }
+            ],
+            "DEFAULTFORMAT": "",
+            "HANDLER": "",
+            "METHODS": "GET",
+            "ACTION": "",
+            "DESCRIPTION": "Returns code entries according to passed in parameters or using default values."
+        },
+        "/:format/types": {
+            "RESPONSE": {},
+            "placeholders": [
+                {
+                    "default": "",
+                    "required": true,
+                    "name": "format",
+                    "type": "xml,json",
+                    "description": "The return format for the resource"
+                }
+            ],
+            "pattern": "/:format/types",
+            "RESOURCEID": "D41BBB85B530C160E6F125800EB4AFE7",
+            "HEADERS": [],
+            "DEFAULTMETHOD": "GET",
+            "PARAMETERS": [],
+            "DEFAULTFORMAT": "",
+            "HANDLER": "",
+            "METHODS": "GET",
+            "ACTION": "",
+            "DESCRIPTION": "Returns a listing of all available ForgeBox code entry types"
+        }
+    },
+    "RELAX": {
+        "entryPoint": {
+            "DEV": "http://coldbox.jfetmac/api/forgebox",
+            "PRODUCTION": "http://www.coldbox.org/api/forgebox"
+        },
+        "extensionDetection": false,
+        "THROWONINVALIDEXTENSION": false,
+        "validExtensions": "json,jsont,xml,html,htm,rss",
+        "throwOnInvalidExtensions": "false",
+        "title": "ForgeBox API",
+        "description": "ForgeBox is a source directory for anything ColdBox."
+    },
+    "GLOBALPARAMETERS": [],
+    "RESOURCES": [
+        {
+            "RESPONSE": {},
+            "placeholders": [
+                {
+                    "default": "",
+                    "required": true,
+                    "name": "format",
+                    "type": "xml,json",
+                    "description": "The return format for the resource"
+                }
+            ],
+            "pattern": "/:format/types",
+            "RESOURCEID": "D41BBB85B530C160E6F125800EB4AFE7",
+            "HEADERS": [],
+            "DEFAULTMETHOD": "GET",
+            "PARAMETERS": [],
+            "DEFAULTFORMAT": "",
+            "HANDLER": "",
+            "METHODS": "GET",
+            "ACTION": "",
+            "DESCRIPTION": "Returns a listing of all available ForgeBox code entry types"
+        },
+        {
+            "RESPONSE": {},
+            "placeholders": [
+                {
+                    "default": "",
+                    "required": true,
+                    "name": "format",
+                    "type": "xml,json",
+                    "description": "The return format for the resource"
+                }
+            ],
+            "pattern": "/:format/entries",
+            "RESOURCEID": "E533C56C6733171E7593C2F29C30760E",
+            "HEADERS": [],
+            "DEFAULTMETHOD": "GET",
+            "parameters": [
+                {
+                    "default": "recent",
+                    "required": "false",
+                    "name": "orderby",
+                    "type": "new,recent,popular",
+                    "description": "The ordering to impose in the results"
+                },
+                {
+                    "default": "0",
+                    "required": "false",
+                    "name": "maxrows",
+                    "type": "numeric",
+                    "description": "The max records to retrieve"
+                },
+                {
+                    "default": "0",
+                    "required": "false",
+                    "name": "startrow",
+                    "type": "numeric",
+                    "description": "The offset to use when paging records"
+                },
+                {
+                    "default": "",
+                    "required": "false",
+                    "name": "type",
+                    "type": "string",
+                    "description": "he type slug to filter the results with"
+                }
+            ],
+            "DEFAULTFORMAT": "",
+            "HANDLER": "",
+            "METHODS": "GET",
+            "ACTION": "",
+            "DESCRIPTION": "Returns code entries according to passed in parameters or using default values."
+        }
+    ],
+    "GLOBALHEADERS": [],
+    "_CURRENTRESOURCE": "/:format/entries"
+}

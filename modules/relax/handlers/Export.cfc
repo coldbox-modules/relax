@@ -12,14 +12,14 @@ Description :
 	<!--- dependencies --->
 	<cfproperty name="relaxerService" 	inject="id:Relaxer@relax" >
 	<cfproperty name="DSLService"		inject="id:DSLService@relax" >
-	
+	<cfproperty name="wikitext"			inject="wikitext@wikitext">
+
 <cfscript>
 
-	function preHandler(event){
-		var rc = event.getCollection();
-		super.preHandler(argumentCollection=arguments);
+	function preHandler( event, rc, prc ){
+		super.preHandler( argumentCollection=arguments );
 		// module settings
-		rc.settings = getModuleSettings("relax").settings;
+		rc.settings = getModuleSettings("relax");
 		// Get the loaded API for the user
 		rc.dsl				= DSLService.getLoadedAPI();
 		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
@@ -29,15 +29,15 @@ Description :
 		// Exit Handlers
 		rc.xehResourceDocEvent  = "relax:Home.resourceDoc";
 	}
-	
+
 	function api(event,rc,prc){
 		prc.xehExportAPI = "relax/export/api";
 		prc.jsonAPI = serializeJSON( rc.dsl );
 		if( event.valueExists("download") ){
-			var title = getPlugin("HTMLHelper").slugify( rc.dsl.relax.title );
+			var title = getPlugin("htmlhelper@coldbox").slugify( rc.dsl.relax.title );
 			event.setHTTPHeader(name="content-disposition",value='attachment; filename="#title#.json"');
 			event.renderData(data=prc.jsonAPI,type="json");
-		}	
+		}
 		else{
 			event.setView(name="export/api",layout="ajax");
 		}
@@ -46,33 +46,32 @@ Description :
 	function html(event,rc,prc){
 		rc.print 				= "true";
 		rc.expandedResourceDivs = true;
-		
+
 		// custom css/js
 		rc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
 		rc.cssAppendList = "shCore,shThemeDefault";
-		
+
 		event.setView(name="export/html",layout="html");
 	}
-	
+
 	function pdf(event,rc,prc){
 		html(event,rc,prc);
 		event.setLayout("pdf");
 	}
-	
+
 	function mediawiki(event,rc,prc){
 		wikiMarkup(event,rc,prc,"WIKIPEDIA");
 	}
 
 	function trac(event,rc,prc){
-		wikiMarkup(event,rc,prc,"TRAC");	
+		wikiMarkup(event,rc,prc,"TRAC");
 	}
 
 	function wikiMarkup(event,rc,prc,type){
-		var converter = getPlugin(plugin="WikiText",module="relax");
 		var data = "";
-		
+
 		html(event,rc,prc);
-		data = converter.toWiki(wikiTranslator=arguments.type,htmlString=renderView("export/html"));
+		data = wikitext.toWiki(wikiTranslator=arguments.type,htmlString=renderView("export/html"));
 		event.renderData(type="text",data=data);
 	}
 

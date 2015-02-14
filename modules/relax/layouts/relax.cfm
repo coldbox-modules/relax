@@ -4,11 +4,11 @@
 <!--============================Head============================-->
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="robots" content="noindex,nofollow" />	
+	<meta name="robots" content="noindex,nofollow" />
 	<!--- SES --->
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--=========Title=========-->
-    <title>ColdBox Relax - RESTful Tools For Lazy Experts</title> 
+    <title>ColdBox Relax - RESTful Tools For Lazy Experts</title>
 	<link href="#rc.root#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--=========Stylesheets=========-->
 	<link href="#rc.root#/includes/css/style.css"	 	rel="stylesheet" type="text/css"/>
@@ -22,7 +22,7 @@
 	<cfloop list="#event.getValue("cssFullAppendList","")#" index="css">
 		<cfset addAsset("#css#.css")>
 	</cfloop>
-	        
+
 	<!--========= JAVASCRIPT -->
 	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery-1.4.4.min.js"></script> <!--Import jquery tools-->
 	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery.tools.min.js"></script> <!--Import jquery tools-->
@@ -49,7 +49,7 @@
 
 	<!--============Header Wrapper============-->
 	<div class="wrapper">
-       
+
 		<!--=======Top Header area======-->
 		<div id="header_top">
 			<span class="fr">
@@ -61,46 +61,31 @@
 		  RESTful Tools For Lazy Experts
 		</div>
 		<!--End Header top Area=-->
-    
+
 		<!--=========Header Area including search field and logo=========-->
 		<div id="logo">
 			<a title="Wanna Relax? Click Me!" href="javascript:openRemoteModal('#event.buildLink(rc.xehRelax)#')"><img src="#rc.root#/includes/images/Coldbox-Relax_125.png" height="120" border="0" alt="logo" /></a>
 		</div>
-		
+
 		<div id="header_main" class="clearfix">
-           	<a href="#event.buildLink(rc.xehHome)#"><h1>Relax <span>v.#getModuleSettings('relax').version#</span></h1></a>
+           	<a href="#event.buildLink(rc.xehHome)#"><h1>Relax <span>v.#getModuleConfig('relax').version#</span></h1></a>
 		</div>
 		<!--End Search field and logo Header Area-->
-      
+
 		<!--=========Main Navigation=========-->
 		<ul id="main_nav">
 			<!--- Main Nav --->
-			<li> 
+			<li>
 				<a href="##" title="Relax Dashboard" <cfif event.getCurrentHandler() eq "relax:home"> class="current"</cfif>>Dashboard</a>
 				<ul>
 					<li><a href="#event.buildLink(rc.xehHome)#"  <cfif event.getCurrentAction() eq "index"> class="current"</cfif>>Home</a></li>
 					<li><a title="Pronounced 'Relax-ER'" href="#event.buildLink(rc.xehRelaxer)#"  <cfif event.getCurrentAction() eq "relaxer"> class="current"</cfif>>RelaxURL</a></li>
-					<li><a href="javascript:openRemoteModal('#event.buildLink(rc.xehRelaxUpdates)#')" title="Check For Relax Updates">Check For Updates</a></li>
 					<li><a href="#event.buildLink(rc.xehDSLDocs)#"  <cfif event.getCurrentAction() eq "DSLDocs"> class="current"</cfif>>RelaxDSL Docs</a></li>
-				</ul>
-			</li>
-			<!--- LogBox Nav --->
-			<li>
-				<a href="##" title="LogBox Integration" <cfif event.getCurrentHandler() eq "relax:logs"> class="current"</cfif>>LogBox</a>
-				<ul>
-					<li>
-						<a href="#event.buildLink(rc.xehLogViewer)#" <cfif event.getCurrentAction() eq "index"> class="current"</cfif>
-						   title="The Most Relaxed Log Viewer On Earth!">RelaxLogs</a>
-					</li>
-					<li>
-						<a href="#event.buildLink(rc.xehLogHelp)#" <cfif event.getCurrentAction() eq "help"> class="current"</cfif>
-						   title="Get some setup help!">Help</a>
-					</li>
 				</ul>
 			</li>
 		</ul>
 		<!--End Main Navigation-->
-    
+
   	</div>
   <!--End Wrapper-->
 </div>
@@ -110,7 +95,7 @@
 <div id="content_bg" class="clearfix">
 	<!--============================ Main Content Area ============================-->
 	<div class="content wrapper clearfix">
-		#renderView()#		
+		#renderView()#
 	</div>
 <!--End main content area-->
 </div>
@@ -126,16 +111,16 @@
 <!--End Footer-->
 
 <!--- ============================ confirm it modal dialog ============================ --->
-<div id="confirmIt"> 
-	<div> 
-		<h2 id="confirmItTitle">Are you sure?</h2> 
-		<p id="confirmItMessage">Are you sure you want to perform this action?</p> 
+<div id="confirmIt">
+	<div>
+		<h2 id="confirmItTitle">Are you sure?</h2>
+		<p id="confirmItMessage">Are you sure you want to perform this action?</p>
 		<hr />
 		<p class="textRight">
 			<button class="close button" 	data-action="cancel"> Cancel </button>
 			<button class="close buttonred" data-action="confirm"> Confirm </button>
 		</p>
-	</div> 
+	</div>
 </div>
 <!--- ============================ end Confirmit ============================ --->
 

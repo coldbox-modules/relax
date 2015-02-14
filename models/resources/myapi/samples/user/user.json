@@ -1,0 +1,14 @@
+{
+	"status":"success",
+	"message":"",
+	"data":{
+		"userid":1001,
+		"username":"admin",
+		"useremail":"admin@server.com",
+		"userfirstname":"Administrator",
+		"userlastname":"",
+		"userrole":"admin",
+		"clientid":1001,
+		"clientname":"System"
+	}
+}

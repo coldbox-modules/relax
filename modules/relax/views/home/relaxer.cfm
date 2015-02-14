@@ -25,14 +25,14 @@
 				</cfloop>
 			</div>
 			<!--End Accordion-->
-			
+
 			<!--- Help button --->
 			<p class="center">
 				<br/>
 				<button class="button" onclick="return showResourceHelp()" title="Selected Resource Help"> <img src="#rc.root#/includes/images/help_small.png" alt="help"/> Resource Doc</button>
 			</p>
 		</div>
-	</div>	
+	</div>
 	<!--- Replay Button --->
 	<div class="small_box" id="requestHistoryContainer">
 		<div class="header">
@@ -51,21 +51,21 @@
 					</cfif>
 					<cfloop from="1" to="#arrayLen(rc.requestHistory)#" index="x">
 						<option value='#x-1#'>#printDate(rc.requestHistory[x].requestDate)#</option>
-					</cfloop>					
+					</cfloop>
 				</select>
 				<br/>
 			</p>
-			
-			<p class="center">	
+
+			<p class="center">
 				<!--- Clear History Command --->
-				<a href="javascript:clearHistory()" class="button confirmIt" 
+				<a href="javascript:clearHistory()" class="button confirmIt"
 				   title="Clear the request history"
 				   data-message="Do you really want to clear your request history?">
 					<span>
 						<img src="#rc.root#/includes/images/edit-clear.png" border="0" align="absmiddle" alt="purge history" />
 					</span>
 				</a>
-				
+
 				<!--- Replay Command --->
 				<a href="javascript:rebuildRequest()" class="button" title="Rebuild the request">
 					<span>
@@ -73,16 +73,16 @@
 					</span>
 				</a>
 			</p>
-			
+
 			<!--- Loader --->
 			<div id="historyLoader" class="loaders">
 				<p>
 					<img src="#rc.root#/includes/images/ajax-loader-blue.gif" alt="loader" />
 				</p>
 			</div>
-			
+
 		</div>
-	</div>	
+	</div>
 </div>
 <!--End sidebar-->
 
@@ -93,21 +93,23 @@
 			<img src="#rc.root#/includes/images/web.png" alt="Database" width="30" height="30" title="Go Relax!" />
 			RelaxURL Console
 		</div>
-		
+
 		<div class="body">
 			<!--- MessageBox --->
-			#getPlugin("messagebox").renderit()#	
-			
+			<cfif flash.exists( "notice" )>
+				#flash.get( "notice" )#
+			</cfif>
+
 			<form name="relaxerForm" id="relaxerForm" action="#event.buildLink(rc.xehRelaxer)#" method="post">
 				<input type="hidden" name="sendrequest" value="true" />
-				
+
 				<fieldset>
 					<legend>Method-Resource-Format</legend>
-				
+
 				<!--- Resource ID --->
 				<input type="hidden" name="resourceID" 	 id="resourceID" 	value="null" />
 				<input type="hidden" name="resourceTier" id="resourceTier" 	value="production" />
-				
+
 				<!--- HTTP Method --->
 				<select name="httpMethod" id="httpMethod" title="Choose your HTTP Method">
 					<option <cfif rc.httpMethod eq "GET">selected="selected"</cfif>>GET</option>
@@ -116,17 +118,17 @@
 					<option <cfif rc.httpMethod eq "DELETE">selected="selected"</cfif>>DELETE</option>
 					<option <cfif rc.httpMethod eq "HEAD">selected="selected"</cfif>>HEAD</option>
 					<option <cfif rc.httpMethod eq "OPTIONS">selected="selected"</cfif>>OPTIONS</option>
-				</select> 
-				
+				</select>
+
 				<!--- Spacer --->
 				<img src="#rc.root#/includes/images/bullet_right.png" alt="right"/>
-				
+
 				<!--- Resource or URL --->
 				<input title="The resource to hit" type="text" name="httpResource" id="httpResource" size="70" class="textfield" value="#rc.httpResource#" />
-				
+
 				<!--- Spacer --->
 				<img src="#rc.root#/includes/images/bullet_right.png" alt="right"/>
-				
+
 				<!--- Format --->
 				<select name="httpFormat" id="httpFormat" title="The resource format extension (if available)">
 					<option value="" <cfif rc.httpFormat eq "">selected="selected"</cfif>>none</option>
@@ -135,67 +137,67 @@
 					<option <cfif rc.httpFormat eq "jsont">selected="selected"</cfif>>jsont</option>
 					<option <cfif rc.httpFormat eq "rss">selected="selected"</cfif>>rss</option>
 				</select>
-				
+
 				<!--- Button Bar --->
 				<button class="button" title="Advanced Settings" onClick="advancedSettings();return false;"> <img src="#rc.root#/includes/images/settings.png" alt="settings" height="16"/></button>
 				<button class="button" title="Send Request" onclick="submitForm();return false;"> <img src="#rc.root#/includes/images/send-receive.png" alt="settings" height="16"/> </button>
-				
+
 				</fieldset>
-				
+
 				<!--- Advanced Settings --->
 				<div id="advancedSettings">
 					<fieldset style="background-color:##e5e5e5">
 						<legend>Advanced Settings</legend>
-					
+
 					<!--- HTTP Basic Auth --->
 					<fieldset>
 						<legend>HTTP Basic Authentication</legend>
 						Username:
 						<input title="Username"  type="text" class="textfield" name="username" id="username" size="30" value="#rc.username#" />
-						Password: 
+						Password:
 						<input title="Password"  type="text" class="textfield" name="password" id="password" size="30" value="#rc.password#" />
-						
+
 					</fieldset>
-					
+
 					<!--- HTTP Proxy --->
 					<fieldset>
 						<legend>HTTP Proxy</legend>
 						Host:
 						<input title="HTTP Proxy"  type="text" class="textfield" name="httpProxy" id="httpProxy"  size="30" value="#rc.httpProxy#" />
-						Port: 
+						Port:
 						<input title="HTTP Proxy Port"  type="text" class="textfield" name="httpProxyPort" id="httpProxyPort" size="30" value="#rc.httpProxyPort#" />
-						
+
 					</fieldset>
-									
+
 					<!--- HTTP Headers --->
 					<fieldset>
 						<legend>API Headers</legend>
-						
+
 						<!--- Headers Holder --->
 						<div id="httpHeaders">
 							<cfloop from="1" to="#listLen(rc.headerNames)#" index="i">
 							<p style="margin:0px">
 								<input title="Header Name"  type="text" class="textfield" name="headerNames"  size="30" value="#listGetAt(rc.headerNames,i)#" />
-								<input title="Header Value" type="text" class="textfield" name="headerValues" size="50" 
+								<input title="Header Value" type="text" class="textfield" name="headerValues" size="50"
 									   value="<cfif listLen(rc.headerValues)>#listGetAt(rc.headerValues,i)#</cfif>"/>
 								<button class="button dynamicRemove" onclick="return false;"><img src="#rc.root#/includes/images/delete.png" alt="delete"/></button>
 							</p>
-							</cfloop>						
+							</cfloop>
 							<!--- Add Header --->
 							<button class="button dynamicAdd" data-type="header" title="Add Header" id="addHeaderButton" onclick="return false;"><img src="#rc.root#/includes/images/add.png" /></button>
 						</div>
 					</fieldset>
-					
+
 					<!--- Query Params --->
 					<fieldset>
 						<legend>API Parameters</legend>
-						
+
 						<!--- Parameters Holder --->
 						<div id="httpParameters">
 							<cfloop from="1" to="#listLen(rc.parameterNames)#" index="i">
 							<p style="margin:0px">
 								<input title="Parameter Name"  type="text" class="textfield" name="parameterNames"  size="30" value="#listGetAt(rc.parameterNames,i)#" />
-								<input title="Parameter Value" type="text" class="textfield" name="parameterValues" size="50" 
+								<input title="Parameter Value" type="text" class="textfield" name="parameterValues" size="50"
 									   value="<cfif listLen(rc.parameterValues)>#listGetAt(rc.parameterValues,i)#</cfif>" />
 								<button class="button dynamicRemove" onclick="return false;"><img src="#rc.root#/includes/images/delete.png" alt="delete"/></button>
 							</p>
@@ -204,11 +206,11 @@
 							<button class="button dynamicAdd" data-type="parameter" title="Add Parameter" id="addParameterButton" onclick="return false;"><img src="#rc.root#/includes/images/add.png" /></button>
 						</div>
 					</fieldset>
-					
+
 					</fieldset>
 				</div>
 			</form>
-				
+
 			<!--- Loader --->
 			<div id="bottomCenteredLoader">
 				<p>
@@ -216,11 +218,11 @@
 					<img src="#rc.root#/includes/images/ajax-loader-blue.gif" alt="loader" />
 				</p>
 			</div>
-			
-			
+
+
 			<!--- results --->
 			<cfif structKeyExists(rc,"results")>
-				<a name="results"></a> 
+				<a name="results"></a>
 				<div id="resultsBox">
 					<!--- Tabs --->
 					<ul class="tabs" id="tabs">
@@ -228,7 +230,7 @@
 						<li><a href="##" onclick="showTab(1);return false">Raw Results</a></li>
 						<li><a href="##" onclick="showTab(2);return false">Pretty Results</a></li>
 						<li><a href="##" onclick="showBrowserResults();return false">Browser Results</a></li>
-					</ul>				
+					</ul>
 					<!--- Panes --->
 					<div class="panes" id="tabPanes">
 						<!--- headers --->
@@ -247,7 +249,7 @@
 										#rc.results.responseHeader[header].toString()#
 									</td>
 								</tr>
-								</cfloop>							
+								</cfloop>
 							</table>
 						</div>
 						<!--- Raw Content --->
@@ -260,16 +262,16 @@
 						<div class="pane">
 							<pre id="resultsPretty" class="brush: #getBrush(rc.results.fileContent)#">#getTreatedContent(rc.results.fileContent)#
 							</pre>
-						</div>				
+						</div>
 					</div>
 				</div>
 			</cfif>
 			<!--- end Results Box --->
 		</div>
-	
+
 	</div>
 	<!--- end Box --->
-	
+
 </div>
 
 <!--- Fields Template --->
@@ -283,7 +285,7 @@ $(document).ready(function() {
 	$relaxerForm 	= $("##relaxerForm");
 	$resultsBox  	= $("##resultsBox");
 	$relaxerHeader 	= $("##relaxerHeader");
-	
+
 	<cfif structKeyExists(rc,"results")>
 	$tabPanes		= $("##tabPanes");
 	$tabRoot		= $("##tabs");
@@ -295,14 +297,14 @@ $(document).ready(function() {
 	showTab(currentTabIndex);
 	// scroll to results
 	$.scrollTo($resultsBox, 800, {axis:'y'});
-	
+
 	// some formatting
 	<cfif( NOT isXML(rc.results.fileContent) )>
-		$("##resultsPretty").html( formatJSONRaw('#JSStringFormat(rc.results.fileContent)#') );	
+		$("##resultsPretty").html( formatJSONRaw('#JSStringFormat(rc.results.fileContent)#') );
 	</cfif>
-	
+
 	</cfif>
-	
+
 	// Dynamic Add
 	$(".dynamicAdd").click(function() {
 		addDynamicItem($(this));
@@ -314,7 +316,7 @@ $(document).ready(function() {
 		$(this).parent().remove();
 		return false;
 	});
-	
+
 	// resource js models
 	$resources = {};
 	<cfloop array="#rc.dsl.resources#" index="thisResource">
@@ -330,7 +332,7 @@ function showBrowserResults(){
 	var w = 900, h = 750;
 	var LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
 	var TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
-	
+
 	var c = window.open("","browserResults","height="+h+",width="+w+",left="+LeftPosition+",top="+TopPosition+",resizable=yes,scrollbars=yes");
 	c.document.write( $("##resultsRAW").val() );
 }
@@ -347,18 +349,18 @@ function resourceSelect(rData,tier){
 		$("##httpResource").val('');
 	}
 	$("##entryTier").val(tier);
-	
+
 	// Select default HTTP Method
 	selectOption("httpMethod", $resources[resourceID].DEFAULTMETHOD);
 	// Select default Format
 	selectOption("httpFormat", $resources[resourceID].DEFAULTFORMAT);
-	
+
 	// Check for required parameters
 	var openAdvanced = false;
 	// Clean header values and params
 	cleanHeaders(); cleanParams();
 	$("##httpParameters p").remove();
-	
+
 	// params required?
 	if ($resources[resourceID].PARAMETERS != null) {
 		$.each($resources[resourceID].PARAMETERS, function(index, objValue){
@@ -389,12 +391,12 @@ function cleanParams(){
 function showResourceHelp(){
 	var val = $("##resourceID").val();
 	if( val != "null"){
-		var values = val.split(";");	
+		var values = val.split(";");
 		openRemoteModal('#event.buildLink(rc.xehResourceDoc)#',{
 			resourceID: values[0]
-		});	
+		});
 	}
-	
+
 	return false;
 }
 function showTab(index){
@@ -409,12 +411,12 @@ function addDynamicItem(_this, inData){
 	var fieldType = $trigger.attr("data-type");
 	// turn on the duplicate template on the requested trigger
 	$("##fieldsTemplate").clone(true).attr("id","").insertBefore( $trigger ).toggle();
-	
+
 	$trigger.prev().find("input").each(function(index){
 		var $this = $(this);
 		var fieldTitle = $this.attr("data-title");
 		var fieldName  = $this.attr("name");
-		
+
 		$this.attr("title", fieldTitle.replace(/::fieldType::/,fieldType) )
 			.attr("name", fieldName.replace(/::fieldType::/,fieldType));
 		if (inData != null) {
@@ -436,7 +438,7 @@ function clearHistory(){
 			// setup message
 			$("##requestHistoryMessages").html(response.messages)
 				.slideDown().delay(1500).slideUp();
-			// Check if we can remove it	
+			// Check if we can remove it
 			if(!response.error){
 				$('##requestHistory')
 				    .empty()
@@ -450,7 +452,7 @@ function rebuildRequest(){
 	if( index != "null" ){
 		var item = reqHistory[index].DATA;
 		//console.log(item);
-		
+
 		$("##advancedSettings").slideDown();
 		// main options
 		selectOption("httpMethod",item.HTTPMETHOD);
@@ -464,7 +466,7 @@ function rebuildRequest(){
 		$("##httpProxyPort").val(item.HTTPPROXYPORT);
 		// Clean header values and params
 		cleanHeaders();cleanParams();
-		
+
 		// headers
 		if (item.HEADERNAMES.toString().length) {
 			var headerNames = item.HEADERNAMES.toString().split(",");
@@ -496,18 +498,18 @@ function submitForm(){
 	// Verify the destination just in case:
 	if( !$resource.val().length ){
 		if( !$resource.hasClass("error") ){
-			$resource.addClass("error");	
+			$resource.addClass("error");
 		}
 		$resource.focus();
 		alert("The HTTP resource to hit cannot be empty! You are too relaxed!");
 		return;
 	}
 	$('##bottomCenteredBar').slideUp("fast");
-	$('##bottomCenteredLoader').fadeIn("slow");		
+	$('##bottomCenteredLoader').fadeIn("slow");
 	$relaxerForm.submit();
 }
 function advancedSettings(){
-	$("##advancedSettings").slideToggle();	
+	$("##advancedSettings").slideToggle();
 }
 </script>
 </cfoutput>

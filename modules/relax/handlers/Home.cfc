@@ -1,24 +1,12 @@
-<!-----------------------------------------------------------------------
-********************************************************************************
-Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-www.coldbox.org | www.luismajano.com | www.ortussolutions.com
-********************************************************************************
+component extends="BaseHandler"{
 
-Author     :	Luis Majano
-Description :
-	Home Handler Section
------------------------------------------------------------------------>
-<cfcomponent output="false" extends="BaseHandler">
+	property name="relaxerService" 	inject="Relaxer@relax";
+	property name="DSLService"		inject="DSLService@relax";
 
-	<!--- dependencies --->
-	<cfproperty name="relaxerService" 	inject="id:Relaxer@relax" >
-	<cfproperty name="DSLService"		inject="id:DSLService@relax" >
-
-<cfscript>
 
 	function index(event,rc,prc){
 		// module settings
-		rc.settings = getModuleSettings("relax").settings;
+		rc.settings 		= getModuleSettings("relax");
 		// Get the loaded API for the user
 		rc.dsl				= DSLService.getLoadedAPI();
 		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
@@ -61,7 +49,7 @@ Description :
 		// load the api if it has length else ignored.
 		if( len(rc.apiName) ){
 			test = DSLService.loadAPI( rc.apiName );
-			getPlugin("MessageBox").info("API: #rc.apiName# loaded!");
+			flash.put( "notice", "API: #rc.apiName# loaded!" );
 		}
 		setNextEvent(rc.xehHome);
 	}
@@ -83,7 +71,7 @@ Description :
 		event.paramValue("entryTier","production");
 
 		// module settings
-		rc.settings 		= getModuleSettings("relax").settings;
+		rc.settings 		= getModuleSettings("relax");
 		// DSL Settings
 		rc.dsl				= DSLService.getLoadedAPI();
 		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
@@ -104,7 +92,7 @@ Description :
 			}
 			catch(Any e){
 				log.error("Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#", e);
-				getPlugin("MessageBox").error("Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#");
+				flash.put( "notice", "Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#" );
 			}
 		}
 
@@ -119,7 +107,7 @@ Description :
 		var layout = "Ajax";
 
 		// event setup
-		rc.settings 		= getModuleSettings("relax").settings;
+		rc.settings 		= getModuleSettings("relax");
 		// DSL Settings
 		rc.dsl				= DSLService.getLoadedAPI();
 		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
@@ -165,13 +153,6 @@ Description :
 		event.renderData(type="jsont",data=results);
 	}
 
-	function checkUpdates(event,rc,prc){
-		// check updates
-		rc.entry = getMyPlugin(plugin="ForgeBox",module="Relax").getEntry('relax');
-
-		event.setView(name="home/checkUpdates",layout="Ajax");
-	}
-
 	function dslDocs(event,rc,prc){
 		prc.docs = getModel("DSLDoc@relax").generate();
 		event.setView(name="home/DSLDocs");
@@ -181,5 +162,4 @@ Description :
 		event.renderData(data=getModel("DSLDoc@relax").generateCodex(),type="text");
 	}
 
-</cfscript>
-</cfcomponent>
+}

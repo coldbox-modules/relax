@@ -1,10 +1,9 @@
 <cfsetting showdebugoutput="false">
-<cfset event.showDebugPanel(false)>
 <!--- Content Disposition --->
 <cfheader name="Content-Disposition" value="inline; filename=ColdBoxRelaxDocument.pdf">
 <!--- CFFDocument --->
 <cfdocument pagetype="letter" format="pdf">
-	
+
 	<!--- Header --->
 	<cfdocumentitem type="header">
 	<cfoutput>
@@ -13,7 +12,7 @@
 	</div>
 	</cfoutput>
 	</cfdocumentitem>
-	
+
 	<!--- Footer --->
 	<cfdocumentitem type="footer">
 	<cfoutput>
