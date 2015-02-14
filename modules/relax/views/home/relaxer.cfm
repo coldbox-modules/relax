@@ -4,7 +4,7 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.root#/includes/images/iinfo_icon.png" alt="info" width="24" height="24" />#rc.loadedAPIName# API
+			<img src="#prc.root#/includes/images/iinfo_icon.png" alt="info" width="24" height="24" />#prc.loadedAPIName# API
 		</div>
 		<div class="body">
 			<p>Choose a tier+resource to test:</p>

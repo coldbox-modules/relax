@@ -9,7 +9,6 @@ component extends="BaseHandler"{
 
 	// DI
 	property name="relaxerService" 	inject="Relaxer@relax";
-	property name="DSLService"		inject="DSLService@relax";
 
 	/**
 	* Home
@@ -23,15 +22,15 @@ component extends="BaseHandler"{
 		prc.jsAppendList  	= "shCore,brushes/shBrushColdFusion,brushes/shBrushJScript,brushes/shBrushXml";
 		prc.cssAppendList 	= "shCore,shThemeDefault";
 		// Exit Handlers
-		prc.xehResourceDoc  	= "relax/Home.resourceDoc";
+		prc.xehResourceDoc  	= "relax/Home/resourceDoc";
 		prc.xehResourceDocEvent = "relax:Home.resourceDoc";
-		prc.xehExportHTML 		= "relax/Export.html";
-		prc.xehExportPDF 		= "relax/Export.pdf";
-		prc.xehExportwiki 		= "relax/Export.mediawiki";
-		prc.xehExportTrac 		= "relax/Export.trac";
-		prc.xehExportAPI		= "relax/Export.api";
-		prc.xehImportAPI		= "relax/Import.api";
-		prc.xehLoadAPI			= "relax/Home.loadAPI";
+		prc.xehLoadAPI			= "relax/Home/loadAPI";
+		prc.xehExportHTML 		= "relax/Export/html";
+		prc.xehExportPDF 		= "relax/Export/pdf";
+		prc.xehExportwiki 		= "relax/Export/mediawiki";
+		prc.xehExportTrac 		= "relax/Export/trac";
+		prc.xehExportAPI		= "relax/Export/api";
+		prc.xehImportAPI		= "relax/Import/api";
 
 		// Expanded div for resource holders
 		prc.expandedResourceDivs = false;
@@ -44,28 +43,29 @@ component extends="BaseHandler"{
 	* Home
 	*/
 	function relax( event, rc, prc ){
-		event.setView(name="home/relax",layout="Ajax");
+	
+		event.renderData( data=renderView( view="home/relax", module="relax" ) );
 	}
 
 	/**
-	* Home
-	*/
-	function clearUserData( event, rc, prc ){
-		DSLService.clearUserData();
-		setNextEVent(rc.xehHome);
-	}
-
-	/**
-	* Home
+	* Load a selected API
 	*/
 	function loadAPI( event, rc, prc ){
-		event.paramValue("apiName","");
+		event.paramValue( "apiName", "" );
 		// load the api if it has length else ignored.
-		if( len(rc.apiName) ){
-			test = DSLService.loadAPI( rc.apiName );
+		if( len( rc.apiName ) ){
+			DSLService.loadAPI( rc.apiName );
 			flash.put( "notice", "API: #rc.apiName# loaded!" );
 		}
-		setNextEvent(rc.xehHome);
+		setNextEvent( prc.xehHome );
+	}
+
+	/**
+	* The DSL Documentation
+	*/
+	function dslDocs( event, rc, prc ){
+		prc.docs = getModel( "DSLDoc@relax" ).generate();
+		event.setView( view="home/DSLDocs" );
 	}
 
 	/**
@@ -73,41 +73,38 @@ component extends="BaseHandler"{
 	*/
 	function relaxer( event, rc, prc ){
 		// some defaults
-		event.paramValue("httpResource","");
-		event.paramValue("httpFormat","");
-		event.paramValue("httpMethod","GET");
-		event.paramValue("headerNames","");
-		event.paramValue("headerValues","");
-		event.paramValue("parameterNames","");
-		event.paramValue("parameterValues","");
-		event.paramValue("sendRequest",false);
-		event.paramValue("username","");
-		event.paramValue("password","");
-		event.paramValue("httpProxy","");
-		event.paramValue("httpProxyPort","");
-		event.paramValue("entryTier","production");
+		event.paramValue( "httpResource", "" );
+		event.paramValue( "httpFormat", "" );
+		event.paramValue( "httpMethod", "GET" );
+		event.paramValue( "headerNames", "" );
+		event.paramValue( "headerValues", "" );
+		event.paramValue( "parameterNames", "" );
+		event.paramValue( "parameterValues", "" );
+		event.paramValue( "sendRequest", false );
+		event.paramValue( "username", "" );
+		event.paramValue( "password", "" );
+		event.paramValue( "httpProxy", "" );
+		event.paramValue( "httpProxyPort", "" );
+		event.paramValue( "entryTier", "production" );
 
-		// module settings
-		rc.settings 		= getModuleSettings("relax");
 		// DSL Settings
-		rc.dsl				= DSLService.getLoadedAPI();
-		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
+		prc.dsl				= DSLService.getLoadedAPI();
+		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
 
 		// custom css/js
-		rc.jsAppendList  = "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		rc.cssAppendList = "shCore,shThemeDefault";
+		prc.jsAppendList  = "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
+		prc.cssAppendList = "shCore,shThemeDefault";
 
 		// exit handlers
-		rc.xehPurgeHistory 	= "relax/Home.purgeHistory";
-		rc.xehResourceDoc  	= "relax/Home.resourceDoc";
-		rc.xehLoadAPI		= "relax/Home.loadAPI";
+		prc.xehPurgeHistory 	= "relax/Home.purgeHistory";
+		prc.xehResourceDoc  	= "relax/Home.resourceDoc";
+		prc.xehLoadAPI		= "relax/Home.loadAPI";
 
 		// send request
 		if( rc.sendRequest ){
 			try{
-				rc.results = relaxerService.send(argumentCollection=rc);
-			}
-			catch(Any e){
+				prc.results = relaxerService.send(argumentCollection=rc);
+			} catch( Any e ){
 				log.error("Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#", e);
 				flash.put( "notice", "Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#" );
 			}
@@ -118,6 +115,14 @@ component extends="BaseHandler"{
 
 		// display relaxer
 		event.setView("home/relaxer");
+	}
+
+	/**
+	* Home
+	*/
+	function clearUserData( event, rc, prc ){
+		DSLService.clearUserData();
+		setNextEVent(rc.xehHome);
 	}
 
 	/**
@@ -151,7 +156,7 @@ component extends="BaseHandler"{
 		if( event.isAjax() ){
 			event.renderData( data=renderView( view="home/docs/resourceDoc", module="relax" ) );
 		} else {
-			event.setView( name="home/docs/resourceDoc", layout="#rc.print#" );
+			event.setView( view="home/docs/resourceDoc", layout="#rc.print#" );
 		}
 	}
 
@@ -176,13 +181,7 @@ component extends="BaseHandler"{
 		event.renderData(type="jsont",data=results);
 	}
 
-	/**
-	* Home
-	*/
-	function dslDocs( event, rc, prc ){
-		prc.docs = getModel("DSLDoc@relax").generate();
-		event.setView(name="home/DSLDocs");
-	}
+	
 
 	/**
 	* Home

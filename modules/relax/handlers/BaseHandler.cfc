@@ -7,21 +7,22 @@ www.ortussolutions.com
 component{
 
 	// DI
-	property name="settings" inject="coldbox:setting:relax";
+	property name="settings" 		inject="coldbox:setting:relax";
+	property name="DSLService"		inject="id:DSLService@relax";
 
 	/**
 	* Pre handler
 	*/
 	function preHandler( event, rc, prc ){
 		// module root
-		prc.root = event.getModuleRoot();
+		prc.root 			= event.getModuleRoot();
 		// settings
-		prc.settings = variables.settings;
+		prc.settings 		= variables.settings;
 		// exit handlers
-		prc.xehHome 		= "relax/home";
-		prc.xehRelax		= "relax/home.relax";
-		prc.xehRelaxer		= "relax/home.relaxer";
-		prc.xehDSLDocs		= "relax/home.DSLDocs";
+		prc.xehHome 		= "relax";
+		prc.xehRelax		= "relax/home/relax";
+		prc.xehRelaxer		= "relax/home/relaxer";
+		prc.xehDSLDocs		= "relax/home/DSLDocs";
 	}
 
 }

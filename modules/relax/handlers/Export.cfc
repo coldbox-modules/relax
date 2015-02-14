@@ -8,7 +8,6 @@ www.ortussolutions.com
 component extends="BaseHandler"{
 	
 	// DI
-	property name="DSLService"		inject="id:DSLService@relax";
 	property name="wikitext"		inject="wikitext@wikitext";
 
 	/**
