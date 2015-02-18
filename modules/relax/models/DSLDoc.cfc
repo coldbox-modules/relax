@@ -21,29 +21,39 @@ component singleton{
 		var tab 		= chr( 9 );
 		var br  		= chr( 10 );
 		var dq      	= chr( 34 );
-		var fncExclude  = "init,onMissingMethod,appendResponse,appendData,verifyResourcePivot,$throw";
+		var fncExclude  = "init,onMissingMethod,appendResponse,appendData,verifyResourcePivot";
 		var out   		= createObject( "java", "java.lang.StringBuilder").init( '' );
 		var md   		= getComponentMetaData( "RelaxDSL" );
 		var title 		= "Relax Programmatic Resource DSL Help";
 	
 		out.append( '<h1>#title#</h1><p>#md.hint#</p>' );
 		
+		var aSortedNames = [];
+		var mdLookup	 = {};
+		arrayEach( md.functions, function( thisMD ){
+			arrayAppend( aSortedNames, arguments.thisMD.name );
+			mdLookup[ arguments.thisMD.name ] = arguments.thisMD;
+		});
+		arraySort( aSortedNames, "textnocase" );
+
 		// output functions
-		for(var x=1; x lte arrayLen( md.functions ); x++){
-			if( NOT structKeyExists( md.functions[ x ], "returntype" ) ){ md.functions[ x ].returntype = "any"; }
-			if( NOT structKeyExists( md.functions[ x ], "hint" ) ){ md.functions[ x ].hint = ""; }
-			if( NOT structKeyExists( md.functions[ x ], "access" ) ){ md.functions[ x ].access = "public"; }
+		for(var thisFunction in aSortedNames ){
+			var thisMD = mdLookup[ thisFunction ];
+			
+			if( NOT structKeyExists( thisMD, "returntype" ) ){ thisMD.returntype = "any"; }
+			if( NOT structKeyExists( thisMD, "hint" ) ){ thisMD.hint = ""; }
+			if( NOT structKeyExists( thisMD, "access" ) ){ thisMD.access = "public"; }
 			
 			// Exclude certain functions
-			if( listFindNoCase( fncExclude, md.functions[ x ].name ) OR 
-				listFindNoCase( "private,package", md.functions[ x ].access ) ){ continue; }
+			if( listFindNoCase( fncExclude, thisMD.name ) OR 
+				listFindNoCase( "private,package", thisMD.access ) ){ continue; }
 				
 			out.append("
-			<h2>#md.functions[ x ].name#()</h2>
-			<p>#md.functions[ x ].hint#</p>");
+			<h2>#thisMD.name#()</h2>
+			<p>#thisMD.hint#</p>");
 			
 			// Are arguments defined
-			if( arrayLen( md.functions[ x ].parameters ) ){
+			if( arrayLen( thisMD.parameters ) ){
 				
 				out.append("
 				<h3>Arguments</h3>
@@ -61,18 +71,18 @@ component singleton{
 					<tbody>");
 				
 				// Parameters
-				for( var y=1; y lte arrayLen( md.functions[ x ].parameters ); y++){
-					if( NOT structKeyExists( md.functions[ x ].parameters[ y ],"required" ) ){	md.functions[ x ].parameters[ y ].required = false;	}
-					if( NOT structKeyExists( md.functions[ x ].parameters[ y ],"hint" ) ){	md.functions[ x ].parameters[ y ].hint = "";	}
-					if( NOT structKeyExists( md.functions[ x ].parameters[ y ],"type" ) ){	md.functions[ x ].parameters[ y ].type = "any";	}
-					if( NOT structKeyExists( md.functions[ x ].parameters[ y ],"default" ) ){	md.functions[ x ].parameters[ y ]["default"] = "---"; }
+				for( var y=1; y lte arrayLen( thisMD.parameters ); y++){
+					if( NOT structKeyExists( thisMD.parameters[ y ],"required" ) ){	thisMD.parameters[ y ].required = false;	}
+					if( NOT structKeyExists( thisMD.parameters[ y ],"hint" ) ){	thisMD.parameters[ y ].hint = "";	}
+					if( NOT structKeyExists( thisMD.parameters[ y ],"type" ) ){	thisMD.parameters[ y ].type = "any";	}
+					if( NOT structKeyExists( thisMD.parameters[ y ],"default" ) ){	thisMD.parameters[ y ]["default"] = "---"; }
 					
 					out.append('<tr>
-					<td>#md.functions[ x ].parameters[ y ].name#</td>
-					<td>#md.functions[ x ].parameters[ y ].type#</td>
-					<td>#yesNoFormat(md.functions[ x ].parameters[ y ].required)#</td> 
-					<td>#md.functions[ x ].parameters[ y ].default#</td>
-					<td>#md.functions[ x ].parameters[ y ].hint#</td>
+					<td>#thisMD.parameters[ y ].name#</td>
+					<td>#thisMD.parameters[ y ].type#</td>
+					<td>#yesNoFormat(thisMD.parameters[ y ].required)#</td> 
+					<td>#thisMD.parameters[ y ].default#</td>
+					<td>#thisMD.parameters[ y ].hint#</td>
 					</tr>');
 				
 				}// end for loop of params
