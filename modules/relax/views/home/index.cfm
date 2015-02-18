@@ -11,9 +11,11 @@
 
 			<p class="center">
 				<!--- My Apis --->
-				<select name="myAPI" id="myAPI" title="Your defined Relaxed APIs" onchange="window.location='#event.buildLink( prc.xehLoadAPI)#?apiName='+this.value">
+				<select name="myAPI" id="myAPI" title="Your defined Relaxed APIs" onchange="window.location='#event.buildLink( prc.xehLoadAPI )#?apiName=' + this.value">
 					<cfloop query="prc.loadedAPIs">
+						<cfif prc.loadedAPIs.type eq "Dir">
 						<option value="#prc.loadedAPis.name#" <cfif prc.loadedAPIs.name eq prc.loadedAPIName>selected="selected"</cfif>>#prc.loadedAPis.name#</option>
+						</cfif>
 					</cfloop>
 				</select>
 			</p>

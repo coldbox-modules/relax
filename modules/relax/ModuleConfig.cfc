@@ -87,7 +87,7 @@ component{
 
 		// Default Config Structure
 		configStruct.relax = {
-			APILocation = "#moduleMapping#.models.resources",
+			APILocation 	= "#moduleMapping#.models.resources",
 			defaultAPI 		= "myapi",
 			maxHistory		= 10
 		};
