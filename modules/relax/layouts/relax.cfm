@@ -23,10 +23,12 @@
     <link rel="stylesheet" href="#prc.root#/includes/css/font-awesome.min.css">
     <!-- CSS Animate -->
     <link rel="stylesheet" href="#prc.root#/includes/css/animate.css">
-    <!-- Custom styles for this theme -->
+    <!-- Theme Styles -->
     <link rel="stylesheet" href="#prc.root#/includes/css/main.css">
     <!-- iCheck-->
     <link rel="stylesheet" href="#prc.root#/includes/plugins/icheck/css/_all.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="#prc.root#/includes/css/relax.css">
     <!--- CUSTOM CSS --->
 	<cfloop list="#event.getPrivateValue("cssAppendList","")#" index="css">
 		<cfset addAsset("#prc.root#/includes/css/#css#.css")>
