@@ -318,3 +318,7 @@ function formatJSONRaw(jsonData){
 		return jsonData;
 	}
 }
+function toggleResource(id){
+    var $div = $( "#resource_" + id );
+    $div.slideToggle();
+}
