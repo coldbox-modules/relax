@@ -49,26 +49,28 @@ component singleton{
 				listFindNoCase( "private,package", thisMD.access ) ){ continue; }
 				
 			out.append("
-			<h2>#thisMD.name#()</h2>
-			<p>#thisMD.hint#</p>");
+			<h2><code>#thisMD.name#()</code></h2>
+			<p class='lead'>#thisMD.hint#</p>");
 			
 			// Are arguments defined
 			if( arrayLen( thisMD.parameters ) ){
 				
 				out.append("
-				<h3>Arguments</h3>
-				
-				<table class=#dq#tablelisting#dq# cellpadding=#dq#5#dq# width=#dq#98%#dq#>
-					<thead>
-						<tr>
-							<th>Argument</th>
-							<th>Type</th>
-							<th>Required</th>
-							<th>Default</th>
-							<th>Description</th>
-						</tr>
-					</thead>
-					<tbody>");
+				<div class=#dq#panel panel-default#dq#>
+					<div class=#dq#panel-heading#dq#>Arguments</div>
+
+					<div class=#dq#panel-body#dq#>
+					<table class=#dq#table table-striped table-hover#dq#>
+						<thead>
+							<tr>
+								<th>Argument</th>
+								<th>Type</th>
+								<th>Required</th>
+								<th>Default</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>");
 				
 				// Parameters
 				for( var y=1; y lte arrayLen( thisMD.parameters ); y++){
@@ -87,7 +89,7 @@ component singleton{
 				
 				}// end for loop of params
 				
-				out.append('</tbody></table>');
+				out.append('</tbody></table></div></div>');
 				
 			} // end if no params
 		

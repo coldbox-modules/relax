@@ -22,3 +22,9 @@ function flattenActions(action){
 	return '';
 }
 </cfscript>
+<script language="javascript">
+function toggleResource(id){
+	var $div = $("##resource_"+id);
+	$div.slideToggle();
+}
+</script>

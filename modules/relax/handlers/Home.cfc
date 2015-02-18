@@ -18,18 +18,16 @@ component extends="BaseHandler"{
 		prc.dsl				= DSLService.getLoadedAPI();
 		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
 		prc.loadedAPIs		= DSLService.listAPIs();
-		// JS/CSS Append
-		prc.jsAppendList  	= "shCore,brushes/shBrushColdFusion,brushes/shBrushJScript,brushes/shBrushXml";
-		prc.cssAppendList 	= "shCore,shThemeDefault";
+
 		// Exit Handlers
-		prc.xehResourceDoc  	= "relax/Home/resourceDoc";
-		prc.xehLoadAPI			= "relax/Home/loadAPI";
-		prc.xehExportHTML 		= "relax/Export/html";
-		prc.xehExportPDF 		= "relax/Export/pdf";
-		prc.xehExportwiki 		= "relax/Export/mediawiki";
-		prc.xehExportTrac 		= "relax/Export/trac";
-		prc.xehExportAPI		= "relax/Export/api";
-		prc.xehImportAPI		= "relax/Import/api";
+		prc.xehResourceDoc  = "relax/Home/resourceDoc";
+		prc.xehLoadAPI		= "relax/Home/loadAPI";
+		prc.xehExportHTML 	= "relax/Export/html";
+		prc.xehExportPDF 	= "relax/Export/pdf";
+		prc.xehExportwiki 	= "relax/Export/mediawiki";
+		prc.xehExportTrac 	= "relax/Export/trac";
+		prc.xehExportAPI	= "relax/Export/api";
+		prc.xehImportAPI	= "relax/Import/api";
 
 		// Expanded div for resource holders
 		prc.expandedResourceDivs = false;
@@ -77,10 +75,6 @@ component extends="BaseHandler"{
 		prc.xehResourceDoc  	= "relax/home/resourceDoc";
 		// expanded divs
 		prc.expandedResourceDivs = true;
-
-		// custom css/js
-		prc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		prc.cssAppendList = "shCore,shThemeDefault";
 
 		// select layout
 		event.paramValue( "print", "html" );

@@ -1,21 +1,33 @@
 <cfoutput>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<!--============================Head============================-->
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="robots" content="noindex,nofollow" />
-	<!--- SES --->
-	<base href="#getSetting('htmlBaseURL')#" />
-	<!--=========Title=========-->
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ColdBox Relax - RESTful Tools For Lazy Experts</title>
-	<link href="#prc.root#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-	<!--=========Stylesheets=========-->
-	<link href="#prc.root#/includes/css/style.css"	 	rel="stylesheet" type="text/css"/>
-	<link href="#prc.root#/includes/css/teal.css" 		rel="stylesheet" type="text/css"/>
-	<link href="#prc.root#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
-    <link href="#prc.root#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
-	<!--- loop around the cssAppendList, to add page specific css --->
+    <!--- favicon --->
+    <link href="#prc.root#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <!--- SES --->
+	<base href="#getSetting( 'htmlBaseURL' )#" />
+	<!--- View Port --->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="#prc.root#/includes/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Fonts from Font Awsome -->
+    <link rel="stylesheet" href="#prc.root#/includes/css/font-awesome.min.css">
+    <!-- CSS Animate -->
+    <link rel="stylesheet" href="#prc.root#/includes/css/animate.css">
+    <!-- Custom styles for this theme -->
+    <link rel="stylesheet" href="#prc.root#/includes/css/main.css">
+    <!-- iCheck-->
+    <link rel="stylesheet" href="#prc.root#/includes/plugins/icheck/css/_all.css">
+    <!--- CUSTOM CSS --->
 	<cfloop list="#event.getPrivateValue("cssAppendList","")#" index="css">
 		<cfset addAsset("#prc.root#/includes/css/#css#.css")>
 	</cfloop>
@@ -23,111 +35,126 @@
 		<cfset addAsset("#css#.css")>
 	</cfloop>
 
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <!-- Feature detection -->
+    <script src="#prc.root#/includes/js/modernizr-2.6.2.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="#prc.root#/includes/js/html5shiv.js"></script>
+    <script src="#prc.root#/includes/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="animated fadeIn">
+	<section id="container">
+		<header id="header">
+            <!--logo start-->
+            <div class="brand">
+                <a href="#event.buildLink( prc.xehHome )#" class="logo"><span>Relax</span></a>
+            </div>
+            <!--Toggle-->
+            <div class="toggle-navigation toggle-left">
+                <button type="button" class="btn btn-default" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+            <!-- NavBar -->
+            <div class="user-nav">
+                <ul>
+                	<li>
+                  		<button type="button" class="btn btn-default dropdown-toggle options" id="toggle-mail" data-toggle="dropdown">
+                        	<i class="fa fa-gamepad"></i>
+                    	</button>
+                    </li>
+                    <li class="dropdown settings">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="##">
+                      		RESTFul Tools For Lazy Experts<i class="fa fa-angle-down"></i>
+                    	</a>
+                        <ul class="dropdown-menu animated fadeInDown">
+                            
+                        	<li>
+                        		<a href="http://www.ortussolutions.com" title="The experts behind ColdBox"><i class="fa fa-bolt"></i> By Ortus Solutions</a>
+                        	</li>
+							<li>
+								<a href="http://www.coldbox.org" title="The premier ColdFusion development platform"><i class="fa fa-link"></i> Powered By ColdBox</a>
+							</li>
+							<li>
+								<a href="http://www.github.com/coldbox/coldbox-relax" title="The Relax Source Code"><i class="fa fa-github"></i> Github Repo</a>
+							</li>
+							<li>
+								<a href="http://www.twitter.com/coldbox" title="Follow me!"><i class="fa fa-twitter"></i> Tweet</a>
+							</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </header>
+	</section>
+
+	<!--sidebar start-->
+    <aside class="sidebar">
+        <div id="leftside-navigation" class="nano">
+            <ul class="nano-content">
+                <li <cfif event.getCurrentHandler() eq "relax:home">class="active"</cfif>>
+                    <a href="#event.buildLink( prc.xehHome )#"><i class="fa fa-dashboard"></i><span>API Manager</span></a>
+                </li>
+                <li <cfif event.getCurrentHandler() eq "relax:relaxer">class="active"</cfif>>
+                    <a href="#event.buildLink( prc.xehRelaxer )#" title="Pronounced 'Relax-ER'"><i class="fa fa-flask"></i><span>RelaxURL</span></a>
+                </li>
+                <li <cfif event.getCurrentAction() eq "DSLDocs">class="active"</cfif>>
+                    <a href="#event.buildLink( prc.xehDSLDocs )#" ><i class="fa fa-code"></i><span>RelaxDSL Docs</span></a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+    <!--sidebar end-->
+	
 	<!--========= JAVASCRIPT -->
-	<script type="text/javascript" src="#prc.root#/includes/javascript/jquery-1.4.4.min.js"></script> <!--Import jquery tools-->
-	<script type="text/javascript" src="#prc.root#/includes/javascript/jquery.tools.min.js"></script> <!--Import jquery tools-->
-	<script type="text/javascript" src="#prc.root#/includes/javascript/jquery.uitablefilter.js"></script>
-	<script type="text/javascript" src="#prc.root#/includes/javascript/metadata.pack.js"></script>
-	<script type="text/javascript" src="#prc.root#/includes/javascript/tablesorter.min.js"></script>
-	<script type="text/javascript" src="#prc.root#/includes/javascript/relax.js"></script>
-	<script type="text/javascript" src="#prc.root#/includes/javascript/jsonlint.js"></script>
+	<script src="#prc.root#/includes/js/jquery.min.js"></script> <!--Import jquery tools-->
+    <script src="#prc.root#/includes/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="#prc.root#/includes/js/jsonlint.js"></script>
+	<script src="#prc.root#/includes/js/relax.js"></script>
+
 	<!--- loop around the jsAppendList, to add page specific js --->
 	<cfloop list="#event.getPrivateValue("jsAppendList", "")#" index="js">
-		<cfset addAsset("#prc.root#/includes/javascript/#js#.js")>
+		<cfset addAsset("#prc.root#/includes/js/#js#.js")>
 	</cfloop>
 	<cfloop list="#event.getPrivateValue("jsFullAppendList", "")#" index="js">
 		<cfset addAsset("#js#.js")>
 	</cfloop>
 
-</head>
-<!--End Head-->
-<!--============================Body============================-->
-<body>
+	<!-- syntax highlighter -->
+	<link type="text/css" rel="stylesheet" href="#prc.root#/includes/highlighter/styles/shCoreMidnight.css">
+	<script src="#prc.root#/includes/highlighter/scripts/shCore.js"></script>
+	<script src="#prc.root#/includes/highlighter/scripts/shBrushColdFusion.js"></script>
+	<script src="#prc.root#/includes/highlighter/scripts/shBrushXml.js"></script>
+	<script src="#prc.root#/includes/highlighter/scripts/shBrushSql.js"></script>
+	<script src="#prc.root#/includes/highlighter/scripts/shBrushJScript.js"></script>
+	<script src="#prc.root#/includes/highlighter/scripts/shBrushJava.js"></script>
+	<script src="#prc.root#/includes/highlighter/scripts/shBrushCss.js"></script>
+	<script>
+	$(document).ready(function() {
+		// syntax highlight
+		SyntaxHighlighter.all();
+	});
+	</script>
 
-<!--==================== Header =======================-->
-<div id="header_bg">
+	<!--main content start-->
+    <section class="main-content-wrapper">
+        <section id="main-content">
+           #renderView()#         
+        </section>
+    </section>
+    <!--main content end-->
+</section>
 
-	<!--============Header Wrapper============-->
-	<div class="wrapper">
-
-		<!--=======Top Header area======-->
-		<div id="header_top">
-			<span class="fr">
-		  		<a href="http://www.ortussolutions.com" title="The experts behind ColdBox">www.ortussolutions.com</a>
-				<a href="http://www.coldbox.org" title="The premier ColdFusion development platform">www.coldbox.org</a>
-				<a href="http://www.github.com/coldbox/coldbox-relax" title="The Relax Source Code">Github Repo</a>
-				<a href="http://www.twitter.com/coldbox" title="Follow me!">Tweet</a>
-			</span>
-		  RESTful Tools For Lazy Experts
-		</div>
-		<!--End Header top Area=-->
-
-		<!--=========Header Area including search field and logo=========-->
-		<div id="logo">
-			<a title="Wanna Relax? Click Me!" href="javascript:openRemoteModal('#event.buildLink(prc.xehRelax)#')"><img src="#prc.root#/includes/images/Coldbox-Relax_125.png" height="120" border="0" alt="logo" /></a>
-		</div>
-
-		<div id="header_main" class="clearfix">
-           	<a href="#event.buildLink(prc.xehHome)#"><h1>Relax <span>v.#getModuleConfig('relax').version#</span></h1></a>
-		</div>
-		<!--End Search field and logo Header Area-->
-
-		<!--=========Main Navigation=========-->
-		<ul id="main_nav">
-			<!--- Main Nav --->
-			<li>
-				<a href="##" title="Relax Dashboard" <cfif event.getCurrentHandler() eq "relax:home"> class="current"</cfif>>Dashboard</a>
-				<ul>
-					<li><a href="#event.buildLink(prc.xehHome)#"  <cfif event.getCurrentAction() eq "index"> class="current"</cfif>>Home</a></li>
-					<li><a title="Pronounced 'Relax-ER'" href="#event.buildLink(prc.xehRelaxer)#"  <cfif event.getCurrentAction() eq "relaxer"> class="current"</cfif>>RelaxURL</a></li>
-					<li><a href="#event.buildLink(prc.xehDSLDocs)#"  <cfif event.getCurrentAction() eq "DSLDocs"> class="current"</cfif>>RelaxDSL Docs</a></li>
-				</ul>
-			</li>
-		</ul>
-		<!--End Main Navigation-->
-
-  	</div>
-  <!--End Wrapper-->
-</div>
-<!--End Header-->
-
-<!--============================ Template Content Background ============================-->
-<div id="content_bg" class="clearfix">
-	<!--============================ Main Content Area ============================-->
-	<div class="content wrapper clearfix">
-		#renderView()#
-	</div>
-<!--End main content area-->
-</div>
-
-<!--End Template Content bacground-->
-<!--============================Footer============================-->
-<div id="footer">
-	<div class="wrapper">
-	Copyright (C) #dateformat(now(),"yyyy")# <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a>  . All Rights Reserved.<br/>
-	<a href="http://www.ortussolutions.com">Need Professional ColdFusion/ColdBox Support, Architecture, Design, or Development?</a>
-	</div>
-</div>
-<!--End Footer-->
-
-<!--- ============================ confirm it modal dialog ============================ --->
-<div id="confirmIt">
-	<div>
-		<h2 id="confirmItTitle">Are you sure?</h2>
-		<p id="confirmItMessage">Are you sure you want to perform this action?</p>
-		<hr />
-		<p class="textRight">
-			<button class="close button" 	data-action="cancel"> Cancel </button>
-			<button class="close buttonred" data-action="confirm"> Confirm </button>
-		</p>
-	</div>
-</div>
-<!--- ============================ end Confirmit ============================ --->
 
 <!--- ============================ Remote Modal Window ============================ --->
 <div id="remoteModal">
 	<div id="remoteModelContent">
-		<img src="#prc.root#/includes/images/ajax-loader-blue.gif" alt="loader" />
 	</div>
 </div>
 <!--- ============================ end Confirmit ============================ --->

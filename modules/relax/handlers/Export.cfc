@@ -19,8 +19,7 @@ component extends="BaseHandler"{
 		prc.dsl				= DSLService.getLoadedAPI();
 		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
 		// custom css/js
-		prc.jsAppendList 	= "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		prc.cssAppendList 	= "shCore,shThemeDefault";
+		prc.jsAppendList 	= "jquery.scrollTo-min";
 	}
 
 	/**
@@ -47,10 +46,6 @@ component extends="BaseHandler"{
 	function html( event, rc, prc ){
 		prc.print 				 = "true";
 		prc.expandedResourceDivs = true;
-
-		// custom css/js
-		prc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		prc.cssAppendList = "shCore,shThemeDefault";
 
 		// View
 		event.setView( name="export/html", layout="html" );
