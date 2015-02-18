@@ -62,7 +62,7 @@ component extends="BaseHandler"{
 		prc.requestHistory = relaxerService.getHistory();
 
 		// display relaxer
-		event.setView("home/relaxer");
+		event.setView( "relaxer/index" );
 	}
 
 	/**
