@@ -1,6 +1,6 @@
 <cfparam name="args.sidebar"    default="true">
 <cfparam name="args.header"     default="true">
-<cfparam name="args.print"      default="true">
+<cfparam name="args.print"      default="false">
 <cfoutput>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -152,7 +152,7 @@
 	</script>
 
 	<!--main content start-->
-    <section class="main-content-wrapper" style="margin-left:0px">
+    <section class="main-content-wrapper" <cfif args.print>style="margin-left:0px"</cfif>>
         <section id="main-content">
            #renderView()#         
         </section>

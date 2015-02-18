@@ -44,8 +44,11 @@ component extends="BaseHandler"{
 	* Export as HTML
 	*/
 	function html( event, rc, prc ){
-		prc.print 				 = "true";
+		// args setup
+		rc.print 				 = true;
 		prc.expandedResourceDivs = true;
+		// exit handlers
+		prc.xehResourceDoc  = "relax/Home/resourceDoc";
 
 		// View
 		event.setView( name="export/html", layout="html" );

@@ -17,9 +17,6 @@
 		</p>
 
 		<div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">API Documentation</h3>
-            </div>
             <div class="panel-body">
                 <div class="tab-wrapper tab-primary">
                     <ul class="nav nav-tabs">

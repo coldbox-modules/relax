@@ -1,17 +1,17 @@
 <cfoutput>
 <!--- Service Title and Description --->
 <h1>#prc.dsl.relax.title#</h1>
-<p>#prc.dsl.relax.description#</p>
+<blockquote>#prc.dsl.relax.description#</blockquote>
 
 <!--- Entry Points --->
-<h3>Service Entry Point(s)</h3>
+<h2>Service Entry Point(s)</h2>
 <cfloop collection="#prc.dsl.relax.entryPoint#" item="entryPoint">
 <p class="label label-info">#entryPoint#</p>
 <pre class="brush: xml; ruler: false">#prc.dsl.relax.entryPoint[entryPoint]#</pre>
 </cfloop>
 
 <!--- API Return Formats --->
-<h3>API Return Formats</h3>
+<h2>API Return Formats</h2>
 <p>
 	This service can detect the incoming resource extension in order to provide to you the resource represented
 	according to the extension:
@@ -37,7 +37,7 @@
 </table>
 
 <!--- API Global Headers --->
-<h3>API Global Headers</h3>
+<h2>API Global Headers</h2>
 <cfif NOT arrayLen(prc.dsl.globalHeaders)>
 	<em>No global headers</em>
 </cfif>
@@ -61,7 +61,7 @@
 </table>
 
 <!--- API Global Parameters --->
-<h3>API Global Parameters</h3>
+<h2>API Global Parameters</h2>
 <cfif NOT arrayLen(prc.dsl.globalParameters)>
 	<em>No global parameters</em>
 </cfif>
