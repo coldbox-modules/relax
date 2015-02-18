@@ -1,161 +1,175 @@
-<!-----------------------------------------------------------------------
+/**
 ********************************************************************************
-Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-www.coldbox.org | www.luismajano.com | www.ortussolutions.com
+Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
+www.ortussolutions.com
 ********************************************************************************
+* The Relaxer service
+*/
+component singleton accessors="true"{
 
-Author     :	Luis Majano
-Description :
-	The Relaxer service
------------------------------------------------------------------------>
-<cfcomponent output="false" hint="The Relaxer service" singleton>
+	// DI
+	property name="log" 		inject="logbox:logger:{this}";
+	property name="settings"	inject="coldbox:setting:relax";
 
-	<!--- Dependencies --->
-	<cfproperty name="log" 		inject="logbox:logger:{this}">
-	<cfproperty name="settings" inject="coldbox:setting:relax">
+	/**
+	* Constructor
+	*/
+	function init(){
+		return this;
+	}
 
-	<!--- Constructor --->
-	<cffunction name="init" hint="Constructor" access="public" returntype="Relaxer" output="false">
-		<cfscript>
-			return this;
-		</cfscript>
-	</cffunction>
+	/**
+	* Get the max history stack, this comes from the relax settings
+	*/
+	numeric function getMaxHistory(){
+		return variables.settings.maxHistory;
+	}
 
-	<!--- getMaxHistory --->
-    <cffunction name="getMaxHistory" output="false" access="public" returntype="any" hint="Get the maximum history stack">
-    	<cfreturn variables.settings.maxHistory>
-    </cffunction>
+	/**
+	* Clear the history stack
+	* 
+	* @return Relaxer
+	*/
+	function clearHistory(){
+		structDelete( session, "relax-history" );
+		return this;
+	}
 
-	<!--- clearHistory --->
-    <cffunction name="clearHistory" output="false" access="public" returntype="void" hint="Clear relaxer history">
-    	<cfset structDelete( session, "relax-history" )>
-    </cffunction>
+	/**
+	* Get the relaxer history array
+	*/
+	array function getHistory(){
+		return ( structKeyExists( session, "relax-history" ) ? session[ "relax-history" ] : [] );
+	}
 
-	<!--- getHistory --->
-    <cffunction name="getHistory" output="false" access="public" returntype="any" hint="Get the relaxer history array">
-    	<cfreturn ( structKeyExists( session, "relax-history" ) ? session[ "relax-history" ] : [] ) >
-    </cffunction>
+	/**
+	* Clear the history stack
+	* 
+	* @return Relaxer
+	*/
+	function pushHistory( required values ){
+		var stack = "";
+		var history = {};
 
-	<!--- pushHistory --->
-    <cffunction name="pushHistory" output="false" access="public" returntype="any" hint="Push a restful history item">
-    	<cfargument name="values" required="true" hint="The structure values for the push"/>
-		<cfscript>
-			var stack = "";
-			var history = {};
+		// check if history exists?
+		if( NOT structKeyExists( session, "relax-history" ) ){
+			session[ "relax-history" ] = [];
+		}
+		stack = session[ "relax-history" ];
+		// Check limit on it
+		if( ( arrayLen( stack ) + 1 ) GT getMaxHistory() ){
+			// pop one
+			arrayDeleteAt( stack, arrayLen( stack ) );
+		}
+		// Push new history
+		history.requestDate = now();
+		history.data 		= arguments.values;
+		// append it
+		arrayPrepend( stack, history );
+		// save it
+		session[ "relax-history" ] = stack;
 
-			// check if history exists?
-			if( NOT structKeyExists( session, "relax-history" ) ){
-				session[ "relax-history" ] = [];
-			}
-			stack = session[ "relax-history" ];
-			// Check limit on it
-			if( (arrayLen(stack) + 1) GT getMaxHistory() ){
-				// pop one
-				arrayDeleteAt(stack, arrayLen(stack) );
-			}
-			// Push new history
-			history.requestDate = now();
-			history.data = arguments.values;
-			// append it
-			arrayPrepend(stack, history);
-			// save it
-			session[ "relax-history" ] = stack;
-		</cfscript>
-    </cffunction>
+		return this;
+	}
+	
+	/**
+	* Send a Relaxer Request
+	* @httpMethod 		HTTP Method
+	* @httpResource 	HTTP Resource to hit
+	* @httpFormat 		HTTP Format extension if used.
+	* @headerNames 		HTTP header names (list)
+	* @headerValues 	HTTP header values (list)
+	* @parameterNames 	HTTP parameters names (list)
+	* @parameterValues	HTTP parameters values (list)
+	* @username 		HTTP Basic Auth Username
+	* @password 		HTTP Basic Auth password
+	* @httpProxy 		HTTP Proxy server host
+	* @httpProxyPort 	HTTP Proxy server host port
+	*/
+	function send(
+		httpMethod = "GET",
+		httpResource = "",
+		httpFormat = "",
+		headerNames = "",
+		headerValues = "",
+		parameterNames = "",
+		parameterValues = "",
+		username = "",
+		password = "",
+		httpProxy = "",
+		httpProxyPort = ""
+	){
+		var results 	= structnew();
+		var response 	= "";
+		var i			= 1;
+		var tmpValue	= "";
+		var attribs		= structnew();
+		var history		= {
+			httpMethod 		= arguments.httpMethod,
+			httpResource 	= arguments.httpResource,
+			httpFormat 		= arguments.httpFormat,
+			headerNames 	= arguments.headerNames,
+			headerValues 	= arguments.headerValues,
+			parameterNames 	= arguments.parameterNames,
+			parameterValues = arguments.parameterValues,
+			username		= arguments.username,
+			password		= arguments.password,
+			httpProxy		= arguments.httpProxy,
+			httpProxyPort	= arguments.httpProxyPort
+		};
 
-	<!--- Send Request --->
-	<cffunction name="send" output="false" access="public" returntype="any" hint="Send a Relaxer Request">
-		<cfargument name="httpMethod" 		required="false" default="GET" hint="HTTP Method"/>
-		<cfargument name="httpResource" 	required="false" default="" hint="HTTP Resource to hit"/>
-		<cfargument name="httpFormat" 		required="false" default="" hint="HTTP Format extension if used."/>
-		<cfargument name="headerNames" 		required="false" default="" hint="HTTP header names (list)"/>
-		<cfargument name="headerValues" 	required="false" default="" hint="HTTP header values (list)"/>
-		<cfargument name="parameterNames" 	required="false" default="" hint="HTTP parameters names (list)"/>
-		<cfargument name="parameterValues" 	required="false" default="" hint="HTTP parameters values (list)"/>
-		<cfargument name="username" 		required="false" default="" hint="HTTP Basic Auth Username"/>
-		<cfargument name="password" 		required="false" default="" hint="HTTP Basic Auth password"/>
-		<cfargument name="httpProxy" 		required="false" default="" hint="HTTP Proxy server host"/>
-		<cfargument name="httpProxyPort" 	required="false" default="" hint="HTTP Proxy server host port"/>
-		<cfscript>
-			var results 	= structnew();
-			var response 	= "";
-			var i			= 1;
-			var tmpValue	= "";
-			var attribs		= structnew();
-			var history		= {
-				httpMethod 		= arguments.httpMethod,
-				httpResource 	= arguments.httpResource,
-				httpFormat 		= arguments.httpFormat,
-				headerNames 	= arguments.headerNames,
-				headerValues 	= arguments.headerValues,
-				parameterNames 	= arguments.parameterNames,
-				parameterValues = arguments.parameterValues,
-				username		= arguments.username,
-				password		= arguments.password,
-				httpProxy		= arguments.httpProxy,
-				httpProxyPort	= arguments.httpProxyPort
-			};
+		// Record History
+		pushHistory( history );
 
-			// Record History
-			pushHistory(history);
+		// Format Extension detected? If so, add it to resource.
+		if( len( arguments.httpFormat ) ){
+			arguments.httpResource = arguments.httpResource & "." & arguments.httpFormat;
+		}
 
-			// Format Extension detected? If so, add it to resource.
-			if( len(arguments.httpFormat) ){
-				arguments.httpResource = arguments.httpResource & "." & arguments.httpFormat;
-			}
+		// Log what we are sending out
+		if( variables.log.canDebug() ){
+			variables.log.debug( "Relaxed URL Request to #arguments.httpMethod#:#arguments.httpResource#:#arguments.httpFormat#",
+						   	     "Headers: #arguments.headerNames#->#arguments.headerValues#; Parameters: #arguments.parameterNames#->#arguments.parameterValues#" );
+		}
 
-			// Log what we are sending out
-			if( variables.log.canDebug() ){
-				variables.log.debug("Relaxed URL Request to #arguments.httpMethod#:#arguments.httpResource#:#arguments.httpFormat#",
-							   	   "Headers: #arguments.headerNames#->#arguments.headerValues#; Parameters: #arguments.parameterNames#->#arguments.parameterValues#");
-			}
+		// inflate headers
+		arguments.headerNames  = listToArray( arguments.headerNames );
+		arguments.headerValues = listToArray( arguments.headerValues );
 
-			// inflate headers
-			arguments.headerNames  = listToArray(arguments.headerNames);
-			arguments.headerValues = listToArray(arguments.headerValues);
+		// inflate parameters
+		arguments.parameterNames  = listToArray( arguments.parameterNames );
+		arguments.parameterValues = listToArray( arguments.parameterValues );
 
-			// inflate parameters
-			arguments.parameterNames  = listToArray(arguments.parameterNames);
-			arguments.parameterValues = listToArray(arguments.parameterValues);
+		// optional attribs
+		if( len( arguments.username ) ){ attribs.username = arguments.username; }
+		if( len( arguments.password ) ){ attribs.password = arguments.password; }
+		if( len( arguments.httpProxy ) ){ attribs.proxyServer = arguments.httpProxy; }
+		if( len( arguments.httpProxyPort ) ){ attribs.proxyPort = arguments.httpProxyPort; }
 
-			// optional attribs
-			if( len(arguments.username) ){ attribs.username = arguments.username; }
-			if( len(arguments.password) ){ attribs.password = arguments.password; }
-			if( len(arguments.httpProxy) ){ attribs.proxyServer = arguments.httpProxy; }
-			if( len(arguments.httpProxyPort) ){ attribs.proxyPort = arguments.httpProxyPort; }
+		var httpService = new http(
+			method				= "#arguments.httpMethod#",
+			url					= "#arguments.httpResource#",
+			timeout				= "20",
+			resolveURL			= "true",
+			userAgent			= "ColdBox Relaxer",
+			attributecollection	= "#attribs#",
+			charset				= "UTF-8"
+		);
 
-		</cfscript>
+		// Add Headers
+		for( var x=1; x lte arrayLen( arguments.headerNames ); x++ ){
+			var thisValue = ( arrayIsDefined( arguments.headerValues, x ) ? arguments.headerValues[ x ] : "" );
+			httpService.addParam( type="header", name=arguments.headerNames[ x ], value=thisValue );
+		} 
 
-		<!--- Make cfhttp call --->
-		<cfhttp method="#arguments.httpMethod#"
-				url="#arguments.httpResource#"
-				result="results"
-				timeout="20"
-				resolveURL="true"
-				userAgent="ColdBox Relax"
-				attributecollection="#attribs#">
+		// Add Parameters
+		for( var x=1; x lte arrayLen( arguments.parameterNames ); x++ ){
+			var thisValue = ( arrayIsDefined( arguments.parameterValues, x ) ? arguments.parameterValues[ x ] : "" );
+			httpService.addParam( type="url", name=arguments.parameterNames[ x ], value=thisValue );
+		}
 
-			<!--- Headers --->
-			<cfloop from="1" to="#arrayLen(arguments.headerNames)#" index="i">
-				<cfset tmpValue = "">
-				<cfif arrayIsDefined(arguments.headerValues,i)>
-					<cfset tmpValue = arguments.headerValues[i]>
-				</cfif>
-				<cfhttpparam type="header" name="#arguments.headerNames[i]#" value="#tmpValue#">
-			</cfloop>
+		return httpService.send().getPrefix();
 
-			<!--- Parameters --->
-			<cfloop from="1" to="#arrayLen(arguments.parameterNames)#" index="i">
-				<cfset tmpValue = "">
-				<cfif arrayIsDefined(arguments.parameterValues,i)>
-					<cfset tmpValue = arguments.parameterValues[i]>
-				</cfif>
-				<cfhttpparam type="url" name="#arguments.parameterNames[i]#" value="#tmpValue#">
-			</cfloop>
+	}
 
-		</cfhttp>
-
-	 	<cfreturn results>
-	</cffunction>
-
-</cfcomponent>
+}

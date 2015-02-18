@@ -175,11 +175,11 @@
 
 						<!--- Headers Holder --->
 						<div id="httpHeaders">
-							<cfloop from="1" to="#listLen(rc.headerNames)#" index="i">
+							<cfloop from="1" to="#arrayLen( rc.headerNames )#" index="i">
 							<p style="margin:0px">
-								<input title="Header Name"  type="text" class="textfield" name="headerNames"  size="30" value="#listGetAt(rc.headerNames,i)#" />
+								<input title="Header Name"  type="text" class="textfield" name="headerNames"  size="30" value="#rc.headerNames[ i ]#" />
 								<input title="Header Value" type="text" class="textfield" name="headerValues" size="50"
-									   value="<cfif listLen(rc.headerValues)>#listGetAt(rc.headerValues,i)#</cfif>"/>
+									   value="<cfif arrayLen( rc.headerValues ) and arrayIsDefined( rc.headerValues, i )>#rc.headerValues[ i ]#</cfif>"/>
 								<button class="button dynamicRemove" onclick="return false;"><img src="#prc.root#/includes/images/delete.png" alt="delete"/></button>
 							</p>
 							</cfloop>
@@ -194,11 +194,11 @@
 
 						<!--- Parameters Holder --->
 						<div id="httpParameters">
-							<cfloop from="1" to="#listLen(rc.parameterNames)#" index="i">
+							<cfloop from="1" to="#arrayLen( rc.parameterNames )#" index="i">
 							<p style="margin:0px">
-								<input title="Parameter Name"  type="text" class="textfield" name="parameterNames"  size="30" value="#listGetAt(rc.parameterNames,i)#" />
+								<input title="Parameter Name"  type="text" class="textfield" name="parameterNames"  size="30" value="#rc.parameterNames[ i ]#" />
 								<input title="Parameter Value" type="text" class="textfield" name="parameterValues" size="50"
-									   value="<cfif listLen(rc.parameterValues)>#listGetAt(rc.parameterValues,i)#</cfif>" />
+									   value="<cfif arrayLen( rc.parameterValues ) and arrayIsDefined( rc.parameterValues, i )>#rc.parameterValues[ i ]#</cfif>" />
 								<button class="button dynamicRemove" onclick="return false;"><img src="#prc.root#/includes/images/delete.png" alt="delete"/></button>
 							</p>
 							</cfloop>

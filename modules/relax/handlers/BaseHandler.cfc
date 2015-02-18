@@ -21,7 +21,7 @@ component{
 		// exit handlers
 		prc.xehHome 		= "relax";
 		prc.xehRelax		= "relax/home/relax";
-		prc.xehRelaxer		= "relax/home/relaxer";
+		prc.xehRelaxer		= "relax/relaxer";
 		prc.xehDSLDocs		= "relax/home/DSLDocs";
 	}
 

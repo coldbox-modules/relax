@@ -23,7 +23,6 @@ component extends="BaseHandler"{
 		prc.cssAppendList 	= "shCore,shThemeDefault";
 		// Exit Handlers
 		prc.xehResourceDoc  	= "relax/Home/resourceDoc";
-		prc.xehResourceDocEvent = "relax:Home.resourceDoc";
 		prc.xehLoadAPI			= "relax/Home/loadAPI";
 		prc.xehExportHTML 		= "relax/Export/html";
 		prc.xehExportPDF 		= "relax/Export/pdf";
@@ -43,7 +42,6 @@ component extends="BaseHandler"{
 	* Home
 	*/
 	function relax( event, rc, prc ){
-	
 		event.renderData( data=renderView( view="home/relax", module="relax" ) );
 	}
 
@@ -69,63 +67,6 @@ component extends="BaseHandler"{
 	}
 
 	/**
-	* The Awesome Relaxer
-	*/
-	function relaxer( event, rc, prc ){
-		// some defaults
-		event.paramValue( "httpResource", "" );
-		event.paramValue( "httpFormat", "" );
-		event.paramValue( "httpMethod", "GET" );
-		event.paramValue( "headerNames", "" );
-		event.paramValue( "headerValues", "" );
-		event.paramValue( "parameterNames", "" );
-		event.paramValue( "parameterValues", "" );
-		event.paramValue( "sendRequest", false );
-		event.paramValue( "username", "" );
-		event.paramValue( "password", "" );
-		event.paramValue( "httpProxy", "" );
-		event.paramValue( "httpProxyPort", "" );
-		event.paramValue( "entryTier", "production" );
-
-		// DSL Settings
-		prc.dsl				= DSLService.getLoadedAPI();
-		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
-
-		// custom css/js
-		prc.jsAppendList  = "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		prc.cssAppendList = "shCore,shThemeDefault";
-
-		// exit handlers
-		prc.xehPurgeHistory 	= "relax/Home.purgeHistory";
-		prc.xehResourceDoc  	= "relax/Home.resourceDoc";
-		prc.xehLoadAPI		= "relax/Home.loadAPI";
-
-		// send request
-		if( rc.sendRequest ){
-			try{
-				prc.results = relaxerService.send( argumentCollection=rc );
-			} catch( Any e ){
-				log.error( "Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#", e );
-				flash.put( "notice", "Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#" );
-			}
-		}
-
-		// Get request history
-		prc.requestHistory = relaxerService.getHistory();
-
-		// display relaxer
-		event.setView("home/relaxer");
-	}
-
-	/**
-	* Home
-	*/
-	function clearUserData( event, rc, prc ){
-		DSLService.clearUserData();
-		setNextEVent(rc.xehHome);
-	}
-
-	/**
 	* Export Resource Doc
 	*/
 	function resourceDoc( event, rc, prc, resourceID, expandedDiv ){
@@ -133,7 +74,7 @@ component extends="BaseHandler"{
 		prc.dsl				= DSLService.getLoadedAPI();
 		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
 		// exit handlers
-		prc.xehResourceDoc  	= "relax/Home.resourceDoc";
+		prc.xehResourceDoc  	= "relax/home/resourceDoc";
 		// expanded divs
 		prc.expandedResourceDivs = true;
 
@@ -161,23 +102,11 @@ component extends="BaseHandler"{
 	}
 
 	/**
-	* Purge relaxer history
+	* Home
 	*/
-	function purgeHistory( event, rc, prc ){
-		var results = {
-			"error" 	= false,
-			"messages" 	= "History cleaned!"
-		};
-		try{
-			relaxerService.clearHistory();
-		} catch( Any e ){
-			results.error 	 = true;
-			results.messages = "error clearing history: #e.detail# #e.message#";
-			if( log.canError() ){
-				log.error( "Error clearing history: #e.message# #e.detail#", e );
-			}
-		}
-		event.renderData( type="json", data=results );
+	function clearUserData( event, rc, prc ){
+		DSLService.clearUserData();
+		setNextEVent(rc.xehHome);
 	}
 
 }
