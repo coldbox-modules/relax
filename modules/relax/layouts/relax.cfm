@@ -1,3 +1,6 @@
+<cfparam name="args.sidebar"    default="true">
+<cfparam name="args.header"     default="true">
+<cfparam name="args.print"      default="true">
 <cfoutput>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -50,9 +53,10 @@
 
 </head>
 
-<body class="animated fadeIn">
-	<section id="container">
-		<header id="header">
+<body class="<cfif !args.print>animated fadeIn</cfif>" <cfif args.print>style="background-color: white"</cfif>>    
+	<cfif args.header>
+    <section id="container">
+        <header id="header">
             <!--logo start-->
             <div class="brand">
                 <a href="#event.buildLink( prc.xehHome )#" class="logo"><span>Relax</span></a>
@@ -94,9 +98,11 @@
                 </ul>
             </div>
         </header>
-	</section>
+    </section>
+    </cfif>
 
 	<!--sidebar start-->
+    <cfif args.sidebar>
     <aside class="sidebar">
         <div id="leftside-navigation" class="nano">
             <ul class="nano-content">
@@ -113,6 +119,7 @@
         </div>
     </aside>
     <!--sidebar end-->
+    </cfif>
 	
 	<!--========= JAVASCRIPT -->
 	<script src="#prc.root#/includes/js/jquery.min.js"></script> <!--Import jquery tools-->
@@ -145,7 +152,7 @@
 	</script>
 
 	<!--main content start-->
-    <section class="main-content-wrapper">
+    <section class="main-content-wrapper" style="margin-left:0px">
         <section id="main-content">
            #renderView()#         
         </section>

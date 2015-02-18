@@ -5,19 +5,21 @@
 <!--- Print Buttons --->
 <cfif NOT structKeyExists( rc, "print" )>
 <div id="exportBar" class="pull-right">
-	<a title="Print HTML Document"
-	   target="_blank"
-	   class="btn btn-info"
-	   href="#event.buildlink(linkTo=prc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=html")#">
-		<i class="fa fa-print"></i>
-	</a>
-	&nbsp;
-	<a title="Print PDF"
-	   target="_blank"
-	   class="btn btn-info"
-	   href="#event.buildlink(linkTo=prc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=pdf")#">
-		<i class="fa fa-file-pdf-o"></i>
-	</a>
+	<div class="btn-group">
+		<a title="Print HTML Document"
+		   target="_blank"
+		   class="btn btn-info"
+		   href="#event.buildlink(linkTo=prc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=html")#">
+			<i class="fa fa-print"></i>
+		</a>
+		&nbsp;
+		<a title="Print PDF"
+		   target="_blank"
+		   class="btn btn-info"
+		   href="#event.buildlink(linkTo=prc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=pdf")#">
+			<i class="fa fa-file-pdf-o"></i>
+		</a>
+	</div>
 </div>
 </cfif>
 

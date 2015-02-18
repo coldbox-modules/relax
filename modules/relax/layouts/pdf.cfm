@@ -21,6 +21,6 @@
 	</cfdocumentitem>
 
 	<cfoutput>
-	#renderLayout( "html" )#
+	#renderLayout( layout="relax", args={ sidebar=false, header=false, print=true } )#
 	</cfoutput>
 </cfdocument>
