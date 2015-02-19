@@ -235,10 +235,10 @@ $(document).ready(function() {
     app.init();
 });
 
-function formatJSON(id){
-	$("#"+id).val( formatJSONRaw( $("#"+id).val() ) ); 
+function formatJSON( id ){
+	$( "#" + id ).val( formatJSONRaw( $( "#" + id ).val() ) ); 
 }
-function formatJSONRaw(jsonData){
+function formatJSONRaw( jsonData ){
 	if( !jsonData.length ){ return ''; }
 	try{
 		var result = jsonlint.parse( jsonData );
@@ -250,6 +250,7 @@ function formatJSONRaw(jsonData){
 	}
 	catch(e){
 		console.log(e);
+        alert( "Error parsing JSON!" + e );
 		return jsonData;
 	}
 }

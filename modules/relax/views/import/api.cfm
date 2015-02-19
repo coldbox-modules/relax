@@ -19,7 +19,7 @@
 	
 	<div class="modal-footer">
 		<button class="btn btn-default" data-dismiss="modal">Close</button>
-		<button class="btn btn-info" onclick="formatJSON('apiJSON');return false"> Format JSON </button>
+		<button class="btn btn-info" onclick="formatJSON( 'apiJSON' );return false"> Format JSON </button>
 		<button type="submit" class="btn btn-primary" onClick="formatJSON('apiJSON')">Start Import</button>
 	</div>
 </div>
