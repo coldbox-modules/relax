@@ -272,7 +272,7 @@ component accessors="true"{
 		string description="",
 		string body=""
 	){
-		appendData( arguments, "schemas" );
+		appendResponse( arguments, "schemas" );
 		return this;
 	}
 
@@ -289,7 +289,7 @@ component accessors="true"{
 		string description="",
 		string body=""
 	){
-		appendData( arguments, "samples" );
+		appendResponse( arguments, "samples" );
 		return this;
 	}
     
