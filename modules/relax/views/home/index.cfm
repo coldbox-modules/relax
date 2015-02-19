@@ -12,8 +12,7 @@
 		</cfif>
 
 		<!--- Body --->
-		<p>Welcome to your Relax Console.  We have succesfully read the <em>Relax DSL</em>
-			for your loaded API: <code>#prc.loadedAPIName#</code>.
+		<p>We have succesfully loaded the <em>Relax DSL</em> for your loaded API: <code>#prc.loadedAPIName#</code>.
 		</p>
 
 		<div class="panel panel-default">
@@ -21,13 +20,14 @@
                 <div class="tab-wrapper tab-primary">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="##overview" data-toggle="tab">Service Overview</a></li>
-						<li><a href="##resources" data-toggle="tab">Defined Resources</a></li>
 						<li><a href="##httpcodes" data-toggle="tab">HTTP Codes</a></li>
 						<li><a href="##routes" data-toggle="tab">Generated Routes</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="overview">#renderView( view="home/docs/serviceOverview" , module="relax", prePostExempt=true )#</div>
-                        <div class="tab-pane" id="resources">#renderView( view="home/docs/resourceDefinitions" , module="relax", prePostExempt=true )#</div>
+                        <div class="tab-pane active" id="overview">
+                        	#renderView( view="home/docs/serviceOverview" , module="relax", prePostExempt=true )#
+                        	#renderView( view="home/docs/resourceDefinitions" , module="relax", prePostExempt=true )#
+                        </div>
                         <div class="tab-pane" id="httpcodes">#renderView( view="home/docs/httpcodes" , module="relax", prePostExempt=true )#</div>
                         <div class="tab-pane" id="routes">#renderView( view="home/docs/generatedRoutes" , module="relax", prePostExempt=true )#</div>
                     </div>

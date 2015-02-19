@@ -1,16 +1,31 @@
 var app = function() {
 
     var init = function() {
-        // setup globals
-        $remoteModal = $( "#modal" );
-
         // Call init functions
+        remoteModals();
         tooltips();
         toggleMenuLeft();
         toggleMenuRight();
         menu();
         togglePanel();
         closePanel();
+    };
+
+    var remoteModals = function(){
+        // setup globals
+        $remoteModal    = $( "#modal" );
+        $modalTemplate  = $( "#modal-template" );
+
+        $remoteModal.on( 'shown.bs.modal', function (e) {
+            var button  = $( e.relatedTarget ) // Button that triggered the modal
+            var modal   = $( this );
+            modal.find( "#modal-dialog" ).load( button.attr( "href" ) );
+        });
+
+        $remoteModal.on( 'hidden.bs.modal', function (e) {
+            var modal = $( this );
+            modal.find( "#modal-dialog" ).html( $modalTemplate.html() );
+        });
     };
 
     var tooltips = function() {
