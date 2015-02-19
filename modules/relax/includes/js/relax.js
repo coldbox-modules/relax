@@ -1,7 +1,10 @@
 var app = function() {
 
     var init = function() {
+        // setup globals
+        $remoteModal = $( "#modal" );
 
+        // Call init functions
         tooltips();
         toggleMenuLeft();
         toggleMenuRight();
@@ -215,91 +218,8 @@ var app = function() {
 //Load global functions
 $(document).ready(function() {
     app.init();
-
 });
 
-/**
- * A-la-Carte closing of remote modal windows
- * @return
- */
-function closeRemoteModal(){
-	$remoteModal.data("overlay").close();
-	$remoteModalContent.html('').html($remoteModalLoading);
-}
-/**
- * Open a new remote modal window Ajax style.
- * @param url The URL ajax destination
- * @param data The data packet to send
- * @param w The width of the modal
- * @param h The height of the modal
- * @return
- */
-function openRemoteModal(url,params,w,h){
-	$remoteModal.overlay({
-			mask: {
-			color: '#fff',
-			loadSpeed: 200,
-			opacity: 0.6
-		},
-		closeOnClick: true,
-		onBeforeLoad : function(){
-			$remoteModalContent.load( $remoteModal.data("url"),$remoteModal.data("params") );
-		},
-		onClose: function(){ closeRemoteModal(); }
-	});
-	$remoteModal.find("a.close").attr("title","Close Window");
-	// Set data for this remote modal
-	$remoteModal.data("url",url).data("params",params);
-	// width/height
-	if( w ){ $remoteModal.css("width",w); }
-	if( h ){ $remoteModal.css("height",h); }
-	// open the remote modal
-	$remoteModal.data("overlay").load();
-}
-/**
- * Activate modal confirmation windows
- * @return
- */
-function activateConfirmations(){
-	
-	// verify overlay already loaded
-	if( !$confirmIt.data("overlay") ){
-		// Overlay the global confirmation
-		$confirmIt.overlay({
-			mask: {
-				color: '#fff',
-				loadSpeed: 200,
-				opacity: 0.6
-			},
-			closeOnClick:false
-		});
-		
-		// close button triggers for confirmation dialog
-		$confirmIt.find("button").click(function(e){
-			if( $(this).attr("data-action") == "confirm" ){
-				window.location =  $confirmIt.data('confirmSrc');
-			}
-		});
-	}
-	
-	// Activate dynamic confirmations from <a> of class confirmIt
-	$('a.confirmIt').click(function(e){
-		// setup the href
-		$confirmIt.data("confirmSrc", $(this).attr('href'));
-		// data-message
-		if( $(this).attr('data-message') ){
-			$confirmIt.find("#confirmItMessage").html( $(this).attr('data-message') );
-		}
-		// data-title
-		if( $(this).attr('data-title') ){
-			$confirmIt.find("#confirmItTitle").html( $(this).attr('data-title') );
-		}
-		// show the confirmation when clicked
-		$confirmIt.data("overlay").load();
-		// prevent default action
-		e.preventDefault();
-	});
-}
 function formatJSON(id){
 	$("#"+id).val( formatJSONRaw( $("#"+id).val() ) ); 
 }

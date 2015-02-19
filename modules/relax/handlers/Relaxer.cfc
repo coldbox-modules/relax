@@ -33,14 +33,9 @@ component extends="BaseHandler"{
 		prc.dsl				= DSLService.getLoadedAPI();
 		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
 
-		// custom css/js
-		prc.jsAppendList  = "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		prc.cssAppendList = "shCore,shThemeDefault";
-
 		// exit handlers
 		prc.xehPurgeHistory = "relax/relaxer/purgeHistory";
 		prc.xehResourceDoc  = "relax/home/resourceDoc";
-		//prc.xehLoadAPI		= "relax/relaxer/loadAPI";
 
 		// send request
 		if( rc.sendRequest ){

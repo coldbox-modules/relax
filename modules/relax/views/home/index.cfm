@@ -69,13 +69,17 @@
 
 				<p class="center">
 					<!--- Export --->
-					<a href="javascript:openRemoteModal('#event.buildLink( prc.xehExportAPI)#')"
+					<a href="#event.buildLink( prc.xehExportAPI )#"
+						data-toggle="modal" 
+						data-target="##modal"
 						class="btn btn-primary"
 					   	title="Export API">
 							<i class="fa fa-lg fa-cloud-download"></i> Export
 					</a>
 					<!--- Import --->
-					<a href="javascript:openRemoteModal('#event.buildLink( prc.xehImportAPI)#')"
+					<a href="#event.buildLink( prc.xehImportAPI)#"
+						data-toggle="modal" 
+						data-target="##modal"
 						class="btn btn-primary"
 					   	title="Import API">
 							<i class="fa fa-lg fa-cloud-upload"></i> Import

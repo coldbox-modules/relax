@@ -154,19 +154,26 @@
 	<!--main content start-->
     <section class="main-content-wrapper" <cfif args.print>style="margin-left:0px"</cfif>>
         <section id="main-content">
-           #renderView()#         
+           #renderView()#    
         </section>
     </section>
     <!--main content end-->
-</section>
 
-
-<!--- ============================ Remote Modal Window ============================ --->
-<div id="remoteModal">
-	<div id="remoteModelContent">
-	</div>
-</div>
-<!--- ============================ end Confirmit ============================ --->
+    <!--- ============================ Remote Modal Window ============================ --->
+    <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="remoteModelContent">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Loading...</h3>
+                </div>
+                <div class="modal-body">
+                    <i class="fa fa-spinner fa-spin fa-lg fa-4x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--- ============================ Remote Modal Window ============================ --->
 
 </body>
 <!--End Body-->
