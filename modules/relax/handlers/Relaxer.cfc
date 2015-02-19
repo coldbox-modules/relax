@@ -35,7 +35,7 @@ component extends="BaseHandler"{
 
 		// exit handlers
 		prc.xehPurgeHistory = "relax/relaxer/purgeHistory";
-		prc.xehResourceDoc  = "relax/home/resourceDoc";
+		prc.xehResourceDoc  = "relax/relaxer/resourceDoc";
 
 		// send request
 		if( rc.sendRequest ){
@@ -58,6 +58,14 @@ component extends="BaseHandler"{
 
 		// display relaxer
 		event.setView( "relaxer/index" );
+	}
+
+	/**
+	* resourceDoc, called via Ajax
+	*/
+	any function resourceDoc( event, rc, prc ){
+		prc.body = runEvent( event="relax:home.resourceDoc", eventArguments={ widget=true } );
+		event.renderData( data=renderView( view="relaxer/resourceDoc", module="relax" ) );
 	}
 
 	/**

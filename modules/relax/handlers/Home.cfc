@@ -67,10 +67,10 @@ component extends="BaseHandler"{
 	/**
 	* Export Resource Doc
 	*/
-	function resourceDoc( event, rc, prc, resourceID, expandedDiv ){
+	function resourceDoc( event, rc, prc, resourceID, expandedDiv, boolean widget=false ){
 		// DSL Settings
-		prc.dsl				= DSLService.getLoadedAPI();
-		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
+		prc.dsl					= DSLService.getLoadedAPI();
+		prc.loadedAPIName 		= DSLService.getLoadedAPIName();
 		// exit handlers
 		prc.xehResourceDoc  	= "relax/home/resourceDoc";
 		// expanded divs
@@ -88,8 +88,8 @@ component extends="BaseHandler"{
 		}
 
 		// set view for Rendering
-		if( event.isAjax() ){
-			event.renderData( data=renderView( view="home/docs/resourceDoc", module="relax" ) );
+		if( arguments.widget ){
+			return renderView( view="home/docs/resourceDoc", module="relax" );
 		} else {
 			event.setView( view="home/docs/resourceDoc", layout="#rc.print#" );
 		}

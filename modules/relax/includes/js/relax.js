@@ -234,7 +234,14 @@ var app = function() {
 $(document).ready(function() {
     app.init();
 });
-
+function openRemoteModal( url, params ){
+    $remoteModal    = $( "#modal" );
+    // load URL
+    $remoteModal.find( "#modal-dialog" )
+        .load( url, params );
+    // show it
+    $remoteModal.modal( "show" );
+}
 function formatJSON( id ){
 	$( "#" + id ).val( formatJSONRaw( $( "#" + id ).val() ) ); 
 }
