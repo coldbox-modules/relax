@@ -59,7 +59,10 @@
         <header id="header">
             <!--logo start-->
             <div class="brand">
-                <a href="#event.buildLink( prc.xehHome )#" class="logo"><span>Relax</span></a>
+                <a href="#event.buildLink( prc.xehHome )#" class="logo">
+                    <img src="#prc.root#/includes/images/ColdBoxLogo2015-Solo_50.png" title="ColdBox"/>
+                    <span>Relax</span>
+                </a>
             </div>
             <!--Toggle-->
             <div class="toggle-navigation toggle-left">
@@ -114,6 +117,9 @@
                 </li>
                 <li <cfif event.getCurrentAction() eq "DSLDocs">class="active"</cfif>>
                     <a href="#event.buildLink( prc.xehDSLDocs )#" ><i class="fa fa-code"></i><span>RelaxDSL Docs</span></a>
+                </li>
+                <li>
+                    <a href="##" title="Version Information"><i class="fa fa-info"></i>Relax v#getModuleConfig( 'relax' ).version#</a>
                 </li>
             </ul>
         </div>
