@@ -105,9 +105,7 @@ component{
 	private function loadDefaultAPI(){
 		var DSLService = wirebox.getInstance( "DSLService@relax" );
 		// check if the api is loaded or not, else, load the default one
-		if( NOT DSLService.isLoadedAPI() ){
-			DSLService.loadAPI( controller.getConfigSettings().relax.defaultAPI );
-		}
+		DSLService.loadAPI( controller.getConfigSettings().relax.defaultAPI );
 	}
 
 }
