@@ -67,7 +67,7 @@
             <div class="panel-body">
             	You can export your Relaxed Service API to JSON and also import one.<br/><br/>
 
-				<p class="center">
+				<p class="text-center">
 					<!--- Export --->
 					<a href="#event.buildLink( prc.xehExportAPI )#"
 						data-toggle="modal" 
@@ -95,7 +95,7 @@
             <div class="panel-body">
             	<p>You can export your Relaxed Service Documentation in several formats: <br/></p>
 				<!--- Export COmmands --->
-				<p class="center">
+				<p class="text-center">
 					<!--- html --->
 					<a href="#event.buildLink( prc.xehExportHTML)#"
 						target="_blank"
