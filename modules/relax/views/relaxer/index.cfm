@@ -4,7 +4,7 @@
 	<div class="col-md-9">
 		<!--- MessageBox --->
 		<cfif flash.exists( "notice" )>
-			#flash.get( "notice" )#
+			<div class="alert alert-info"><i class="fa fa-bell"></i> #flash.get( "notice" )#</div>
 		</cfif>
 
 		<form name="relaxerForm" id="relaxerForm" action="#event.buildLink( prc.xehRelaxer)#" method="post" class="form-inline">

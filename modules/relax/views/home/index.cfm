@@ -8,7 +8,7 @@
 
 		<!--- MessageBox --->
 		<cfif flash.exists( "notice" )>
-			<div>#flash.get( "notice" )#</div>
+			<div class="alert alert-info"><i class="fa fa-bell"></i> #flash.get( "notice" )#</div>
 		</cfif>
 
 		<!--- Body --->
