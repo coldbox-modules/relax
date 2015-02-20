@@ -63,8 +63,8 @@ component{
 	function preProcess(event,interceptData) eventPattern="^relax.*"{
 		var DSLService = wirebox.getInstance( "DSLService@relax" );
 		// load the default API if none loaded
-		if( DSLService.isLoadedAPI() ){
-			DSLService.loadDefaultAPI();
+		if( !DSLService.isLoadedAPI() ){
+			DSLService.loadAPI( controller.getConfigSettings().relax.defaultAPI );
 		}
 	}
 
