@@ -1,31 +1,28 @@
-<!-----------------------------------------------------------------------
+/**
 ********************************************************************************
-Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-www.coldbox.org | www.luismajano.com | www.ortussolutions.com
+Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
+www.ortussolutions.com
 ********************************************************************************
+*/
+component{
 
-Author     :	Luis Majano
-Description :
-	Base handler
------------------------------------------------------------------------>
-<cfcomponent output="false">
-<cfscript>
+	// DI
+	property name="settings" 		inject="coldbox:setting:relax";
+	property name="DSLService"		inject="id:DSLService@relax";
 
-	function preHandler(event){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
-		
+	/**
+	* Pre handler
+	*/
+	function preHandler( event, rc, prc ){
 		// module root
-		rc.root = event.getModuleRoot();
+		prc.root 			= event.getModuleRoot();
+		// settings
+		prc.settings 		= variables.settings;
 		// exit handlers
-		rc.xehHome 			= "relax/home";
-		rc.xehRelax			= "relax/home.relax";
-		rc.xehRelaxer		= "relax/home.relaxer";
-		rc.xehRelaxUpdates	= "relax/Home.checkUpdates";
-		rc.xehDSLDocs		= "relax/home.DSLDocs";
-		rc.xehLogViewer 	= "relax/logs";
-		rc.xehLogHelp		= "relax/logs.help";
+		prc.xehHome 		= "relax";
+		prc.xehRelax		= "relax/home/relax";
+		prc.xehRelaxer		= "relax/relaxer";
+		prc.xehDSLDocs		= "relax/home/DSLDocs";
 	}
 
-</cfscript>
-</cfcomponent>
+}

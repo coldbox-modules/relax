@@ -1,6 +1,6 @@
 <h1>HTTP Response Codes</h1>
 <p> All RESTful service APIs should return appropriate <a href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP Status Codes</a> for every request.</p>
-<table class="tablelisting" width="100%">
+<table class="table table-hover table-striped">
   <tbody>
     <tr>
       <th width="30"><strong>Code</strong></th>

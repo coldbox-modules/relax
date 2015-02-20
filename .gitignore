@@ -1,6 +1,11 @@
+.settings
+logs/*.log
 settings.xml
-.DS_Store
-.settings/
-.project
-/ignore/
-coldbox
+.netbeans
+test/results/*.properties
+test/results/*.html
+test/results/*.log
+tests/results
+modules/cbjavaloader
+modules/cbi18n
+workbench/build.number

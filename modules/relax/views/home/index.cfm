@@ -1,191 +1,150 @@
 <cfoutput>
-<!--============================Sidebar============================-->
-<div class="sidebar">
-	<!--- Loaded API --->
-	<div class="small_box">
-		<div class="header">
-			<img src="#rc.root#/includes/images/sofa.png" alt="info" width="24" height="24" />Loaded Relaxed APIs
-		</div>
-		<div class="body">
-			From here you can switch to another Relaxed API in your <strong>resources</strong> folder:<br/>
-			
-			<p class="center">
-				<!--- My Apis --->
-				<select name="myAPI" id="myAPI" title="Your defined Relaxed APIs" onchange="window.location='#event.buildLink(rc.xehLoadAPI)#?apiName='+this.value">
-					<cfloop query="rc.loadedAPIs">
-						<option value="#rc.loadedAPis.name#" <cfif rc.loadedAPIs.name eq rc.loadedAPIName>selected="selected"</cfif>>#rc.loadedAPis.name#</option>
-					</cfloop>
-				</select>
-			</p>
-		</div>
-	</div>	
-	
-	<!--- Import/Export Box --->
-	<div class="small_box">
-		<div class="header">
-			<img src="#rc.root#/includes/images/export.png" alt="info" width="24" height="24" />API Export/Import
-		</div>
-		<div class="body">
-			You can export your Relaxed Service API to JSON and also import one.<br/><br/>
-			
-			<p class="center">
-				<!--- Export --->
-				<a href="javascript:openRemoteModal('#event.buildLink(rc.xehExportAPI)#')" 
-					class="button" 
-				   	title="Export API">
-					<span>
-						<img src="#rc.root#/includes/images/export_16.png" alt="export"/> Export
-					</span>
-				</a>
-				<!--- Import --->
-				<a href="javascript:openRemoteModal('#event.buildLink(rc.xehImportAPI)#')" 
-					class="button" 
-				   	title="Import API">
-					<span>
-						<img src="#rc.root#/includes/images/import_16.png" alt="import"/> Import
-					</span>
-				</a>
-			</p>
-		</div>
-	</div>	
-	
-	<!--- Export Box --->
-	<div class="small_box">
-		<div class="header">
-			<img src="#rc.root#/includes/images/documents_icon.png" alt="info" width="24" height="24" />Docs Export Lounge
-		</div>
-		<div class="body">
-			<p>You can export your Relaxed Service Documentation in several formats: <br/></p>
-			
-			<!--- Export COmmands --->
-			<p class="center">
-				<!--- html --->
-				<a href="#event.buildLink(rc.xehExportHTML)#" 
-					target="_blank"
-					class="button" 
-				   	title="Export as HTML">
-					<span>
-						<img src="#rc.root#/includes/images/html.png" border="0" align="absmiddle" alt="html" />
-					</span>
-				</a>
-				<!--- pdf --->
-				<a href="#event.buildLink(rc.xehExportPDF)#" class="button" 
-				    target="_blank"
-					title="Export as PDF">
-					<span>
-						<img src="#rc.root#/includes/images/pdf.png" border="0" align="absmiddle" alt="html" />
-					</span>
-				</a>
-				<!--- mediawiki --->
-				<a href="#event.buildLink(rc.xehExportwiki)#" class="button" 
-				    target="_blank"
-					title="Export as MediaWiki">
-					<span>
-						<img src="#rc.root#/includes/images/wikipedia.png" border="0" align="absmiddle" alt="html" />
-					</span>
-				</a>
-				<!--- trac --->
-				<a href="#event.buildLink(rc.xehExporttrac)#" class="button" 
-				    target="_blank"
-					title="Export as TracMarkup">
-					<span>
-						<img src="#rc.root#/includes/images/trac.png" border="0" align="absmiddle" alt="html" />
-					</span>
-				</a>
-			</p>
-		</div>
-	</div>		
-	
-	<!--- Info Box --->
-	<div class="small_box">
-		<div class="header">
-			<img src="#rc.root#/includes/images/info.png" alt="info" width="24" height="24" />Need Help?
-		</div>
-		<div class="body">
-			<a href="http://www.ortussolutions.com" target="_blank" title="The Gurus behind ColdBox">
-			<img src="#rc.root#/includes/images/ortus-top-logo.png" alt="Ortus Solutions" border="0" /></a><br/>
-			
-			<p><strong>Ortus Solutions</strong> is the company behind anything ColdBox. Need professional support, architecture analysis,
-			code reviews, custom development or anything ColdFusion, ColdBox related? 
-			<a href="mailto:help@ortussolutions.com">Contact us</a>, we are here
-			to help!</p>
-			
-			<p class="center">
-			<a href="javascript:openRemoteModal('#event.buildLink(rc.xehRelaxUpdates)#')" class="button" 
-			   title="Check for Updates">
-				<span>
-					<img src="#rc.root#/includes/images/download.png" border="0" align="absmiddle" alt="updates" />
-					Check For Updates
-				</span>
-			</a>
-		</div>
-	</div>	
-	
-</div>
-<!--End sidebar-->
-
-<!--============================Main Column============================-->
-<div class="main_column">
-	<div class="box">
-		<div class="header" id="relaxerHeader">
-			<img src="#rc.root#/includes/images/sofa.png" alt="Database" width="30" height="30" title="Go Relax!" />
+<div class="row">
+	<div class="col-md-9">
+		<h1>
+			<i class="fa fa-beer"></i>
 			Welcome To Relax
-		</div>
-		<!--- Body --->
-		<div class="body">
-			<!--- MessageBox --->
-			#getPlugin("MessageBox").renderit()#
-			<!--- Body --->
-			<p>Welcome to your Relax Console.  We have succesfully read the <em>Relax DSL</em>
-				for your loaded API: <strong>#rc.loadedAPIName#</strong>.  Below is the RESTful 
-				documentation.  From here you can also tap into our <strong>RelaxURL</strong> console to test the resources or any web 
-				RESTful service or view our awesome <strong>RelaxLogs</strong> log viewer.
-			</p>			
-		</div>
-		<div class="body_vertical_nav clearfix">
-			<!--- Documentation Navigation Bar --->
-			<ul class="vertical_nav">
-				<li class="active"><a href="##overview">Service Overview</a></li>
-				<li><a href="##resources">Defined Resources</a></li>
-				<li><a href="##httpcodes">HTTP Codes</a></li>
-				<li><a href="##routes">Generated Routes</a></li>
-			</ul>		
-			<!--- Documentation Panes --->	
-			<div class="main_column">
-				<!-- Content area that wil show the form and stuff -->
-				<div class="panes_vertical">
-					<!--- OverView Panel --->
-					<div>
-						#renderView(view="home/docs/serviceOverview",prePostExempt=true)#
-					</div>
-					<!--- Resources Panel --->
-					<div>
-						#renderView(view="home/docs/resourceDefinitions",prePostExempt=true)#						
-					</div>
-					<!--- HTTP Codes Panel --->
-					<div>
-						#renderView(view="home/docs/httpcodes",prePostExempt=true)#
-					</div>
-					<!--- Generated Routes --->
-					<div>
-						#renderView(view="home/docs/generatedRoutes",prePostExempt=true)#
-					</div>
-				</div>
-			</div>
-			
-		</div>
-	
-	</div>
+		</h1>
 
-</div>
-<script language="javascript">
-$(document).ready(function() {
-	// syntax highlight
-	SyntaxHighlighter.all();
-});
-function toggleResource(id){
-	var $div = $("##resource_"+id);
-	$div.slideToggle();	
-}
-</script>
+		<!--- MessageBox --->
+		<cfif flash.exists( "notice" )>
+			<div class="alert alert-info"><i class="fa fa-bell"></i> #flash.get( "notice" )#</div>
+		</cfif>
+
+		<!--- Body --->
+		<p>We have succesfully loaded the <em>Relax DSL</em> for your loaded API: <code>#prc.loadedAPIName#</code>.
+		</p>
+
+		<div class="panel panel-default">
+            <div class="panel-body">
+                <div class="tab-wrapper tab-primary">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="##overview" data-toggle="tab">Service Overview</a></li>
+						<li><a href="##httpcodes" data-toggle="tab">HTTP Codes</a></li>
+						<li><a href="##routes" data-toggle="tab">Generated Routes</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="overview">
+                        	#renderView( view="home/docs/serviceOverview" , module="relax", prePostExempt=true )#
+                        	#renderView( view="home/docs/resourceDefinitions" , module="relax", prePostExempt=true )#
+                        </div>
+                        <div class="tab-pane" id="httpcodes">#renderView( view="home/docs/httpcodes" , module="relax", prePostExempt=true )#</div>
+                        <div class="tab-pane" id="routes">#renderView( view="home/docs/generatedRoutes" , module="relax", prePostExempt=true )#</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+	</div> <!--- end main content column --->
+
+	<!--- Sidebar --->
+	<div class="col-md-3">
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Loaded Relaxed APIs</h3>
+            </div>
+            <div class="panel-body">
+            	From here you can switch to another Relaxed API in your <strong>resources</strong> folder:<br/>
+
+				<p class="text-center">
+					<br>
+					<!--- My Apis --->
+					<select name="myAPI" id="myAPI" title="Your defined Relaxed APIs" onchange="window.location='#event.buildLink( prc.xehLoadAPI )#?apiName=' + this.value" class="form-control">
+						<cfloop query="prc.loadedAPIs">
+							<cfif prc.loadedAPIs.type eq "Dir">
+							<option value="#prc.loadedAPis.name#" <cfif prc.loadedAPIs.name eq prc.loadedAPIName>selected="selected"</cfif>>#prc.loadedAPis.name#</option>
+							</cfif>
+						</cfloop>
+					</select>
+				</p>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">API Export/Import</h3>
+            </div>
+            <div class="panel-body">
+            	You can export your Relaxed Service API to JSON and also import one.<br/><br/>
+
+				<p class="text-center">
+					<!--- Export --->
+					<a href="#event.buildLink( prc.xehExportAPI )#"
+						data-toggle="modal" 
+						data-target="##modal"
+						class="btn btn-primary"
+					   	title="Export API">
+							<i class="fa fa-lg fa-cloud-download"></i> Export
+					</a>
+					<!--- Import --->
+					<a href="#event.buildLink( prc.xehImportAPI)#"
+						data-toggle="modal" 
+						data-target="##modal"
+						class="btn btn-primary"
+					   	title="Import API">
+							<i class="fa fa-lg fa-cloud-upload"></i> Import
+					</a>
+				</p>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Docs Export Lounge</h3>
+            </div>
+            <div class="panel-body">
+            	<p>You can export your Relaxed Service Documentation in several formats: <br/></p>
+				<!--- Export COmmands --->
+				<p class="text-center">
+					<!--- html --->
+					<a href="#event.buildLink( prc.xehExportHTML)#"
+						target="_blank"
+						class="btn btn-primary"
+					   	title="Export as HTML">
+						<i class="fa fa-lg fa-html5"></i>
+					</a>
+					<!--- pdf --->
+					<a href="#event.buildLink( prc.xehExportPDF)#" class="btn btn-primary"
+					    target="_blank"
+						title="Export as PDF">
+						<i class="fa fa-lg fa-file-pdf-o"></i>
+					</a>
+					<!--- mediawiki --->
+					<a href="#event.buildLink( prc.xehExportwiki)#" class="btn btn-primary"
+					    target="_blank"
+						title="Export as MediaWiki">
+						<i class="fa fa-lg fa-file-code-o"></i>
+					</a>
+					<!--- trac --->
+					<a href="#event.buildLink( prc.xehExporttrac)#" class="btn btn-primary"
+					    target="_blank"
+						title="Export as TracMarkup">
+						<i class="fa fa-lg fa-paw"></i>
+					</a>
+				</p>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Need Help?</h3>
+            </div>
+            <div class="panel-body">
+            	<div class="text-center">
+	            	<a href="http://www.ortussolutions.com" target="_blank" title="The Gurus behind ColdBox">
+						<img src="#prc.root#/includes/images/ortus-top-logo.png" alt="Ortus Solutions" border="0" class="img-thumbnail"/>
+					</a>
+				</div>
+
+				<p>&nbsp;</p>
+
+				<p><strong>Ortus Solutions</strong> is the company behind anything ColdBox. Need professional support, architecture analysis,
+				code reviews, custom development or anything ColdFusion, ColdBox related?
+				<a href="mailto:help@ortussolutions.com">Contact us</a>, we are here
+				to help!</p>
+            </div>
+        </div>
+
+	</div> <!--- end sidebar column --->
+</div> <!--- end row --->
 </cfoutput>

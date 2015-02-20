@@ -16,7 +16,7 @@ function flattenActions(action){
 	}
 	
 	if( len(action) ){
-		return ',action="#action#"';
+		return ', action="#action#"';
 	}
 	
 	return '';

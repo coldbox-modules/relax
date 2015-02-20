@@ -1,32 +1,29 @@
 <cfcomponent output="false" hint="My App Configuration">
-<cfscript>	
+<cfscript>
 	// Configure ColdBox Application
 	function configure(){
-	
+
 		// coldbox directives
 		coldbox = {
 			//Application Setup
-			appName 				= "Relax Shell",
-			
+			appName 				= "Development Shell",
+
 			//Development Settings
-			debugMode				= false,
-			debugPassword			= "",
 			reinitPassword			= "",
 			handlersIndexAutoReload = true,
-			configAutoReload		= false,
-			
+
 			//Implicit Events
 			defaultEvent			= "relax:home.index",
-			requestStartHandler		= "Main.onRequestStart",
+			requestStartHandler		= "",
 			requestEndHandler		= "",
 			applicationStartHandler = "",
 			applicationEndHandler	= "",
 			sessionStartHandler 	= "",
 			sessionEndHandler		= "",
 			missingTemplateHandler	= "",
-			
+
 			//Extension Points
-			UDFLibraryFile 				= "",
+			ApplicationHelper 				= "",
 			coldboxExtensionsLocation 	= "",
 			modulesExternalLocation		= [],
 			pluginsExternalLocation 	= "",
@@ -34,68 +31,60 @@
 			layoutsExternalLocation 	= "",
 			handlersExternalLocation  	= "",
 			requestContextDecorator 	= "",
-			
+
 			//Error/Exception Handling
 			exceptionHandler		= "",
 			onInvalidEvent			= "",
-			customErrorTemplate		= "",
-				
+			customErrorTemplate		= "/coldbox/system/includes/BugReport.cfm",
+
 			//Application Aspects
 			handlerCaching 			= false,
 			eventCaching			= false,
-			proxyReturnCollection 	= false,
-			flashURLPersistScope	= "session"	
+			proxyReturnCollection 	= false
 		};
-	
+
 		// custom settings
 		settings = {
 		};
-		
-		// Activate WireBox
-		wirebox = { enabled = true, singletonReload=true };
-		
+
 		// Module Directives
 		modules = {
 			//Turn to false in production, on for dev
-			autoReload = true
+			autoReload = false
 		};
-		
+
 		//LogBox DSL
 		logBox = {
 			// Define Appenders
 			appenders = {
-				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" },
-				// DB appender so we can see the logbox log reader work
-				dbAppender = {
-					class="coldbox.system.logging.appenders.DBAppender",
+				files={class="coldbox.system.logging.appenders.RollingFileAppender",
 					properties = {
-						dsn = "relax", table="api_logs", autocreate=true, textDBType="longtext"
+						filename = "devshell", filePath="/#appMapping#/logs"
 					}
 				}
 			},
 			// Root Logger
 			root = { levelmax="DEBUG", appenders="*" },
 			// Implicit Level Categories
-			info = [ "coldbox.system" ] 
+			info = [ "coldbox.system" ]
 		};
-		
-		//Layout Settings
-		layoutSettings = {
-			defaultLayout = "Layout.Main.cfm"
-		};
-		
+
 		//Register interceptors as an array, we need order
 		interceptors = [
-			//Autowire
-			{class="coldbox.system.interceptors.Autowire",
-			 properties={}
-			},
 			//SES
 			{class="coldbox.system.interceptors.SES",
 			 properties={}
 			}
 		];
-		
+
+		validation = {
+			sharedConstraints = {
+				"sharedUser" = {
+					username = {required=true, size="6..20"},
+					password = {required=true, size="6..20"}
+				}
+			}
+		};
 	}
 </cfscript>
 </cfcomponent>

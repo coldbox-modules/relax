@@ -1,185 +1,108 @@
-<!-----------------------------------------------------------------------
+/**
 ********************************************************************************
-Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-www.coldbox.org | www.luismajano.com | www.ortussolutions.com
+Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
+www.ortussolutions.com
 ********************************************************************************
+* Main Handler
+*/
+component extends="BaseHandler"{
 
-Author     :	Luis Majano
-Description :
-	Home Handler Section
------------------------------------------------------------------------>
-<cfcomponent output="false" extends="BaseHandler">
+	// DI
+	property name="relaxerService" 	inject="Relaxer@relax";
 
-	<!--- dependencies --->
-	<cfproperty name="relaxerService" 	inject="id:Relaxer@relax" >
-	<cfproperty name="DSLService"		inject="id:DSLService@relax" >
-
-<cfscript>
-
-	function index(event,rc,prc){
-		// module settings
-		rc.settings = getModuleSettings("relax").settings;
+	/**
+	* Home
+	*/
+	function index( event, rc, prc ){
 		// Get the loaded API for the user
-		rc.dsl				= DSLService.getLoadedAPI();
-		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
-		rc.loadedAPIs		= DSLService.listAPIs();
-		// JS/CSS Append
-		rc.jsAppendList  = "shCore,brushes/shBrushColdFusion,brushes/shBrushJScript,brushes/shBrushXml";
-		rc.cssAppendList = "shCore,shThemeDefault";
+		prc.dsl				= DSLService.getLoadedAPI();
+		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
+		prc.loadedAPIs		= DSLService.listAPIs();
+
 		// Exit Handlers
-		rc.xehResourceDoc  		= "relax/Home.resourceDoc";
-		rc.xehResourceDocEvent  = "relax:Home.resourceDoc";
-		rc.xehExportHTML 		= "relax/Export.html";
-		rc.xehExportPDF 		= "relax/Export.pdf";
-		rc.xehExportwiki 		= "relax/Export.mediawiki";
-		rc.xehExportTrac 		= "relax/Export.trac";
-		rc.xehExportAPI			= "relax/Export.api";
-		rc.xehImportAPI			= "relax/Import.api";
-		rc.xehLoadAPI			= "relax/Home.loadAPI";
+		prc.xehResourceDoc  = "relax/Home/resourceDoc";
+		prc.xehLoadAPI		= "relax/Home/loadAPI";
+		prc.xehExportHTML 	= "relax/Export/html";
+		prc.xehExportPDF 	= "relax/Export/pdf";
+		prc.xehExportwiki 	= "relax/Export/mediawiki";
+		prc.xehExportTrac 	= "relax/Export/trac";
+		prc.xehExportAPI	= "relax/Export/api";
+		prc.xehImportAPI	= "relax/Import/api";
 
 		// Expanded div for resource holders
-		rc.expandedResourceDivs = false;
+		prc.expandedResourceDivs = false;
 
-		event.setView("home/index");
+		// set view
+		event.setView( "home/index" );
 	}
 
-	function test(event,rc,prc){
-		event.setView(name="test",layout="template");
+	/**
+	* Home
+	*/
+	function relax( event, rc, prc ){
+		event.renderData( data=renderView( view="home/relax", module="relax" ) );
 	}
 
-	function relax(event,rc,prc){
-		event.setView(name="home/relax",layout="Ajax");
-	}
-
-	function clearUserData(event,rc,prc){
-		DSLService.clearUserData();
-		setNextEVent(rc.xehHome);
-	}
-
-	function loadAPI(event,rc,prc){
-		event.paramValue("apiName","");
+	/**
+	* Load a selected API
+	*/
+	function loadAPI( event, rc, prc ){
+		event.paramValue( "apiName", "" )
+			.paramValue( "returnEvent", "" );
 		// load the api if it has length else ignored.
-		if( len(rc.apiName) ){
-			test = DSLService.loadAPI( rc.apiName );
-			getPlugin("MessageBox").info("API: #rc.apiName# loaded!");
-		}
-		setNextEvent(rc.xehHome);
-	}
-
-	function relaxer(event,rc,prc){
-		// some defaults
-		event.paramValue("httpResource","");
-		event.paramValue("httpFormat","");
-		event.paramValue("httpMethod","GET");
-		event.paramValue("headerNames","");
-		event.paramValue("headerValues","");
-		event.paramValue("parameterNames","");
-		event.paramValue("parameterValues","");
-		event.paramValue("sendRequest",false);
-		event.paramValue("username","");
-		event.paramValue("password","");
-		event.paramValue("httpProxy","");
-		event.paramValue("httpProxyPort","");
-		event.paramValue("entryTier","production");
-
-		// module settings
-		rc.settings 		= getModuleSettings("relax").settings;
-		// DSL Settings
-		rc.dsl				= DSLService.getLoadedAPI();
-		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
-
-		// custom css/js
-		rc.jsAppendList  = "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		rc.cssAppendList = "shCore,shThemeDefault";
-
-		// exit handlers
-		rc.xehPurgeHistory 	= "relax/Home.purgeHistory";
-		rc.xehResourceDoc  	= "relax/Home.resourceDoc";
-		rc.xehLoadAPI		= "relax/Home.loadAPI";
-
-		// send request
-		if( rc.sendRequest ){
-			try{
-				rc.results = relaxerService.send(argumentCollection=rc);
-			}
-			catch(Any e){
-				log.error("Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#", e);
-				getPlugin("MessageBox").error("Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#");
-			}
+		if( len( rc.apiName ) ){
+			DSLService.loadAPI( rc.apiName );
+			flash.put( "notice", "API: #rc.apiName# loaded!" );
 		}
 
-		// Get request history
-		rc.requestHistory = relaxerService.getHistory();
-
-		// display relaxer
-		event.setView("home/relaxer");
+		setNextEvent( len( rc.returnEvent ) ? rc.returnEvent : prc.xehHome );
 	}
 
-	function resourceDoc(event,rc,prc,resourceID,expandedDiv){
-		var layout = "Ajax";
+	/**
+	* The DSL Documentation
+	*/
+	function dslDocs( event, rc, prc ){
+		prc.docs = getModel( "DSLDoc@relax" ).generate();
+		event.setView( view="home/DSLDocs" );
+	}
 
-		// event setup
-		rc.settings 		= getModuleSettings("relax").settings;
+	/**
+	* Export Resource Doc
+	*/
+	function resourceDoc( event, rc, prc, resourceID, expandedDiv, boolean widget=false ){
 		// DSL Settings
-		rc.dsl				= DSLService.getLoadedAPI();
-		rc.loadedAPIName 	= DSLService.getLoadedAPIName();
+		prc.dsl					= DSLService.getLoadedAPI();
+		prc.loadedAPIName 		= DSLService.getLoadedAPIName();
 		// exit handlers
-		rc.xehResourceDoc  	= "relax/Home.resourceDoc";
+		prc.xehResourceDoc  	= "relax/home/resourceDoc";
 		// expanded divs
-		rc.expandedResourceDivs = true;
-
-		// custom css/js
-		rc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		rc.cssAppendList = "shCore,shThemeDefault";
+		prc.expandedResourceDivs = true;
 
 		// select layout
-		if( structKeyExists(rc,"print") ){ layout = lcase(rc.print); }
+		event.paramValue( "print", "html" );
 
 		// selected ID for resource display
-		for(x=1; x lte arrayLen(rc.dsl.resources);x++){
-			if( rc.dsl.resources[x].resourceID eq rc.resourceID ){
-				rc.thisResource = rc.dsl.resources[x];
+		for(var x=1; x lte arrayLen( prc.dsl.resources ); x++ ){
+			if( prc.dsl.resources[ x ].resourceID eq rc.resourceID ){
+				prc.thisResource = prc.dsl.resources[x];
 				break;
 			}
 		}
 
 		// set view for Rendering
-		event.setView(name="home/docs/resourceDoc",layout="#layout#");
-	}
-
-	function purgeHistory(event,rc,prc){
-		var results = {
-			error = false,
-			messages = "History cleaned!"
-		};
-		try{
-			relaxerService.clearHistory();
+		if( arguments.widget ){
+			return renderView( view="home/docs/resourceDoc", module="relax" );
+		} else {
+			event.setView( view="home/docs/resourceDoc", layout="#rc.print#" );
 		}
-		catch(Any e){
-			results.error = true;
-			results.messages = "error clearing history: #e.detail# #e.message#";
-			if( log.canError() ){
-				log.error("Error clearing history: #e.message# #e.detail#",e);
-			}
-		}
-		event.renderData(type="jsont",data=results);
 	}
 
-	function checkUpdates(event,rc,prc){
-		// check updates
-		rc.entry = getMyPlugin(plugin="ForgeBox",module="Relax").getEntry('relax');
-
-		event.setView(name="home/checkUpdates",layout="Ajax");
+	/**
+	* Home
+	*/
+	function clearUserData( event, rc, prc ){
+		DSLService.clearUserData();
+		setNextEVent(rc.xehHome);
 	}
 
-	function dslDocs(event,rc,prc){
-		prc.docs = getModel("DSLDoc@relax").generate();
-		event.setView(name="home/DSLDocs");
-	}
-
-	function dslDocsCodex(event,rc,prc){
-		event.renderData(data=getModel("DSLDoc@relax").generateCodex(),type="text");
-	}
-
-</cfscript>
-</cfcomponent>
+}

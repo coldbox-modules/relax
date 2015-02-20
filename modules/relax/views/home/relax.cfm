@@ -1,15 +1,19 @@
 <cfoutput>
-<h2>Time For You To Relax!</h2>
+<div class="modal-content">
 
-<div class="center">
-<object width="480" height="385"><param name="movie" value="http://www.youtube.com/v/lyl5DlrsU90?fs=1&amp;hl=en_US&amp;rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/lyl5DlrsU90?fs=1&amp;hl=en_US&amp;rel=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="385"></embed></object>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4>Time For You To Relax!</h4>
+	</div>
+
+	<div class="modal-body">
+		<div class="center">
+		<iframe width="420" height="315" src="https://www.youtube.com/embed/_kNvcxwJVs4" frameborder="0" allowfullscreen></iframe>
+		</div>
+	</div>
+	
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	</div>
 </div>
-
-<hr/>
-
-<!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
-</div>
-
 </cfoutput>
