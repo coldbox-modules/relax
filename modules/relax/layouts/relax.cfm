@@ -74,9 +74,13 @@
             <div class="user-nav">
                 <ul>
                 	<li>
-                  		<button type="button" class="btn btn-default dropdown-toggle options" id="toggle-mail" data-toggle="dropdown">
+                  		<a  href="#event.buildLink( prc.xehRelax )#"
+                            data-toggle="modal" 
+                            data-target="##modal" 
+                            class="btn btn-default dropdown-toggle options" 
+                            title="Time to relax?">
                         	<i class="fa fa-gamepad"></i>
-                    	</button>
+                    	</a>
                     </li>
                     <li class="dropdown settings">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="##">
