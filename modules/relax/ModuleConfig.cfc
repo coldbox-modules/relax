@@ -61,8 +61,11 @@ component{
 	* Pre process for relax, makes sure an API is loaded
 	*/
 	function preProcess(event,interceptData) eventPattern="^relax.*"{
-		// load the default API
-		loadDefaultAPI();
+		var DSLService = wirebox.getInstance( "DSLService@relax" );
+		// load the default API if none loaded
+		if( !DSLService.isLoadedAPI() ){
+			DSLService.loadAPI( controller.getConfigSettings().relax.defaultAPI );
+		}
 	}
 
 	/**
@@ -97,15 +100,6 @@ component{
 
 		// expand the location path
 		configStruct.relax.APILocationExpanded = expandPath( "/#replace( configStruct.relax.APILocation, ".", "/", "all" )#" );
-	}
-
-	/**
-	* Load default API Checks
-	*/
-	private function loadDefaultAPI(){
-		var DSLService = wirebox.getInstance( "DSLService@relax" );
-		// check if the api is loaded or not, else, load the default one
-		DSLService.loadAPI( controller.getConfigSettings().relax.defaultAPI );
 	}
 
 }

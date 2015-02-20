@@ -18,18 +18,16 @@ component extends="BaseHandler"{
 		prc.dsl				= DSLService.getLoadedAPI();
 		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
 		prc.loadedAPIs		= DSLService.listAPIs();
-		// JS/CSS Append
-		prc.jsAppendList  	= "shCore,brushes/shBrushColdFusion,brushes/shBrushJScript,brushes/shBrushXml";
-		prc.cssAppendList 	= "shCore,shThemeDefault";
+
 		// Exit Handlers
-		prc.xehResourceDoc  	= "relax/Home/resourceDoc";
-		prc.xehLoadAPI			= "relax/Home/loadAPI";
-		prc.xehExportHTML 		= "relax/Export/html";
-		prc.xehExportPDF 		= "relax/Export/pdf";
-		prc.xehExportwiki 		= "relax/Export/mediawiki";
-		prc.xehExportTrac 		= "relax/Export/trac";
-		prc.xehExportAPI		= "relax/Export/api";
-		prc.xehImportAPI		= "relax/Import/api";
+		prc.xehResourceDoc  = "relax/Home/resourceDoc";
+		prc.xehLoadAPI		= "relax/Home/loadAPI";
+		prc.xehExportHTML 	= "relax/Export/html";
+		prc.xehExportPDF 	= "relax/Export/pdf";
+		prc.xehExportwiki 	= "relax/Export/mediawiki";
+		prc.xehExportTrac 	= "relax/Export/trac";
+		prc.xehExportAPI	= "relax/Export/api";
+		prc.xehImportAPI	= "relax/Import/api";
 
 		// Expanded div for resource holders
 		prc.expandedResourceDivs = false;
@@ -49,13 +47,15 @@ component extends="BaseHandler"{
 	* Load a selected API
 	*/
 	function loadAPI( event, rc, prc ){
-		event.paramValue( "apiName", "" );
+		event.paramValue( "apiName", "" )
+			.paramValue( "returnEvent", "" );
 		// load the api if it has length else ignored.
 		if( len( rc.apiName ) ){
 			DSLService.loadAPI( rc.apiName );
 			flash.put( "notice", "API: #rc.apiName# loaded!" );
 		}
-		setNextEvent( prc.xehHome );
+
+		setNextEvent( len( rc.returnEvent ) ? rc.returnEvent : prc.xehHome );
 	}
 
 	/**
@@ -69,18 +69,14 @@ component extends="BaseHandler"{
 	/**
 	* Export Resource Doc
 	*/
-	function resourceDoc( event, rc, prc, resourceID, expandedDiv ){
+	function resourceDoc( event, rc, prc, resourceID, expandedDiv, boolean widget=false ){
 		// DSL Settings
-		prc.dsl				= DSLService.getLoadedAPI();
-		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
+		prc.dsl					= DSLService.getLoadedAPI();
+		prc.loadedAPIName 		= DSLService.getLoadedAPIName();
 		// exit handlers
 		prc.xehResourceDoc  	= "relax/home/resourceDoc";
 		// expanded divs
 		prc.expandedResourceDivs = true;
-
-		// custom css/js
-		prc.jsAppendList  = "shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		prc.cssAppendList = "shCore,shThemeDefault";
 
 		// select layout
 		event.paramValue( "print", "html" );
@@ -94,8 +90,8 @@ component extends="BaseHandler"{
 		}
 
 		// set view for Rendering
-		if( event.isAjax() ){
-			event.renderData( data=renderView( view="home/docs/resourceDoc", module="relax" ) );
+		if( arguments.widget ){
+			return renderView( view="home/docs/resourceDoc", module="relax" );
 		} else {
 			event.setView( view="home/docs/resourceDoc", layout="#rc.print#" );
 		}

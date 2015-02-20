@@ -32,15 +32,12 @@ component extends="BaseHandler"{
 		// DSL Settings
 		prc.dsl				= DSLService.getLoadedAPI();
 		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
-
-		// custom css/js
-		prc.jsAppendList  = "jquery.scrollTo-min,shCore,brushes/shBrushJScript,brushes/shBrushColdFusion,brushes/shBrushXml";
-		prc.cssAppendList = "shCore,shThemeDefault";
+		prc.loadedAPIs		= DSLService.listAPIs();
 
 		// exit handlers
 		prc.xehPurgeHistory = "relax/relaxer/purgeHistory";
-		prc.xehResourceDoc  = "relax/home/resourceDoc";
-		//prc.xehLoadAPI		= "relax/relaxer/loadAPI";
+		prc.xehResourceDoc  = "relax/relaxer/resourceDoc";
+		prc.xehLoadAPI		= "relax/Home/loadAPI";
 
 		// send request
 		if( rc.sendRequest ){
@@ -60,9 +57,17 @@ component extends="BaseHandler"{
 
 		// Get request history
 		prc.requestHistory = relaxerService.getHistory();
-
+		
 		// display relaxer
-		event.setView("home/relaxer");
+		event.setView( "relaxer/index" );
+	}
+
+	/**
+	* resourceDoc, called via Ajax
+	*/
+	any function resourceDoc( event, rc, prc ){
+		prc.body = runEvent( event="relax:home.resourceDoc", eventArguments={ widget=true } );
+		event.renderData( data=renderView( view="relaxer/resourceDoc", module="relax" ) );
 	}
 
 	/**
