@@ -1,28 +1,28 @@
 <cfscript>
-function printDate(inDate){
-	return dateFormat(inDate,"medium") & " " & timeformat(inDate,"medium");
+function printDate( inDate ){
+	return dateFormat( inDate, "medium" ) & " " & timeformat( inDate, "medium" );
 }
-function getTreatedContent(content){
+function getTreatedContent( required content ){
 	var rawContent = arguments.content;
-	if( isXML(rawContent) ){
-		return xmlHumanReadable(rawContent);
+	if( isXML( rawContent ) ){
+		return xmlHumanReadable( rawContent );
 	}
-	arguments.content = htmlEditFormat(trim(arguments.content));
-	arguments.content = Replace(arguments.content,":{",":{#chr(13)#","all");
-	arguments.content = Replace(arguments.content,"}:","{:#chr(13)#","all");
-	arguments.content = Replace(arguments.content,":[",":[#chr(13)#","all");
-	arguments.content = Replace(arguments.content,"]:","]:#chr(13)#","all");
-	arguments.content = Replace(arguments.content,',',',#chr(13)#',"all");
+	arguments.content = htmlEditFormat( trim( arguments.content ) );
+	arguments.content = Replace( arguments.content, ":{", ":{#chr(13)#", "all" );
+	arguments.content = Replace( arguments.content, "}:", "{:#chr(13)#", "all" );
+	arguments.content = Replace( arguments.content, ":[", ":[#chr(13)#", "all" );
+	arguments.content = Replace( arguments.content, "]:", "]:#chr(13)#", "all" );
+	arguments.content = Replace( arguments.content, ',',' ,#chr(13)#', "all" );
 
 	return arguments.content;
 }
-function getBrush(content){
-	if(isXML(trim(arguments.content)) ){
+function getBrush( required content ){
+	if( isXML( trim( arguments.content ) ) ){
 		return "xml";
 	}
 	return "js";
 }
-function xmlHumanReadable(XmlDoc) {
+function xmlHumanReadable( required XmlDoc ){
     var elem = "";
     var result = "";
     var tab = "    ";
@@ -79,22 +79,14 @@ $(document).ready(function() {
     $relaxerHeader  = $("##relaxerHeader");
 
     <cfif structKeyExists( prc, "results" )>
-    $tabPanes       = $("##tabPanes");
-    $tabRoot        = $("##tabs");
-    // syntax highlight
-    SyntaxHighlighter.all();
-    // tabs
-    currentTabIndex = 0;
-    // init tab
-    showTab(currentTabIndex);
-    // scroll to results
-    $.scrollTo($resultsBox, 800, {axis:'y'});
-
-    // some formatting
-    <cfif( NOT isXML( prc.results.fileContent) )>
-        $("##resultsPretty").html( formatJSONRaw('#JSStringFormat( prc.results.fileContent)#') );
-    </cfif>
-
+        // syntax highlight
+        SyntaxHighlighter.all();
+        // some formatting
+        <!---
+        <cfif( NOT isXML( prc.results.fileContent) )>
+            $( "##resultsPretty" ).html( formatJSONRaw( '#JSStringFormat( prc.results.fileContent)#' ) );
+        </cfif>
+        --->
     </cfif>
 
     // Dynamic Add
@@ -122,10 +114,10 @@ $(document).ready(function() {
 });
 function showBrowserResults(){
     var w = 900, h = 750;
-    var LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
-    var TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+    var LeftPosition    = ( screen.width )  ? ( screen.width-w )  / 2 : 0;
+    var TopPosition     = ( screen.height ) ? ( screen.height-h ) / 2 : 0;
 
-    var c = window.open("","browserResults","height="+h+",width="+w+",left="+LeftPosition+",top="+TopPosition+",resizable=yes,scrollbars=yes");
+    var c = window.open( "", "browserResults", "height="+h+", width="+w+", left="+LeftPosition+", top="+TopPosition+", resizable=yes, scrollbars=yes" );
     c.document.write( $("##resultsRAW").val() );
 }
 function resourceSelect(rData,tier){
@@ -190,13 +182,6 @@ function showResourceHelp(){
     }
 
     return false;
-}
-function showTab(index){
-    $tabRoot.find("li:eq("+currentTabIndex+")").removeClass("current");
-    $tabRoot.find("li:eq("+index+")").addClass("current");
-    $tabPanes.find("div:eq("+currentTabIndex+")").fadeOut('fast');
-    $tabPanes.find("div:eq("+index+")").fadeIn('fast');
-    currentTabIndex = index;
 }
 function addDynamicItem(_this, inData){
     var $trigger  = _this;

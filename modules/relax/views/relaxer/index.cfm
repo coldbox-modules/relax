@@ -124,51 +124,57 @@
 			</p>
 		</div>
 
-
 		<!--- results --->
 		<cfif structKeyExists( prc, "results" )>
 			<a name="results"></a>
 			<div id="resultsBox">
-				<!--- Tabs --->
-				<ul class="tabs" id="tabs">
-					<li><a href="##" onclick="showTab(0);return false">Response Headers</a></li>
-					<li><a href="##" onclick="showTab(1);return false">Raw Results</a></li>
-					<li><a href="##" onclick="showTab(2);return false">Pretty Results</a></li>
-					<li><a href="##" onclick="showBrowserResults();return false">Browser Results</a></li>
-				</ul>
-				<!--- Panes --->
-				<div class="panes" id="tabPanes">
-					<!--- headers --->
-					<div class="pane">
-						<table class="tablelisting" width="100%">
-							<tr>
-								<th width="125" class="textRight">Request Status</th>
-								<td>
-									#prc.results.statuscode#
-								</td>
-							</tr>
-							<cfloop collection="#prc.results.responseHeader#" item="header">
-							<tr>
-								<th width="125" class="textRight">#header#</th>
-								<td>
-									#prc.results.responseHeader[header].toString()#
-								</td>
-							</tr>
-							</cfloop>
-						</table>
-					</div>
-					<!--- Raw Content --->
-					<div class="pane">
-						<form>
-						<textarea id="resultsRAW" class="textfield" rows="30" style="width:100%">#prc.results.fileContent.toString()#</textarea>
-						</form>
-					</div>
-					<!--- Pretty Content --->
-					<div class="pane">
-						<pre id="resultsPretty" class="brush: #getBrush(prc.results.fileContent)#">#getTreatedContent(prc.results.fileContent)#
-						</pre>
-					</div>
-				</div>
+
+				<div class="panel panel-default">
+		            <div class="panel-body">
+		                <div class="tab-wrapper tab-primary">
+		                    <ul class="nav nav-tabs">
+		                        <li class="active"><a href="##headers" data-toggle="tab">Response Headers</a></li>
+								<li><a href="##results" data-toggle="tab">Raw Results</a></li>
+								<li><a href="##pretty" data-toggle="tab">Pretty Results</a></li>
+								<li><a href="##browser" onclick="showBrowserResults();return false">Browser Results</a></li>
+		                    </ul>
+		                    <div class="tab-content">
+		                    	<!--- RAW HEADERS --->
+		                        <div class="tab-pane active" id="headers">
+		                        	<table class="table table-hover table-striped table-condensed" width="100%">
+										<tr>
+											<th width="200" class="text-right">Request Status</th>
+											<td>
+												#prc.results.statuscode#
+											</td>
+										</tr>
+										<cfloop collection="#prc.results.responseHeader#" item="header">
+										<tr>
+											<th class="text-right">#header#</th>
+											<td>
+												#prc.results.responseHeader[ header ].toString()#
+											</td>
+										</tr>
+										</cfloop>
+									</table>
+		                        </div>
+		                        <!--- RAW CONTENT --->
+		                        <div class="tab-pane" id="results">
+		                        	<form>
+									<textarea id="resultsRAW" class="textfield" rows="30" style="width:100%">#prc.results.fileContent.toString()#</textarea>
+									</form>
+		                        </div>
+		                        <!--- PRETTY CONTENT --->
+		                        <div class="tab-pane" id="pretty">
+		                        	<pre id="resultsPretty" class="brush: #getBrush(prc.results.fileContent)#">
+		                        		#getTreatedContent( prc.results.fileContent )#
+									</pre>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div> <!--- end panel body--->
+		        </div> <!---- end panel --->
+				
 			</div>
 		</cfif>
 		<!--- end Results Box --->
@@ -237,7 +243,7 @@
 							<option value="null">Select History Item</option>
 						</cfif>
 						<cfloop from="1" to="#arrayLen( prc.requestHistory)#" index="x">
-							<option value='#x-1#'>#printDate( prc.requestHistory[x].requestDate)#</option>
+							<option value='#x-1#'>#printDate( prc.requestHistory[x].requestDate )#</option>
 						</cfloop>
 					</select>
 					<br/>

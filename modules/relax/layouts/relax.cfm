@@ -160,7 +160,7 @@
 	<!--main content start-->
     <section class="main-content-wrapper" <cfif args.print>style="margin-left:0px"</cfif>>
         <section id="main-content">
-           #renderView()#    
+           #renderView()#
         </section>
     </section>
     <!--main content end-->

@@ -55,7 +55,7 @@ component extends="BaseHandler"{
 
 		// Get request history
 		prc.requestHistory = relaxerService.getHistory();
-
+		
 		// display relaxer
 		event.setView( "relaxer/index" );
 	}
