@@ -21,36 +21,36 @@
 			<input type="hidden" name="resourceID" 	 id="resourceID" 	value="null" />
 			<input type="hidden" name="resourceTier" id="resourceTier" 	value="production" />
 
-			<!--- HTTP Method --->
-			<select name="httpMethod" id="httpMethod" title="Choose your HTTP Method" class="form-control">
-				<option <cfif rc.httpMethod eq "GET">selected="selected"</cfif>>GET</option>
-				<option <cfif rc.httpMethod eq "PUT">selected="selected"</cfif>>PUT</option>
-				<option <cfif rc.httpMethod eq "POST">selected="selected"</cfif>>POST</option>
-				<option <cfif rc.httpMethod eq "DELETE">selected="selected"</cfif>>DELETE</option>
-				<option <cfif rc.httpMethod eq "HEAD">selected="selected"</cfif>>HEAD</option>
-				<option <cfif rc.httpMethod eq "OPTIONS">selected="selected"</cfif>>OPTIONS</option>
-			</select>
+			<div class="input-group">
 
-			<!--- Spacer --->
-			<i class="fa fa-chevron-right"></i>
+				<!--- Button Bar --->
+				<div class="input-group-btn">
+					<!--- HTTP Method --->
+					<select name="httpMethod" id="httpMethod" title="Choose your HTTP Method" class="form-control">
+						<option <cfif rc.httpMethod eq "GET">selected="selected"</cfif>>GET</option>
+						<option <cfif rc.httpMethod eq "PUT">selected="selected"</cfif>>PUT</option>
+						<option <cfif rc.httpMethod eq "POST">selected="selected"</cfif>>POST</option>
+						<option <cfif rc.httpMethod eq "DELETE">selected="selected"</cfif>>DELETE</option>
+						<option <cfif rc.httpMethod eq "HEAD">selected="selected"</cfif>>HEAD</option>
+						<option <cfif rc.httpMethod eq "OPTIONS">selected="selected"</cfif>>OPTIONS</option>
+					</select>
 
-			<!--- Resource or URL --->
-			<input title="The resource to hit" type="text" name="httpResource" id="httpResource" size="60" class="form-control" value="#rc.httpResource#" />
+					<!--- Resource or URL --->
+					<input title="The resource to hit" type="text" name="httpResource" id="httpResource" size="60" class="form-control" value="#rc.httpResource#" />
 
-			<!--- Spacer --->
-			<i class="fa fa-chevron-right"></i>
+					<!--- Format --->
+					<select name="httpFormat" id="httpFormat" title="The resource format extension (if available)" class="form-control">
+						<option value="" <cfif rc.httpFormat eq "">selected="selected"</cfif>>none</option>
+						<option <cfif rc.httpFormat eq "xml">selected="selected"</cfif>>xml</option>
+						<option <cfif rc.httpFormat eq "json">selected="selected"</cfif>>json</option>
+						<option <cfif rc.httpFormat eq "jsont">selected="selected"</cfif>>jsont</option>
+						<option <cfif rc.httpFormat eq "rss">selected="selected"</cfif>>rss</option>
+					</select>
 
-			<!--- Format --->
-			<select name="httpFormat" id="httpFormat" title="The resource format extension (if available)" class="form-control">
-				<option value="" <cfif rc.httpFormat eq "">selected="selected"</cfif>>none</option>
-				<option <cfif rc.httpFormat eq "xml">selected="selected"</cfif>>xml</option>
-				<option <cfif rc.httpFormat eq "json">selected="selected"</cfif>>json</option>
-				<option <cfif rc.httpFormat eq "jsont">selected="selected"</cfif>>jsont</option>
-				<option <cfif rc.httpFormat eq "rss">selected="selected"</cfif>>rss</option>
-			</select>
+					<button type="button" class="btn btn-danger" title="Send Request" onclick="submitForm();return false;"> Send </button>
+				</div>
 
-			<!--- Button Bar --->
-			<button type="button" class="btn btn-primary" title="Send Request" onclick="submitForm();return false;" style=""> Send </button>
+			</div>
 			</fieldset>
 
 			<!--- Advanced Settings --->
@@ -188,8 +188,20 @@
                 <h2 class="panel-title">#prc.loadedAPIName#</h2>
             </div>
             <div class="panel-body">
+
+            	<!--- My Apis --->
+            	<h4>Loaded API:</h4>
+            	<div class="form-group">
+				<select name="myAPI" id="myAPI" title="You can switch the loaded API" onchange="window.location='#event.buildLink( prc.xehLoadAPI )#?returnEvent=#prc.xehRelaxer#&apiName=' + this.value" class="form-control">
+					<cfloop query="prc.loadedAPIs">
+						<cfif prc.loadedAPIs.type eq "Dir">
+						<option value="#prc.loadedAPis.name#" <cfif prc.loadedAPIs.name eq prc.loadedAPIName>selected="selected"</cfif>>#prc.loadedAPis.name#</option>
+						</cfif>
+					</cfloop>
+				</select>
+				</div>
             	
-            	<p>Choose a tier+resource to test:</p>
+            	<h4>Choose a tier+resource to test:</h4>
 
             	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             		<!-- Accordion Items-->
@@ -226,6 +238,7 @@
             </div>
         </div> <!--- panel resource --->
 
+        <!--- Request History --->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Request History</h3>
@@ -233,7 +246,7 @@
             <div class="panel-body">
             	
             	<!--- MessageHolder --->
-				<div id="requestHistoryMessages" class="flickerMessages"></div>
+				<div id="requestHistoryMessages" class="alert alert-info" style="display:none"></div>
 				<p class="center">
 					<!--- Selection Box --->
 					<select name="requestHistory" id="requestHistory" <cfif arrayLen( prc.requestHistory ) EQ 0>disabled="disabled"</cfif> class="form-control">
@@ -251,7 +264,7 @@
 
 				<p class="text-center">
 					<!--- Clear History Command --->
-					<a href="javascript:clearHistory()" class="btn btn-danger confirmIt"
+					<a href="javascript:clearHistory()" class="btn btn-danger confirmIt" onclick="confirm( 'Really wipe out the history' )"
 					   title="Clear the request history"
 					   data-message="Do you really want to clear your request history?">
 						<i class="fa fa-recycle" ></i>

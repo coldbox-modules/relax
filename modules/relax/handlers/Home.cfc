@@ -47,13 +47,15 @@ component extends="BaseHandler"{
 	* Load a selected API
 	*/
 	function loadAPI( event, rc, prc ){
-		event.paramValue( "apiName", "" );
+		event.paramValue( "apiName", "" )
+			.paramValue( "returnEvent", "" );
 		// load the api if it has length else ignored.
 		if( len( rc.apiName ) ){
 			DSLService.loadAPI( rc.apiName );
 			flash.put( "notice", "API: #rc.apiName# loaded!" );
 		}
-		setNextEvent( prc.xehHome );
+
+		setNextEvent( len( rc.returnEvent ) ? rc.returnEvent : prc.xehHome );
 	}
 
 	/**

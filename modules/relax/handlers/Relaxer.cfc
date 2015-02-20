@@ -32,10 +32,12 @@ component extends="BaseHandler"{
 		// DSL Settings
 		prc.dsl				= DSLService.getLoadedAPI();
 		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
+		prc.loadedAPIs		= DSLService.listAPIs();
 
 		// exit handlers
 		prc.xehPurgeHistory = "relax/relaxer/purgeHistory";
 		prc.xehResourceDoc  = "relax/relaxer/resourceDoc";
+		prc.xehLoadAPI		= "relax/Home/loadAPI";
 
 		// send request
 		if( rc.sendRequest ){

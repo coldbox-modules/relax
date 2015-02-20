@@ -82,11 +82,9 @@ $(document).ready(function() {
         // syntax highlight
         SyntaxHighlighter.all();
         // some formatting
-        <!---
         <cfif( NOT isXML( prc.results.fileContent) )>
-            $( "##resultsPretty" ).html( formatJSONRaw( '#JSStringFormat( prc.results.fileContent)#' ) );
+            $( "##resultsPretty" ).text( formatJSONRaw( '#JSStringFormat( prc.results.fileContent)#' ) );
         </cfif>
-        --->
     </cfif>
 
     // Dynamic Add
