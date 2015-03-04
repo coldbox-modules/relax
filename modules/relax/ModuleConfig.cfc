@@ -11,7 +11,7 @@ component{
 	this.author 			= "Ortus Solutions";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "RESTful Tools For Lazy Experts";
-	this.version			= "2.0.0+@build.number@";
+	this.version			= "2.0.1+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	// Module Entry Point

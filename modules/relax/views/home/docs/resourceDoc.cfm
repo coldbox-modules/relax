@@ -108,7 +108,7 @@
 	<!--- HTTP Headers --->
 	<fieldset>
 		<legend>HTTP Headers</legend>
-		<cfif NOT structKeyExists(thisResource,"globalHeaders") or NOT arrayLen(thisResource.globalHeaders)>
+		<cfif NOT structKeyExists(thisResource,"headers") or NOT arrayLen(thisResource.headers)>
 			<div class="alert alert-warning">No Headers</div>
 		<cfelse>
 			<table class="table table-hover table-striped" width="100%">
@@ -119,7 +119,7 @@
 					<th>Default</th>
 					<th>Description</th>
 				</tr>
-				<cfloop array="#thisResource.globalHeaders#" index="thisHeader">
+				<cfloop array="#thisResource.headers#" index="thisHeader">
 					<tr>
 						<td><code>#thisHeader.name#</code></td>
 						<td><cfif structKeyExists(thisHeader,"type")>#thisHeader.type#<cfelse>string</cfif></td>
