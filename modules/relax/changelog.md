@@ -6,6 +6,7 @@ CHANGELOG
 * Updated readme
 * Updated full skin assets
 * Included sample resources in build
+* Navigation fixes
 
 ## 2.0.1
 * Fixed resource headers, as they are not showing

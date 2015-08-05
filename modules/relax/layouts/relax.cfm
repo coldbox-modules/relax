@@ -147,7 +147,7 @@
 	    <nav class="sidebar sidebar-left">
 	        <h5 class="sidebar-header">Navigation</h5>
 	            <ul class="nav nav-pills nav-stacked">
-	                <li <cfif event.getCurrentHandler() eq "relax:home">class="active"</cfif>>
+	                <li <cfif event.getCurrentEvent() eq "relax:home.index">class="active"</cfif>>
 	                    <a href="#event.buildLink( prc.xehHome )#"><i class="fa fa-dashboard"></i><span>API Manager</span></a>
 	                </li>
 	                <li <cfif event.getCurrentHandler() eq "relax:relaxer">class="active"</cfif>>
