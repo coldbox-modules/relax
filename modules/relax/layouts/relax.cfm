@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="#prc.root#/includes/css/font-awesome.min.css">
     <!-- CSS Animate -->
     <link rel="stylesheet" href="#prc.root#/includes/css/animate.css">
+    <!-- Switchery -->
+    <link rel="stylesheet" href="#prc.root#/includes/plugins/switchery/switchery.min.css">
     <!-- Theme Styles -->
     <link rel="stylesheet" href="#prc.root#/includes/css/main.css">
     <!-- iCheck-->
@@ -51,11 +53,44 @@
     <script src="#prc.root#/includes/js/respond.min.js"></script>
     <![endif]-->
 
+    <!--========= JAVASCRIPT -->
+	<script src="#prc.root#/includes/js/jquery.min.js"></script> <!--Import jquery tools-->
+    <script src="#prc.root#/includes/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="#prc.root#/includes/plugins/navgoco/jquery.navgoco.min.js"></script>
+    <script src="#prc.root#/includes/plugins/switchery/switchery.min.js"></script>
+	<script src="#prc.root#/includes/js/jsonlint.js"></script>
+	<script src="#prc.root#/includes/js/relax.js"></script>
+
+	<!--- loop around the jsAppendList, to add page specific js --->
+	<cfloop list="#event.getPrivateValue("jsAppendList", "")#" index="js">
+		<cfset addAsset("#prc.root#/includes/js/#js#.js")>
+	</cfloop>
+	<cfloop list="#event.getPrivateValue("jsFullAppendList", "")#" index="js">
+		<cfset addAsset("#js#.js")>
+	</cfloop>
+
+	<!-- syntax highlighter -->
+	<link type="text/css" rel="stylesheet" href="#prc.root#/includes/highlighter/styles/shCoreMidnight.css">
+	<script src="#prc.root#/includes/highlighter/scripts/shCore.js"></script>
+	<script src="#prc.root#/includes/highlighter/scripts/shBrushColdFusion.js"></script>
+	<script src="#prc.root#/includes/highlighter/scripts/shBrushXml.js"></script>
+	<script src="#prc.root#/includes/highlighter/scripts/shBrushSql.js"></script>
+	<script src="#prc.root#/includes/highlighter/scripts/shBrushJScript.js"></script>
+	<script src="#prc.root#/includes/highlighter/scripts/shBrushJava.js"></script>
+	<script src="#prc.root#/includes/highlighter/scripts/shBrushCss.js"></script>
+	<script>
+	$(document).ready(function() {
+		// syntax highlight
+		SyntaxHighlighter.all();
+	});
+	</script>
+
 </head>
 
-<body class="<cfif !args.print>animated fadeIn</cfif>" <cfif args.print>style="background-color: white"</cfif>>    
-	<cfif args.header>
-    <section id="container">
+<body class="off-canvas <cfif !args.print>animated fadeIn</cfif>" <cfif args.print>style="background-color: white"</cfif>>    
+   
+    <div id="container">
+		<cfif args.header>
         <header id="header">
             <!--logo start-->
             <div class="brand">
@@ -105,69 +140,39 @@
                 </ul>
             </div>
         </header>
-    </section>
-    </cfif>
+   		</cfif>
 
-	<!--sidebar start-->
-    <cfif args.sidebar>
-    <aside class="sidebar">
-        <div id="leftside-navigation" class="nano">
-            <ul class="nano-content">
-                <li <cfif event.getCurrentHandler() eq "relax:home">class="active"</cfif>>
-                    <a href="#event.buildLink( prc.xehHome )#"><i class="fa fa-dashboard"></i><span>API Manager</span></a>
-                </li>
-                <li <cfif event.getCurrentHandler() eq "relax:relaxer">class="active"</cfif>>
-                    <a href="#event.buildLink( prc.xehRelaxer )#" title="Pronounced 'Relax-ER'"><i class="fa fa-flask"></i><span>RelaxURL</span></a>
-                </li>
-                <li <cfif event.getCurrentAction() eq "DSLDocs">class="active"</cfif>>
-                    <a href="#event.buildLink( prc.xehDSLDocs )#" ><i class="fa fa-code"></i><span>RelaxDSL Docs</span></a>
-                </li>
-                <li>
-                    <a href="##" title="Version Information"><i class="fa fa-info"></i>Relax v#getModuleConfig( 'relax' ).version#</a>
-                </li>
-            </ul>
-        </div>
-    </aside>
-    <!--sidebar end-->
-    </cfif>
+		<!--sidebar start-->
+	    <cfif args.sidebar>
+	    <nav class="sidebar sidebar-left">
+	        <h5 class="sidebar-header">Navigation</h5>
+	            <ul class="nav nav-pills nav-stacked">
+	                <li <cfif event.getCurrentHandler() eq "relax:home">class="active"</cfif>>
+	                    <a href="#event.buildLink( prc.xehHome )#"><i class="fa fa-dashboard"></i><span>API Manager</span></a>
+	                </li>
+	                <li <cfif event.getCurrentHandler() eq "relax:relaxer">class="active"</cfif>>
+	                    <a href="#event.buildLink( prc.xehRelaxer )#" title="Pronounced 'Relax-ER'"><i class="fa fa-flask"></i><span>RelaxURL</span></a>
+	                </li>
+	                <li <cfif event.getCurrentAction() eq "DSLDocs">class="active"</cfif>>
+	                    <a href="#event.buildLink( prc.xehDSLDocs )#" ><i class="fa fa-code"></i><span>RelaxDSL Docs</span></a>
+	                </li>
+	                <li>
+	                    <a href="##" title="Version Information"><i class="fa fa-info"></i>Relax v#getModuleConfig( 'relax' ).version#</a>
+	                </li>
+	            </ul>
+	    </nav>
+	    <!--sidebar end-->
+	    </cfif>
 	
-	<!--========= JAVASCRIPT -->
-	<script src="#prc.root#/includes/js/jquery.min.js"></script> <!--Import jquery tools-->
-    <script src="#prc.root#/includes/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<script src="#prc.root#/includes/js/jsonlint.js"></script>
-	<script src="#prc.root#/includes/js/relax.js"></script>
+		<!--main content start-->
+	    <section class="main-content-wrapper" <cfif args.print>style="margin-left:0px"</cfif>>
+	        <section id="main-content">
+	           #renderView()#
+	        </section>
+	    </section>
+	    <!--main content end-->
 
-	<!--- loop around the jsAppendList, to add page specific js --->
-	<cfloop list="#event.getPrivateValue("jsAppendList", "")#" index="js">
-		<cfset addAsset("#prc.root#/includes/js/#js#.js")>
-	</cfloop>
-	<cfloop list="#event.getPrivateValue("jsFullAppendList", "")#" index="js">
-		<cfset addAsset("#js#.js")>
-	</cfloop>
-
-	<!-- syntax highlighter -->
-	<link type="text/css" rel="stylesheet" href="#prc.root#/includes/highlighter/styles/shCoreMidnight.css">
-	<script src="#prc.root#/includes/highlighter/scripts/shCore.js"></script>
-	<script src="#prc.root#/includes/highlighter/scripts/shBrushColdFusion.js"></script>
-	<script src="#prc.root#/includes/highlighter/scripts/shBrushXml.js"></script>
-	<script src="#prc.root#/includes/highlighter/scripts/shBrushSql.js"></script>
-	<script src="#prc.root#/includes/highlighter/scripts/shBrushJScript.js"></script>
-	<script src="#prc.root#/includes/highlighter/scripts/shBrushJava.js"></script>
-	<script src="#prc.root#/includes/highlighter/scripts/shBrushCss.js"></script>
-	<script>
-	$(document).ready(function() {
-		// syntax highlight
-		SyntaxHighlighter.all();
-	});
-	</script>
-
-	<!--main content start-->
-    <section class="main-content-wrapper" <cfif args.print>style="margin-left:0px"</cfif>>
-        <section id="main-content">
-           #renderView()#
-        </section>
-    </section>
-    <!--main content end-->
+    </div>
 
     <!--- ============================ Remote Modal Window ============================ --->
     <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
