@@ -30,10 +30,10 @@ component singleton{
 		
 		var aSortedNames = [];
 		var mdLookup	 = {};
-		arrayEach( md.functions, function( thisMD ){
-			arrayAppend( aSortedNames, arguments.thisMD.name );
-			mdLookup[ arguments.thisMD.name ] = arguments.thisMD;
-		});
+		for (var i=1; i LTE arrayLen(md.functions); i++ ){
+			arrayAppend( aSortedNames, md.functions[i].name );
+			mdLookup[ md.functions[i].name ] = md.functions[i];
+		}
 		arraySort( aSortedNames, "textnocase" );
 
 		// output functions

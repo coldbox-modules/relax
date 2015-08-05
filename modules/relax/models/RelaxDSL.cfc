@@ -52,7 +52,7 @@ component accessors="true"{
 	* @name The name of the header
 	* @description The description of the header
 	* @required Is the header required or not
-	* @default The default value of this header
+	* @defaultValue The default value of this header
 	* @type The type of the incoming header
 	* 
 	* @return RelaxDSL
@@ -61,7 +61,7 @@ component accessors="true"{
 		required string name,
 		string description="",
 		boolean required=false,
-		string default="",
+		string defaultValue="",
 		string type="string"
 	){
 		var thisHeader 	= {};
@@ -82,7 +82,7 @@ component accessors="true"{
 	* @name The name of the parameter
 	* @description The description of the parameter
 	* @required Is the parameter required or not
-	* @default The default value of this parameter
+	* @defaultValue The default value of this parameter
 	* @type The type of the incoming parameter
 	* 
 	* @return RelaxDSL
@@ -91,7 +91,7 @@ component accessors="true"{
 		required string name,
 		string description="",
 		boolean required=false,
-		string default="",
+		string defaultValue="",
 		string type="string"
 	){
 		var thisParam 	= {};
@@ -113,7 +113,7 @@ component accessors="true"{
 	* @pattern The SES pattern to register for the resource
 	* @handler The handler this pattern directs to
 	* @action The action this pattern directs to, it can be simple or a complex HTTP-Action struct: { "get" : "list", "delete", "doRemove" }
-	* @defaultMethod The default HTTP Method: GET
+	* @defaultValueMethod The default HTTP Method: GET
 	* 
 	* @return RelaxDSL
 	*/
@@ -201,7 +201,7 @@ component accessors="true"{
 	* @name The name of the header
 	* @description The description of the header
 	* @required Is the header required or not
-	* @default The default value of this header
+	* @defaultValue The default value of this header
 	* @type The type of the incoming header
 	* 
 	* @return RelaxDSL
@@ -210,7 +210,7 @@ component accessors="true"{
 		required string name,
 		string description="",
 		boolean required=false,
-		string default="",
+		string defaultValue="",
 		string type="string"
 	){
 		appendData( arguments, "headers" );
@@ -222,7 +222,7 @@ component accessors="true"{
 	* @name The name of the parameter
 	* @description The description of the parameter
 	* @required Is the parameter required or not
-	* @default The default value of this parameter
+	* @defaultValue The default value of this parameter
 	* @type The type of the incoming parameter
 	* 
 	* @return RelaxDSL
@@ -231,7 +231,7 @@ component accessors="true"{
 		required string name,
 		string description="",
 		boolean required=false,
-		string default="",
+		string defaultValue="",
 		string type="string"
 	){
 		appendData( arguments, "parameters" );
@@ -243,7 +243,7 @@ component accessors="true"{
 	* @name The name of the placeholder
 	* @description The description of the placeholder
 	* @required Is the placeholder required or not
-	* @default The default value of this placeholder
+	* @defaultValue The default value of this placeholder
 	* @type The type of the incoming placeholder
 	* 
 	* @return RelaxDSL
@@ -252,7 +252,7 @@ component accessors="true"{
 		required string name,
 		string description="",
 		boolean required=false,
-		string default="",
+		string defaultValue="",
 		string type="string"
 	){
 		appendData( arguments, "placeholders" );
