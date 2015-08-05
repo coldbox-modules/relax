@@ -26,7 +26,7 @@
 				<!--- Button Bar --->
 				<div class="input-group-btn">
 					<!--- HTTP Method --->
-					<select name="httpMethod" id="httpMethod" title="Choose your HTTP Method" class="form-control">
+					<select name="httpMethod" id="httpMethod" title="Choose your HTTP Method" class="form-control input-sm">
 						<option <cfif rc.httpMethod eq "GET">selected="selected"</cfif>>GET</option>
 						<option <cfif rc.httpMethod eq "PUT">selected="selected"</cfif>>PUT</option>
 						<option <cfif rc.httpMethod eq "POST">selected="selected"</cfif>>POST</option>
@@ -39,7 +39,7 @@
 					<input title="The resource to hit" type="text" name="httpResource" id="httpResource" size="60" class="form-control" value="#rc.httpResource#" />
 
 					<!--- Format --->
-					<select name="httpFormat" id="httpFormat" title="The resource format extension (if available)" class="form-control">
+					<select name="httpFormat" id="httpFormat" title="The resource format extension (if available)" class="form-control input-sm">
 						<option value="" <cfif rc.httpFormat eq "">selected="selected"</cfif>>none</option>
 						<option <cfif rc.httpFormat eq "xml">selected="selected"</cfif>>xml</option>
 						<option <cfif rc.httpFormat eq "json">selected="selected"</cfif>>json</option>
@@ -192,7 +192,7 @@
             	<!--- My Apis --->
             	<h4>Loaded API:</h4>
             	<div class="form-group">
-				<select name="myAPI" id="myAPI" title="You can switch the loaded API" onchange="window.location='#event.buildLink( prc.xehLoadAPI )#?returnEvent=#prc.xehRelaxer#&apiName=' + this.value" class="form-control">
+				<select name="myAPI" id="myAPI" title="You can switch the loaded API" onchange="window.location='#event.buildLink( prc.xehLoadAPI )#?returnEvent=#prc.xehRelaxer#&apiName=' + this.value" class="form-control input-sm">
 					<cfloop query="prc.loadedAPIs">
 						<cfif prc.loadedAPIs.type eq "Dir">
 						<option value="#prc.loadedAPis.name#" <cfif prc.loadedAPIs.name eq prc.loadedAPIName>selected="selected"</cfif>>#prc.loadedAPis.name#</option>
@@ -217,7 +217,7 @@
 	            			<div id="tab-#entryPoint#" class="panel-collapse collapse <cfif rc.entryTier eq entryPoint>in</cfif>" role="tabpanel" aria-labelledby="tab-#entryPoint#">
 	            				<div class="panel-body">
 	            					<!--- My Resources --->
-									<select name="myResource" id="myResource" title="Your defined RESTful resources" onchange="resourceSelect(this.value,'#JSStringFormat( entrypoint )#')" class="form-control">
+									<select name="myResource" id="myResource" title="Your defined RESTful resources" onchange="resourceSelect(this.value,'#JSStringFormat( entrypoint )#')" class="form-control input-sm">
 										<option value="null" selected="selected">Pick One To Test</option>
 										<cfloop array="#prc.dsl.resources#" index="thisResource">
 											<option value="#thisResource.resourceID#;#prc.dsl.relax.entryPoint[entryPoint]##thisResource.pattern#">#thisResource.pattern#</option>
@@ -249,7 +249,7 @@
 				<div id="requestHistoryMessages" class="alert alert-info" style="display:none"></div>
 				<p class="center">
 					<!--- Selection Box --->
-					<select name="requestHistory" id="requestHistory" <cfif arrayLen( prc.requestHistory ) EQ 0>disabled="disabled"</cfif> class="form-control">
+					<select name="requestHistory" id="requestHistory" <cfif arrayLen( prc.requestHistory ) EQ 0>disabled="disabled"</cfif> class="form-control input-sm">
 						<cfif arrayLen( prc.requestHistory ) EQ 0>
 							<option value="null">No History</option>
 						<cfelse>

@@ -25,7 +25,7 @@ setThrowOnInvalidExtension( #prc.dsl.relax.throwOnInvalidExtension# );
 </pre>
 
 <h2>Module Routes</h2>
-<p>Use the following when creating the routes for a module</p>
+<p>Use the following when creating the routes for a module inside the <code>ModuleConfig.cfc</code></p>
 <cfset index = 1>
 <pre class="brush: coldfusion;">
 // Module Route Definitions
@@ -34,4 +34,20 @@ routes = [<cfloop array="#prc.dsl.resources#" index="thisResource">
 </cfloop>
 ];
 </pre>
+
+<p>You can also use the following for a standalone <code>Routes.cfm</code> in your module <code>config</code> directory</p>
+<h3>ModuleConfig.cfc</h3>
+<pre class="brush: coldfusion;">
+// Module Route Definitions
+routes = [
+	"config/routes.cfm"
+];
+</pre>
+
+<h3>routes.cfm</h3>
+<pre class="brush: coldfusion;">
+// Route Definitions
+<cfloop array="#prc.dsl.resources#" index="thisResource">addRoute( pattern="#thisResource.pattern#"<cfif len(thisResource.handler)>, handler="#thisResource.handler#"</cfif>#flattenActions(thisResource.action)#);#chr( 10 )#</cfloop>
+</pre>
+
 </cfoutput>

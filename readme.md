@@ -1,6 +1,7 @@
 WELCOME TO COLDBOX RELAX
 ========================================
-RELAX = RESTFul Tools For Lazy Experts!
+
+>RELAX = RESTFul Tools For Lazy Experts!
 
 What is Relax? ColdBox Relax is a set of RESTFul tools for lazy experts. We pride ourselves in helping you (the developer) work smarter and 
 ColdBox Relax is a tool to help you document your projects faster. ColdBox Relax provides you with the necessary tools to 
@@ -11,10 +12,9 @@ test RESTFul web services, monitor RESTFul web services and document RESTFul web
 Apache License, Version 2.0.
 
 ##IMPORTANT LINKS
-- http://github.com/coldbox/coldbox-relax
-- https://ortussolutions.atlassian.net/browse/RELAX
-- http://wiki.coldbox.org/wiki/Projects:Relax.cfm
-- http://blog.coldbox.org/archives.cfm/category/codedepot
+- Code: http://github.com/coldbox/coldbox-relax
+- Issues: https://github.com/ColdBox/coldbox-relax/issues
+- Documentation: https://github.com/ColdBox/coldbox-relax/wiki
 
 ##SYSTEM REQUIREMENTS
 - Lucee 4.5+
