@@ -3,7 +3,7 @@
 	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
 	<property name="project.name" 		value="coldbox-relax" />
 	<property name="module.name" 		value="relax" />
-	<property name="project.version" 	value="2.0.1"/>
+	<property name="project.version" 	value="2.0.2"/>
 	<property name="groupID" 			value="ortussolutions" />
 	
 	<!-- Build Labels -->
@@ -64,11 +64,15 @@
 		<concat destfile="${dir.build}/${build.label}">Built on ${start.TODAY}</concat>
 		
 		<!-- Copy src -->	
-      	<copy todir="${dir.build}" encoding="UTF-8">
+      	<copy todir="${dir.build}" encoding="UTF-8" overwrite="true">
         	<fileset dir="modules/${module.name}" />
         </copy>
-        <!-- Copy readme -->
-        <copy todir="${dir.build}" encoding="UTF-8" file="readme.md" overwrite="true" />
+
+        <!-- Copy Assets -->
+        <copy todir="${dir.build}" encoding="UTF-8" overwrite="true">
+        	<fileset file="readme.md"/>
+        	<fileset file="LICENSE"/>
+        </copy>
         
         <!-- Replace Build Numbers -->
 		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
