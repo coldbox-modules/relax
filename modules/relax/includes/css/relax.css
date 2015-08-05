@@ -11,6 +11,6 @@ h1{
 }
 td.code > div.container, td.code > div.container:after, td.code > div.container:before{ content : none !important; }
 fieldset{ margin: 10px 0px 10px 0px;}
-.nav > li > a:hover {
+.nav-tabs > li > a:hover {
 	background-color: #eaeaea;
 }
