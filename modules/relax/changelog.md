@@ -7,6 +7,7 @@ CHANGELOG
 * Updated full skin assets
 * Included sample resources in build
 * Navigation fixes
+* Module Standalone route generation
 
 ## 2.0.1
 * Fixed resource headers, as they are not showing
