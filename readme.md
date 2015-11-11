@@ -34,7 +34,7 @@ You will need to update the your `ColdBox.cfc` with a `relax` structure with you
 ```
 relax = {
     // The location of the relaxed APIs, defaults to models.resources
-    APILocation = "models.resources",
+    APILocation = "modules.relax.models.resources",
     // Default API to load, name of the directory inside of resources
     defaultAPI = "myapi",
     // History stack size, the number of history items to track in the RelaxURL
