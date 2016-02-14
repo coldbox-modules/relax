@@ -9,3 +9,7 @@ tests/results
 modules/cbjavaloader
 modules/cbi18n
 workbench/build.number
+modules/*
+!modules/relax
+coldbox
+testbox
