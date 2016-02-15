@@ -99,8 +99,10 @@ component{
 		// Apend it
 		structAppend( configStruct.relax, relaxDSL, true );
 
-		// as a convenience, turn off flash auto-saves 
-		// if sessions are disabled or requestEndErrors will be thrown
+		/** 
+		*  As a convenience, turn off flash auto-saves if sessions are disabled, 
+		*  or requestEnd errors will be thrown
+		**/
 		if( !configStruct.relax.sessionsEnabled && controller.getSetting("flash").scope == 'session' ){
 			controller.getSetting("flash").autoSave = false;
 		}
