@@ -19,7 +19,7 @@ component extends="BaseHandler"{
 		prc.dsl				= DSLService.getLoadedAPI();
 		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
 		// custom css/js
-		prc.jsAppendList 	= "jquery.scrollTo-min";
+		prc.addJS(prc.root & '/includes/js/jquery.scrollTo-min');
 	}
 
 	/**

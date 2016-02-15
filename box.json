@@ -47,15 +47,19 @@
     ],
     "dependencies":{
         "coldbox-be":"4.0.0",
-        "wikitext":"1.0.0"
+        "wikitext":"1.1.0",
+        "coldbox":"4.2.0+00002"
     },
     "devDependencies":{
-        "testbox-be":"2.0.0"
+        "testbox-be":"2.0.0",
+        "testbox":"2.3.0"
     },
     "installPaths":{
         "testbox-be":"testbox",
         "coldbox-be":"coldbox",
-        "wikitext":"modules/wikitext"
+        "wikitext":"modules/wikitext",
+        "coldbox":"coldbox",
+        "testbox":"testbox"
     },
     "ignore":[
         

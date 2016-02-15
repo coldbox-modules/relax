@@ -1,7 +1,15 @@
+.DS_Store
+Thumbs.db
 .settings
-logs/*.log
+logs/*
 settings.xml
 .netbeans
+/.sass-cache/*
+/.sass-cache
+/bower_components/*
+/bower_components
+/node_modules/*
+/node_modules
 test/results/*.properties
 test/results/*.html
 test/results/*.log
@@ -11,5 +19,8 @@ modules/cbi18n
 workbench/build.number
 modules/*
 !modules/relax
+modules/relax/includes/js/build.txt
+modules/relax/includes/css/relax.css.map
+modules/relax/includes/css/theme.css.map
 coldbox
 testbox
