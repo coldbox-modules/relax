@@ -30,7 +30,6 @@
         "**/.*",
         "tests",
         "apidocs",
-        "models/resources",
         "*/.md"
     ]
 }

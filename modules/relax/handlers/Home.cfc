@@ -49,10 +49,13 @@ component extends="BaseHandler"{
 	function loadAPI( event, rc, prc ){
 		event.paramValue( "apiName", "" )
 			.paramValue( "returnEvent", "" );
+
 		// load the api if it has length else ignored.
 		if( len( rc.apiName ) ){
 			DSLService.loadAPI( rc.apiName );
-			flash.put( "notice", "API: #rc.apiName# loaded!" );
+			if( VARIABLES.settings.sessionsEnabled ) {
+				flash.put( "notice", "API: #rc.apiName# loaded!" );
+			}
 		}
 
 		setNextEvent( len( rc.returnEvent ) ? rc.returnEvent : prc.xehHome );

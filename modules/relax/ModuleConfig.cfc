@@ -92,11 +92,20 @@ component{
 		configStruct.relax = {
 			APILocation 	= "#moduleMapping#.models.resources",
 			defaultAPI 		= "myapi",
-			maxHistory		= 10
+			maxHistory		= 10,
+			sessionsEnabled	= APPLICATION.GetApplicationSettings().sessionManagement
 		};
 
 		// Apend it
 		structAppend( configStruct.relax, relaxDSL, true );
+
+		/** 
+		*  As a convenience, turn off flash auto-saves if sessions are disabled, 
+		*  or requestEnd errors will be thrown
+		**/
+		if( !configStruct.relax.sessionsEnabled && controller.getSetting("flash").scope == 'session' ){
+			controller.getSetting("flash").autoSave = false;
+		}
 
 		// expand the location path
 		configStruct.relax.APILocationExpanded = expandPath( "/#replace( configStruct.relax.APILocation, ".", "/", "all" )#" );
