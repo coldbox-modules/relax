@@ -104,5 +104,17 @@ component extends="BaseHandler"{
 		DSLService.clearUserData();
 		setNextEVent(rc.xehHome);
 	}
+	
+	/**
+	* View a Single Resource Doc
+	*/
+	function view( event, rc, prc ){
+		event.paramValue( "print", "relax" );
+		resourceDoc(
+			event = arguments.event,
+			rc = arguments.rc,
+			prc = arguments.prc
+		);
+	}
 
 }
