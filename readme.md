@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ColdBox/coldbox-relax.svg?branch=master)](https://travis-ci.org/ColdBox/coldbox-relax)
+
 WELCOME TO COLDBOX RELAX
 ========================================
 
