@@ -1,14 +1,13 @@
 <cfparam name="url.version" default="0">
-<cfparam name="url.path" 	default="#expandPath( "./relax-APIDocs" )#">
+<cfparam name="url.path" 	default="#expandPath( "./#request.moduleName#-APIDocs" )#">
 <cfscript>
-	docName = "Relax-APIDocs";
-	base = expandPath( "/relax" );
-
-	colddoc 	= new ColdDoc();
-	strategy 	= new colddoc.strategy.api.HTMLAPIStrategy( url.path, "ColdBox Relax v#url.version#" );
-	colddoc.setStrategy( strategy );
-
-	colddoc.generate( inputSource=base, outputDir=url.path, inputMapping="relax" );
+	docName = "#request.moduleName#-APIDocs";
+	base 	= expandPath( "/#request.moduleName#" );
+	docbox 	= new docbox.DocBox( properties = {
+		projectTitle 	= "#request.moduleName# v#url.version#",
+		outputDir 		= url.path
+	} );
+	docbox.generate( source=base, mapping="#request.moduleName#" );
 </cfscript>
 
 <!---
