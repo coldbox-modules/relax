@@ -6,7 +6,7 @@
 component{
 
 	// DI
-	property name="settings" 		inject="wirebox:property:relax";
+	property name="settings" 		inject="coldbox:setting:relax";
 	property name="DSLService"		inject="id:DSLService@relax";
 
 	/**
