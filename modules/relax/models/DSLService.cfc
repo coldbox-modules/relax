@@ -9,16 +9,22 @@ component accessors="true" singleton{
 
 	// DI
 	property name="log" 		inject="logbox:logger:{this}";
-	property name="settings" 	inject="coldbox:setting:relax";
+	property name="settings" 	inject="wirebox:property:relax";
 	
 	// properties
 	property name="APIDefinitions";
+	property name="sessionsEnabled";
 
 	/**
 	* Constructor
 	*/
 	function init(){
-		variables.APIDefinitions = {};
+
+		if( isNull( getSettings() ) ) application.wirebox.autowire( this );
+
+		this.setAPIDefinitions( {} );
+		this.setSessionsEnabled( getSettings().sessionsEnabled );
+		
 		return this;
 	}
 
@@ -42,6 +48,7 @@ component accessors="true" singleton{
     */
     function getLoadedAPI(){
 		var apiName = getLoadedAPIName();
+
 		// lazy load API if not in scope
 		if( NOT structKeyExists( variables.APIDefinitions, apiName ) ){ loadAPI( apiName ); }
 		// return it.
@@ -52,6 +59,8 @@ component accessors="true" singleton{
 	* Get the loaded API name
 	*/
     string function getLoadedAPIName(){
+    	if( !getSessionsEnabled() ) return getSettings().defaultAPI;
+
     	return ( structKeyExistS( session, "relax-api" ) ? session[ "relax-api" ] : "" );
     }
 
@@ -66,6 +75,8 @@ component accessors="true" singleton{
 	* Clears user data
 	*/
 	DSLService function clearUserData(){
+		if( !getSessionsEnabled() ) return this;
+
 		structDelete( session, "relax-api" );
 		return this;
 	}
@@ -156,7 +167,7 @@ component accessors="true" singleton{
 		variables.APIDefinitions[ arguments.name ] = dataCFC;
 
 		// Store user's selection
-		session[ "relax-api" ] = arguments.name;
+		if( getSessionsEnabled() ) session[ "relax-api" ] = arguments.name;
 
 		return dataCFC;
 	}
