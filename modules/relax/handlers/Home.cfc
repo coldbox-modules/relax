@@ -52,7 +52,7 @@ component extends="BaseHandler"{
 		// load the api if it has length else ignored.
 		if( len( rc.apiName ) ){
 			DSLService.loadAPI( rc.apiName );
-			if( VARIABLES.settings.sessionsEnabled ) {
+			if( variables.settings.sessionsEnabled ) {
 				flash.put( "notice", "API: #rc.apiName# loaded!" );
 			}
 		}

@@ -92,7 +92,7 @@ component{
 			APILocation 	= "#moduleMapping#.models.resources",
 			defaultAPI 		= "myapi",
 			maxHistory		= 10,
-			sessionsEnabled	= APPLICATION.GetApplicationSettings().sessionManagement
+			sessionsEnabled	= application.getApplicationSettings().sessionManagement
 		};
 
 		// Apend it
@@ -102,8 +102,8 @@ component{
 		*  As a convenience, turn off flash auto-saves if sessions are disabled, 
 		*  or requestEnd errors will be thrown
 		**/
-		if( !configStruct.relax.sessionsEnabled && controller.getSetting("flash").scope == 'session' ){
-			controller.getSetting("flash").autoSave = false;
+		if( !configStruct.relax.sessionsEnabled && controller.getSetting( "flash" ).scope == 'session' ){
+			controller.getSetting( "flash" ).autoSave = false;
 		}
 
 		// expand the location path
