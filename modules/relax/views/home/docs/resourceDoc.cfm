@@ -19,6 +19,12 @@
 		   href="#event.buildlink(linkTo=prc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=pdf")#">
 			<i class="fa fa-file-pdf-o"></i>
 		</a>
+		&nbsp;
+		<a title="View Details"
+			class="btn btn-info"
+			href="#event.buildlink(linkTo=prc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=relax")#">
+			<i class="fa fa-file-text-o"></i>
+		</a>
 	</div>
 </div>
 </cfif>
