@@ -2,8 +2,8 @@
 * Copyright Ortus Solutions, Corp, All rights reserved
 * www.ortussolutions.com
 * ---
-* The Relax DSL configuration object which is mixed into a simple Relax CFC Definition Object so you can use all the methods in this CFC to define RESTful web services.  
-* All functions can be concatenated to create a nice programmatic DSL.
+* Relax offers you a nice programmatic DSL to define RESTFul web services.  All functions defined in this DSL can be concatenated with each other to 
+* create expressive and human readable representations of your API Definitions.
 */
 component accessors="true"{
 

@@ -12,15 +12,6 @@
 
 <!--- API Return Formats --->
 <h2>API Return Formats</h2>
-<p>
-	This service can detect the incoming resource extension in order to provide to you the resource represented
-	according to the extension:
-	<pre class="brush: html; auto-links:false">
-	resource.{format}
-	resource.json
-	resource.xml</pre>
-
-</p>
 <table class="table table-striped table-hover" width="100%">
 	<tr>
 		<th width="250" class="textRight">Service Extension Detection:</th>
@@ -83,4 +74,6 @@
 	</tr>
 	</cfloop>
 </table>
+
+<hr>
 </cfoutput>
