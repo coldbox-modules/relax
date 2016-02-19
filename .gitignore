@@ -10,13 +10,9 @@ settings.xml
 /bower_components
 /node_modules/*
 /node_modules
-test/results/*.properties
-test/results/*.html
-test/results/*.log
-tests/results
-modules/cbjavaloader
-modules/cbi18n
+tests/results/*
 workbench/build.number
+build/*
 modules/*
 !modules/relax
 modules/relax/includes/js/build.txt

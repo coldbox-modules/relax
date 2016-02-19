@@ -1,8 +1,7 @@
 /**
-********************************************************************************
-Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
+* Copyright Ortus Solutions, Corp, All rights reserved
+* www.ortussolutions.com
+* ---
 * Main Handler
 */
 component extends="BaseHandler"{
@@ -53,7 +52,7 @@ component extends="BaseHandler"{
 		// load the api if it has length else ignored.
 		if( len( rc.apiName ) ){
 			DSLService.loadAPI( rc.apiName );
-			if( VARIABLES.settings.sessionsEnabled ) {
+			if( variables.settings.sessionsEnabled ) {
 				flash.put( "notice", "API: #rc.apiName# loaded!" );
 			}
 		}

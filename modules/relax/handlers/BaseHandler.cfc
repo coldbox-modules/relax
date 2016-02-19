@@ -1,13 +1,12 @@
 /**
-********************************************************************************
-Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
+* Copyright Ortus Solutions, Corp, All rights reserved
+* www.ortussolutions.com
+* ---
 */
 component {
 
 	// DI
-	property name="settings" 		inject="wirebox:property:relax";
+	property name="settings" 		inject="coldbox:setting:relax";
 	property name="DSLService"		inject="id:DSLService@relax";
 
 	/**
