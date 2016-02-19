@@ -1,5 +1,6 @@
 {
     "port":"49616",
     "openbrowser":"false",
-    "force":"true"
+    "force":"true",
+    "rewritesEnable":true
 }
