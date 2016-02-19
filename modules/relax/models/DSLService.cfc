@@ -8,21 +8,32 @@ component accessors="true" singleton{
 
 	// DI
 	property name="log" 		inject="logbox:logger:{this}";
-	property name="settings" 	inject="wirebox:property:relax";
 	
-	// properties
-	property name="APIDefinitions";
-	property name="sessionsEnabled";
+	/**
+	* Storage for API Definitions
+	*/
+	property name="APIDefinitions" type="struct";
+
+	/**
+	* Flag that tell us if the underlying application leverages session scope
+	*/
+	property name="sessionsEnabled" type="boolean";
+
+	/**
+	* The relax module's settings
+	*/
+	property name="settings" type="struct";
 
 	/**
 	* Constructor
+	* @settings The relax module settings needed
+	* @settings.inject coldbox:setting:relax
 	*/
-	function init(){
+	function init( required settings ){
 
-		if( isNull( getSettings() ) ) application.wirebox.autowire( this );
-
-		this.setAPIDefinitions( {} );
-		this.setSessionsEnabled( getSettings().sessionsEnabled );
+		variables.settings 			= arguments.settings;
+		variables.APIDefinitions 	= {};
+		variables.sessionsEnabled 	= arguments.settings.sessionsEnabled;
 		
 		return this;
 	}
@@ -58,7 +69,9 @@ component accessors="true" singleton{
 	* Get the loaded API name
 	*/
     string function getLoadedAPIName(){
-    	if( !getSessionsEnabled() ) return getSettings().defaultAPI;
+    	if( !getSessionsEnabled() ){
+    		return getSettings().defaultAPI;
+    	}
 
     	return ( structKeyExistS( session, "relax-api" ) ? session[ "relax-api" ] : "" );
     }
@@ -129,7 +142,7 @@ component accessors="true" singleton{
 		}
 
 		// Process resources
-		for(var x=1; x lte arrayLen( dataCFC.resources ); x++){
+		for( var x=1; x lte arrayLen( dataCFC.resources ); x++ ){
 			dataCFC.resources[ x ].resourceID = hash( dataCFC.resources[ x ].toString() );
 			if( NOT structKeyExists( dataCFC.resources[ x ], "headers" ) ){
 				dataCFC.resources[ x ].headers = [];
@@ -166,7 +179,9 @@ component accessors="true" singleton{
 		variables.APIDefinitions[ arguments.name ] = dataCFC;
 
 		// Store user's selection
-		if( getSessionsEnabled() ) session[ "relax-api" ] = arguments.name;
+		if( getSessionsEnabled() ){
+			session[ "relax-api" ] = arguments.name;
+		}
 
 		return dataCFC;
 	}

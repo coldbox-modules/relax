@@ -8,15 +8,12 @@ component singleton accessors="true"{
 
 	// DI
 	property name="log" 		inject="logbox:logger:{this}";
-	property name="settings"	inject="coldbox:setting:relax";
-	// Properties
-	property name="sessionsEnabled";
+	property name="DSLService"	inject="DSLService@relax";
 
 	/**
 	* Constructor
 	*/
 	function init(){
-		setSessionsEnabled( APPLICATION.GetApplicationSettings().sessionManagement );
 		return this;
 	}
 
@@ -33,7 +30,7 @@ component singleton accessors="true"{
 	* @return Relaxer
 	*/
 	function clearHistory(){
-		if( this.getSessionsEnabled() ){
+		if( DSLService.getSessionsEnabled() ){
 			structDelete( session, "relax-history" );	
 		}
 
@@ -44,7 +41,7 @@ component singleton accessors="true"{
 	* Get the relaxer history array
 	*/
 	array function getHistory(){
-		if( !this.getSessionsEnabled() ) return [];
+		if( !DSLService.getSessionsEnabled() ) return [];
 
 		return ( structKeyExists( session, "relax-history" ) ? session[ "relax-history" ] : [] );
 	}
@@ -59,7 +56,7 @@ component singleton accessors="true"{
 		var history = {};
 
 		// check if history exists?
-		if( this.getSessionsEnabled() ){
+		if( DSLService.getSessionsEnabled() ){
 			if( !structKeyExists( session, "relax-history" ) ){
 				session[ "relax-history" ] = [];
 			}
