@@ -1,4 +1,3 @@
-<cfset sessionsEnabled = getSetting("relax").sessionsEnabled >
 <cfoutput>
 <div class="row">
 	<div class="col-md-9">
@@ -41,7 +40,7 @@
 	<!--- Sidebar --->
 	<div class="col-md-3">
 
-		<cfif sessionsEnabled>
+		<cfif prc.settings.sessionsEnabled>
 						
 			<div class="panel panel-default">
 	            <div class="panel-heading">
@@ -68,10 +67,10 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">API Export<cfif sessionsEnabled>/Import</cfif></h3>
+                <h3 class="panel-title">API Export<cfif prc.settings.sessionsEnabled>/Import</cfif></h3>
             </div>
             <div class="panel-body">
-            	You can export your Relaxed Service API to JSON<cfif sessionsEnabled> and also import one</cfif>.<br/><br/>
+            	You can export your Relaxed Service API to JSON<cfif prc.settings.sessionsEnabled> and also import one</cfif>.<br/><br/>
 
 				<p class="text-center">
 					<!--- Export --->
@@ -83,7 +82,7 @@
 							<i class="fa fa-lg fa-cloud-download"></i> Export
 					</a>
 
-					<cfif sessionsEnabled>
+					<cfif prc.settings.sessionsEnabled>
 						<!--- Import --->
 						<a href="#event.buildLink( prc.xehImportAPI)#"
 							data-toggle="modal" 
