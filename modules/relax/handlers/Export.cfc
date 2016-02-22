@@ -1,11 +1,12 @@
 /**
-* Copyright Ortus Solutions, Corp, All rights reserved
-* www.ortussolutions.com
-* ---
+********************************************************************************
+Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
+www.ortussolutions.com
+********************************************************************************
 * Export handler
 */
 component extends="BaseHandler"{
-	
+
 	// DI
 	property name="wikitext"		inject="wikitext@wikitext";
 
@@ -24,11 +25,23 @@ component extends="BaseHandler"{
 	/**
 	* API Export
 	*/
-	function api( event, rc, prc ){
-		// exit handlers
-		prc.xehExportAPI = "relax/export/api";
-		// serialze the api
-		prc.jsonAPI = serializeJSON( prc.dsl );
+
+    function api( event, rc, prc ){
+        // exit handlers
+        prc.xehExportAPI = "relax/export/api";
+
+        var output = {
+            "_definedResources" = prc.dsl["_definedResources"]
+            , "globalHeaders" = prc.dsl[ "globalHeaders" ]
+            , "_currentResource" = prc.dsl[ "_currentResource" ]
+            , "resources" = prc.dsl[ "resources" ]
+            , "relax" = prc.dsl[ "relax" ]
+            , "globalParameters" = prc.dsl[ "globalParameters" ]
+        };
+
+        // serialze the api
+        prc.jsonAPI = serializeJSON( prc.dsl );
+        prc.jsonAPI = serializeJSON( output );
 
 		if( event.valueExists( "download" ) ){
 			var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.relax.title );

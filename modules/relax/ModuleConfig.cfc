@@ -1,7 +1,8 @@
 /**
-* Copyright Ortus Solutions, Corp, All rights reserved
-* www.ortussolutions.com
-* ---
+*********************************************************************************
+* Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
+* www.coldbox.org | www.luismajano.com | www.ortussolutions.com
+********************************************************************************
 */
 component{
 
@@ -10,7 +11,7 @@ component{
 	this.author 			= "Ortus Solutions";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "RESTful Tools For Lazy Experts";
-	this.version			= "@build.version@+@build.number@";
+	this.version			= "2.1.0+00017";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	// Module Entry Point
@@ -89,25 +90,20 @@ component{
 
 		// Default Config Structure
 		configStruct.relax = {
-			APILocation 	= "#moduleMapping#.models.resources",
-			defaultAPI 		= "myapi",
-			maxHistory		= 10,
-			sessionsEnabled	= application.getApplicationSettings().sessionManagement
+			APILocation 	= "relaxroot.resources",
+			defaultAPI 		= "v1",
+			maxHistory		= 0
 		};
 
 		// Apend it
 		structAppend( configStruct.relax, relaxDSL, true );
 
-		/** 
-		*  As a convenience, turn off flash auto-saves if sessions are disabled, 
-		*  or requestEnd errors will be thrown
-		**/
-		if( !configStruct.relax.sessionsEnabled && controller.getSetting( "flash" ).scope == 'session' ){
-			controller.getSetting( "flash" ).autoSave = false;
-		}
+
+
 
 		// expand the location path
 		configStruct.relax.APILocationExpanded = expandPath( "/#replace( configStruct.relax.APILocation, ".", "/", "all" )#" );
+		// /writedump( configStruct ); abort;
 	}
 
 }

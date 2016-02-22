@@ -14,14 +14,39 @@ fieldset{ margin: 10px 0px 10px 0px;}
 .nav-tabs > li > a:hover {
 	background-color: #eaeaea;
 }
-/** Syntax Highlighter Updates */
-pre, .syntaxhighlighter code{
-	font-size: 14px !important;
-	margin: 10px 0px;
+
+
+/* Custom CSS by Abcam */
+#main-content .tab-wrapper .tab-content {
+	border: 0;
 }
-div.syntaxhighlighter{
-	border: 1px solid #ccc;
-	padding: 5px;
+#resourcesAccordion .panel-default {
+	border: 1px solid #ddd;
+	margin-bottom: 5px;
 }
-div.syntaxhighlighter div.container:after,
-div.syntaxhighlighter div.container:before{ display: block !important;}
+#resourcesAccordion .panel-default > .panel-heading {
+	background: #f5f5f5 !important;
+}
+#resourcesAccordion .panel > .panel-heading {
+    text-transform: initial;
+    padding: 5px 15px 0;
+}
+#resourcesAccordion .panel > .panel-heading p {
+    margin-bottom: 0;
+}
+#resourcesAccordion .panel-title {
+	margin-top: 5px;
+	font-size: 24px;
+}
+#resourcesAccordion .panel-title i {
+	color: gray;
+}
+#resourcesAccordion .panel-title code {
+	color: #1abc9c;
+}
+#container nav.sidebar-left {
+	padding-top: 15px;
+}
+#container nav.sidebar-left div.toggle-navigation {
+	padding-bottom: 10px;
+}
