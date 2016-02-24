@@ -21,7 +21,7 @@ component singleton accessors="true"{
 	* Get the max history stack, this comes from the relax settings
 	*/
 	numeric function getMaxHistory(){
-		return variables.settings.maxHistory;
+		return DSLService.getSettings().maxHistory;
 	}
 
 	/**
@@ -79,7 +79,7 @@ component singleton accessors="true"{
 		arrayPrepend( stack, history );
 		
 		// save it
-		if( this.getSessionsEnabled() ) session[ "relax-history" ] = stack;
+		if( DSLService.getSessionsEnabled() ) session[ "relax-history" ] = stack;
 
 		return this;
 	}
