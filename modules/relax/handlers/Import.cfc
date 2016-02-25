@@ -1,7 +1,8 @@
 /**
-* Copyright Ortus Solutions, Corp, All rights reserved
-* www.ortussolutions.com
-* ---
+********************************************************************************
+Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
+www.ortussolutions.com
+********************************************************************************
 * Import Handler
 */
 component extends="BaseHandler"{

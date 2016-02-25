@@ -1,7 +1,8 @@
 /**
-* Copyright Ortus Solutions, Corp, All rights reserved
-* www.ortussolutions.com
-* ---
+********************************************************************************
+Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
+www.ortussolutions.com
+********************************************************************************
 * Main Handler
 */
 component extends="BaseHandler"{
@@ -48,13 +49,10 @@ component extends="BaseHandler"{
 	function loadAPI( event, rc, prc ){
 		event.paramValue( "apiName", "" )
 			.paramValue( "returnEvent", "" );
-
 		// load the api if it has length else ignored.
 		if( len( rc.apiName ) ){
 			DSLService.loadAPI( rc.apiName );
-			if( variables.settings.sessionsEnabled ) {
-				flash.put( "notice", "API: #rc.apiName# loaded!" );
-			}
+			flash.put( "notice", "API: #rc.apiName# loaded!" );
 		}
 
 		setNextEvent( len( rc.returnEvent ) ? rc.returnEvent : prc.xehHome );

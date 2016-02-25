@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-## 2.2.0
-* Updated build scripts for using DocBox
-* Travis CI integration for tests
-* Update of all dependencies
-
 ## 2.1.0
 * Updates on box.json and locations
 * Updated readme
