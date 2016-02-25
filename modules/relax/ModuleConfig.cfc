@@ -88,32 +88,12 @@ component{
 		var configStruct 	= controller.getConfigSettings();
 
 		// Default Config Structure
-
-		// CF11 hack (application.getApplicationSettings() info is not in struct format anymore, also no way to find out session management enabled or not )
-		if( (server.coldfusion.productname contains 'coldfusion') && ListFirst(server.coldfusion.productversion) == 11) {
-			var sessionsEnabled = true;
-			try{
-				session["cbrelaxrandom"] = true;
-				sessionsEnabled = (isDefined("session"));
-			}catch(Any e){
-				sessionsEnabled = false;
-			}
-
-			configStruct.relax = {
-				APILocation 	= "#moduleMapping#.models.resources",
-				defaultAPI 		= "myapi",
-				maxHistory		= 10,
-				sessionsEnabled	= sessionsEnabled
-			};
-		}
-		else{
-			configStruct.relax = {
-				APILocation 	= "#moduleMapping#.models.resources",
-				defaultAPI 		= "myapi",
-				maxHistory		= 10,
-				sessionsEnabled	= application.getApplicationSettings().sessionManagement
-			};
-		}
+		configStruct.relax = {
+			APILocation 	= "#moduleMapping#.models.resources",
+			defaultAPI 		= "myapi",
+			maxHistory		= 10,
+			sessionsEnabled	= application.getApplicationSettings().sessionManagement
+		};
 
 		// Apend it
 		structAppend( configStruct.relax, relaxDSL, true );
