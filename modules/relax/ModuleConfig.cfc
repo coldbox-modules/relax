@@ -95,7 +95,6 @@ component{
 			try{
 				session["cbrelaxrandom"] = true;
 				sessionsEnabled = (isDefined("session"));
-				structDelete(session, "cbrelaxrandom");
 			}catch(Any e){
 				sessionsEnabled = false;
 			}
