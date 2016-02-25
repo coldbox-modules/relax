@@ -59,7 +59,7 @@ component{
 	/**
 	* Pre process for relax, makes sure an API is loaded
 	*/
-	function preProcess(event,interceptData) eventPattern="^relax.*"{
+	function preProcess( event, interceptData ) eventPattern="^relax.*"{
 		var DSLService = wirebox.getInstance( "DSLService@relax" );
 		// load the default API if none loaded
 		if( !DSLService.isLoadedAPI() ){
@@ -88,22 +88,12 @@ component{
 		var configStruct 	= controller.getConfigSettings();
 
 		// Default Config Structure
-		//CF10 and 11 getApplicationSettingsMap 
-		if ( (server.coldfusion.productname contains "coldfusion")  && listFirst( server.coldfusion.productVersion ) > 9 ) {
-			configStruct.relax = {
-				APILocation 	= "#moduleMapping#.models.resources",
-				defaultAPI 		= "myapi",
-				maxHistory		= 10,
-				sessionsEnabled	= application.getApplicationSettingsMap().sessionManagement
-			};
-		}else{
-			configStruct.relax = {
-				APILocation 	= "#moduleMapping#.models.resources",
-				defaultAPI 		= "myapi",
-				maxHistory		= 10,
-				sessionsEnabled	= application.getApplicationSettings().sessionManagement
-			};
-		}	
+		configStruct.relax = {
+			APILocation 	= "#moduleMapping#.models.resources",
+			defaultAPI 		= "myapi",
+			maxHistory		= 10,
+			sessionsEnabled	= getApplicationMetadata().sessionManagement
+		};
 
 		// Apend it
 		structAppend( configStruct.relax, relaxDSL, true );
