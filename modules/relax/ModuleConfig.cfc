@@ -88,12 +88,22 @@ component{
 		var configStruct 	= controller.getConfigSettings();
 
 		// Default Config Structure
-		configStruct.relax = {
-			APILocation 	= "#moduleMapping#.models.resources",
-			defaultAPI 		= "myapi",
-			maxHistory		= 10,
-			sessionsEnabled	= application.getApplicationSettings().sessionManagement
-		};
+		//CF10 and 11 getApplicationSettingsMap 
+		if ( (server.coldfusion.productname contains "coldfusion")  && listFirst( server.coldfusion.productVersion ) > 9 ) {
+			configStruct.relax = {
+				APILocation 	= "#moduleMapping#.models.resources",
+				defaultAPI 		= "myapi",
+				maxHistory		= 10,
+				sessionsEnabled	= application.getApplicationSettingsMap().sessionManagement
+			};
+		}else{
+			configStruct.relax = {
+				APILocation 	= "#moduleMapping#.models.resources",
+				defaultAPI 		= "myapi",
+				maxHistory		= 10,
+				sessionsEnabled	= application.getApplicationSettings().sessionManagement
+			};
+		}	
 
 		// Apend it
 		structAppend( configStruct.relax, relaxDSL, true );
