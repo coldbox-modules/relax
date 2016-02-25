@@ -89,14 +89,14 @@ component{
 
 		// Default Config Structure
 		//CF10 and 11 getApplicationSettingsMap 
-		if ( listFirst( server.coldfusion.productVersion ) > 9 ) {
+		if ( (server.coldfusion.productname contains "coldfusion")  && listFirst( server.coldfusion.productVersion ) > 9 ) {
 			configStruct.relax = {
 				APILocation 	= "#moduleMapping#.models.resources",
 				defaultAPI 		= "myapi",
 				maxHistory		= 10,
 				sessionsEnabled	= application.getApplicationSettingsMap().sessionManagement
 			};
-		else{
+		}else{
 			configStruct.relax = {
 				APILocation 	= "#moduleMapping#.models.resources",
 				defaultAPI 		= "myapi",
