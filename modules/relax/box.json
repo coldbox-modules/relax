@@ -20,7 +20,8 @@
 	],
 	"contributors"		: [
 		"Brad Wood <bdw429s@gmail.com>", 
-		"Curt Gratz <gratzc@compknowhow.com>"
+		"Curt Gratz <gratzc@compknowhow.com>",
+		"Jon Clausen <jon_clausen@silowebworks.com>"
 	],
 	"dependencies" : {
 		"wikitext" : "1.0.0"
@@ -29,7 +30,6 @@
         "**/.*",
         "tests",
         "apidocs",
-        "models/resources",
         "*/.md"
     ]
 }

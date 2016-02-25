@@ -12,7 +12,7 @@
 		</cfif>
 
 		<!--- Body --->
-		<p>We have succesfully loaded the <em>Relax DSL</em> for your loaded API: <code>#prc.loadedAPIName#</code>.
+		<p>The <em>Relax DSL</em> is loaded for your API: <code>#prc.loadedAPIName#</code>.
 		</p>
 
 		<div class="panel panel-default">
@@ -39,33 +39,38 @@
 
 	<!--- Sidebar --->
 	<div class="col-md-3">
-		<div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Loaded Relaxed APIs</h3>
-            </div>
-            <div class="panel-body">
-            	From here you can switch to another Relaxed API in your <strong>resources</strong> folder:<br/>
 
-				<p class="text-center">
-					<br>
-					<!--- My Apis --->
-					<select name="myAPI" id="myAPI" title="Your defined Relaxed APIs" onchange="window.location='#event.buildLink( prc.xehLoadAPI )#?apiName=' + this.value" class="form-control input-sm">
-						<cfloop query="prc.loadedAPIs">
-							<cfif prc.loadedAPIs.type eq "Dir">
-							<option value="#prc.loadedAPis.name#" <cfif prc.loadedAPIs.name eq prc.loadedAPIName>selected="selected"</cfif>>#prc.loadedAPis.name#</option>
-							</cfif>
-						</cfloop>
-					</select>
-				</p>
-            </div>
-        </div>
+		<cfif prc.settings.sessionsEnabled>
+						
+			<div class="panel panel-default">
+	            <div class="panel-heading">
+	                <h3 class="panel-title">Loaded Relaxed APIs</h3>
+	            </div>
+	            <div class="panel-body">
+	            	From here you can switch to another Relaxed API in your <strong>resources</strong> folder:<br/>
+
+					<p class="text-center">
+						<br>
+						<!--- My Apis --->
+						<select name="myAPI" id="myAPI" title="Your defined Relaxed APIs" onchange="window.location='#event.buildLink( prc.xehLoadAPI )#?apiName=' + this.value" class="form-control input-sm">
+							<cfloop query="prc.loadedAPIs">
+								<cfif prc.loadedAPIs.type eq "Dir">
+								<option value="#prc.loadedAPis.name#" <cfif prc.loadedAPIs.name eq prc.loadedAPIName>selected="selected"</cfif>>#prc.loadedAPis.name#</option>
+								</cfif>
+							</cfloop>
+						</select>
+					</p>
+	            </div>
+	        </div>
+
+    	</cfif>
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">API Export/Import</h3>
+                <h3 class="panel-title">API Export<cfif prc.settings.sessionsEnabled>/Import</cfif></h3>
             </div>
             <div class="panel-body">
-            	You can export your Relaxed Service API to JSON and also import one.<br/><br/>
+            	You can export your Relaxed Service API to JSON<cfif prc.settings.sessionsEnabled> and also import one</cfif>.<br/><br/>
 
 				<p class="text-center">
 					<!--- Export --->
@@ -76,14 +81,17 @@
 					   	title="Export API">
 							<i class="fa fa-lg fa-cloud-download"></i> Export
 					</a>
-					<!--- Import --->
-					<a href="#event.buildLink( prc.xehImportAPI)#"
-						data-toggle="modal" 
-						data-target="##modal"
-						class="btn btn-primary"
-					   	title="Import API">
-							<i class="fa fa-lg fa-cloud-upload"></i> Import
-					</a>
+
+					<cfif prc.settings.sessionsEnabled>
+						<!--- Import --->
+						<a href="#event.buildLink( prc.xehImportAPI)#"
+							data-toggle="modal" 
+							data-target="##modal"
+							class="btn btn-primary"
+						   	title="Import API">
+								<i class="fa fa-lg fa-cloud-upload"></i> Import
+						</a>
+					</cfif>
 				</p>
             </div>
         </div>

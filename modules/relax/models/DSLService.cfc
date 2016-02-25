@@ -1,24 +1,40 @@
 /**
-********************************************************************************
-Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
+* Copyright Ortus Solutions, Corp, All rights reserved
+* www.ortussolutions.com
+* ---
 * The DSL Service
 */
 component accessors="true" singleton{
 
 	// DI
 	property name="log" 		inject="logbox:logger:{this}";
-	property name="settings" 	inject="coldbox:setting:relax";
 	
-	// properties
-	property name="APIDefinitions";
+	/**
+	* Storage for API Definitions
+	*/
+	property name="APIDefinitions" type="struct";
+
+	/**
+	* Flag that tell us if the underlying application leverages session scope
+	*/
+	property name="sessionsEnabled" type="boolean";
+
+	/**
+	* The relax module's settings
+	*/
+	property name="settings" type="struct";
 
 	/**
 	* Constructor
+	* @settings The relax module settings needed
+	* @settings.inject coldbox:setting:relax
 	*/
-	function init(){
-		variables.APIDefinitions = {};
+	function init( required settings ){
+
+		variables.settings 			= arguments.settings;
+		variables.APIDefinitions 	= {};
+		variables.sessionsEnabled 	= arguments.settings.sessionsEnabled;
+		
 		return this;
 	}
 
@@ -42,6 +58,7 @@ component accessors="true" singleton{
     */
     function getLoadedAPI(){
 		var apiName = getLoadedAPIName();
+
 		// lazy load API if not in scope
 		if( NOT structKeyExists( variables.APIDefinitions, apiName ) ){ loadAPI( apiName ); }
 		// return it.
@@ -52,6 +69,10 @@ component accessors="true" singleton{
 	* Get the loaded API name
 	*/
     string function getLoadedAPIName(){
+    	if( !getSessionsEnabled() ){
+    		return getSettings().defaultAPI;
+    	}
+
     	return ( structKeyExistS( session, "relax-api" ) ? session[ "relax-api" ] : "" );
     }
 
@@ -66,6 +87,8 @@ component accessors="true" singleton{
 	* Clears user data
 	*/
 	DSLService function clearUserData(){
+		if( !getSessionsEnabled() ) return this;
+
 		structDelete( session, "relax-api" );
 		return this;
 	}
@@ -119,7 +142,7 @@ component accessors="true" singleton{
 		}
 
 		// Process resources
-		for(var x=1; x lte arrayLen( dataCFC.resources ); x++){
+		for( var x=1; x lte arrayLen( dataCFC.resources ); x++ ){
 			dataCFC.resources[ x ].resourceID = hash( dataCFC.resources[ x ].toString() );
 			if( NOT structKeyExists( dataCFC.resources[ x ], "headers" ) ){
 				dataCFC.resources[ x ].headers = [];
@@ -156,7 +179,9 @@ component accessors="true" singleton{
 		variables.APIDefinitions[ arguments.name ] = dataCFC;
 
 		// Store user's selection
-		session[ "relax-api" ] = arguments.name;
+		if( getSessionsEnabled() ){
+			session[ "relax-api" ] = arguments.name;
+		}
 
 		return dataCFC;
 	}

@@ -1,12 +1,17 @@
-<cfcomponent output="false" hint="My App Configuration">
-<cfscript>
+/**
+* Copyright Ortus Solutions, Corp, All rights reserved
+* www.ortussolutions.com
+* ---
+*/
+component{
+
 	// Configure ColdBox Application
 	function configure(){
 
 		// coldbox directives
 		coldbox = {
 			//Application Setup
-			appName 				= "Development Shell",
+			appName 				= "Relax Dev Shell",
 
 			//Development Settings
 			reinitPassword			= "",
@@ -39,8 +44,7 @@
 
 			//Application Aspects
 			handlerCaching 			= false,
-			eventCaching			= false,
-			proxyReturnCollection 	= false
+			eventCaching			= false
 		};
 
 		// custom settings
@@ -77,14 +81,6 @@
 			}
 		];
 
-		validation = {
-			sharedConstraints = {
-				"sharedUser" = {
-					username = {required=true, size="6..20"},
-					password = {required=true, size="6..20"}
-				}
-			}
-		};
 	}
-</cfscript>
-</cfcomponent>
+
+}
