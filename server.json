@@ -1,6 +1,8 @@
 {
-    "port":"49616",
-    "openbrowser":"false",
-    "force":"true",
-    "rewritesEnable":true
+    "rewritesEnabled":true,
+    "web":{
+        "http":{
+            "port":"49616"
+        }
+    }
 }
