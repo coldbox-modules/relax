@@ -1,33 +1,44 @@
 component name="OpenAPIParser" accessors="true" {
-	property name="jLoader" inject="loader@cbjavaloader";
-	//the swagger parser
-	property name="Parser";
-	//the loaded swagger object
-	property name="objAPI";
+	//the base path of the APIDoc
+	property name="document";
+	property name="baseDocumentPath";
 
-	public function init(){
-		setParser(jLoader.create("io.swagger.parser.SwaggerParser"));
 
-		return this;
-	}
-
-	public function read(required string APIDoc){
-		if( isJSON( ARGUMENTS.APIDoc )){
-			if(isStruct(ARGUMENTS.APIDoc)) ARGUMENTS.APIDoc = serializeJSON( ARGUMENTS.APIDoc )
-
-			var jsonObj = jLoader.create("com.fasterxml.jackson.databind.JsonNode").init(ARGUMENTS.APIDoc);
-			
-			setObjAPI(Parser.read(jsonObj))
-
-		} else if( fileExists( ARGUMENTS.APIDoc ) ) {
-		
-			setObjAPI( Parser.read() )
-		
-		} else {
-			throw( "The APIDoc argument did not contain a file path or JSON string" )
+	public function init(string APIDocPath){
+		setBaseDocumentPath( APIDocPath );
+		var documentContent;
+		switch( listLast( APIDocPath, ',' ) ){
+			case "cfm":
+				savecontent variable="documentContent" {
+					include APIDocPath;
+				}
+				break;
+			case "yml":
+				throw( "YAML support is not yet implemented" );
+				break;
+			default:
+				documentContent = fileRead( APIDocPath );
 		}
 
-		return this;
+		if( !isJSON( documentContent ) ) throw( "The API Document Provided: #APIDocPath# is not valid JSON" );
+
+		return parse( deSerializeJSON( documentContent ) );
+	}
+
+
+	public function parse( required struct APIDoc ){
+		
+
+
+	}
+
+	public function normalizeSchema( required struct APIDoc ){
+		for ( var key in APIDoc ){
+			if( structKeyExists( APIDoc[key], "$ref" ) ){
+				
+			}
+		}
+
 	}
 
 }
