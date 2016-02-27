@@ -59,7 +59,7 @@ component{
 	/**
 	* Pre process for relax, makes sure an API is loaded
 	*/
-	function preProcess(event,interceptData) eventPattern="^relax.*"{
+	function preProcess( event, interceptData ) eventPattern="^relax.*"{
 		var DSLService = wirebox.getInstance( "DSLService@relax" );
 		// load the default API if none loaded
 		if( !DSLService.isLoadedAPI() ){
@@ -92,7 +92,7 @@ component{
 			APILocation 	= "#moduleMapping#.models.resources",
 			defaultAPI 		= "myapi",
 			maxHistory		= 10,
-			sessionsEnabled	= application.getApplicationSettings().sessionManagement
+			sessionsEnabled	= getApplicationMetadata().sessionManagement
 		};
 
 		// Apend it
