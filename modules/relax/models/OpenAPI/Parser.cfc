@@ -1,3 +1,9 @@
+/**
+* Copyright Ortus Solutions, Corp, All rights reserved
+* www.ortussolutions.com
+* ---
+* Open API Parser
+*/
 component name="OpenAPIParser" accessors="true" {
 	//the base path of the APIDoc
 	property name="DocumentObject";
