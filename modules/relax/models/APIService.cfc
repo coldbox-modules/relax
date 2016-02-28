@@ -4,7 +4,7 @@
 * ---
 * The DSL Service
 */
-component accessors="true" singleton{
+component accessors="true" {
 	// DI
 	property name="Wirebox" inject="wirebox";
 	property name="log" 		inject="logbox:logger:{this}";
@@ -109,7 +109,6 @@ component accessors="true" singleton{
 		// If we have a configure() then call it 
 		if( structKeyExists( dataCFC, "configure") ) processConfiguration( dataCFC );
 
-
 		if( !isNull( dataCFC ) && isLegacyAPI( dataCFC ) ){
 			/**
 			* Legacy RelaxDSL API Checks
@@ -147,9 +146,9 @@ component accessors="true" singleton{
 
 		return (
 			(
-				structKeyExists(dataCFC,"globalHeaders")
+				structKeyExists(dataCFC,"resources")
 				&&
-				arrayLen( dataCFC.globalHeaders )
+				arrayLen( dataCFC.resources )
 			)
 			or
 			( 
