@@ -59,29 +59,33 @@ component name="OpenAPIParser" accessors="true" {
 				throw( type="Relax.ParserException", message="Relax does not support schema using the .#lcase(getSchemaType())# file extension." );
 		}
 
-
 		return parse( documentContent , XPath );
 	}
 
 
 	public function parse( required struct APIDoc, required string XPath="" ){
-		
-		for( var key in ARGUMENTS.APIDoc ){
-			ARGUMENTS.APIDoc[ key ] = parseDocumentReferences( ARGUMENTS.APIDoc[ key ] );
-		}
 
 		setDocumentObject( getWirebox().getInstance( "OpenAPIDocument@relax" ).init( ARGUMENTS.APIDoc, ARGUMENTS.XPath) );
+
+		var Document = getDocumentObject().getDocument();
+
+		for( var key in Document ){
+			Document[ key ] = parseDocumentReferences( Document[ key ] );
+		}
 
 		return this;
 	}
 
 	public function parseDocumentReferences(required any DocItem ){
-
+		
 		if( isArray( DocItem ) ) {
 			for( var i = 1; i <= arrayLen( DocItem ); i++){
 				DocItem[ i ] = parseDocumentReferences( DocItem[ i ] );
 			}
 		} else if( isStruct( DocItem ) ) {
+			//handle top-level values, if they exist
+			if( structKeyExists( DocItem, "$ref" ) ) return fetchDocumentReference(DocItem[ "$ref" ]);
+
 			for( var key in DocItem){
 				if( 
 					isStruct( DocItem[ key ] ) 
@@ -89,9 +93,9 @@ component name="OpenAPIParser" accessors="true" {
 					structKeyExists( DocItem[ key ], "$ref" ) 
 				) {
 					DocItem[ key ] = fetchDocumentReference( DocItem[ key ][ "$ref" ] );
-				} else if( isArray( DocItem[ key ] ) ){
+				} else if( isStruct( DocItem[ key ] ) ||  isArray( DocItem[ key ] ) ){
 					DocItem[ key ] = parseDocumentReferences( DocItem[ key ] );
-				}
+				} 
 			}
 		}
 
@@ -99,14 +103,9 @@ component name="OpenAPIParser" accessors="true" {
 
 	}
 
-	public function getDocumentInstance( required string XPath = "" ){
-		
-		if( len( XPath ) ){
-			return getDocumentObject().locate( replace( XPath, "/", "." , "ALL") );
-		} else {
-			return getDocumentObject();
-		}
-
+	public function getInternalXPath( required string XPath ){
+		var PathArray = listToArray( XPath, "/" );
+		return getDocumentObject().locate( arrayToList( PathArray, "." ) );
 	}
 
 	/**
@@ -117,21 +116,39 @@ component name="OpenAPIParser" accessors="true" {
 	}
 
 	private function fetchDocumentReference( required string $ref ){
-		var refArray = listToArray( $ref, chr( 35 ) );
+		
+		//resolve internal refrences before looking for externals
+		if( left( $ref, 1 ) == chr( 35 )){
+			var FilePath = "";
+			var XPath = listLast( " " & $ref, chr( 35 ) );
 
-		var FilePath = refArray[ 1 ];
-		if( arrayLen( refArray ) > 1 ) {
-			var XPath = refArray[ 2 ]
+		} else {
+			var refArray = listToArray( $ref, chr( 35 ) );
+			var FilePath = refArray[ 1 ];
+			if( arrayLen( refArray ) > 1 ) {
+				var XPath = refArray[ 2 ];
+			}	
 		}
 
 		var ReferenceDocument = {};
 		
+		//Files receive a parser reference
 		if( len( FilePath ) && fileExists( getDirectoryFromPath( getBaseDocumentPath() ) &  FilePath )){
 
 			var ReferenceDocument = Wirebox.getInstance( "OpenAPIParser@relax" ).init(  getDirectoryFromPath( getBaseDocumentPath() ) & $ref );
 		
-		} else if( !isNull( XPath ) ) {
-			var ReferenceDocument = Wirebox.getInstance( "OpenAPIParser@relax" ).init(  getBaseDocumentPath()  & $ref );
+		} else if( len( FilePath ) && !fileExists( getDirectoryFromPath( getBaseDocumentPath() ) &  FilePath )) {
+
+			throw( type="Relax.ParserException", message="File #( getDirectoryFromPath( getBaseDocumentPath() ) &  FilePath )# does not exist" );
+
+		} else if( !isNull( XPath )  && len( XPath ) ) {
+
+			var ReferenceDocument = getInternalXPath( XPath );	
+
+		} else {
+
+			throw( type="Relax.ParserException", message="The $ref #$ref# could not be resolved as either an internal or external reference");
+
 		}
 
 		return ReferenceDocument;
