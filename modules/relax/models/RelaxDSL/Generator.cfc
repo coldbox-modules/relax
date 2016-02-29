@@ -3,6 +3,8 @@
 * www.ortussolutions.com
 * ---
 * Generate DSL docs
+*  
+* @deprecate v3.0.0
 */
 component singleton{
 

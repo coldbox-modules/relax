@@ -1,3 +1,9 @@
+/**
+* Copyright Ortus Solutions, Corp, All rights reserved
+* www.ortussolutions.com
+* ---
+* Open API Document Object
+*/
 component name="OpenAPIDocument" accessors="true" {
 	property name="Document";
 	property name="XPath";

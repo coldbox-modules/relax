@@ -8,7 +8,7 @@ component singleton accessors="true"{
 
 	// DI
 	property name="log" 		inject="logbox:logger:{this}";
-	property name="DSLService"	inject="DSLService@relax";
+	property name="DSLService"	inject="APIService@relax";
 
 	/**
 	* Constructor
