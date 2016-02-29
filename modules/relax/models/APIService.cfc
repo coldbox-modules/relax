@@ -130,7 +130,8 @@ component accessors="true" {
 						break;
 					}
 				}
-			}	
+			}
+
 		} 
 
 		// Store user's selection
@@ -160,7 +161,7 @@ component accessors="true" {
 	}
 
 	private function loadOpenAPI( required string definitionFile ){
-		return getWirebox( ).getInstance( "OpenAPIParser@relax" ).init( definitionFile )
+		return getWirebox( ).getInstance( "OpenAPIParser@relax" ).init( definitionFile );
 	}
 
 	private function loadDSLAPI( required any dataCFC ){
@@ -226,10 +227,6 @@ component accessors="true" {
 		}
 		
 		return dataCFC;
-	}
-
-	private function loadOpenAPI( required name ){
-		
 	}
 
 	/**
