@@ -103,7 +103,7 @@ var tab 	= chr(9);
 var br  	= chr(10);
 var dq      = chr(34);
 var fncExclude  = "init,onMissingMethod,appendResponse,appendData,verifyResourcePivot,$throw";
-var out   = createObject("java","java.lang.StringBuffer").init('');
+var out   = createObject("java","java.lang.StringBuilder").init('');
 var md    = getComponentMetaData( "RelaxDSL" );
 var title = "Relax Programmatic Resource DSL Help";
 
