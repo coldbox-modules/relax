@@ -1,6 +1,8 @@
 CHANGELOG
 =========
 
+## 2.3.0
+
 ## 2.2.0
 * [RELAX-22] - Updated build scripts for using DocBox
 * [RELAX-23] - Travis CI integration for tests
