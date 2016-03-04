@@ -1,15 +1,14 @@
 /**
-********************************************************************************
-Copyright 2005-2007 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
+* Copyright Ortus Solutions, Corp, All rights reserved
+* www.ortussolutions.com
+* ---
 * The Relaxer service
 */
 component singleton accessors="true"{
 
 	// DI
 	property name="log" 		inject="logbox:logger:{this}";
-	property name="settings"	inject="coldbox:setting:relax";
+	property name="DSLService"	inject="DSLService@relax";
 
 	/**
 	* Constructor
@@ -22,7 +21,7 @@ component singleton accessors="true"{
 	* Get the max history stack, this comes from the relax settings
 	*/
 	numeric function getMaxHistory(){
-		return variables.settings.maxHistory;
+		return DSLService.getSettings().maxHistory;
 	}
 
 	/**
@@ -31,7 +30,10 @@ component singleton accessors="true"{
 	* @return Relaxer
 	*/
 	function clearHistory(){
-		structDelete( session, "relax-history" );
+		if( DSLService.getSessionsEnabled() ){
+			structDelete( session, "relax-history" );	
+		}
+
 		return this;
 	}
 
@@ -39,6 +41,8 @@ component singleton accessors="true"{
 	* Get the relaxer history array
 	*/
 	array function getHistory(){
+		if( !DSLService.getSessionsEnabled() ) return [];
+
 		return ( structKeyExists( session, "relax-history" ) ? session[ "relax-history" ] : [] );
 	}
 
@@ -52,22 +56,30 @@ component singleton accessors="true"{
 		var history = {};
 
 		// check if history exists?
-		if( NOT structKeyExists( session, "relax-history" ) ){
-			session[ "relax-history" ] = [];
+		if( DSLService.getSessionsEnabled() ){
+			if( !structKeyExists( session, "relax-history" ) ){
+				session[ "relax-history" ] = [];
+			}
+			stack = session[ "relax-history" ];
+		} else {
+			stack = [];
 		}
-		stack = session[ "relax-history" ];
+
 		// Check limit on it
 		if( ( arrayLen( stack ) + 1 ) GT getMaxHistory() ){
 			// pop one
 			arrayDeleteAt( stack, arrayLen( stack ) );
 		}
+		
 		// Push new history
 		history.requestDate = now();
 		history.data 		= arguments.values;
+		
 		// append it
 		arrayPrepend( stack, history );
+		
 		// save it
-		session[ "relax-history" ] = stack;
+		if( DSLService.getSessionsEnabled() ) session[ "relax-history" ] = stack;
 
 		return this;
 	}

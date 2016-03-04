@@ -1,7 +1,7 @@
 {
 	"name" 		: "ColdBox Relax",
 	"author" 	: "Luis Majano <lmajano@ortussolutions.com",
-	"version"	: "2.1.0",
+	"version"	: "@build.version@+@build.number@",
 	"slug"		: "relax",
 	"type"		: "modules",
 	"keywords"	: "RESTFul,modeling,web services",
@@ -20,7 +20,8 @@
 	],
 	"contributors"		: [
 		"Brad Wood <bdw429s@gmail.com>", 
-		"Curt Gratz <gratzc@compknowhow.com>"
+		"Curt Gratz <gratzc@compknowhow.com>",
+		"Jon Clausen <jon_clausen@silowebworks.com>"
 	],
 	"dependencies" : {
 		"wikitext" : "1.0.0"
@@ -28,8 +29,6 @@
     "ignore":[
         "**/.*",
         "tests",
-        "apidocs",
-        "models/resources",
         "*/.md"
     ]
 }
