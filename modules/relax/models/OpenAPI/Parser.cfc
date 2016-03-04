@@ -79,6 +79,12 @@ component name="OpenAPIParser" accessors="true" {
 			Document[ key ] = parseDocumentReferences( Document[ key ] );
 		}
 
+		for( var pathKey in Document[ "paths" ] ){
+			structAppend( Document[ "paths" ][ pathKey ], {
+				"x-resourceId": lcase( hash( pathKey ) )
+			} );
+		}
+
 		return this;
 	}
 

@@ -193,7 +193,7 @@ component accessors="true" {
 
 		// Process resources
 		for( var x=1; x lte arrayLen( dataCFC.resources ); x++ ){
-			dataCFC.resources[ x ].resourceID = hash( dataCFC.resources[ x ].toString() );
+			dataCFC.resources[ x ].resourceID = lcase( hash( dataCFC.resources[ x ].pattern ) );
 			if( !structKeyExists( dataCFC.resources[ x ], "headers" ) ){
 				dataCFC.resources[ x ].headers = [];
 			}
