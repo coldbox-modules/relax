@@ -29,7 +29,6 @@
     "ignore":[
         "**/.*",
         "tests",
-        "apidocs",
         "*/.md"
     ]
 }
