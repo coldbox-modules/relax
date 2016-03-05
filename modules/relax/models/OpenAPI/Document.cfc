@@ -35,8 +35,7 @@ component name="OpenAPIDocument" accessors="true" {
 
 	}
 
-	private void function setResourceIds(){
-		var resourceDoc = getDocument();
+	private void function setResourceIds(required struct resourceDoc=getDocument(), string hashPrefix="" ){
 		var appendableNodes = [ "paths","responses" ];
 
 		for ( var resourceKey in appendableNodes ){
@@ -48,7 +47,7 @@ component name="OpenAPIDocument" accessors="true" {
 					} );
 					//recurse, if necessary
 					for( var subKey in resourceDoc[ resourceKey ][ pathKey ] ){
-						if( arrayFind( appendableNodes, subKey ) ) setResourceIds( resourceDoc[ resourceKey ][ pathKey ] );
+						if( arrayFind( appendableNodes, subKey ) ) setResourceIds( resourceDoc[ resourceKey ][ pathKey ], pathKey );
 					}
 				}
 			}	
