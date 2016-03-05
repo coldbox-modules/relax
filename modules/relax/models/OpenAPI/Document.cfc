@@ -18,20 +18,11 @@ component name="OpenAPIDocument" accessors="true" {
 			this.xPath( ARGUMENTS.XPath );
 			zoomToXPath();
 		}
+
+		setResourceIds();
 		
 		return this;
 	}
-
-	/**
-	* Overloads the accessor to detect and XPath requirement
-	**/
-	// public function getDocument(  ){
-	// 	if( !isNull( getXPath() ) ){
-	// 		return locate( getXPath() );
-	// 	} else {
-	// 		return VARIABLES.Document;
-	// 	}
-	// }
 
 	public function xPath( required string XPath ){
 		this.setXPath( ARGUMENTS.XPath );
@@ -42,7 +33,27 @@ component name="OpenAPIDocument" accessors="true" {
 
 		setDocument( locate( getXPath() ) );
 
-		//cleanup uneeded references to save space
+	}
+
+	private void function setResourceIds(){
+		var resourceDoc = getDocument();
+		var appendableNodes = [ "paths","responses" ];
+
+		for ( var resourceKey in appendableNodes ){
+			
+			if( structKeyExists( resourceDoc, resourceKey ) ){
+				for( var pathKey in resourceDoc[ resourceKey ] ){
+					structAppend( resourceDoc[ resourceKey ][ pathKey ], {
+						"x-resourceId": lcase( hash( pathKey ) )
+					} );
+					//recurse, if necessary
+					for( var subKey in resourceDoc[ resourceKey ][ pathKey ] ){
+						if( arrayFind( appendableNodes, subKey ) ) setResourceIds( resourceDoc[ resourceKey ][ pathKey ] );
+					}
+				}
+			}	
+		}
+
 	}
 
 	public function asStruct( required struct APIDoc ){	
