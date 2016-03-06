@@ -27,7 +27,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 
 		translatePaths( dataCFC, translation );
 
-		return translation;	
+		return OpenAPIParser.parse( translation );	
 	}
 
 	private void function translateGlobals( required any dataCFC, required struct translation ){

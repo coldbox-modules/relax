@@ -77,7 +77,7 @@ component name="OpenAPIDocument" accessors="true" {
 
 		for ( var key in NormalizedDoc ){
 
-			if( isObject( NormalizedDoc[ key ] )){
+			if( isObject( NormalizedDoc[ key ] ) && findNoCase( "Parser", getMetaData( NormalizedDoc[ key ] ).name ) ){
 
 				if( !structKeyExists( NormalizedDoc[ key ], "getDocumentObject" )  ){
 					throwForeignObjectTypeException( NormalizedDoc[ key ] )
