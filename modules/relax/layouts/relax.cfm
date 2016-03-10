@@ -17,7 +17,7 @@
     <!--- favicon --->
     <link href="#prc.root#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <!--- SES --->
-	<base href="#getSetting( 'htmlBaseURL' )#" />
+	<base href="#replacenocase( event.buildLink( linkTo='', ssl=event.isSSL() ), "index.cfm", "" )#"/>
 	<!--- View Port --->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <!-- Bootstrap core CSS -->
@@ -43,8 +43,8 @@
 	</cfloop>
 
     <!-- Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <!-- Feature detection -->
     <script src="#prc.root#/includes/js/modernizr-2.6.2.min.js"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -124,16 +124,16 @@
                         <ul class="dropdown-menu animated fadeInDown">
                             
                         	<li>
-                        		<a href="http://www.ortussolutions.com" title="The experts behind ColdBox"><i class="fa fa-bolt"></i> By Ortus Solutions</a>
+                        		<a href="//www.ortussolutions.com" title="The experts behind ColdBox"><i class="fa fa-bolt"></i> By Ortus Solutions</a>
                         	</li>
 							<li>
-								<a href="http://www.coldbox.org" title="The premier ColdFusion development platform"><i class="fa fa-link"></i> Powered By ColdBox</a>
+								<a href="//www.coldbox.org" title="The premier ColdFusion development platform"><i class="fa fa-link"></i> Powered By ColdBox</a>
 							</li>
 							<li>
-								<a href="http://www.github.com/coldbox/coldbox-relax" title="The Relax Source Code"><i class="fa fa-github"></i> Github Repo</a>
+								<a href="//www.github.com/coldbox/coldbox-relax" title="The Relax Source Code"><i class="fa fa-github"></i> Github Repo</a>
 							</li>
 							<li>
-								<a href="http://www.twitter.com/coldbox" title="Follow me!"><i class="fa fa-twitter"></i> Tweet</a>
+								<a href="//www.twitter.com/coldbox" title="Follow me!"><i class="fa fa-twitter"></i> Tweet</a>
 							</li>
                         </ul>
                     </li>
