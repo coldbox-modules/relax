@@ -9,13 +9,15 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html>
 <!--<![endif]-->
 
 <cfinclude template="inc/HTMLHead.cfm"/>
 
-<body class="off-canvas <cfif !args.print>animated fadeIn</cfif>" <cfif args.print>style="background-color: white"</cfif>>    
-   
+<body class="off-canvas <cfif !args.print>animated fadeIn><cfelse>print</cfif>" <cfif args.print>style="background-color: white"</cfif>>    
+   <cfif args.print>
+       <a href="javascript:void(0)" id="btnCopyGeneratedSource" class="btn btn-default pull-right" data-toggle="tooltip" data-placement="bottom" title="Copy generated source to clipboard"><i class="fa fa-clipboard"></i></a>
+   </cfif>
     <div id="container">
 		<cfif args.header>
         <header id="header">

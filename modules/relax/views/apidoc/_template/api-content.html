@@ -5,18 +5,23 @@ var responseCodeTemplate = _.template( $( "#httpcodes-template" ).html() );
 var securityDefinitionsTemplate = _.template( $( "#security-definitions-template" ).html() );
 var paramTemplate = _.template( $( "#parameter-template" ).html() );
 %>
-<p>
+<p class="hidden-print">
     The <em>Relax DSL</em> is loaded for your API: <code><%= api.id %></code>.
 </p>
 
 <div class="panel panel-default">
     <div id="api-content-tabs" class="panel-body">
         <div class="tab-wrapper tab-primary">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#overview" data-toggle="tab">Service Overview</a></li>
-				<li><a href="#paths" data-toggle="tab">API Path Reference</a></li>
-                <li><a href="#httpcodes" data-toggle="tab">HTTP Response Reference</a></li>
-            </ul>
+            <% if( !$( "body" ).hasClass( "print" ) ){ %>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#overview" data-toggle="tab">Service Overview</a></li>
+                    <li><a href="#paths" data-toggle="tab">API Path Reference</a></li>
+                    <li><a href="#httpcodes" data-toggle="tab">HTTP Response Reference</a></li>
+                </ul>
+            <% } %>
+            <% if( $( "body" ).hasClass( "print" ) ){ %>
+                <h2 class="text-primary">API Service Overview:</h2>
+            <% } %>
             <div class="tab-content">
                 <div id="overview" class="tab-pane active service-summary">
                     <!--- Service Title and Description --->
@@ -133,9 +138,13 @@ var paramTemplate = _.template( $( "#parameter-template" ).html() );
                     <div class="clearfix"></div>
 
                 </div>
-                <div class="tab-pane" id="httpcodes">
+                <div class="tab-pane hidden-print" id="httpcodes">
                     <%= responseCodeTemplate() %>
                 </div>
+
+                <% if( $( "body" ).hasClass( "print" ) ){ %>
+                    <h2 class="text-primary">API Path Reference:</h2>
+                <% } %>
 
                 <div id="paths" class="tab-pane paths-content">
                     <h3>Available Paths:</h3>
