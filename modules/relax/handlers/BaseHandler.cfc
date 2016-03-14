@@ -7,7 +7,7 @@ component {
 
 	// DI
 	property name="settings" 		inject="coldbox:setting:relax";
-	property name="DSLService"		inject="id:APIService@relax";
+	property name="APIService"		inject="id:APIService@relax";
 
 	/**
 	* Pre handler

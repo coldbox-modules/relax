@@ -1,0 +1,62 @@
+<%
+	var responseTemplate = _.template( $( "#response-template" ).html() );
+	var paramTemplate = _.template( $( "#parameter-template" ).html() );
+%>
+<div id="<%=method["x-resourceId"]%>" class="method-panel panel panel-info">
+		
+	<div class="panel-heading">
+		<h3 class="panel-title methodHeader">
+			<strong><%=key%></strong> 
+			<a class="pull-right btToggleMethod" role="button" data-toggle="collapse" href="#panel_<%=method["x-resourceId"]%>" aria-expanded="false" aria-controls="panel_<%=method["x-resourceId"]%>">
+				<i class="fa fa-chevron-down"></i>
+			</a>
+		</h3>
+	</div>
+
+	<div id="panel_<%=method["x-resourceId"]%>" class="collapse panel-body">
+		<div class="col-xs-12">
+			
+			<% if( !_.isUndefined( method.description ) ){  %>
+				<h4 class="panel-subtitle text-primary">Description:</h4>
+
+				<p><%= method.description.replace(/(?:\r\n|\r|\n)/g, '<br />') %></p>
+				
+				<hr>
+			<% } %>
+
+			<% if( !_.isUndefined( method.operationId ) ){  %>
+				<h4 class="panel-subtitle text-primary">Internal Operation: <small class="text-muted">(e.g. Handler.Action)</small></h4>
+				<code><%= method.operationId %></code>
+				<hr>
+			<% } %>
+
+			<% if( !_.isUndefined( method.parameters )  && method.parameters.length > 0 ){ %>
+				<h4 class="panel-subtitle text-primary">Parameters:</h4>
+				<%= paramTemplate( {"entity":method} ) %>
+				<hr>
+			<% } %>
+
+			<h4 class="panel-subtitle text-primary">Responses:</h4>
+			<% 
+			_.each( _.keys(method.responses), function( responseKey ){ 
+				if( !isNaN( responseKey ) || responseKey === 'default' ){
+			%>
+				<%= responseTemplate( 
+					{
+						"resourceId": method["x-resourceId"] ,
+						"path":key,
+						"key":responseKey,
+						"response":method.responses[ responseKey ]
+					} 
+				) %>
+			
+			<% 
+				}
+			
+			}); 
+			%>
+			
+		</div>
+	</div>
+
+</div>

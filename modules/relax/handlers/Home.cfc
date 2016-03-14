@@ -14,9 +14,9 @@ component extends="BaseHandler"{
 	*/
 	function index( event, rc, prc ){
 		// Get the loaded API for the user
-		prc.dsl				= DSLService.getLoadedAPI();
-		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
-		prc.loadedAPIs		= DSLService.listAPIs();
+		prc.dsl				= APIService.getLoadedAPI().getNormalizedDocument();
+		prc.loadedAPIName 	= APIService.getLoadedAPIName();
+		prc.loadedAPIs		= APIService.listAPIs();
 
 		// Exit Handlers
 		prc.xehResourceDoc  = "relax/Home/resourceDoc";
@@ -51,7 +51,7 @@ component extends="BaseHandler"{
 
 		// load the api if it has length else ignored.
 		if( len( rc.apiName ) ){
-			DSLService.loadAPI( rc.apiName );
+			APIService.loadAPI( rc.apiName );
 			if( variables.settings.sessionsEnabled ) {
 				flash.put( "notice", "API: #rc.apiName# loaded!" );
 			}
@@ -73,8 +73,8 @@ component extends="BaseHandler"{
 	*/
 	function resourceDoc( event, rc, prc, resourceID, expandedDiv, boolean widget=false ){
 		// DSL Settings
-		prc.dsl					= DSLService.getLoadedAPI();
-		prc.loadedAPIName 		= DSLService.getLoadedAPIName();
+		prc.dsl					= APIService.getLoadedAPI();
+		prc.loadedAPIName 		= APIService.getLoadedAPIName();
 		// exit handlers
 		prc.xehResourceDoc  	= "relax/home/resourceDoc";
 		// expanded divs
@@ -103,7 +103,7 @@ component extends="BaseHandler"{
 	* Home
 	*/
 	function clearUserData( event, rc, prc ){
-		DSLService.clearUserData();
+		APIService.clearUserData();
 		setNextEVent(rc.xehHome);
 	}
 

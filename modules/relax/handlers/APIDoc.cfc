@@ -5,6 +5,7 @@ www.ortussolutions.com
 ********************************************************************************
 */
 component extends="BaseHandler"{
+	
 	//HTTP STATUS CODES
 	STATUS = {
 		"CREATED":201,
@@ -39,29 +40,11 @@ component extends="BaseHandler"{
 	* Main API Doc function
 	**/
 	function index( event, rc, prc ){
-		switch(event.getHTTPMethod()){
-			case "POST":
-				this.createDocument( argumentCollection = ARGUMENTS);
-				break;
-			case "PUT":
-			case "PATCH":
-				this.updateDocument( argumentCollection = ARGUMENTS );
-
-				break;
-			case "DELETE":
-				this.deleteDocument( argumentCollection = ARGUMENTS);
-				break;
-			default:
-				this.getDocument( argumentCollection = ARGUMENTS );
+		if( structKeyExists( rc, "api" ) ){
+			marshallAPIDocument( argumentCollection=ARGUMENTS );
+		} else {
+			marshallAPIs(argumentCollection=arguments);
 		}
-
-	}
-
-	/**
-	* Renders the API Document
-	* (GET) /relax/apidoc/:id?
-	**/
-	function getDocument( event, rc, prc ){
 
 	}
 
@@ -70,7 +53,10 @@ component extends="BaseHandler"{
 	* (PUT|PATCH) /relax/apidoc/:id?
 	**/
 	function updateDocument( event, rc, prc ){
-
+		rc.data={
+			"message": "Method not yet implemented"
+		}
+		rc.statusCode = STATUS.NOT_IMPLEMENTED;
 	}
 
 	/**
@@ -78,28 +64,40 @@ component extends="BaseHandler"{
 	* (DELETE) /relax/apidoc/:id?
 	**/
 	function deleteDocument( event, rc, prc ){
-
+		rc.data={
+			"message": "Method not yet implemented"
+		}
+		rc.statusCode = STATUS.NOT_IMPLEMENTED;
 	}
 	
+	private function marshallAPIs( event, rc, prc ){
+		var availableAPIs = APIService.listAPIs();
+
+		rc.data = {
+			"apis":{},
+			"default":APIService.getDefaultAPIName()
+		};
+		rc.statusCode = STATUS.SUCCESS;
+
+		for( var API in availableAPIs ){
+			rc.data.apis[ API.name ] = APIService.loadAPI( API.name ).getDocumentObject().getDocument()[ "info" ];
+			rc.data.apis[ API.name ][ "href" ] = '/relax/apidoc/' & API.name;
+		}
+		
+	}
+
 	/**
 	* Marshall an API Document Response
 	**/
-	private function marshallDocument( event, rc, prc, struct APIDoc){
-	
-	}
-
-	/**
-	* Creates the view-specific document keys within an API doc
-	**/
-	private function prepareDocumentForView( required struct APIDoc){
-
-	}
-
-	/**
-	* Sanitizes the view-specific keys from an APIDoc
-	**/
-	private function santizeDocument( required struct APIDoc ){
-
+	private function marshallAPIDocument( event, rc, prc, struct APIDoc){
+		try {
+			rc.data = APIService.loadAPI(rc.api).getNormalizedDocument();
+			rc.statusCode = STATUS.SUCCESS;
+		} catch ( any e ) {
+			rc.statusCode = STATUS.INTERNAL_ERROR;
+			writeDump(var=e);
+			abort;
+		}
 	}
 
 }

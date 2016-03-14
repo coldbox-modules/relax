@@ -1,0 +1,32 @@
+<%
+	var schemaTemplate = _.template( $( "#schema-template" ).html() );
+	var exampleTemplate = _.template( $( "#example-template" ).html() );
+%>
+<div id="<%=resourceId + '-' + key %>" class="method-panel panel panel-primary">
+		
+	<div class="panel-heading">
+		<h3 class="panel-title methodHeader">
+			<strong><%=key%></strong> 
+			<a class="pull-right btToggleMethod" role="button" data-toggle="collapse" href="#panel_<%=resourceId + '-' + key %>" aria-expanded="false" aria-controls="panel_<%=resourceId + '-' + key %>">
+				<i class="fa fa-chevron-down"></i>
+			</a>
+		</h3>
+	</div>
+
+	<div id="panel_<%=resourceId + '-' + key %>" class="collapse panel-body">
+		<div class="col-xs-12">
+			<% if( !_.isUndefined( response.description ) ){  %>
+				<h4 class="panel-subtitle text-primary">Description:</h4>
+				<p><%= response.description.replace(/(?:\r\n|\r|\n)/g, '<br />') %></p>
+				<hr>
+			<% } %>
+		</div>
+		<% if( !_.isUndefined( response.schema ) ){  %>	
+		<div class="col-xs-12 schema-container">
+			<h4 class="panel-subtitle text-primary">Schema Definition:</h4>
+			<%= schemaTemplate( { "entity": response } ) %>
+		</div>
+		<% } %>
+	</div>
+
+</div>
