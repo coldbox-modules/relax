@@ -17,8 +17,7 @@ component extends="BaseHandler"{
 		// Get the loaded API for the user
 		prc.dsl				= APIService.getLoadedAPI().getNormalizedDocument();
 		prc.loadedAPIName 	= APIService.getLoadedAPIName();
-		// custom css/js
-		prc.addJS(prc.root & '/includes/js/jquery.scrollTo-min');
+
 	}
 
 	/**
@@ -56,7 +55,7 @@ component extends="BaseHandler"{
 	* Export as PDF
 	*/
 	function pdf( event, rc, prc ){
-		var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.relax.title );
+		var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.info.title);
 		html( event, rc, prc );
 		event.setLayout( "pdf" )
 			.setHTTPHeader( name="Content-Disposition", value="inline; filename=#title#.pdf" );
@@ -81,7 +80,7 @@ component extends="BaseHandler"{
 	*/
 	private function toWikiMarkup( event, rc, prc, type ){
 		html( event, rc, prc );
-		var data = wikitext.toWiki( wikiTranslator=arguments.type, htmlString=renderView( view="export/html", module="relax" ) );
+		var data = wikitext.toWiki( translator=arguments.type, html=renderView( view="export/html", module="relax" ) );
 		event.renderData( type="text", data=data );
 	}
 

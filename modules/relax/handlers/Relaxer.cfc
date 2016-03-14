@@ -29,7 +29,7 @@ component extends="BaseHandler"{
 		event.paramValue( "entryTier", "production" );
 
 		// DSL Settings
-		prc.dsl				= APIService.getLoadedAPI();
+		prc.dsl				= APIService.getLoadedAPI().getNormalizedDocument();
 		prc.loadedAPIName 	= APIService.getLoadedAPIName();
 		prc.loadedAPIs		= APIService.listAPIs();
 

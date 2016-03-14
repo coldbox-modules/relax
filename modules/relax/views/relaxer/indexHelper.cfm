@@ -101,8 +101,8 @@ $(document).ready(function() {
 
     // resource js models
     $resources = {};
-    <cfloop array="#prc.dsl.resources#" index="thisResource">
-        $resources['#thisResource.resourceID#'] = #serializeJSON( thisResource )#;
+    <cfloop collection="#prc.dsl.paths#" item="route">
+        $resources['#route#'] = #serializeJSON( prc.dsl.paths[route] )#;
     </cfloop>
     //json history
     reqHistory = [];

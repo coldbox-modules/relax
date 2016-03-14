@@ -6,7 +6,7 @@
 	<cfdocumentitem type="header">
 	<cfoutput>
 	<div style="font-size: 9px; text-align: right;">
-	#prc.dsl.relax.title#
+	#prc.dsl.info.title#
 	</div>
 	</cfoutput>
 	</cfdocumentitem>
@@ -21,6 +21,6 @@
 	</cfdocumentitem>
 
 	<cfoutput>
-	#renderLayout( layout="relax", args={ sidebar=false, header=false, print=true } )#
+	#event.getValue( "pagecontent" )#
 	</cfoutput>
 </cfdocument>
