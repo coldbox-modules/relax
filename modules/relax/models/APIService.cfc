@@ -70,10 +70,14 @@ component accessors="true" {
 	*/
     string function getLoadedAPIName(){
     	if( !getSessionsEnabled() ){
-    		return getSettings().defaultAPI;
+    		return getDefaultAPIName();
     	}
 
     	return ( structKeyExistS( session, "relax-api" ) ? session[ "relax-api" ] : "" );
+    }
+
+    string function getDefaultAPIName(){
+    	return getSettings().defaultAPI;
     }
 
     /**

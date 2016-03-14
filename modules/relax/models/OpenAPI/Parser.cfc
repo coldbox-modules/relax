@@ -94,9 +94,7 @@ component name="OpenAPIParser" accessors="true" {
 		writeDump(var=Parser,top=1);
 		abort;
 		var HashMap = jLoader.create( "java.util.LinkedHashMap" );
-		
-		writeDump(var=CodecProxy.readValue(Parser,HashMap),top=1);
-		abort;		
+			
 	}
 
 	public function parseDocumentReferences( required any DocItem ){

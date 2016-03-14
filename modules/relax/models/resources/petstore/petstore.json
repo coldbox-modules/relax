@@ -31,7 +31,7 @@
       "$ref" : "paths/pets.json#/pets"
     },
     "/pets/{id}": {
-      "$ref" : "paths/pets.json#/pets.{id}"
+      "$ref" : "paths/pets.json#/pets/{id}"
     }
   }
 }

@@ -123,8 +123,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 			structAppend( translation[ "paths" ], 
 			{
 				"#pathkey#" : {
-					"x-coldbox-handler" : resource.handler,
-					"x-resource-id": resource.resourceId
+					"x-resourceId": resource.resourceId
 				}
 			} );
 			
@@ -150,14 +149,16 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		required struct resource, 
 		required struct translation 
 	){
+		pathKey = translatePathKey( resource.pattern );
 
 		//handle string action values for consistent formatting
 		if( isSimpleValue( resource.action ) ) {
-			var defaultAction = resource.action;
+			resource.handlerMethod = resource.action;
 			resource.action = createObject( "java", "java.util.LinkedHashMap" );
 			
 			structAppend( resource.action, {
-					"#resource.defaultMethod#": resource.action
+					"#resource.defaultMethod#": resource.action,
+					"x-coldbox-handler" : resource.handler
 			} );
 
 			var allowedMethods = listToArray( resource.methods );
@@ -173,14 +174,31 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 
 		//assembly begins
 		for( var HTTPMethod in resource.action ){
+			if( 
+				structKeyExists( resource, "handlerMethod" ) 
+				&& 
+				isSimpleValue( resource.handlerMethod ) 
+				&& 
+				len( resource.handlerMethod ) 
+				&&
+				!isStruct( resource.handlerMethod )
+			){
+				var operationalAction = "." & resource.handlerMethod;
+			} else {
+				var operationalAction = "";
+			}
+			
 			structAppend( path, {
 				"#lcase( HTTPMethod )#" = {
 					"description": structKeyExists( resource,"description" ) ? resource.description : "",
+					"operationId" : resource.handler & operationalAction,
 					"produces": translation["produces"],
 					"responses" : createObject( "java", "java.util.LinkedHashMap" ),
-					"parameters" : createObject( "java", "java.util.LinkedHashMap" )
+					"parameters" : createObject( "java", "java.util.LinkedHashMap" ),
+					"x-resourceId": lcase( hash( pathKey & lcase( HTTPMethod ) ) )
 				}
-			} );
+			});
+
 
 			//handle our URL placeholders
 			for( var placeholder in resource.placeholders ){
