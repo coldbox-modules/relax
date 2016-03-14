@@ -22,32 +22,4 @@
 		#renderView( "includes/sidebar" )#
 
 	</div> <!-- end .row -->
-
-	<script type="text/template" id="api-content-template">
-		<cfinclude template="#prc.root#/views/apidoc/_template/api-content.html"/>
-	</script>
-	<script type="text/template" id="path-template">
-		<cfinclude template="#prc.root#/views/apidoc/_template/path.html"/>
-	</script>
-	<script type="text/template" id="method-template">
-		<cfinclude template="#prc.root#/views/apidoc/_template/method.html"/>
-	</script>
-	<script type="text/template" id="response-template">
-		<cfinclude template="#prc.root#/views/apidoc/_template/response.html"/>
-	</script>
-	<script type="text/template" id="httpcodes-template">
-		<cfinclude template="#prc.root#/views/apidoc/_template/httpcodes.html"/>
-	</script>
-	<script type="text/template" id="response-code-template">
-		<cfinclude template="#prc.root#/views/apidoc/_template/httpcodes.html"/>
-	</script>
-	<script type="text/template" id="parameter-template">
-		<cfinclude template="#prc.root#/views/apidoc/_template/parameter.html"/>
-	</script>
-	<script type="text/template" id="example-template">
-		<cfinclude template="#prc.root#/views/apidoc/_template/example.html"/>
-	</script>
-	<script type="text/template" id="schema-template">
-		<cfinclude template="#prc.root#/views/apidoc/_template/schema.html"/>
-	</script>
 </cfoutput>

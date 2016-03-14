@@ -2,6 +2,7 @@
 console.log( api );
 var pathKeys = _.keys(api.paths);
 var responseCodeTemplate = _.template( $( "#httpcodes-template" ).html() );
+var securityDefinitionsTemplate = _.template( $( "#security-definitions-template" ).html() );
 %>
 <p>
     The <em>Relax DSL</em> is loaded for your API: <code><%= api.id %></code>.
@@ -113,6 +114,13 @@ var responseCodeTemplate = _.template( $( "#httpcodes-template" ).html() );
 
                     <% if( !_.isUndefined( api[ "x-throwOnInvalidExtension" ] ) ) { %>
                         <h3>Throws on Invalid Extension:  <code><%= api[ "x-throwOnInvalidExtension"] %></code></h3>
+                    <% } %>
+
+                    <!-- Security Definitions -->
+                    <% if( !_.isUndefined( api.securityDefinitions ) ) { 
+                    %>
+                        <h3>Security Definitions</h3>
+                        <%= securityDefinitionsTemplate( { "definitions":api.securityDefinitions } ) %>
                     <% } %>
 
                     <!--- API Global Headers --->

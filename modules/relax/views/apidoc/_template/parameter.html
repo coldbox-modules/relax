@@ -33,12 +33,33 @@
 	    </div>
 
 	    <div class="parameter column type col-sm-2 col-xs-4">
-	    	<% if( !_.isUndefined(param.in) || param.in !== 'body' ){ %>
-	    	<code><%= param.type %></code>
-	    	<% 
-	    		} else if(  !_.isUndefined( param.schema ) && !_.isUndefined(param.schema.type) ) { 
+	    	<% if( 
+	    		!_.isUndefined( param.type ) 
+	    		&& 
+	    		( 
+	    			!_.isUndefined(param.in) 
+	    			|| 
+	    			param.in !== 'body' 
+	    		) 
+	    		){ 
 	    	%>
+	    	
+	    	<code><%= param.type %></code>
+	    	
+	    	<% 
+	    		} else if( 
+	    			!_.isUndefined( param.type ) 
+	    			&& 
+	    			!_.isUndefined( param.schema ) 
+	    			&& 
+	    			!_.isUndefined(param.schema.type) 
+	    		) { 
+	    	%>
+	    	
 	    	<code><%= param.schema.type %> (body)</code> 
+	    	
+	    	<% } else if( _.isUndefined( param.type ) ) { %>
+	    		N/A
 	    	<% } %>
 	    </div>
 
