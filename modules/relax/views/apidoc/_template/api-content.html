@@ -3,6 +3,7 @@ console.log( api );
 var pathKeys = _.keys(api.paths);
 var responseCodeTemplate = _.template( $( "#httpcodes-template" ).html() );
 var securityDefinitionsTemplate = _.template( $( "#security-definitions-template" ).html() );
+var paramTemplate = _.template( $( "#parameter-template" ).html() );
 %>
 <p>
     The <em>Relax DSL</em> is loaded for your API: <code><%= api.id %></code>.
@@ -116,38 +117,21 @@ var securityDefinitionsTemplate = _.template( $( "#security-definitions-template
                         <h3>Throws on Invalid Extension:  <code><%= api[ "x-throwOnInvalidExtension"] %></code></h3>
                     <% } %>
 
-                    <!-- Security Definitions -->
                     <% if( !_.isUndefined( api.securityDefinitions ) ) { 
                     %>
+                        <!-- Security Definitions -->
                         <h3>Security Definitions</h3>
                         <%= securityDefinitionsTemplate( { "definitions":api.securityDefinitions } ) %>
                     <% } %>
 
-                    <!--- API Global Headers --->
-                    <h2>API Global Headers</h2>
-                    <table class="table table-striped table-hover" width="100%">
-                        <tr>
-                            <th>Header</th>
-                            <th width="75">Type</th>
-                            <th width="40">Required</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </table>
+                    <% if( !_.isUndefined( api.parameters ) ) { %>
+                        <!--- API Global Parameters --->
+                        <h3>Global Parameters</h3>
+                        <%= paramTemplate( { "entity":api } ) %>
+                    <% } %>
 
-                    <!--- API Global Parameters --->
-                    <h2>API Global Parameters</h2>
-                    <table class="table table-striped table-hover" width="100%">
-                        <tr>
-                            <th>Parameter</th>
-                            <th width="75">Type</th>
-                            <th width="40">Required</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </table>
+                    <div class="clearfix"></div>
 
-                    <hr>
                 </div>
                 <div class="tab-pane" id="httpcodes">
                     <%= responseCodeTemplate() %>

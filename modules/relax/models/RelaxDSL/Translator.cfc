@@ -199,6 +199,10 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 				}
 			});
 
+			if( !len( trim( path[ lcase( HTTPMethod ) ][ "operationId" ] ) ) ){
+				structDelete( path[ lcase( HTTPMethod ) ], "operationId" );
+			}
+
 
 			//handle our URL placeholders
 			for( var placeholder in resource.placeholders ){
