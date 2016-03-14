@@ -22,7 +22,7 @@ component{
 	// Auto-map models
 	this.autoMapModels		= true;
 	// Module Dependencies That Must Be Loaded First, use internal names or aliases
-	this.dependencies		= [ "cbjavaloader" ];
+	this.dependencies		= [ "cbjavaloader","wikitext" ];
 
 	/**
 	* Configure App
@@ -33,8 +33,15 @@ component{
 
 		// SES Routes
 		routes = [
+			// APIDoc API Routes
+			{
+				pattern="/apidoc/:api?",
+				handler="APIDoc",
+				action={"GET":"index","PUT":"update","PATCH":"update","DELETE":"delete"}
+				
+			},
 			// Module Entry Point
-			{ pattern="/", handler="home", action="index" },
+			{ pattern="/", handler="Home", action="index" },
 			// Convention Route
 			{ pattern="/:handler/:action?" }
 		];
@@ -139,7 +146,7 @@ component{
 		// Default Config Structure
 		configStruct.relax = {
 			APILocation 	= "#moduleMapping#.models.resources",
-			defaultAPI 		= "myapi",
+			defaultAPI 		= "petstore",
 			maxHistory		= 10,
 			sessionsEnabled	= getApplicationMetadata().sessionManagement
 		};

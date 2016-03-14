@@ -24,6 +24,7 @@
 		"Jon Clausen <jon_clausen@silowebworks.com>"
 	],
 	"dependencies" : {
+		"cbjavaloader" : "1.0.0",
 		"wikitext" : "1.0.0"
 	},
     "ignore":[

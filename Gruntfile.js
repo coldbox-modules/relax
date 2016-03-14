@@ -89,7 +89,7 @@ module.exports = function(grunt) {
 			  	},
 			  	files: [{
 		          expand: true,
-			      cwd: 'includes/js',
+			      cwd: 'includes/jsdev',
 		          src: 'models/**/*.js',
 		          dest: 'modules/relax/includes/js/'
 			    }]
