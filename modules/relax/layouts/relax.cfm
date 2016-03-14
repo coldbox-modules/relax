@@ -51,16 +51,16 @@
                         <ul class="dropdown-menu animated fadeInDown">
                             
                         	<li>
-                        		<a href="http://www.ortussolutions.com" title="The experts behind ColdBox"><i class="fa fa-bolt"></i> By Ortus Solutions</a>
+                        		<a href="//www.ortussolutions.com" title="The experts behind ColdBox"><i class="fa fa-bolt"></i> By Ortus Solutions</a>
                         	</li>
 							<li>
-								<a href="http://www.coldbox.org" title="The premier ColdFusion development platform"><i class="fa fa-link"></i> Powered By ColdBox</a>
+								<a href="//www.coldbox.org" title="The premier ColdFusion development platform"><i class="fa fa-link"></i> Powered By ColdBox</a>
 							</li>
 							<li>
-								<a href="http://www.github.com/coldbox/coldbox-relax" title="The Relax Source Code"><i class="fa fa-github"></i> Github Repo</a>
+								<a href="//www.github.com/coldbox/coldbox-relax" title="The Relax Source Code"><i class="fa fa-github"></i> Github Repo</a>
 							</li>
 							<li>
-								<a href="http://www.twitter.com/coldbox" title="Follow me!"><i class="fa fa-twitter"></i> Tweet</a>
+								<a href="//www.twitter.com/coldbox" title="Follow me!"><i class="fa fa-twitter"></i> Tweet</a>
 							</li>
                         </ul>
                     </li>
