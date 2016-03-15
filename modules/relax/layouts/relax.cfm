@@ -80,8 +80,13 @@
 	                    <a href="#event.buildLink( prc.xehHome )#"><i class="fa fa-dashboard"></i><span>API Manager</span></a>
 	                </li>
 	                <li <cfif event.getCurrentHandler() eq "relax:relaxer">class="active"</cfif>>
-	                    <a href="#event.buildLink( prc.xehRelaxer )#" title="Pronounced 'Relax-ER'"><i class="fa fa-flask"></i><span>RelaxURL</span></a>
+	                    <a href="#event.buildLink( prc.xehRelaxer )#" title="Pronounced 'Relax-ER'"><i class="fa fa-flask"></i><span>API Test Tool</span></a>
 	                </li>
+
+                    <li <cfif event.getCurrentAction() eq "OpenAPIDocs">class="active"</cfif>>
+                        <a href="#event.buildLink( prc.xehOpenAPIDocs )#" ><i class="fa fa-rocket"></i><span>OpenAPI Docs</span></a>
+                    </li>
+
 	                <li <cfif event.getCurrentAction() eq "DSLDocs">class="active"</cfif>>
 	                    <a href="#event.buildLink( prc.xehDSLDocs )#" ><i class="fa fa-code"></i><span>RelaxDSL Docs</span></a>
 	                </li>

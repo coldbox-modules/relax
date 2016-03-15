@@ -21,6 +21,7 @@ component {
 		prc.xehHome 		= "relax";
 		prc.xehRelax		= "relax/home/relax";
 		prc.xehRelaxer		= "relax/relaxer";
+		prc.xehOpenAPIDocs	= "relax/home/OpenAPIDocs";
 		prc.xehDSLDocs		= "relax/home/DSLDocs";
 
 		prepareRuntimeAssets(argumentCollection=arguments);

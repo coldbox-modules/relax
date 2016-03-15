@@ -29,14 +29,23 @@ component extends="BaseHandler"{
 		event.paramValue( "entryTier", "production" );
 
 		// DSL Settings
-		prc.dsl				= APIService.getLoadedAPI().getNormalizedDocument();
-		prc.loadedAPIName 	= APIService.getLoadedAPIName();
-		prc.loadedAPIs		= APIService.listAPIs();
+		prc.dsl						= APIService.getLoadedAPI().getNormalizedDocument();
+		prc.serviceEntryPoints		= [];
+		prc.loadedAPIName 			= APIService.getLoadedAPIName();
+		prc.loadedAPIs				= APIService.listAPIs();
 
 		// exit handlers
 		prc.xehPurgeHistory = "relax/relaxer/purgeHistory";
 		prc.xehResourceDoc  = "relax/relaxer/resourceDoc";
 		prc.xehLoadAPI		= "relax/Home/loadAPI";
+
+		if( structKeyExists( prc.dsl, host ) ){
+			if( structKeyExists( prc.dsl, 'schemes' ) ){
+				for( var scheme in prc.dsl[ 'schemes' ] ){
+					arrayAppend( prc.baseURLs,  )
+				}
+			}
+		}
 
 		// send request
 		if( rc.sendRequest ){

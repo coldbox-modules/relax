@@ -24,7 +24,7 @@ component singleton{
 		var dq      	= chr( 34 );
 		var fncExclude  = "init,onMissingMethod,appendResponse,appendData,verifyResourcePivot";
 		var out   		= createObject( "java", "java.lang.StringBuilder").init( '' );
-		var md   		= getComponentMetaData( "RelaxDSL" );
+		var md   		= getComponentMetaData( "Document" );
 		var title 		= "Relax Programmatic Resource DSL Help";
 	
 		out.append( '<h1>#title#</h1><p>#md.hint#</p>' );
