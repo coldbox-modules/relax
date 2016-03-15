@@ -39,14 +39,6 @@ component extends="BaseHandler"{
 		prc.xehResourceDoc  = "relax/relaxer/resourceDoc";
 		prc.xehLoadAPI		= "relax/Home/loadAPI";
 
-		if( structKeyExists( prc.dsl, host ) ){
-			if( structKeyExists( prc.dsl, 'schemes' ) ){
-				for( var scheme in prc.dsl[ 'schemes' ] ){
-					arrayAppend( prc.baseURLs,  )
-				}
-			}
-		}
-
 		// send request
 		if( rc.sendRequest ){
 			try{
