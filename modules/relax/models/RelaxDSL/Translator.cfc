@@ -264,7 +264,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 					"schema" : {
 						"type" : "object"
 					},
-					"example" : createObject( "java", "java.util.LinkedHashMap" )
+					"examples" : createObject( "java", "java.util.LinkedHashMap" )
 				}
 
 				switch( schema[ "format" ] ){
@@ -282,7 +282,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 						var mimeType = REFindNoCase( schema[ "format" ], "html|text|string" ) ? "text/" & schema[ "format" ] : "application/" & schema[ "format" ];			
 				}
 
-				structAppend( schemaDefinition[ "example" ], {
+				structAppend( schemaDefinition[ "examples" ], {
 					"#mimeType#" : body
 				});
 
@@ -300,7 +300,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 						
 						} else if( structKeyExists( path[ methodKey ][ "responses" ], statusCode ) ) {
 
-							if( structKeyExists( path[ methodKey ][ "responses" ][ statusCode ][ "example" ], mimeType ) ){
+							if( structKeyExists( path[ methodKey ][ "responses" ][ statusCode ][ "examples" ], mimeType ) ){
 							
 								structAppend( path[ methodKey ][ "responses" ], {
 									"default" : schemaDefinition
@@ -308,7 +308,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 							
 							} else {
 
-								structAppend( path[ methodKey ][ "responses" ][ statusCode ][ "example" ], schemaDefinition[ "example" ] );
+								structAppend( path[ methodKey ][ "responses" ][ statusCode ][ "examples" ], schemaDefinition[ "examples" ] );
 							
 							}
 						

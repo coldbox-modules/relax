@@ -111,7 +111,7 @@ component accessors="true" {
 		}
 
 		// If we have a configure() then call it 
-		if( structKeyExists( dataCFC, "configure") ) processConfiguration( dataCFC );
+		if( !isNull( dataCFC ) && structKeyExists( dataCFC, "configure") ) processConfiguration( dataCFC );
 
 		if( !isNull( dataCFC ) && isLegacyAPI( dataCFC ) ){
 			/**

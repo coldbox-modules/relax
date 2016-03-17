@@ -47,22 +47,23 @@
 
             	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             		<!-- Accordion Items-->
-					<cfloop collection="#prc.dsl.relax.entryPoint#" item="entryPoint">
+					<cfloop collection="#prc.dsl.paths#" item="entryPoint">
+						<cfset path = prc.dsl.paths[ entryPoint ]>
 	            		<div class="panel panel-default">
-            				<div class="panel-heading" role="tab" id="heading-#entryPoint#">
+            				<div class="panel-heading" role="tab" id="heading-#path[ "x-resourceId" ]#">
 	            				<h4 class="panel-title">
-							        <a data-toggle="collapse" data-parent="##accordion" href="##tab-#entryPoint#" aria-expanded="true" aria-controls="tab-#entryPoint#">
+							        <a data-toggle="collapse" data-parent="##accordion" href="##tab-#path[ "x-resourceId" ]#" aria-expanded="true" aria-controls="tab-#path[ "x-resourceId" ]#">
 							        #entryPoint#
 							        </a>
 							    </h4>
 	            			</div>
-	            			<div id="tab-#entryPoint#" class="panel-collapse collapse <cfif rc.entryTier eq entryPoint>in</cfif>" role="tabpanel" aria-labelledby="tab-#entryPoint#">
+	            			<div id="tab-#path[ "x-resourceId" ]#" class="panel-collapse collapse <cfif rc.entryTier eq entryPoint>in</cfif>" role="tabpanel" aria-labelledby="tab-#path[ "x-resourceId" ]#">
 	            				<div class="panel-body">
 	            					<!--- My Resources --->
 									<select name="myResource" id="myResource" title="Your defined RESTful resources" onchange="resourceSelect(this.value,'#JSStringFormat( entrypoint )#')" class="form-control input-sm">
 										<option value="null" selected="selected">Pick One To Test</option>
-										<cfloop array="#prc.dsl.resources#" index="thisResource">
-											<option value="#thisResource.resourceID#;#prc.dsl.relax.entryPoint[entryPoint]##thisResource.pattern#">#thisResource.pattern#</option>
+										<cfloop collection="#path#" item="thisResource">
+											<option value="#thisResource#;#entryPoint#;">( #ucase( thisResource )# ) #entryPoint#</option>
 										</cfloop>
 									</select>
 	            				</div>
