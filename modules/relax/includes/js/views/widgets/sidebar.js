@@ -1,4 +1,4 @@
-/*! Copyright 2016 - Ortus Solutions (Compiled: 15-03-2016) */
+/*! Copyright 2016 - Ortus Solutions (Compiled: 18-03-2016) */
 define([ "Backbone", "models/RelaxAPI" ], function(Backbone, APIModel) {
     "use strict";
     var View = Backbone.View.extend({
@@ -55,8 +55,6 @@ define([ "Backbone", "models/RelaxAPI" ], function(Backbone, APIModel) {
         onSelectAPI: function(e) {
             var _this = this;
             var $select = $(e.currentTarget);
-            console.log($select.length);
-            console.log($select.val());
             var selectedAPI = $select.val();
             _this.ViewModel.set("id", selectedAPI);
             _this.View.renderLoaderMessage();

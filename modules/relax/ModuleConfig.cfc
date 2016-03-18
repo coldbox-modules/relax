@@ -146,7 +146,7 @@ component{
 		// Default Config Structure
 		configStruct.relax = {
 			APILocation 	= "#moduleMapping#.models.resources",
-			defaultAPI 		= "petstore",
+			defaultAPI 		= "myapi",
 			maxHistory		= 10,
 			sessionsEnabled	= getApplicationMetadata().sessionManagement
 		};

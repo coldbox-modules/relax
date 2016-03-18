@@ -211,7 +211,6 @@ define([
 			    var index = $("#requestHistory").val();
 			    if( index != "null" ){
 			        var item = reqHistory[index].DATA;
-			        //console.log(item);
 
 			        $("#advancedSettings").slideDown();
 			        // main options

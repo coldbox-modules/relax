@@ -56,8 +56,6 @@ define([
             * ----------------------------------------------
             */
             ,setupDefaults:function(){
-            	console.log( Messenger );
-            	//this.Messenger = new Messenger();
 
                 return this;
             }

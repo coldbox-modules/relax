@@ -100,8 +100,6 @@ define([
             ,onSelectAPI: function( e ){
                 var _this = this;
                 var $select = $( e.currentTarget );
-                console.log( $select.length );
-                console.log( $select.val() );
                 var selectedAPI = $select.val();
                 _this.ViewModel.set( 'id', selectedAPI );
                 _this.View.renderLoaderMessage();

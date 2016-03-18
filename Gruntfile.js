@@ -14,6 +14,15 @@ module.exports = function(grunt) {
             jsModel: {
             	files: ['includes/jsdev/models/*.js'],
             	tasks: ['uglify:modelJS']
+            },
+
+            jsGlobals: {
+            	files: [
+            		'includes/jsdev/app.js',
+            		'includes/jsdev/globals.js',
+            		'includes/jsdev/udf.js'
+            	],
+            	tasks: ['requirejs:compile','uglify:viewJS','uglify:modelJS']
             }
 		},
 		sass: {

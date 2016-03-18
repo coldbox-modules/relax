@@ -24,14 +24,12 @@
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
-    <!-- Feature detection -->
-    <script src="#prc.root#/includes/js/modernizr.js"></script>
-    
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="#prc.root#/includes/js/html5shiv.js"></script>
     <script src="#prc.root#/includes/js/respond.min.js"></script>
     <![endif]-->
+        
     <cfoutput>
         <!--- <cfdump var="#event#" abort> --->
     <script type="application/javascript">
