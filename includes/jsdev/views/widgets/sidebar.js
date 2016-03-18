@@ -13,7 +13,9 @@ define([
             el:".mc-sidebar"
 
             ,events:{
-                "change #myAPI":"onSelectAPI"
+                "change #myAPI":"onSelectAPI",
+                "click .btnExportMediaWiki":"onExportMediaWiki",
+                "click .btnExportTrac":"onExportTrac"
             }
 
             /**
@@ -23,6 +25,8 @@ define([
             */
             ,initialize:function( options ){
             	var _this = this;
+
+                if( typeof( moduleAPIRoot ) === 'undefined' ) moduleAPIRoot = '/relax/';
 
                 if( !_.isUndefined( options.apis ) ){
                   _this.availableAPIs = options.apis;  
@@ -113,8 +117,57 @@ define([
                     }
                 });
             }
-            
 
+            ,onExportTrac: function( e ){
+                var _this = this;
+                var documentationHTML = $( ".api-content" )[ 0 ].outerHTML;
+                $.post( 
+                    moduleAPIRoot + "export/trac", 
+                    {
+                    "content":documentationHTML
+                    },
+                    function( translationContent ){
+                       var $modal = $( "#modal" );
+                       var modalContent = '<div class="panel panel-solid-default"><pre>' + translationContent + '</pre></div>';
+                       $modal.find( ".modal-header" ).html( 
+                        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
+                         <h3><i class="fa fa-lg fa-paw"></i> API Export: Trac </h3>' 
+                        );
+                       $modal.find( ".modal-body" ).html( _this.exportWrapper( modalContent ) );
+                       $modal.modal("show");
+                    }
+                );
+            }
+
+            ,onExportMediaWiki: function( e ){
+                var _this = this;
+                var documentationHTML = $( ".api-content" )[ 0 ].outerHTML;
+                $.post( 
+                    moduleAPIRoot + "export/mediawiki", 
+                    {
+                    "content":documentationHTML
+                    },
+                    function( translationContent ){
+                       var $modal = $( "#modal" );
+                       var modalContent = '<div class="panel panel-solid-default"><pre>' + translationContent + '</pre></div>';
+                       $modal.find( ".modal-header" ).html( 
+                        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
+                         <h3><i class="fa fa-lg fa-code-o"></i> API Export: MediaWiki</h3>' 
+                        );
+                       $modal.find( ".modal-body" ).html( _this.exportWrapper( modalContent ) );
+                       $modal.modal("show");
+                    }
+                );   
+            }
+
+
+            /**
+            * Utility functions
+            **/
+
+            ,exportWrapper: function( exportContent ){
+                return '<textarea id="exportContent" class="form-control" rows="20">' + exportContent + '</textarea>';
+            }
         });
 
         return View;

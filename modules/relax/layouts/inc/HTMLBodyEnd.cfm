@@ -1,6 +1,6 @@
 <!--- ============================ Remote Modal Window ============================ --->
 <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" id="modal-dialog">
+    <div class="modal-dialog modal-lg" id="modal-dialog">
         <div class="modal-content" id="remoteModelContent">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -83,4 +83,9 @@
     </script>
 
 </cfoutput>
+
+
+<!-- Fonts -->
+<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 

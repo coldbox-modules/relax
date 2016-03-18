@@ -80,7 +80,10 @@ component extends="BaseHandler"{
 	*/
 	private function toWikiMarkup( event, rc, prc, type ){
 		html( event, rc, prc );
-		var data = wikitext.toWiki( translator=arguments.type, html=renderView( view="export/html", module="relax" ) );
+		if( !structKeyExists( rc, "content" ) ){
+			rc.content = renderView( view="export/html", module="relax" );
+		}
+		var data = wikitext.toWiki( translator=arguments.type, html=rc.content );
 		event.renderData( type="text", data=data );
 	}
 
