@@ -1,0 +1,33 @@
+<!--- Request History --->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Request History</h3>
+    </div>
+    <div class="panel-body">
+    	
+    	<!--- MessageHolder --->
+		<div id="requestHistoryMessages" class="alert alert-info" style="display:none"></div>
+		<p class="center">
+			<!--- Selection Box --->
+			<select name="requestHistory" id="requestHistory" class="form-control input-sm">
+				
+					<option value="null">Select History Item</option>
+					<% for ( var i=0; i < requests.length; i++ ) { %>
+						<option value='<%=i%>'>( <%=request.method.toUpperCase()%> ) <%=request.path%></option>
+					<% } %>
+			</select>
+		</p>
+
+		<p class="text-center">
+			<!--- Clear History Command --->
+			<a href="javascript:void(0)" class="btn btn-danger btnClearHistory" data-toggle="tooltip" title="Clear the request history">
+				<i class="fa fa-recycle"></i>
+			</a>
+
+			<!--- Replay Command --->
+			<a href="javascript:void(0)" class="btn btn-primary btnReplayHistoryLast" data-toggle="tooltip" title="Replay last request">
+				<i class="fa fa-retweet"></i>
+			</a>
+		</p>
+    </div>
+</div> <!--- panel history --->

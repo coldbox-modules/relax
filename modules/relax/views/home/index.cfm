@@ -17,7 +17,7 @@
 				</div>
 			</div>
 			
-		</div> <!-- end .main-content -->
+		</div> <!-- /.main-content -->
 
 		#renderView( "includes/sidebar" )#
 

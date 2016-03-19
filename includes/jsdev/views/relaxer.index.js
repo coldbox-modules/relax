@@ -1,17 +1,22 @@
 /**
-* This is the Backbone View extension
+* This is the Backbone View extension for Relaxer
 **/
 define([
-    'Backbone'
+    'Backbone',
+    'views/widgets/relaxer',
+    'views/widgets/sidebar',
+    'models/RelaxAPI'
 ],  function(
-            Backbone
+            Backbone,
+            RelaxerWidget,
+            SidebarWidget,
+            APIModel
         ){
         'use strict';
         var View = Backbone.View.extend({
-            el:".main-content"
-
+            el: '#main-content'
+            
             ,events:{
-
             }
 
             /**
@@ -20,7 +25,7 @@ define([
             * ----------------------------------------------
             */
             ,initialize:function(){
-                return this.setupDefaults().setupSelectors().render();
+                return this.setupSelectors().setupDefaults().render();
             }
 
             /**
@@ -29,7 +34,6 @@ define([
             * ----------------------------------------------
             */
             ,setupSelectors:function(){
-
                 return this;
             }
 
@@ -39,7 +43,23 @@ define([
             * ----------------------------------------------
             */
             ,setupDefaults:function(){
+                var _this = this;
+            	if( _.isUndefined( rootAssetPath ) ){
+            		var rootAssetPath = '/modules/relax';
+            	}
 
+                _this.sidebar = new SidebarWidget( {
+                    "view":_this
+                });
+
+                var $relaxer = $( ".relaxer", _this.el );
+                
+                _this.Relaxer = new RelaxerWidget({
+                    "el":".relaxer",
+                    "$el":$relaxer
+                });
+
+    
                 return this;
             }
 
@@ -49,10 +69,8 @@ define([
 			* ----------------------------------------------
 			*/
             ,render:function(){
-            	$( 'pre[class*="language-"],code[class*="language-"]' ).each( function(){
-                    Prism.highlightElement(this); 
-                });
-                return this;
+            	var _this = this;
+                return _this;
             }
             
             /**
@@ -60,8 +78,8 @@ define([
 			* Events
 			* ----------------------------------------------
 			*/
-            
-            
+
+ 			
 
         });
 

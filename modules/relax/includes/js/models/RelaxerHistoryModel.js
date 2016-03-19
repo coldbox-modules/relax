@@ -2,10 +2,8 @@
 define([ "Backbone" ], function(Backbone) {
     "use strict";
     var Model = Backbone.Model.extend({
-        urlRoot: "/relax/apidoc",
+        urlRoot: "",
         initialize: function(attributes, options) {
-            if (typeof moduleAPIRoot === "undefined") moduleAPIRoot = "/relax/";
-            this.urlRoot = moduleAPIRoot + "apidoc";
             if (typeof attributes !== "undefined") this.set(attributes);
             return this;
         }
