@@ -153,12 +153,12 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 
 		//handle string action values for consistent formatting
 		if( isSimpleValue( resource.action ) ) {
+
 			resource.handlerMethod = resource.action;
 			resource.action = createObject( "java", "java.util.LinkedHashMap" );
 			
 			structAppend( resource.action, {
-					"#resource.defaultMethod#": resource.action,
-					"x-coldbox-handler" : resource.handler
+					"#resource.defaultMethod#": resource.action
 			} );
 
 			var allowedMethods = listToArray( resource.methods );
@@ -175,6 +175,8 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		//assembly begins
 		for( var HTTPMethod in resource.action ){
 			if( 
+				!findNoCase( 'x-', HTTPMethod )
+				&&
 				structKeyExists( resource, "handlerMethod" ) 
 				&& 
 				isSimpleValue( resource.handlerMethod ) 
@@ -195,7 +197,8 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 					"produces": translation["produces"],
 					"responses" : createObject( "java", "java.util.LinkedHashMap" ),
 					"parameters" : createObject( "java", "java.util.LinkedHashMap" ),
-					"x-resourceId": lcase( hash( pathKey & lcase( HTTPMethod ) ) )
+					"x-resourceId": lcase( hash( pathKey & lcase( HTTPMethod ) ) ),
+					"x-coldbox-handler" : resource.handler
 				}
 			});
 

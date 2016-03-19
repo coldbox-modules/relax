@@ -103,12 +103,22 @@ function escapeHtml(string) {
       return entityMap[s];
     });
 }
+/**
+* Templating UDFs
+**/
 
-function toggleResource(id){
-    var $div = $( "#resource_" + id );
-    $div.slideToggle();
+function renderXAttributes( entity, headerNode ){
+    var xAttributesTemplate = _.template( $( "#x-attributes-template" ).html() );
+    return xAttributesTemplate( {
+        "entity":entity,
+        "headerNode":headerNode
+    } );
 }
 
+
+/**
+* Prototype extensions
+*/
 String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };

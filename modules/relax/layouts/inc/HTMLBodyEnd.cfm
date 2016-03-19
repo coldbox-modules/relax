@@ -62,6 +62,9 @@
 <script type="text/template" id="relaxer-response-template">
     <cfinclude template="#prc.root#/views/apidoc/_template/relaxer-response.html"/>
 </script>
+<script type="text/template" id="x-attributes-template">
+    <cfinclude template="#prc.root#/views/apidoc/_template/x-attributes.html"/>
+</script>
 
 <!-- dynamic assets -->
 <cfoutput>
