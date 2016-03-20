@@ -87,7 +87,8 @@ define([
                 var $container = $( ".relaxer-results", _this.$el );
 
                 var responseEcho = JSON.parse( jqXHR.responseText );
-                console.log( responseEcho );
+                
+                console.debug( responseEcho );
 
                 //reformat our echo to emulate a jqXHR object
                 var responseObject = {

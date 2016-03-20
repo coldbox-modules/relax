@@ -11,6 +11,37 @@ function openRemoteModal( url, params ){
     $remoteModal.modal( "show" );
 }
 
+function parseRequestParams(){
+    var location = window.location;
+
+    var params = {
+        hash : location.hash,
+        queryString : location.search,
+        path : location.pathname,
+        api : getQueryVariable( "api" )
+    };
+
+    //evaluate path information for apiname
+    var pathArray = params.path.split( '/' );
+    if( pathArray[ pathArray.length - 2 ] === 'api' && pathArray[ pathArray.length - 1 ].length ){
+        params.api = pathArray[ pathArray.length - 1 ];
+    }
+
+    return params;
+}
+
+function getQueryVariable(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) == variable) {
+            return decodeURIComponent(pair[1]);
+        }
+    }
+    console.log('Query variable %s not found', variable);
+}
+
 function formatAPIExample( example, mimetype ){
     switch( mimetype ){
         case "application/xml":
@@ -103,6 +134,7 @@ function escapeHtml(string) {
       return entityMap[s];
     });
 }
+
 /**
 * Templating UDFs
 **/

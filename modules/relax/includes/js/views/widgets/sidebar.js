@@ -1,4 +1,4 @@
-/*! Copyright 2016 - Ortus Solutions (Compiled: 19-03-2016) */
+/*! Copyright 2016 - Ortus Solutions (Compiled: 20-03-2016) */
 define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Backbone, APIModel, HistoryModel) {
     "use strict";
     var View = Backbone.View.extend({
@@ -105,7 +105,7 @@ define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Back
             if (!_.isUndefined(_this.View.renderLoaderMessage)) _this.View.renderLoaderMessage();
             _this.ViewModel.fetch({
                 success: function(model, resp) {
-                    console.log(model);
+                    console.debug(model.attributes);
                     if (_this.$el.hasClass("relaxer-sidebar")) {
                         _this.renderRelaxerResources();
                     } else {
@@ -138,6 +138,19 @@ define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Back
             var documentationHTML = $(".api-content")[0].outerHTML;
             $.post(moduleAPIRoot + "export/mediawiki", {
                 content: documentationHTML
+            }, function(translationContent) {
+                var $modal = $("#modal");
+                var modalContent = '<div class="panel panel-solid-default"><pre>' + translationContent + "</pre></div>";
+                $modal.find(".modal-header").html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                         <h3><i class="fa fa-lg fa-code-o"></i> API Export: MediaWiki</h3>');
+                $modal.find(".modal-body").html(_this.exportWrapper(modalContent));
+                $modal.modal("show");
+            });
+        },
+        onExportPDF: function(e) {
+            var _this = this;
+            var documentationHTML = $(".api-content")[0].outerHTML;
+            $.post(moduleAPIRoot + "export/pdf", {
+                pagecontent: documentationHTML
             }, function(translationContent) {
                 var $modal = $("#modal");
                 var modalContent = '<div class="panel panel-solid-default"><pre>' + translationContent + "</pre></div>";

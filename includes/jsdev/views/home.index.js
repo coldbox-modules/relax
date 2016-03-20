@@ -56,6 +56,7 @@ define([
             ,setupDefaults: function(){
                 var _this = this;
                 var promise = new Promise( function( resolve, reject ){
+                    _this.activeAPI = parseRequestParams().api;
                     //pull our list of APIs
                     _this.Model.fetch( {
                         success: function( model, resp ){
@@ -66,13 +67,14 @@ define([
                                 _this.sidebar = new SidebarWidget( {
                                     "view":_this,
                                     "apis":model.attributes.apis,
-                                    "default":model.attributes.default    
+                                    "default": _.isUndefined( _this.activeAPI ) ? model.attributes.default : _this.activeAPI   
                                 } );   
                                 
                             }
 
                             _this.defaultAPI = model.attributes.default;
-                            if( typeof( _this.activeAPI ) === 'undefined' ) _this.activeAPI = _this.defaultAPI;
+
+                            if( _.isUndefined( _this.activeAPI ) ) _this.activeAPI = _this.defaultAPI;
                             
                             //pull our single API
                             _this.Model.clear().set( 'id', _this.activeAPI );
@@ -158,6 +160,9 @@ define([
 			* Events
 			* ----------------------------------------------
 			*/
+
+
+
             
             
 

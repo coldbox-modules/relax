@@ -1,4 +1,4 @@
-/*! Copyright 2016 - Ortus Solutions (Compiled: 19-03-2016) */
+/*! Copyright 2016 - Ortus Solutions (Compiled: 20-03-2016) */
 define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/RelaxAPI" ], function(Backbone, Relaxer, SidebarWidget, APIModel) {
     "use strict";
     var View = Backbone.View.extend({
@@ -17,6 +17,7 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
         setupDefaults: function() {
             var _this = this;
             var promise = new Promise(function(resolve, reject) {
+                _this.activeAPI = parseRequestParams().api;
                 _this.Model.fetch({
                     success: function(model, resp) {
                         _this.availableAPIs = _.clone(model.attributes.apis);
@@ -24,11 +25,11 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
                             _this.sidebar = new SidebarWidget({
                                 view: _this,
                                 apis: model.attributes.apis,
-                                "default": model.attributes.default
+                                "default": _.isUndefined(_this.activeAPI) ? model.attributes.default : _this.activeAPI
                             });
                         }
                         _this.defaultAPI = model.attributes.default;
-                        if (typeof _this.activeAPI === "undefined") _this.activeAPI = _this.defaultAPI;
+                        if (_.isUndefined(_this.activeAPI)) _this.activeAPI = _this.defaultAPI;
                         _this.Model.clear().set("id", _this.activeAPI);
                         _this.Model.fetch({
                             success: function(model, resp) {

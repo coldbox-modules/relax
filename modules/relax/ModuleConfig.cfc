@@ -40,7 +40,8 @@ component{
 				action={"GET":"index","PUT":"update","PATCH":"update","DELETE":"delete"}
 				
 			},
-			//Direct API request
+			//Direct API requests
+			{ pattern="/export/:action/:apiname?", handler="Export", action="index" },
 			{ pattern="/api/:apiname?", handler="Home", action="index" },
 			// Module Entry Point
 			{ pattern="/", handler="Home", action="index" },
