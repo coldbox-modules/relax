@@ -1,14 +1,12 @@
 <%
 	if( _.isUndefined( headerNode ) ) var headerNode = 'h3';
-	var skippedAttributes = [ 'x-resourceId','x-entryPoint','x-extensionDetection','x-throwOnInvalidExtension' ];
+	var skippedAttributes = [ 'x-resourceId','x-entryPoint','x-extensionDetection','x-throwOnInvalidExtension', 'x-request-samples' ];
 	var xAttributes = [];
 	_.each( _.keys( entity ), function( nodeName ){
 		if( nodeName.indexOf( 'x-' ) === 0 && skippedAttributes.indexOf( nodeName ) === -1 ){
 			var attributeArray = nodeName.split( '-' );
 			attributeArray.splice( 0, 1 );
 			var attributeName = attributeArray.join( ' ' ).toProperCase();
-			console.log(  nodeName  );
-			console.log( entity[ nodeName ] );
 			xAttributes.push( {
 				"name": attributeName,
 				"value": entity[ nodeName ]

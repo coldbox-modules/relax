@@ -227,7 +227,8 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		//append schema as responses
 		processPathSchemas( path, resource );
 
-		//append samples as 
+		//append samples as extended attributes
+		processPathSamples( path, resource );
 
 	}
 
@@ -311,7 +312,9 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 							
 							} else {
 
-								structAppend( path[ methodKey ][ "responses" ][ statusCode ][ "examples" ], schemaDefinition[ "examples" ] );
+								structAppend( path[ methodKey ][ "responses" ][ statusCode ][ "examples" ], {
+									"#mimeType#":schemaDefinition[ "examples" ][ mimeType ]
+								} );
 							
 							}
 						
@@ -325,7 +328,72 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		}
 	}
 
+	private function processPathSamples( required path, required resource ){
+		if( structKeyExists( resource.response, "samples" ) ){
+			for ( var sample in resource.response[ "samples" ] ){
+			
+				//RelaxDSL doesn't provide status codes, so we'll use our defaults
+				var sampleDefinition = {
+					"description" : sample[ "description" ],
+					"sample" : {
+						"type" : "object"
+					},
+					"examples" : createObject( "java", "java.util.LinkedHashMap" )
+				}
+
+				switch( sample[ "format" ] ){
+					case "json":
+						var body = deserializeJSON( sample[ "body" ]);
+						var mimeType = "application/json";
+						break;	
+					case "xml":
+						var body = sample[ "body" ];
+						var mimeType = "application/xml";
+	
+						break;
+					default:
+						var body = sample[ "body" ];
+						var mimeType = REFindNoCase( sample[ "format" ], "html|text|string" ) ? "text/" & sample[ "format" ] : "application/" & sample[ "format" ];			
+				}
+
+				structAppend( sampleDefinition[ "examples" ], {
+					"#mimeType#" : body
+				});
 
 
+				for( var methodKey in path ){
+					var methodPosition = arrayFindNoCase( VARIABLES.HTTPMethods, methodKey );
+					if( methodPosition ){
+						var statusCode = VARIABLES.HTTPMethodResponses[ methodPosition ];
+						
+						if( !structKeyExists( path[ methodKey ], "x-request-samples" ) ){
+							structAppend( path[ methodKey ], {
+								"x-request-samples": sampleDefinition
+							});
+						} else {
+
+							if( structKeyExists( path[ methodKey ][ "x-request-samples" ]["examples"], mimeType ) ){
+							
+								structAppend( path[ methodKey ][ "x-request-samples" ]["examples"], {
+									"default" : sampleDefinition[ "examples" ][ mimeType ]
+								} );
+							
+							} else {
+
+								structAppend( path[ methodKey ][ "x-request-samples" ]["examples"], {
+									"#mimeType#":sampleDefinition[ "examples" ][ mimetype ]
+								} );
+							
+							}
+						
+							
+						
+						}	
+					}
+				}
+
+			}	
+		}
+	}
 
 }

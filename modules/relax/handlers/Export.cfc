@@ -55,8 +55,13 @@ component extends="BaseHandler"{
 	* Export as PDF
 	*/
 	function pdf( event, rc, prc ){
+
 		var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.info.title);
-		html( event, rc, prc );
+		
+		if( !structKeyExists( rc, 'pagecontent' ) ){
+			html( event, rc, prc );	
+		}
+		
 		event.setLayout( "pdf" )
 			.setHTTPHeader( name="Content-Disposition", value="inline; filename=#title#.pdf" );
 	}
