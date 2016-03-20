@@ -40,6 +40,8 @@ component{
 				action={"GET":"index","PUT":"update","PATCH":"update","DELETE":"delete"}
 				
 			},
+			//Direct API request
+			{ pattern="/api/:apiname?", handler="Home", action="index" },
 			// Module Entry Point
 			{ pattern="/", handler="Home", action="index" },
 			// Convention Route
