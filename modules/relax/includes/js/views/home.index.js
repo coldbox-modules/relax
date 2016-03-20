@@ -1,5 +1,5 @@
 /*! Copyright 2016 - Ortus Solutions (Compiled: 20-03-2016) */
-define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/RelaxAPI" ], function(Backbone, Relaxer, SidebarWidget, APIModel) {
+define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/RelaxAPI", "scrollify" ], function(Backbone, Relaxer, SidebarWidget, APIModel, scrollify) {
     "use strict";
     var View = Backbone.View.extend({
         el: "#main-content",
@@ -80,7 +80,9 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
                 }));
                 setTimeout(function() {
                     _this.renderContainerUI($container);
-                }, 2e3);
+                    _this.assignAnchorLinksToWindow();
+                    _this.expandHash();
+                }, 1500);
             });
         },
         renderContainerUI: function($container) {
@@ -91,6 +93,66 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
             $('pre[class*="language-"],code[class*="language-"]').each(function() {
                 Prism.highlightElement(this);
             });
+        },
+        assignAnchorLinksToWindow: function($container) {
+            var _this = this;
+            if (_.isUndefined($container)) $container = $("body");
+            var baseHref = $("base", "head").attr("href");
+            $("a", $container).each(function() {
+                var $link = $(this);
+                if (!_.isUndefined($link.attr("href")) && $link.attr("href").indexOf("#") === 0) {
+                    var hash = $link.attr("href");
+                    $link.attr("href", window.location.pathname + window.location.search + hash);
+                    $link.on("click", function() {
+                        if (!$(this).is("[aria-controls]")) {
+                            _this.expandHash(hash);
+                        }
+                    });
+                }
+            });
+        },
+        expandHash: function(hash) {
+            var _this = this;
+            if (_.isUndefined(hash)) hash = window.location.hash;
+            if (hash.length > 0) {
+                var $hashTarget = $(hash);
+                if ($hashTarget.length > 0) {
+                    _this.ensureHashTargetVisibility($hashTarget).then(function() {
+                        if ($hashTarget.is(".panel")) {
+                            $hashTarget.find('[data-toggle="collapse"]').click().scrollify({
+                                offset: 200
+                            }).move($hashTarget);
+                        } else {
+                            $.scrollify({
+                                offset: 200
+                            }).move($hashTarget);
+                        }
+                    });
+                }
+            }
+        },
+        ensureHashTargetVisibility: function($hashTarget) {
+            var _this = this;
+            var promise = new Promise(function(resolve, reject) {
+                if ($hashTarget.is(":visible")) return resolve();
+                var $domParents = $hashTarget.parentsUntil(".api");
+                console.log($domParents);
+                var totalParents = $domParents.length;
+                var i = 1;
+                $domParents.each(function() {
+                    var $parent = $(this);
+                    if ($parent.not(":visible") && ($parent.is(".collapse:not(.in)") || $parent.is(".tab-pane:not(.active)"))) {
+                        $('[aria-controls="' + $parent.attr("id") + '"]').click();
+                    } else if ($parent.not(":visible")) {
+                        $parent.css("display", "block");
+                    }
+                    i++;
+                    if (i === totalParents) {
+                        resolve();
+                    }
+                });
+            });
+            return promise;
         }
     });
     return new View();

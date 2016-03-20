@@ -5,12 +5,14 @@ define([
     'Backbone',
     'views/widgets/relaxer',
     'views/widgets/sidebar',
-    'models/RelaxAPI'
+    'models/RelaxAPI',
+    'scrollify'
 ],  function(
             Backbone,
             Relaxer,
             SidebarWidget,
-            APIModel
+            APIModel,
+            scrollify
         ){
         'use strict';
         var View = Backbone.View.extend({
@@ -142,7 +144,9 @@ define([
                     $container.append( pathTemplate( { "key":pathKey , "path":paths[ pathKey ] } ) );
                     setTimeout( function(  ){
                         _this.renderContainerUI( $container );
-                    }, 2000)
+                        _this.assignAnchorLinksToWindow();
+                        _this.expandHash();
+                    }, 1500)
                 });
             }
             
@@ -155,6 +159,74 @@ define([
                     Prism.highlightElement(this); 
                 });
             }
+
+            ,assignAnchorLinksToWindow: function( $container ){
+                var _this = this;
+                if( _.isUndefined( $container ) ) $container = $( 'body' );
+                var baseHref = $( 'base', 'head' ).attr( 'href' );
+                $( "a", $container ).each( function(){
+                   var $link = $( this );
+                   if( !_.isUndefined( $link.attr( 'href' ) ) && $link.attr( 'href' ).indexOf( "#" ) === 0  ){
+                       var hash = $link.attr( 'href' );
+                       $link.attr( 'href', window.location.pathname + window.location.search + hash );
+                       $link.on( 'click', function(  ){
+                            if( !$( this ).is( '[aria-controls]' ) ){
+                                _this.expandHash( hash );   
+                            }
+                       } );
+                   }
+                });
+            }
+
+            ,expandHash: function( hash ){
+                var _this = this;
+                if( _.isUndefined( hash ) ) hash = window.location.hash;
+                if( hash.length > 0 ){
+                    var $hashTarget = $( hash );
+                    if( $hashTarget.length > 0 ){
+                        _this.ensureHashTargetVisibility( $hashTarget ).then(function(){
+                            if( $hashTarget.is( '.panel' ) ){
+                                $hashTarget.find( '[data-toggle="collapse"]' ).click().scrollify({offset:200}).move( $hashTarget );
+                            } else {
+                                $.scrollify({offset:200}).move( $hashTarget );
+                            }
+                        });
+
+                    }
+                }
+            }
+
+            ,ensureHashTargetVisibility: function( $hashTarget ){
+                var _this = this;
+                var promise = new Promise( function( resolve, reject ){
+                    if( $hashTarget.is(":visible") ) return resolve();
+
+                    //recurse up to the top level container
+                    var $domParents = $hashTarget.parentsUntil( ".api" );
+                    console.log( $domParents );
+
+                    var totalParents = $domParents.length;
+                    var i = 1;
+                    $domParents.each( function(){
+                        var $parent = $( this );
+                        if( $parent.not( ":visible" ) && ( $parent.is( ".collapse:not(.in)" ) || $parent.is( '.tab-pane:not(.active)' ) ) ){ 
+                            $( '[aria-controls="' + $parent.attr( 'id' ) + '"]' ).click();
+                        } else if( $parent.not( ":visible" ) ) {
+                            $parent.css( 'display', 'block' );
+                        }
+
+                        i++;
+
+                        if( i === totalParents ){
+                            resolve();      
+                        }
+                    });
+
+                });
+
+                return promise;
+            }
+
             /**
 			* ----------------------------------------------
 			* Events

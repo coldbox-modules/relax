@@ -14,9 +14,9 @@ var paramTemplate = _.template( $( "#parameter-template" ).html() );
         <div class="tab-wrapper tab-primary">
             <% if( !$( "body" ).hasClass( "print" ) ){ %>
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#overview" data-toggle="tab">Service Overview</a></li>
-                    <li><a href="#paths" data-toggle="tab">API Path Reference</a></li>
-                    <li><a href="#httpcodes" data-toggle="tab">HTTP Response Reference</a></li>
+                    <li class="active"><a href="#overview" data-toggle="tab" aria-controls="overview">Service Overview</a></li>
+                    <li><a href="#paths" data-toggle="tab" aria-controls="paths">API Path Reference</a></li>
+                    <li><a href="#httpcodes" data-toggle="tab" aria-controls="httpcodes">HTTP Response Reference</a></li>
                 </ul>
             <% } %>
             <% if( $( "body" ).hasClass( "print" ) ){ %>
@@ -122,9 +122,9 @@ var paramTemplate = _.template( $( "#parameter-template" ).html() );
                     <h3>Service Available Paths</h3>
 
                    <p> 
-                   <% _.each( pathKeys, function(key){ %>
+                   <% _.each( pathKeys, function( key){ %>
 
-                        <a class="btn btn-xs btn-primary path-nav" href="#<%= key %>"><%= key %></a>
+                        <a class="btn btn-xs btn-primary path-nav" href="#<%= api.paths[ key ][ "x-resourceId" ] %>"><%= key %></a>
                     
                     <% }); %>
                     </p>

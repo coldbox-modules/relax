@@ -30,6 +30,7 @@ function parseRequestParams(){
     return params;
 }
 
+//http://www.idealog.us/2006/06/javascript_to_p.html
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split('&');
@@ -39,7 +40,6 @@ function getQueryVariable(variable) {
             return decodeURIComponent(pair[1]);
         }
     }
-    console.log('Query variable %s not found', variable);
 }
 
 function formatAPIExample( example, mimetype ){

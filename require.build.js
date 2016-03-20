@@ -13,6 +13,7 @@ require.config({
         ,modernizr: '../../bower_components/modernizr/lib/build'
         ,respond: '../../bower_components/respond/dest/respond.min'
         ,switchery: '../../bower_components/switchery/dist/switchery.min'
+        ,scrollify: '../../bower_components/Scrollify/jquery.scrollify.min'
         ,navgoco: '../../bower_components/navgoco/src/jquery.navgoco.min'
         ,"es6-shim": '../../bower_components/es6-shim/es6-shim.min'
         ,prism: '../../bower_components/prism/prism'
@@ -34,7 +35,8 @@ require.config({
         ,clipboard:{exports:'Clipboard'}
         ,messenger:{exports:'Messenger'}
         ,messengerThemeFuture:{deps: [ 'messenger' ]}
+        ,scrollify:{deps: [ 'jquery' ]}
     }
 
-    ,deps:['jquery','bootstrap','underscore','Backbone','respond','switchery','navgoco','html5shiv','iCheck','fastclick','messenger']
+    ,deps:['jquery','bootstrap','underscore','Backbone','respond','switchery','navgoco','html5shiv','iCheck','fastclick','messenger','scrollify']
 });

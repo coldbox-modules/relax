@@ -13,10 +13,6 @@ component extends="BaseHandler"{
 	* Home
 	*/
 	function index( event, rc, prc ){
-		// Get the loaded API for the user
-		prc.dsl				= APIService.getLoadedAPI().getNormalizedDocument();
-		prc.loadedAPIName 	= APIService.getLoadedAPIName();
-		prc.loadedAPIs		= APIService.listAPIs();
 
 		// Exit Handlers
 		prc.xehResourceDoc  = "relax/Home/resourceDoc";
