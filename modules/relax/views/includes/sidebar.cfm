@@ -29,13 +29,13 @@
 
 					<cfif prc.settings.sessionsEnabled>
 						<!--- Import --->
-						<a href="#event.buildLink( prc.xehImportAPI)#"
+						<!--- <a href="#event.buildLink( prc.xehImportAPI)#"
 							data-toggle="modal" 
 							data-target="##modal"
 							class="btn btn-primary"
 						   	title="Import API">
 								<i class="fa fa-lg fa-cloud-upload"></i> Import
-						</a>
+						</a> --->
 					</cfif>
 				</p>
 	        </div>
