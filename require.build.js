@@ -19,7 +19,7 @@ require.config({
         ,prism: '../../bower_components/prism/prism'
         ,clipboard: '../../bower_components/clipboard/dist/clipboard.min'
         ,messenger: '../../modules/relax/includes/plugins/messenger/js/messenger.min'
-        ,messengerThemeFuture: '../../modules/relax/includes/plugins/messenger/js/messenger-theme-future'
+        ,messengerTheme: '../../modules/relax/includes/plugins/messenger/js/messenger-theme-flat'
         ,udf:'udf'
     }
     
@@ -34,9 +34,9 @@ require.config({
         ,jsonlint:{exports:'jsonlint'}
         ,clipboard:{exports:'Clipboard'}
         ,messenger:{exports:'Messenger'}
-        ,messengerThemeFuture:{deps: [ 'messenger' ]}
+        ,messengerTheme:{deps: [ 'messenger' ]}
         ,scrollify:{deps: [ 'jquery' ]}
     }
 
-    ,deps:['jquery','bootstrap','underscore','Backbone','respond','switchery','navgoco','html5shiv','iCheck','fastclick','messenger','scrollify']
+    ,deps:['jquery','bootstrap','underscore','Backbone','respond','switchery','navgoco','html5shiv','iCheck','fastclick','messenger','messengerTheme','scrollify']
 });

@@ -132,7 +132,7 @@ var paramTemplate = _.template( $( "#parameter-template" ).html() );
                     <p>
                     <% _.each( api.consumes, function(type){ %>
 
-                        <a class="btn btn-xs btn-primary consumes-nav" data-mimetype="type"><%= type %></a>
+                        <span class="label label-primary consumes-nav" data-mimetype="type"><%= type %></span>
                     
                     <% }); %>
                     </p>
@@ -141,7 +141,7 @@ var paramTemplate = _.template( $( "#parameter-template" ).html() );
                     <p>
                     <% _.each( api.produces, function(type){ %>
 
-                        <a class="btn btn-xs btn-primary produces-nav" data-mimetype="type"><%= type %></a>
+                        <span class="label label-primary consumes-nav" data-mimetype="type"><%= type %></span>
                     
                     <% }); %>
                     </p>

@@ -6,12 +6,16 @@ define([
     'views/widgets/relaxer',
     'views/widgets/sidebar',
     'models/RelaxAPI',
+    'clipboard',
+    'messenger',
     'scrollify'
 ],  function(
             Backbone,
             Relaxer,
             SidebarWidget,
             APIModel,
+            Clipboard,
+            Messenger,
             scrollify
         ){
         'use strict';
@@ -47,6 +51,10 @@ define([
             * ----------------------------------------------
             */
             ,setupSelectors: function(){
+                Messenger.options = {
+                    extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
+                    theme: 'flat'
+                };
                 return this;
             }
 
@@ -142,12 +150,15 @@ define([
                 var pathTemplate = _.template( $( "#path-template" ).html() );
                 _.each( _.keys(paths), function( pathKey ){ 
                     $container.append( pathTemplate( { "key":pathKey , "path":paths[ pathKey ] } ) );
-                    setTimeout( function(  ){
-                        _this.renderContainerUI( $container );
-                        _this.assignAnchorLinksToWindow();
-                        _this.expandHash();
-                    }, 1500)
                 });
+                
+                setTimeout( function(  ){
+                    _this.renderContainerUI( $container );
+                    _this.assignAnchorLinksToWindow();
+                    _this.expandHash();
+                    _this.renderClipboardIndicators();
+                }, 1500);
+
             }
             
             ,renderContainerUI: function( $container ){
@@ -158,6 +169,41 @@ define([
                 $( 'pre[class*="language-"],code[class*="language-"]' ).each( function(){
                     Prism.highlightElement(this); 
                 });
+            }
+
+            ,renderClipboardIndicators: function(){
+                var _this = this;
+                var $clipableLinks = $( "#paths .path-panel, #paths .path-panel .method-panel", _this.$el );
+                var clipBtnTemplate = _.template( '<a href="javascript:void(0)" class="btnCopyDocumentLink btn btn-link text-muted btn-xs pull-left" data-toggle="tooltip" data-placement="bottom" title="Copy link to this resource"><i class="fa fa-link"></i></a>' );
+                $clipableLinks.each( function(){
+                    var linkHash = $( this ).attr( 'id' );
+                    var $linkHeader = $( '.panel-heading .panel-title' , $( this ) ).first();
+                    if( $linkHeader.length > 0 ){
+                         var link = window.location.href;
+                         if( window.location.hash.length > 0 ){
+                             link = link.replace( window.location.hash , "#" + linkHash )
+                         } else {
+                             link += "#" + linkHash
+                         }
+
+                        var $btn = $linkHeader.prepend( clipBtnTemplate( { "link":link } ) );
+                        
+                        var clipboard = new Clipboard( $btn[0], {
+                            text: function(trigger) {
+                                 Messenger().post({
+                                    message: "Resource link copied to your clipboard",
+                                    type: 'success',
+                                    showCloseButton: true
+                                });
+                                return link;
+                            }
+                        } );
+
+                        $btn.tooltip();     
+                    }
+                   
+                } );
+
             }
 
             ,assignAnchorLinksToWindow: function( $container ){
@@ -185,10 +231,11 @@ define([
                     var $hashTarget = $( hash );
                     if( $hashTarget.length > 0 ){
                         _this.ensureHashTargetVisibility( $hashTarget ).then(function(){
-                            if( $hashTarget.is( '.panel' ) ){
-                                $hashTarget.find( '[data-toggle="collapse"]' ).click().scrollify({offset:200}).move( $hashTarget );
+                            if( $hashTarget.is( '.panel' ) && $hashTarget.find( '.in' ).length === 0 ){
+                                $hashTarget.find( '[data-toggle="collapse"]' ).click();
+                                //$.scrollify({offset:200}).move( $hashTarget );
                             } else {
-                                $.scrollify({offset:200}).move( $hashTarget );
+                                //$.scrollify({offset:200}).move( $hashTarget );
                             }
                         });
 
@@ -198,12 +245,13 @@ define([
 
             ,ensureHashTargetVisibility: function( $hashTarget ){
                 var _this = this;
+
                 var promise = new Promise( function( resolve, reject ){
+
                     if( $hashTarget.is(":visible") ) return resolve();
 
                     //recurse up to the top level container
                     var $domParents = $hashTarget.parentsUntil( ".api" );
-                    console.log( $domParents );
 
                     var totalParents = $domParents.length;
                     var i = 1;
