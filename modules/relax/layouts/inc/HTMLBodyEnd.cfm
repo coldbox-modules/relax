@@ -78,15 +78,15 @@
                     [
                         '#prc.root#/includes/js/jsonlint.js',
                         '#prc.root#/includes/js/app.js',
-                        '#prc.root#/includes/js/prism.js'
+                        '#prc.root#/includes/js/prism.js',
+                        '#prc.root#/includes/js/udf.js'
                     ]
                 ,function(){
-                    require(['#prc.root#/includes/js/udf.js']);    
+                    <!--- loop around the jsAppendList, to add page specific js --->
+                    <cfloop array="#event.getPrivateValue("runtimeAssets",[]).js#" index="js">
+                        require(['#js#']);
+                    </cfloop>    
                 });
-                <!--- loop around the jsAppendList, to add page specific js --->
-                <cfloop array="#event.getPrivateValue("runtimeAssets",[]).js#" index="js">
-                    require(['#js#']);
-                </cfloop>
             });
         });
     </script>

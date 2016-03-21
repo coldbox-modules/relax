@@ -29,6 +29,8 @@ define([
             */
             ,events:{
 
+                "click .btnCopyDocumentLink" : "onCopyResourceLink"
+            
             }
 
             /**
@@ -174,7 +176,7 @@ define([
             ,renderClipboardIndicators: function(){
                 var _this = this;
                 var $clipableLinks = $( "#paths .path-panel, #paths .path-panel .method-panel", _this.$el );
-                var clipBtnTemplate = _.template( '<a href="javascript:void(0)" class="btnCopyDocumentLink btn btn-link text-muted btn-xs pull-left" data-toggle="tooltip" data-placement="bottom" title="Copy link to this resource"><i class="fa fa-link"></i></a>' );
+                var clipBtnTemplate = _.template( '<a href="javascript:void(0)" class="btnCopyDocumentLink btn btn-link text-muted btn-xs pull-left" data-toggle="tooltip" title="Copy link to this resource"><i class="fa fa-link"></i></a>' );
                 $clipableLinks.each( function(){
                     var linkHash = $( this ).attr( 'id' );
                     var $linkHeader = $( '.panel-heading .panel-title' , $( this ) ).first();
@@ -190,22 +192,38 @@ define([
                         
                         var clipboard = new Clipboard( $btn[0], {
                             text: function(trigger) {
-                                 Messenger().post({
-                                    message: "Resource link copied to your clipboard",
-                                    type: 'success',
-                                    showCloseButton: true
-                                });
                                 return link;
                             }
                         } );
 
-                        $btn.tooltip();     
+                        _this.renderContainerUI( $linkHeader );     
                     }
                    
                 } );
 
             }
 
+            /**
+			* ----------------------------------------------
+			* Events
+			* ----------------------------------------------
+			*/
+
+            ,onCopyResourceLink: function(){
+                 Messenger().post({
+                    message: "Resource link copied to your clipboard",
+                    type: 'success',
+                    showCloseButton: true
+                });
+            }
+
+            /**
+            * ----------------------------------------------
+            * Utility Methods
+            * ----------------------------------------------
+            */
+
+            
             ,assignAnchorLinksToWindow: function( $container ){
                 var _this = this;
                 if( _.isUndefined( $container ) ) $container = $( 'body' );
@@ -274,16 +292,6 @@ define([
 
                 return promise;
             }
-
-            /**
-			* ----------------------------------------------
-			* Events
-			* ----------------------------------------------
-			*/
-
-
-
-            
             
 
         });

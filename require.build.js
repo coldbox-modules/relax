@@ -20,7 +20,6 @@ require.config({
         ,clipboard: '../../bower_components/clipboard/dist/clipboard.min'
         ,messenger: '../../modules/relax/includes/plugins/messenger/js/messenger.min'
         ,messengerTheme: '../../modules/relax/includes/plugins/messenger/js/messenger-theme-flat'
-        ,udf:'udf'
     }
     
     ,shim:{

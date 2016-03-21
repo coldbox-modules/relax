@@ -29,13 +29,12 @@
 
 					<cfif prc.settings.sessionsEnabled>
 						<!--- Import --->
-						<!--- <a href="#event.buildLink( prc.xehImportAPI)#"
-							data-toggle="modal" 
-							data-target="##modal"
-							class="btn btn-primary"
+						<a href="javascript:void(0)"
+							data-toggle="tooltip" 
+							class="btn btn-primary btnImportAPI"
 						   	title="Import API">
 								<i class="fa fa-lg fa-cloud-upload"></i> Import
-						</a> --->
+						</a>
 					</cfif>
 				</p>
 	        </div>
@@ -57,12 +56,12 @@
 						<i class="fa fa-lg fa-html5"></i>
 					</a>
 					<!--- pdf --->
-					<a href="#event.buildLink( prc.xehExportPDF)#" class="btn btn-primary"
+					<!---<a href="#event.buildLink( prc.xehExportPDF)#" class="btn btn-primary"
 						data-toggle="tooltip"
 					    target="_blank"
 						title="Export as PDF">
 						<i class="fa fa-lg fa-file-pdf-o"></i>
-					</a>
+					</a>--->
 					<!--- mediawiki --->
 					<a href="javascript:void(0)" class="btn btn-primary btnExportMediaWiki"
 					    data-toggle="tooltip"
@@ -103,5 +102,8 @@
 
 	<script type="text/template" id="api-selector-template">
 		<cfinclude template="#prc.root#/views/apidoc/_template/api-selector.html"/>
+	</script>
+	<script type="text/template" id="api-import-form-template">
+		<cfinclude template="#prc.root#/views/apidoc/_template/api-import-form.html"/>
 	</script>
 </cfoutput>

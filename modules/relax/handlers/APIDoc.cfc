@@ -45,14 +45,34 @@ component extends="BaseHandler"{
 		} else {
 			marshallAPIs(argumentCollection=arguments);
 		}
-
+	}
+	/**
+	* Creates a new Relax API
+	* (POST) /relax/apidoc
+	**/
+	function create( event, rc, prc ){
+		var serviceResponse = APIService.processAPIImport( ARGUMENTS.rc );
+		if( serviceResponse.success ){
+			rc.data = serviceResponse.data;
+			rc.statusCode = STATUS.CREATED;
+		} else {
+			rc.data = {
+				"message" : serviceResponse.message,
+				"errors" : serviceResponse.errors,
+				"api": {
+					"name" : event.getValue( "apiName", "" ),
+					"document" : event.getValue( "apiJSON", {} )
+				}
+			}
+			rc.statusCode = status.EXPECTATION_FAILED;
+		}
 	}
 
 	/**
 	* Updates an API Document
 	* (PUT|PATCH) /relax/apidoc/:id?
 	**/
-	function updateDocument( event, rc, prc ){
+	function update( event, rc, prc ){
 		rc.data={
 			"message": "Method not yet implemented"
 		}
@@ -63,7 +83,7 @@ component extends="BaseHandler"{
 	* Deletes an API Document
 	* (DELETE) /relax/apidoc/:id?
 	**/
-	function deleteDocument( event, rc, prc ){
+	function delete( event, rc, prc ){
 		rc.data={
 			"message": "Method not yet implemented"
 		}
@@ -91,12 +111,20 @@ component extends="BaseHandler"{
 	**/
 	private function marshallAPIDocument( event, rc, prc, struct APIDoc){
 		try {
-			rc.data = APIService.loadAPI(rc.api).getNormalizedDocument();
+			if( !isNull( ARGUMENTS.APIDoc ) ){
+				rc.data = ARGUMENTS.APIDoc;
+			} else{
+				rc.data = APIService.loadAPI(rc.api).getNormalizedDocument();	
+			}
 			rc.statusCode = STATUS.SUCCESS;
 		} catch ( any e ) {
 			rc.statusCode = STATUS.INTERNAL_ERROR;
-			writeDump(var=e);
-			abort;
+			rc.data[ "message" ] = "The API Request could not be parsed";
+			rc.data[ "errors" ] = [ {
+				"type": e.type,
+				"message" : e.message,
+				"description" : e.detail
+			} ];
 		}
 	}
 

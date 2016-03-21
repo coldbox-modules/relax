@@ -37,7 +37,7 @@ component{
 			{
 				pattern="/apidoc/:api?",
 				handler="APIDoc",
-				action={"GET":"index","PUT":"update","PATCH":"update","DELETE":"delete"}
+				action={"GET":"index","POST":"create","PUT":"update","PATCH":"update","DELETE":"delete"}
 				
 			},
 			//Direct API requests

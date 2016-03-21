@@ -1,9 +1,11 @@
-/*! Copyright 2016 - Ortus Solutions (Compiled: 20-03-2016) */
+/*! Copyright 2016 - Ortus Solutions (Compiled: 21-03-2016) */
 define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/RelaxAPI", "clipboard", "messenger", "scrollify" ], function(Backbone, Relaxer, SidebarWidget, APIModel, Clipboard, Messenger, scrollify) {
     "use strict";
     var View = Backbone.View.extend({
         el: "#main-content",
-        events: {},
+        events: {
+            "click .btnCopyDocumentLink": "onCopyResourceLink"
+        },
         initialize: function() {
             var _this = this;
             _this.Model = APIModel;
@@ -102,7 +104,7 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
         renderClipboardIndicators: function() {
             var _this = this;
             var $clipableLinks = $("#paths .path-panel, #paths .path-panel .method-panel", _this.$el);
-            var clipBtnTemplate = _.template('<a href="javascript:void(0)" class="btnCopyDocumentLink btn btn-link text-muted btn-xs pull-left" data-toggle="tooltip" data-placement="bottom" title="Copy link to this resource"><i class="fa fa-link"></i></a>');
+            var clipBtnTemplate = _.template('<a href="javascript:void(0)" class="btnCopyDocumentLink btn btn-link text-muted btn-xs pull-left" data-toggle="tooltip" title="Copy link to this resource"><i class="fa fa-link"></i></a>');
             $clipableLinks.each(function() {
                 var linkHash = $(this).attr("id");
                 var $linkHeader = $(".panel-heading .panel-title", $(this)).first();
@@ -118,16 +120,18 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
                     }));
                     var clipboard = new Clipboard($btn[0], {
                         text: function(trigger) {
-                            Messenger().post({
-                                message: "Resource link copied to your clipboard",
-                                type: "success",
-                                showCloseButton: true
-                            });
                             return link;
                         }
                     });
-                    $btn.tooltip();
+                    _this.renderContainerUI($linkHeader);
                 }
+            });
+        },
+        onCopyResourceLink: function() {
+            Messenger().post({
+                message: "Resource link copied to your clipboard",
+                type: "success",
+                showCloseButton: true
             });
         },
         assignAnchorLinksToWindow: function($container) {
