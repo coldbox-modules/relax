@@ -9,6 +9,10 @@ CHANGELOG
 * [RELAX-3] - Relaxer is now async
 * [RELAX-11] - Relaxer functionality is now rendered in-page
 * [RELAX-7] - Udates DSL Documentation to use dynamic JS Templating
+* Documentation loading is now async
+* Adds OpenAPI specification documentation
+* Exports for Trac and WikiMedia are now async
+* Imports issues resolved and converted to async
 
 ## 2.2.0
 * [RELAX-22] - Updated build scripts for using DocBox
