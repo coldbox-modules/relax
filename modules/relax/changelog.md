@@ -12,7 +12,8 @@ CHANGELOG
 * Documentation loading is now async
 * Adds OpenAPI specification documentation
 * Exports for Trac and WikiMedia are now async
-* Imports issues resolved and converted to async
+* Import issues resolved and converted to async
+* Converts code highlighter from SyntaxHighlighter to Prism.js
 
 ## 2.2.0
 * [RELAX-22] - Updated build scripts for using DocBox
