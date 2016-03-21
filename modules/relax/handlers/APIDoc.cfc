@@ -63,7 +63,7 @@ component extends="BaseHandler"{
 					"name" : event.getValue( "apiName", "" ),
 					"document" : event.getValue( "apiJSON", {} )
 				}
-			}
+			};
 			rc.statusCode = status.EXPECTATION_FAILED;
 		}
 	}
@@ -75,7 +75,7 @@ component extends="BaseHandler"{
 	function update( event, rc, prc ){
 		rc.data={
 			"message": "Method not yet implemented"
-		}
+		};
 		rc.statusCode = STATUS.NOT_IMPLEMENTED;
 	}
 
@@ -86,7 +86,7 @@ component extends="BaseHandler"{
 	function delete( event, rc, prc ){
 		rc.data={
 			"message": "Method not yet implemented"
-		}
+		};
 		rc.statusCode = STATUS.NOT_IMPLEMENTED;
 	}
 	

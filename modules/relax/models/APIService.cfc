@@ -121,12 +121,13 @@ component accessors="true" {
 			loadDSLAPI( dataCFC );
 			// Store the definitions
 			VARIABLES.APIDefinitions[ ARGUMENTS.name ] = getWirebox().getInstance( "DSLTranslator@relax" ).translate( dataCFC );	
+
 		} else {
 			//OpenAPI Checks
 			if( !isNull( dataCFC ) && structKeyExists( dataCFC.relax, "definition" ) ){
 				VARIABLES.APIDefinitions[ ARGUMENTS.name ] = loadOpenAPI( APIDirectory & dataCFC.relax.definition );	
 			} else if( isNull( dataCFC ) ){
-				var mimeExtensions = [ 'json','yaml','yaml','json.cfm' ]
+				var mimeExtensions = [ 'json','yaml','yaml','json.cfm' ];
 				//perform our naming convention type checks checks
 				for( var ext in mimeExtensions ){			
 					if( fileExists( APIDirectory & ARGUMENTs.name & "." & ext ) )	{
@@ -276,10 +277,10 @@ component accessors="true" {
 
 		// validate data
 		if( !structKeyExists( collection, 'apiName' ) || !len( collection.apiName ) ){
-			response.message = "A valid API name was not provided for the import request.  Could not continue."
+			response.message = "A valid API name was not provided for the import request.  Could not continue.";
 			return response;
 		} else if ( !structKeyExists( collection, 'apiJSON' ) ){
-			response.message = "A valid API name was not provided for the import request.  Could not continue."
+			response.message = "A valid API name was not provided for the import request.  Could not continue.";
 			return response;
 		}else if( not isJSON( collection.apiJSON ) ){
 			response.message = "The JSON representation is not valid JSON. Please try again.";
@@ -335,7 +336,7 @@ component accessors="true" {
 			"data":{},
 			"message":"",
 			"errors":[]
-		}
+		};
 	}
 
 }

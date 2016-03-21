@@ -43,9 +43,9 @@ component name="OpenAPIDocument" accessors="true" {
 			if(  structKeyExists( resourceDoc, resourceKey ) && isStruct( resourceDoc[ resourceKey ] ) ){
 				for( var pathKey in resourceDoc[ resourceKey ] ){
 					if( !isStruct( resourceDoc[ resourceKey ][ pathKey ] ) ) continue;
-					structAppend( resourceDoc[ resourceKey ][ pathKey ], {
-						"x-resourceId": lcase( hashPrefix & hash( pathKey ) )
-					} );
+
+					resourceDoc[ resourceKey ][ pathKey ].put( "x-resourceId", lcase( hashPrefix & hash( pathKey ) ) );
+					
 					//recurse, if necessary
 					for( var subKey in resourceDoc[ resourceKey ][ pathKey ] ){
 						if( 
@@ -53,9 +53,7 @@ component name="OpenAPIDocument" accessors="true" {
 							&& 
 							isStruct( resourceDoc[ resourceKey ][ pathKey ][ subKey ] )
 						) {
-							structAppend( resourceDoc[ resourceKey ][ pathKey ][ subKey ],{
-								"x-resourceId": lcase( hashPrefix & hash( pathKey & subkey ) )
-							});
+							resourceDoc[ resourceKey ][ pathKey ][ subKey ].put( "x-resourceId", lcase( hashPrefix & hash( pathKey & subkey ) ) );
 						}
 					}
 				}
@@ -89,7 +87,7 @@ component name="OpenAPIDocument" accessors="true" {
 			if( isObject( NormalizedDoc[ key ] ) && findNoCase( "Parser", getMetaData( NormalizedDoc[ key ] ).name ) ){
 
 				if( !structKeyExists( NormalizedDoc[ key ], "getDocumentObject" )  ){
-					throwForeignObjectTypeException( NormalizedDoc[ key ] )
+					throwForeignObjectTypeException( NormalizedDoc[ key ] );
 					throw( type="Relax.NormalizationException" ,message="Relax doesn't know what do with an object of type #getMetaData( NormalizedDoc[ key ] ).name#." );
 				}					
 			

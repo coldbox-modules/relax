@@ -55,6 +55,7 @@ component{
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
+
 		var configSettings = controller.getConfigSettings();
 		// parse parent settings
 		parseParentSettings();
@@ -105,7 +106,7 @@ component{
 
 		//RelaxDSL Translator
 		binder.map( "DSLTranslator@relax" )
-			.to( "#moduleMapping#.models.RelaxDSL.Translator" )
+			.to( "#moduleMapping#.models.RelaxDSL.Translator" );
 
 	}
 
@@ -140,7 +141,7 @@ component{
 			// History stack size, the number of history items to track in the RelaxURL
 			maxHistory = 10
 		};
-		*/
+		**/
 		// Read parent application config
 		var oConfig 		= controller.getSetting( "ColdBoxConfig" );
 		var relaxDSL		= oConfig.getPropertyMixin( "relax", "variables", structnew() );
