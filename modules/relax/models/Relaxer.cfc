@@ -99,68 +99,48 @@ component singleton accessors="true"{
 	* @httpProxyPort 	HTTP Proxy server host port
 	*/
 	function send(
-		httpMethod = "GET",
-		httpResource = "",
-		httpFormat = "",
-		headerNames = "",
-		headerValues = "",
-		parameterNames = "",
-		parameterValues = "",
-		username = "",
-		password = "",
-		httpProxy = "",
-		httpProxyPort = ""
+		requestData
 	){
 		var results 	= structnew();
 		var response 	= "";
 		var i			= 1;
 		var tmpValue	= "";
 		var attribs		= structnew();
-		var history		= {
-			httpMethod 		= arguments.httpMethod,
-			httpResource 	= arguments.httpResource,
-			httpFormat 		= arguments.httpFormat,
-			headerNames 	= arguments.headerNames,
-			headerValues 	= arguments.headerValues,
-			parameterNames 	= arguments.parameterNames,
-			parameterValues = arguments.parameterValues,
-			username		= arguments.username,
-			password		= arguments.password,
-			httpProxy		= arguments.httpProxy,
-			httpProxyPort	= arguments.httpProxyPort
+		var httpRequest	= {
+			httpMethod 		= arguments.requestData.method,
+			httpResource 	= arguments.requestData.url,
+			httpHeaders 	= arguments.requestData.headers,
+			httpParams 		= arguments.requestData.data
 		};
 
-		// Record History
-		pushHistory( history );
+		if( structKeyExists( arguments.requestData, "httpProxy" ) ){
+			httpRequest[ 'httpProxy' ] = arguments.requestData.httpProxy;
+			httpRequest[ 'httpProxyPort' ] = arguments.requestData.httpProxyPort;
+		}
 
-		// Format Extension detected? If so, add it to resource.
-		if( len( arguments.httpFormat ) ){
-			arguments.httpResource = arguments.httpResource & "." & arguments.httpFormat;
+		if( structKeyExists( arguments.requestData, "authUsername" ) ){
+			httpRequest[ "username" ] = arguments.requestData.username;
+			httpPrequest[ "password" ] = arguments.requestData.password;
 		}
 
 		// Log what we are sending out
 		if( variables.log.canDebug() ){
-			variables.log.debug( "Relaxed URL Request to #arguments.httpMethod#:#arguments.httpResource#:#arguments.httpFormat#",
-						   	     "Headers: #arguments.headerNames#->#arguments.headerValues#; Parameters: #arguments.parameterNames#->#arguments.parameterValues#" );
+			variables.log.debug( "Relaxed URL Request to #httpRequest.httpMethod#:#httpRequest.httpResource#",
+						   	     "RequestData: #serializeJSON( httpRequest )#" );
 		}
 
-		// inflate headers
-		arguments.headerNames  = listToArray( arguments.headerNames );
-		arguments.headerValues = listToArray( arguments.headerValues );
-
-		// inflate parameters
-		arguments.parameterNames  = listToArray( arguments.parameterNames );
-		arguments.parameterValues = listToArray( arguments.parameterValues );
-
 		// optional attribs
-		if( len( arguments.username ) ){ attribs.username = arguments.username; }
-		if( len( arguments.password ) ){ attribs.password = arguments.password; }
-		if( len( arguments.httpProxy ) ){ attribs.proxyServer = arguments.httpProxy; }
-		if( len( arguments.httpProxyPort ) ){ attribs.proxyPort = arguments.httpProxyPort; }
+		if( structKeyExists( httpRequest, "username" ) ){ attribs.username = httpRequest.username; }
+		if( structKeyExists( httpRequest, "password" ) ){ attribs.password = httpRequest.password; }
+		if( structKeyExists( httpRequest, "httpProxy" ) ){ attribs.proxyServer = httpRequest.httpProxy; }
+		if( structKeyExists( httpRequest, "httpProxyPort" ) ){ attribs.proxyPort = httpRequest.httpProxyPort; }
+
+		// Record History
+		pushHistory( httpRequest );
 
 		var httpService = new http(
-			method				= "#arguments.httpMethod#",
-			url					= "#arguments.httpResource#",
+			method				= "#httpRequest.httpMethod#",
+			url					= "#httpRequest.httpResource#",
 			timeout				= "20",
 			resolveURL			= "true",
 			userAgent			= "ColdBox Relaxer",
@@ -169,16 +149,14 @@ component singleton accessors="true"{
 		);
 
 		// Add Headers
-		for( var x=1; x lte arrayLen( arguments.headerNames ); x++ ){
-			var thisValue = ( arrayIsDefined( arguments.headerValues, x ) ? arguments.headerValues[ x ] : "" );
-			httpService.addParam( type="header", name=arguments.headerNames[ x ], value=thisValue );
+		for( var headerName in httpRequest.httpHeaders ){
+			httpService.addParam( type="header", name=headerName, value=httpRequest.httpHeaders[ headerName ] );
 		} 
 
 		// Add Parameters
-		for( var x=1; x lte arrayLen( arguments.parameterNames ); x++ ){
-			var thisValue = ( arrayIsDefined( arguments.parameterValues, x ) ? arguments.parameterValues[ x ] : "" );
-			httpService.addParam( type="url", name=arguments.parameterNames[ x ], value=thisValue );
-		}
+		for( var paramName in httpRequest.httpParams ){
+			httpService.addParam( type="header", name=paramName, value=httpRequest.httpParams[ paramName ] );
+		} 
 
 		return httpService.send().getPrefix();
 

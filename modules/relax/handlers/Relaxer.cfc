@@ -66,13 +66,17 @@ component extends="BaseHandler"{
 		event.noLayout();
 		prc.results = {};
 		try{
-			prc.results = relaxerService.send( argumentCollection=rc );
+			//deserialize our json packet
+			requestData = deSerializeJSON(getHttpRequestData().content);
+			prc.results = relaxerService.send( requestData = requestData );
 		} catch( Any e ){
 			prc.results[ 'error' ] = "Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#";
 			prc.results[ 'message' ] = "Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#";
+			prc.results[ 'mimeType' ] = "application/json";
 			log.error( prc.results.error, e );
 		}
-		renderData( data=prc.results, type=listLast( prc.results.mimeType, '/' ) );
+
+		event.renderData( data=prc.results, type="json" );
 	}
 
 	/**

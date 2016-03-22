@@ -1,0 +1,72 @@
+<%
+var httpMethodKeys = [ 'get','put','post','patch','delete','options','head' ];
+%>
+        	
+<div class="panel-heading">
+    <h3 class="panel-title">Select a tier &amp; path:</h3>
+</div>
+<div class="panel-body">
+    <div class="form-group">
+        <h4 class="text-muted">
+            Tier Entry Point:
+        </h4>
+
+        <% if( !_.isUndefined( api[ "x-entryPoint" ] ) ){ %>
+            <select name="resourceTier" class="form-control input-sm">
+            
+                <% 
+                    _.each( _.keys( api[ "x-entryPoint" ] ), function( entryPoint ){
+                        var baseUrl = api[ "x-entryPoint" ][ entryPoint ];
+                %>
+                <option value="<%=baseUrl%>">(<%=entryPoint.toLowerCase()%>) <%=baseUrl%></option>
+                <% }); %>
+
+            </select>
+        <%  } else {  %>
+            <input 
+                name="resourceTier" 
+                class="form-control input-sm" 
+                type="text" 
+                value="<%= ( !_.isUndefined( api.scheme ) ? api.scheme + '://' : window.location.protocol + "//" ) %><%=api.host%>"
+            />
+        <% } %>  
+    </div><!-- /.form-group -->
+	<div class="form-group">
+        <h4 class="text-muted">Paths:</h4>
+		<!-- Accordion Items-->
+        <% 
+            _.each( _.keys( api.paths ), function( pathName ){
+                var path = api.paths[ pathName ];
+        %>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading-#path[ "x-resourceId" ]#">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#tab-<%=path[ "x-resourceId" ]%>" aria-expanded="true" aria-controls="tab-<%=path[ "x-resourceId" ]%>">
+                        <%=pathName%>
+                        </a>
+                    </h4>
+                </div>
+                <div id="tab-<%=path[ "x-resourceId" ]%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="tab-<%=path[ "x-resourceId" ]%>">
+                    <div class="panel-body">
+                        <!--- My Resources --->
+                        <select name="myResource" title="Your defined RESTful resources"  class="relaxerResourceSelector form-control input-sm">
+                            <option value="null" selected="selected">Pick One To Test</option>
+                            <% 
+                                _.each( httpMethodKeys, function( methodName ){ 
+                                    if( !_.isUndefined( path[ methodName ] ) ){
+                            %>
+                                <option value="<%=methodName%>;<%=pathName%>;">
+                                    ( <%=methodName.toUpperCase()%> ) <%=pathName%>
+                                </option>
+                            
+                            <% 
+                                }
+                                }); 
+                            %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+	</div><!-- /.form-group -->
+</div><!-- /.panel-body -->

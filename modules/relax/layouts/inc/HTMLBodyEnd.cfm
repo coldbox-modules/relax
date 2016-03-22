@@ -56,6 +56,12 @@
 <script type="text/template" id="security-definitions-template">
     <cfinclude template="#prc.root#/views/apidoc/_template/security-definitions.html"/>
 </script>
+<script type="text/template" id="relaxer-form-template">
+    <cfinclude template="#prc.root#/views/apidoc/_template/relaxer-form.html"/>
+</script>
+<script type="text/template" id="relaxer-response-template">
+    <cfinclude template="#prc.root#/views/apidoc/_template/relaxer-response.html"/>
+</script>
 
 <!-- dynamic assets -->
 <cfoutput>
