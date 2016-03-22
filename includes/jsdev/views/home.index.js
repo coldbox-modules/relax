@@ -61,11 +61,15 @@ define([
                         success: function( model, resp ){
                             _this.availableAPIs = _.clone(model.attributes.apis);
                             //instantiate the sidebar
-                            _this.sidebar = new SidebarWidget( {
-                                "view":_this,
-                                "apis":model.attributes.apis,
-                                "default":model.attributes.default    
-                            } );
+                            if( $( ".mc-sidebar" ).length > 0 ){
+                                
+                                _this.sidebar = new SidebarWidget( {
+                                    "view":_this,
+                                    "apis":model.attributes.apis,
+                                    "default":model.attributes.default    
+                                } );   
+                                
+                            }
 
                             _this.defaultAPI = model.attributes.default;
                             if( typeof( _this.activeAPI ) === 'undefined' ) _this.activeAPI = _this.defaultAPI;

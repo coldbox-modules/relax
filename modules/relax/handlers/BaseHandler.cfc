@@ -21,6 +21,7 @@ component {
 		prc.xehHome 		= "relax";
 		prc.xehRelax		= "relax/home/relax";
 		prc.xehRelaxer		= "relax/relaxer";
+		prc.xehOpenAPIDocs	= "relax/home/OpenAPIDocs";
 		prc.xehDSLDocs		= "relax/home/DSLDocs";
 
 		prepareRuntimeAssets(argumentCollection=arguments);
@@ -46,19 +47,19 @@ component {
 		};
 
 		// Naming convention is: {handler}.css
-		var cssPathCheck = cssViewPath & "#handler#.css";
+		var cssPathCheck = cssViewPath & "#lcase(handler)#.css";
 		if( fileExists( expandPath( cssPathCheck )) ){ prc.addCSS( cssPathCheck ); }
 
 		// Naming convention is: {handler}-{action}.css
-		var cssPathCheck = cssViewPath & "#handler#-#action#.css";
+		var cssPathCheck = cssViewPath & "#lcase(handler)#-#action#.css";
 		if( fileExists( expandPath( cssPathCheck )) ){ prc.addCSS( cssPathCheck ); }
 
 		// Naming convention is: {handler}.js
-		var jsPathCheck = jsViewPath & "#handler#.js";
+		var jsPathCheck = jsViewPath & "#lcase(handler)#.js";
 		if( fileExists( expandPath(jsPathCheck) ) ){ prc.addJS( jsPathCheck ); }
 
 		// Naming convention is: {handler}.{action}.js
-		var jsPathCheck = jsViewPath & "#handler#.#action#.js";
+		var jsPathCheck = jsViewPath & "#lcase(handler)#.#action#.js";
 		if( fileExists( expandPath(jsPathCheck) ) ){ prc.addJS( jsPathCheck ); }
 
 	}

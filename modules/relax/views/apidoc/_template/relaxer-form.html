@@ -1,0 +1,131 @@
+<form class="relaxerForm" action="javascript:void(0)" class="form-inline">
+	<%
+		var advancedSettingsUID = _.uniqueId( "advSettings" );
+	%>
+	<div class="pull-right">
+		<a class="btn btn-default" title="Advanced Settings" data-toggle="collapse" href="#<%=advancedSettingsUID%>" aria-expanded="false" aria-controls="<%=advancedSettingsUID%>"> <img src="<%=rootAssetPath%>/includes/images/settings.png" alt="settings" height="16"/></button>
+	</div>
+
+	<fieldset>
+		<legend>Method-Resource-Format</legend>
+
+		<!--- Resource ID --->
+		<input type="hidden" name="resourceID" 	 id="resourceID" 	value="null" />
+		<input type="hidden" name="resourceTier" id="resourceTier" 	value="production" />
+
+		<div class="input-group">
+
+			<!--- Button Bar --->
+			<div class="input-group-btn">
+				<!--- HTTP Method --->
+				<select name="httpMethod" id="httpMethod" title="Choose your HTTP Method" class="form-control input-sm">
+					<option value="GET">GET</option>
+					<option value="PUT">PUT</option>
+					<option value="POST">POST</option>
+					<option value="DELETE">DELETE</option>
+					<option value="HEAD">HEAD</option>
+					<option value="OPTIONS">OPTIONS</option>
+				</select>
+
+				<!--- Resource or URL --->
+				<input title="The resource to hit" type="text" name="httpResource" id="httpResource" size="60" class="form-control" value="" />
+
+				<!--- Format --->
+				<select name="httpFormat" id="httpFormat" title="The resource format extension (if available)" class="form-control input-sm">
+					<option value="">none</option>
+					<option>xml</option>
+					<option>json</option>
+					<option>jsont</option>
+					<option>rss</option>
+				</select>
+
+				<button type="button" class="btn btn-primary btnSendRequest" title="Send Request"> Send </button>
+			</div>
+
+		</div>
+	</fieldset>
+
+	<!--- Advanced Settings --->
+	<div id="<%=advancedSettingsUID%>" class="collapse well advancedSettings">
+		<!--- HTTP Basic Auth --->
+		<fieldset>
+			<% 
+				var authUID = _.uniqueId( "auth" );
+			%> 
+			<legend>
+				HTTP Basic Authentication
+				<a data-toggle="collapse" href="#<%=authUID%>" aria-expanded="false" aria-controls="<%=authUID%>">
+					<i class="fa fa-caret-down"></i>
+				</a>
+			</legend>
+			<div class="collapse" id="<%=authUID%>">
+				Username:
+				<input title="Username"  type="text" class="form-control" name="username" id="username" size="30" value="" />
+				Password:
+				<input title="Password"  type="text" class="form-control" name="password" id="password" size="30" value="" />
+			</div>
+
+		</fieldset>
+
+		<!--- HTTP Proxy --->
+		<fieldset>
+			<% 
+				var proxyUID = _.uniqueId( "proxy" );
+			%> 
+			<legend>
+				HTTP Proxy
+				<a data-toggle="collapse" href="#<%=proxyUID%>" aria-expanded="false" aria-controls="<%=proxyUID%>">
+					<i class="fa fa-caret-down"></i>
+				</a>
+			</legend>
+
+			<div class="collapse" id="<%=proxyUID%>">
+				Host:
+				<input title="HTTP Proxy"  type="text" class="form-control" name="httpProxy" id="httpProxy"  size="30" value="" />
+				Port:
+				<input title="HTTP Proxy Port"  type="text" class="form-control" name="httpProxyPort" id="httpProxyPort" size="30" value="" />
+			</div>
+
+		</fieldset>
+
+		<!--- HTTP Headers --->
+		<fieldset>
+			<% 
+				var headersUID = _.uniqueId( "headers" );
+			%> 
+			<legend>
+				API Headers
+				<a data-toggle="collapse" href="#<%=headersUID%>" aria-expanded="false" aria-controls="<%=headersUID%>">
+					<i class="fa fa-caret-down"></i>
+				</a>
+			</legend>
+
+			<!--- Headers Holder --->
+			<div id="<%=headersUID%>" class="httpHeaders collapse">
+				<div class="headersFormGroup"></div>
+				<!--- Add Header --->
+				<button class="btn btn-default btn-sm dynamicAdd" data-type="header" title="Add Header" id="addHeaderButton" onclick="return false;"><i class="fa fa-plus"></i></button>
+			</div>
+		</fieldset>
+
+		<!--- Query Params --->
+		<fieldset>
+			<% 
+				var paramsUID = _.uniqueId( "params" );
+			%>
+			<legend>
+				API Parameters
+				<a data-toggle="collapse" href="#<%=paramsUID%>" aria-expanded="false" aria-controls="<%=paramsUID%>">
+					<i class="fa fa-caret-down"></i>
+				</a>
+			</legend>
+
+			<!--- Parameters Holder --->
+			<div id="<%=paramsUID%>" class="httpParameters collapse">
+				<div class="parametersFormGroup"></div>
+				<!--- Add Header --->
+				<button class="btn btn-default btn-sm dynamicAdd" data-type="parameter" title="Add Parameter" id="addParameterButton" onclick="return false;"><i class="fa fa-plus"></i></button>
+			</div>
+		</fieldset>
+	</div>
+</form>

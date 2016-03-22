@@ -36,25 +36,30 @@
 				<hr>
 			<% } %>
 
-			<h4 class="panel-subtitle text-primary">Responses:</h4>
-			<% 
-			_.each( _.keys(method.responses), function( responseKey ){ 
-				if( !isNaN( responseKey ) || responseKey === 'default' ){
-			%>
-				<%= responseTemplate( 
-					{
-						"resourceId": method["x-resourceId"] ,
-						"path":key,
-						"key":responseKey,
-						"response":method.responses[ responseKey ]
-					} 
-				) %>
-			
-			<% 
-				}
-			
-			}); 
-			%>
+			<% if( _.keys( method.responses ).length ) { %>
+
+				<h4 class="panel-subtitle text-primary">Responses:</h4>
+				<% 
+				_.each( _.keys(method.responses), function( responseKey ){ 
+					if( !isNaN( responseKey ) || responseKey === 'default' ){
+				%>
+					<%= responseTemplate( 
+						{
+							"resourceId": method["x-resourceId"] ,
+							"path":key,
+							"key":responseKey,
+							"response":method.responses[ responseKey ]
+						} 
+					) %>
+				
+				<% 
+					}
+				
+				}); 
+				%>
+
+			<% } %>
+
 			
 		</div>
 	</div>

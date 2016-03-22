@@ -123,8 +123,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 			structAppend( translation[ "paths" ], 
 			{
 				"#pathkey#" : {
-					"x-coldbox-handler" : resource.handler,
-					"x-resource-id": resource.resourceId
+					"x-resourceId": resource.resourceId
 				}
 			} );
 			
@@ -150,14 +149,16 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		required struct resource, 
 		required struct translation 
 	){
+		pathKey = translatePathKey( resource.pattern );
 
 		//handle string action values for consistent formatting
 		if( isSimpleValue( resource.action ) ) {
-			var defaultAction = resource.action;
+			resource.handlerMethod = resource.action;
 			resource.action = createObject( "java", "java.util.LinkedHashMap" );
 			
 			structAppend( resource.action, {
-					"#resource.defaultMethod#": resource.action
+					"#resource.defaultMethod#": resource.action,
+					"x-coldbox-handler" : resource.handler
 			} );
 
 			var allowedMethods = listToArray( resource.methods );
@@ -173,14 +174,35 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 
 		//assembly begins
 		for( var HTTPMethod in resource.action ){
+			if( 
+				structKeyExists( resource, "handlerMethod" ) 
+				&& 
+				isSimpleValue( resource.handlerMethod ) 
+				&& 
+				len( resource.handlerMethod ) 
+				&&
+				!isStruct( resource.handlerMethod )
+			){
+				var operationalAction = "." & resource.handlerMethod;
+			} else {
+				var operationalAction = "";
+			}
+			
 			structAppend( path, {
 				"#lcase( HTTPMethod )#" = {
 					"description": structKeyExists( resource,"description" ) ? resource.description : "",
+					"operationId" : resource.handler & operationalAction,
 					"produces": translation["produces"],
 					"responses" : createObject( "java", "java.util.LinkedHashMap" ),
-					"parameters" : createObject( "java", "java.util.LinkedHashMap" )
+					"parameters" : createObject( "java", "java.util.LinkedHashMap" ),
+					"x-resourceId": lcase( hash( pathKey & lcase( HTTPMethod ) ) )
 				}
-			} );
+			});
+
+			if( !len( trim( path[ lcase( HTTPMethod ) ][ "operationId" ] ) ) ){
+				structDelete( path[ lcase( HTTPMethod ) ], "operationId" );
+			}
+
 
 			//handle our URL placeholders
 			for( var placeholder in resource.placeholders ){
@@ -242,7 +264,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 					"schema" : {
 						"type" : "object"
 					},
-					"example" : createObject( "java", "java.util.LinkedHashMap" )
+					"examples" : createObject( "java", "java.util.LinkedHashMap" )
 				}
 
 				switch( schema[ "format" ] ){
@@ -260,7 +282,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 						var mimeType = REFindNoCase( schema[ "format" ], "html|text|string" ) ? "text/" & schema[ "format" ] : "application/" & schema[ "format" ];			
 				}
 
-				structAppend( schemaDefinition[ "example" ], {
+				structAppend( schemaDefinition[ "examples" ], {
 					"#mimeType#" : body
 				});
 
@@ -278,7 +300,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 						
 						} else if( structKeyExists( path[ methodKey ][ "responses" ], statusCode ) ) {
 
-							if( structKeyExists( path[ methodKey ][ "responses" ][ statusCode ][ "example" ], mimeType ) ){
+							if( structKeyExists( path[ methodKey ][ "responses" ][ statusCode ][ "examples" ], mimeType ) ){
 							
 								structAppend( path[ methodKey ][ "responses" ], {
 									"default" : schemaDefinition
@@ -286,7 +308,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 							
 							} else {
 
-								structAppend( path[ methodKey ][ "responses" ][ statusCode ][ "example" ], schemaDefinition[ "example" ] );
+								structAppend( path[ methodKey ][ "responses" ][ statusCode ][ "examples" ], schemaDefinition[ "examples" ] );
 							
 							}
 						

@@ -1,0 +1,47 @@
+<div id="resultsBox">
+	<div class="panel panel-default">
+        <div class="panel-body">
+            <div class="tab-wrapper tab-primary">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#headers" data-toggle="tab">Response Headers</a></li>
+					<li><a href="#results" data-toggle="tab">Raw Results</a></li>
+					<li><a href="#pretty" data-toggle="tab">Pretty Results</a></li>
+					<li><a href="#browser" onclick="showBrowserResults();return false">Browser Results</a></li>
+                </ul>
+                <div class="tab-content">
+                	<!--- RAW HEADERS --->
+                    <div class="tab-pane active" id="headers">
+                    	<table class="table table-hover table-striped table-condensed" width="100%">
+							<tr>
+								<th width="200" class="text-right">Request Status</th>
+								<td>
+									#prc.results.statuscode#
+								</td>
+							</tr>
+							<cfloop collection="#prc.results.responseHeader#" item="header">
+							<tr>
+								<th class="text-right">#header#</th>
+								<td>
+									#prc.results.responseHeader[ header ].toString()#
+								</td>
+							</tr>
+							</cfloop>
+						</table>
+                    </div>
+                    <!--- RAW CONTENT --->
+                    <div class="tab-pane" id="results">
+                    	<form>
+						<textarea id="resultsRAW" class="textfield" rows="30" style="width:100%">#prc.results.fileContent.toString()#</textarea>
+						</form>
+                    </div>
+                    <!--- PRETTY CONTENT --->
+                    <div class="tab-pane" id="pretty">
+                    	<pre id="resultsPretty"><code class="language-json">
+                    		#getTreatedContent( prc.results.fileContent )#
+						</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div> <!--- end panel body--->
+    </div> <!---- end panel --->
+</div>

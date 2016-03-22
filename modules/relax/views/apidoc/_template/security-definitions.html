@@ -1,0 +1,88 @@
+<!-- security definitions -->
+<div class="definition-list list-group">
+	<div class="col-xs-12 bg-primary">
+		<div class="definition-column key col-sm-3 col-xs-8">
+			Name
+		</div>
+
+		<div class="definition column type col-sm-2 col-xs-4">
+			Type
+		</div>
+
+		<div class="definition column description col-sm-7 col-xs-12">
+			Description
+		</div>
+
+	</div>
+<% 
+	_.each( _.keys( definitions )  ,function( definitionKey ){
+		var definition = definitions[ definitionKey ];
+	    var definitionUid = _.uniqueId('definition_');
+%>
+
+	<div class="list-group-item definition optional col-xs-12">
+
+	    <div class="definition-column key col-sm-3 col-xs-8">
+	    	<code><%= !_.isUndefined( definition.name ) ? definition.name : definitionKey %></code>
+	    </div>
+
+	    <div class="definition column type col-sm-2 col-xs-4">
+	    	<% if( !_.isUndefined( definition.type ) ){ %>
+	    		
+	    		<code><%= definition.type %></code>
+	    	
+	    	<% } else { %>
+	    	
+	    		N/A
+	    	
+	    	<% } %>
+	    </div>
+
+	    <div class="definition column description col-sm-7 col-xs-12">
+
+	    	<% if(  definition.type === 'oauth2' ) { %>
+		     	<a href="#<%=definitionUid%>" class="pull-right" data-toggle="collapse" aria-expanded="false" aria-controls="<%=definitionUid%>">
+		    		<small><i class="fa fa-chevron-down"></i></small>
+		    	</a>
+	     	 <% } %>
+	    	
+	    	<% if( !_.isUndefined( definition.in ) ){ %>
+	    		<p>Provided in the <code><%=definition.in%></code> of the request</p>
+	    	<% } %>
+
+	    	<% if( !_.isUndefined( definition.description ) ){ %>
+	    		<p><%= definition.description.replace(/(?:\r\n|\r|\n)/g, '<br />') %></p>
+	    	<% } else { %>
+	    		<p>Definition description unavailable.</p>
+	    	<% } %>
+	    	
+	    </div>
+
+	    <% if(  definition.type === 'oauth2' ) { %>
+		    <div class="clearfix"></div>
+		    <div id="<%=definitionUid%>" class="collapse panel panel-solid-default">
+		    	<p>
+		    		
+		    		<strong>Authorization URL:</strong> 
+		    		<a href="<%=definition.authorizationUrl%>"><%=definition.authorizationUrl%></a>
+		    		<br>
+		    		
+		    		<% if( !_.isUndefined( definition.tokenUrl ) ) { %>
+		    		<strong>Token URL</strong> <a href="<%=definition.tokenUrl%>"><%=definition.tokenUrl%></a><br>
+		    		<% } %>
+		    		
+		    		<strong>OAuth Flow</strong> <code><%=definition.flow%></code><br>
+
+		    	</p>
+		    	<strong>Scopes:</strong><br>
+	    		<pre class="language-json"><%= formatJSONRaw( JSON.stringify( definition.scopes ) ).trim() %></pre>
+	    	</div>
+    	<% } %>
+    	
+
+	</div>
+<%	
+	});
+%>
+</div>
+<!-- /security definitions -->

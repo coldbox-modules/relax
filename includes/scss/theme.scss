@@ -13,7 +13,8 @@
 //@import url("../plugins/highlighter/styles/shCoreMidnight.css");
 //@import url("../plugins/prism/prism.css");
 @import url("../plugins/prism/prism-okaidia.css");
-
+@import url( "../plugins/messenger/css/messenger.css" );
+@import url( "../plugins/messenger/css/messenger-theme-future.css" );
 
 /*
  *
@@ -27,7 +28,8 @@
 @import "theme/_mixins.scss";
 
 @import "theme/_base.scss"; 
-@import "theme/_badges.scss"; 
+@import "theme/_badges.scss";
+@import "theme/_backgrounds.scss";  
 @import "theme/_breadcrumbs.scss";
 @import "theme/_buttons.scss";
 @import "theme/_calendar.scss";

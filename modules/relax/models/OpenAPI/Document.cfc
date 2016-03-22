@@ -15,11 +15,11 @@ component name="OpenAPIDocument" accessors="true" {
 		setDocument( ARGUMENTS.Doc );
 
 		if( len( ARGUMENTS.XPath ) ){
-			this.xPath( ARGUMENTS.XPath );
+			this.setXPath( ARGUMENTS.XPath );
 			zoomToXPath();
 		}
 
-		setResourceIds();
+		setResourceIds( getDocument() );
 		
 		return this;
 	}
@@ -35,19 +35,28 @@ component name="OpenAPIDocument" accessors="true" {
 
 	}
 
-	private void function setResourceIds(required struct resourceDoc=getDocument(), string hashPrefix="" ){
-		var appendableNodes = [ "paths","responses" ];
+	private void function setResourceIds(required struct resourceDoc, string hashPrefix="" ){
+		var appendableNodes = [ "paths","get","post","put","patch","delete","head","option" ];
 
 		for ( var resourceKey in appendableNodes ){
 			
-			if( structKeyExists( resourceDoc, resourceKey ) ){
+			if(  structKeyExists( resourceDoc, resourceKey ) && isStruct( resourceDoc[ resourceKey ] ) ){
 				for( var pathKey in resourceDoc[ resourceKey ] ){
+					if( !isStruct( resourceDoc[ resourceKey ][ pathKey ] ) ) continue;
 					structAppend( resourceDoc[ resourceKey ][ pathKey ], {
-						"x-resourceId": lcase( hash( pathKey ) )
+						"x-resourceId": lcase( hashPrefix & hash( pathKey ) )
 					} );
 					//recurse, if necessary
 					for( var subKey in resourceDoc[ resourceKey ][ pathKey ] ){
-						if( arrayFind( appendableNodes, subKey ) ) setResourceIds( resourceDoc[ resourceKey ][ pathKey ], pathKey );
+						if( 
+							arrayFindNoCase( appendableNodes, subKey ) 
+							&& 
+							isStruct( resourceDoc[ resourceKey ][ pathKey ][ subKey ] )
+						) {
+							structAppend( resourceDoc[ resourceKey ][ pathKey ][ subKey ],{
+								"x-resourceId": lcase( hashPrefix & hash( pathKey & subkey ) )
+							});
+						}
 					}
 				}
 			}	
@@ -71,7 +80,7 @@ component name="OpenAPIDocument" accessors="true" {
 		return serializeJSON( getNormalizedDocument() );
 	}
 
-	public function getNormalizedDocument(struct APIDoc=getDocument()){
+	public function getNormalizedDocument(struct APIDoc=this.getDocument()){
 		
 		var NormalizedDoc = structCopy( ARGUMENTS.APIDoc );
 
@@ -111,6 +120,8 @@ component name="OpenAPIDocument" accessors="true" {
 			}
 		}
 
+		setResourceIds(normalizedDoc);
+
 		return NormalizedDoc;
 	}
 
@@ -123,11 +134,9 @@ component name="OpenAPIDocument" accessors="true" {
 	 **/
 	public any function locate( string key ){
 		var document=this.getDocument();
-
-		//if we have an existing document key with that name, return it
 		if( structKeyExists( document, ARGUMENTS.key ) ){
 			return document[ ARGUMENTS.key ];
-		} else {;
+		} else {
 			if( isDefined( 'document.#ARGUMENTS.key#' ) ){
 				return evaluate( 'document.#ARGUMENTS.key#' );
 			}

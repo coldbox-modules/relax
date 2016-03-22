@@ -70,10 +70,14 @@ component accessors="true" {
 	*/
     string function getLoadedAPIName(){
     	if( !getSessionsEnabled() ){
-    		return getSettings().defaultAPI;
+    		return getDefaultAPIName();
     	}
 
     	return ( structKeyExistS( session, "relax-api" ) ? session[ "relax-api" ] : "" );
+    }
+
+    string function getDefaultAPIName(){
+    	return getSettings().defaultAPI;
     }
 
     /**
@@ -107,7 +111,7 @@ component accessors="true" {
 		}
 
 		// If we have a configure() then call it 
-		if( structKeyExists( dataCFC, "configure") ) processConfiguration( dataCFC );
+		if( !isNull( dataCFC ) && structKeyExists( dataCFC, "configure") ) processConfiguration( dataCFC );
 
 		if( !isNull( dataCFC ) && isLegacyAPI( dataCFC ) ){
 			/**

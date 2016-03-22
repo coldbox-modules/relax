@@ -61,12 +61,21 @@ component extends="BaseHandler"{
 	}
 
 	/**
+	* OpenAPI/Swagger Documentation
+	*/
+	function OpenAPIDocs( event, rc, prc ){
+		prc.docs = getModel( "RelaxDoc@relax" ).generate();
+		event.setView( view="home/OpenAPIDocs" );
+	}
+
+	/**
 	* The DSL Documentation
 	*/
 	function dslDocs( event, rc, prc ){
-		prc.docs = getModel( "DSLDoc@relax" ).generate();
+		prc.docs = getModel( "RelaxDoc@relax" ).generate();
 		event.setView( view="home/DSLDocs" );
 	}
+
 
 	/**
 	* Export Resource Doc

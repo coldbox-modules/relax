@@ -58,20 +58,21 @@
 					</a>
 					<!--- pdf --->
 					<a href="#event.buildLink( prc.xehExportPDF)#" class="btn btn-primary"
+						data-toggle="tooltip"
 					    target="_blank"
 						title="Export as PDF">
 						<i class="fa fa-lg fa-file-pdf-o"></i>
 					</a>
 					<!--- mediawiki --->
-					<a href="#event.buildLink( prc.xehExportwiki)#" class="btn btn-primary"
-					    target="_blank"
-						title="Export as MediaWiki">
+					<a href="javascript:void(0)" class="btn btn-primary btnExportMediaWiki"
+					    data-toggle="tooltip"
+					    title="Export as MediaWiki">
 						<i class="fa fa-lg fa-file-code-o"></i>
 					</a>
 					<!--- trac --->
-					<a href="#event.buildLink( prc.xehExporttrac)#" class="btn btn-primary"
-					    target="_blank"
-						title="Export as TracMarkup">
+					<a href="javascript:void(0)" class="btn btn-primary btnExportTrac"
+					    data-toggle="tooltip"
+					    title="Export as TracMarkup">
 						<i class="fa fa-lg fa-paw"></i>
 					</a>
 				</p>

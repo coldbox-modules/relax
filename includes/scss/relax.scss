@@ -28,3 +28,52 @@ div.syntaxhighlighter{
 }
 div.syntaxhighlighter div.container:after,
 div.syntaxhighlighter div.container:before{ display: block !important;}
+
+body:not(.print){
+
+	
+}
+
+/**
+* Print Layout Styles
+**/
+body.print{
+
+	.tab-pane{
+		display:block!important;
+	}
+
+	.hidden-print 
+	,[ data-toggle="collapse" ]
+	{
+		display:none!important;
+	}
+
+	/**
+	* Bootstrap Overrides
+	**/
+
+	.collapse{
+		display:block!important;
+	}
+
+	.tab-content{
+		border-right:none;
+		border-left:none;
+	}
+
+	/**
+	* Theme overrides
+	**/
+	section.main-content,#main-content{
+		width: 100%;
+		margin-left: 0px;
+		margin-right: 0px;
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
+	section.main-content{
+		padding: 0px 0px 0px 0px;
+	}
+
+}

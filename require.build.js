@@ -16,8 +16,12 @@ require.config({
         ,navgoco: '../../bower_components/navgoco/src/jquery.navgoco.min'
         ,"es6-shim": '../../bower_components/es6-shim/es6-shim.min'
         ,prism: '../../bower_components/prism/prism'
+        ,clipboard: '../../bower_components/clipboard/dist/clipboard.min'
+        ,messenger: '../../modules/relax/includes/plugins/messenger/js/messenger.min'
+        ,messengerThemeFuture: '../../modules/relax/includes/plugins/messenger/js/messenger-theme-future'
         ,udf:'udf'
     }
+    
     ,shim:{
         underscore:{exports:'_'}
         ,jquery:{exports:['jQuery','$']}
@@ -27,6 +31,10 @@ require.config({
         ,navgoco:{exports:'navgoco',deps:['jquery']}
         ,"es6-shim":{exports:'es6-shim'}
         ,jsonlint:{exports:'jsonlint'}
+        ,clipboard:{exports:'Clipboard'}
+        ,messenger:{exports:'Messenger'}
+        ,messengerThemeFuture:{deps: [ 'messenger' ]}
     }
-    ,deps:['jquery','bootstrap','underscore','Backbone','respond','switchery','navgoco','html5shiv','iCheck','fastclick']
+
+    ,deps:['jquery','bootstrap','underscore','Backbone','respond','switchery','navgoco','html5shiv','iCheck','fastclick','messenger']
 });
