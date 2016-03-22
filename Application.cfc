@@ -18,6 +18,8 @@ component{
 	COLDBOX_CONFIG_FILE 	 = "";
 	// COLDBOX APPLICATION KEY OVERRIDE
 	COLDBOX_APP_KEY 		 = "";
+	// You can add more paths or change the reload flag as well.
+	this.javaSettings = { loadPaths = [ "lib" ], reloadOnChange = false };
 
 	// application start
 	public boolean function onApplicationStart(){

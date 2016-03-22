@@ -15,10 +15,10 @@ component extends="BaseHandler"{
 	function preHandler( event, rc, prc ){
 		super.preHandler( argumentCollection=arguments );
 		// Get the loaded API for the user
-		prc.dsl				= DSLService.getLoadedAPI();
-		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
+		prc.dsl				= APIService.getLoadedAPI().getNormalizedDocument();
+		prc.loadedAPIName 	= APIService.getLoadedAPIName();
 		// custom css/js
-		prc.jsAppendList 	= "jquery.scrollTo-min";
+		prc.addJS(prc.root & '/includes/js/jquery.scrollTo-min');
 	}
 
 	/**
@@ -31,9 +31,8 @@ component extends="BaseHandler"{
 		prc.jsonAPI = serializeJSON( prc.dsl );
 
 		if( event.valueExists( "download" ) ){
-			var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.relax.title );
-			event.setHTTPHeader( name="content-disposition", value='attachment; filename="#title#.json"')
-				.renderData( data=prc.jsonAPI, type="json" );
+			event.setHTTPHeader( name="content-disposition", value='attachment; filename="#prc.loadedAPIName#.json"')
+				.renderData( data=prc.dsl, type="json" );
 		} else {
 			event.renderData( data=renderView( view="export/api", module="relax" ) );
 		}
