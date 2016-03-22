@@ -1,3 +1,9 @@
+/**
+* Copyright Ortus Solutions, Corp, All rights reserved
+* www.ortussolutions.com
+* ---
+* Open API Utilities
+*/
 component name="OpenAPIUtil" accessors="true" {
 	
 	public function init(){

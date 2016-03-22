@@ -22,7 +22,6 @@ component extends="BaseOpenAPISpec"{
 			it( "Tests the ability instantiate the parser using a JSON file", function(){
 				var JSONParser = Wirebox.getInstance( "OpenAPIParser@relax" ).init( VARIABLES.TestJSONFile );
 				runParserTypeChecks( JSONParser );
-				
 
 				describe( "Performs recursion checks on parsed JSON document", function(){
 					runParserRecursionTests( JSONParser, true );			
@@ -34,19 +33,18 @@ component extends="BaseOpenAPISpec"{
 
 			});
 
-			xit( "Tests the ability instantiate the parser using a CFML file", function(){
-				
-			});
-
 			it( "Tests the ability instantiate the parser using a YAML file", function(){
 				var YAMLParser = Wirebox.getInstance( "OpenAPIParser@relax" ).init( VARIABLES.TestYAMLFile );
-
 				runParserTypeChecks( YAMLParser );
 
 				describe( "Performs recursion checks on parsed YAML document", function(){
 					runParserRecursionTests( YAMLParser );			
 				});
 
+			});
+
+			xit( "Tests the ability instantiate the parser using a CFML file", function(){
+				
 			});
 		});
 	}
@@ -106,6 +104,8 @@ component extends="BaseOpenAPISpec"{
 			expect( NormalizedDocument.paths[ '/pets/{id}' ] ).toHaveDeepKey( "description" );
 			expect( NormalizedDocument.paths[ '/pets/{id}' ] ).toHaveDeepKey( "parameters" );
 			expect( NormalizedDocument.paths[ '/pets/{id}' ] ).toHaveDeepKey( "responses" );
+
+			expect( arrayLen( structFindKey( NormalizedDocument, "$ref" ) ) ).toBe( 0 );
 			
 		});
 
