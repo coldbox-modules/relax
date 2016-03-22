@@ -3,8 +3,8 @@
 * www.coldbox.org | www.luismajano.com | www.ortussolutions.com | www.gocontentbox.org
 **************************************************************************************
 */
-component{
-	this.name = "A TestBox Runner Suite " & hash( getCurrentTemplatePath() );
+component extends="ApplicationProxy"{
+	this.name = "RELAX-TESTHARNESS-" & hash( getCurrentTemplatePath() );
 	// any other application.cfc stuff goes below:
 	this.sessionManagement = true;
 
@@ -13,8 +13,17 @@ component{
 
 	// any mappings go here, we create one that points to the root called test.
 	this.mappings[ "/tests" ] = getDirectoryFromPath( getCurrentTemplatePath() );
-	rootPath = REReplaceNoCase( this.mappings[ "/tests" ], "tests(\\|/)", "" );
+	rootPath = REReplaceNoCase( this.mappings[ "/tests" ], "/tests(\\|/)", "" );
 	this.mappings[ "/root" ]   = rootPath;
+
+	COLDBOX_APP_ROOT_PATH = rootPath & "/";
+	// The web server mapping to this application. Used for remote purposes or static purposes
+	COLDBOX_APP_MAPPING   = "/";
+	// COLDBOX PROPERTIES
+	COLDBOX_CONFIG_FILE 	 = "config.Coldbox";
+	// COLDBOX APPLICATION KEY OVERRIDE
+	COLDBOX_APP_KEY 		 = "RELAX-TESTHARNESS";
+	
 
 	// any orm definitions go here.
 
