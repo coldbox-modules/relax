@@ -27,23 +27,19 @@
 
     <!-- dynamic assets -->
     <cfoutput>
-
-        <!-- Highlighter -->
-        <link type="text/css" rel="stylesheet" href="#prc.root#/includes/plugins/highlighter/styles/shCoreMidnight.css">
-        <script src="#prc.root#/includes/plugins/highlighter/scripts/shCore.js"></script>
-        <script src="#prc.root#/includes/plugins/highlighter/scripts/shBrushColdFusion.js"></script>
-        <script src="#prc.root#/includes/plugins/highlighter/scripts/shBrushXml.js"></script>
-        <script src="#prc.root#/includes/plugins/highlighter/scripts/shBrushSql.js"></script>
-        <script src="#prc.root#/includes/plugins/highlighter/scripts/shBrushJScript.js"></script>
-        <script src="#prc.root#/includes/plugins/highlighter/scripts/shBrushJava.js"></script>
-        <script src="#prc.root#/includes/plugins/highlighter/scripts/shBrushCss.js"></script>
         <!-- RJS Runtime -->
         <script src="#prc.root#/includes/js/require.js" type="application/javascript"></script>
         <script type="application/javascript">
             require(['#prc.root#/includes/js/es6-shim.js'],function(){
                 require(['#prc.root#/includes/js/globals.js'],function(globals){
-                    require(['#prc.root#/includes/js/app.js']);
-                    require(['#prc.root#/includes/js/jsonlint.js'],function(){
+                    window[ "_" ] = _;
+                    require(
+                        [
+                            '#prc.root#/includes/js/jsonlint.js',
+                            '#prc.root#/includes/js/app.js',
+                            '#prc.root#/includes/js/prism.js'
+                        ]
+                    ,function(){
                         require(['#prc.root#/includes/js/udf.js']);    
                     });
                     <!--- loop around the jsAppendList, to add page specific js --->

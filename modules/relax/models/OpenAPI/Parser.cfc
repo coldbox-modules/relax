@@ -14,7 +14,7 @@ component name="OpenAPIParser" accessors="true" {
 	property name="Utils" inject="OpenAPIUtil@relax";
 
 
-	public function init(string APIDocPath){
+	public function init( string APIDocPath ){
 		var refArray = listToArray( ARGUMENTS.APIDocPath, chr( 35 ) );
 
 		var DocPath = refArray[ 1 ];
@@ -59,6 +59,7 @@ component name="OpenAPIParser" accessors="true" {
 				if( !isJSON( documentContent ) ) throwInvalidJSONException( documentContent );
 				
 				documentContent = deSerializeJSON( documentContent );
+
 				break;
 
 			default:
@@ -82,7 +83,23 @@ component name="OpenAPIParser" accessors="true" {
 		return this;
 	}
 
-	public function parseDocumentReferences(required any DocItem ){
+	private function loadAsLinkedHashMap( required string JSONData ){
+
+		var JSONFactory = jLoader.create("com.fasterxml.jackson.core.JsonFactory" );
+		var Codec = jLoader.create( "com.fasterxml.jackson.core.ObjectCodec" );
+		var CodecProxy = createObject("java", "coldfusion.runtime.java.JavaProxy" ).init( Codec );
+
+		var Parser = JSONFactory.createParser( ARGUMENTS.JSONData );
+		var Mapper = jLoader.create( "java.util.Map" );
+		writeDump(var=Parser,top=1);
+		abort;
+		var HashMap = jLoader.create( "java.util.LinkedHashMap" );
+		
+		writeDump(var=CodecProxy.readValue(Parser,HashMap),top=1);
+		abort;		
+	}
+
+	public function parseDocumentReferences( required any DocItem ){
 		
 		if( isArray( DocItem ) ) {
 			for( var i = 1; i <= arrayLen( DocItem ); i++){

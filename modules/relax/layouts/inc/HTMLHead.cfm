@@ -31,5 +31,12 @@
     <script src="#prc.root#/includes/js/html5shiv.js"></script>
     <script src="#prc.root#/includes/js/respond.min.js"></script>
     <![endif]-->
+    <cfoutput>
+        <!--- <cfdump var="#event#" abort> --->
+    <script type="application/javascript">
+        var rootAssetPath = '#prc.root#';
+        var moduleAPIRoot = '/relax/';
+    </script>
+    </cfoutput>
 
 </head>

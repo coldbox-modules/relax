@@ -15,6 +15,7 @@ require.config({
         ,switchery: '../../bower_components/switchery/dist/switchery.min'
         ,navgoco: '../../bower_components/navgoco/src/jquery.navgoco.min'
         ,"es6-shim": '../../bower_components/es6-shim/es6-shim.min'
+        ,prism: '../../bower_components/prism/prism'
         ,udf:'udf'
     }
     ,shim:{

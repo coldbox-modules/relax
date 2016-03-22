@@ -8,9 +8,7 @@
 
 	<div class="modal-body">
 		<p>
-			Below you can see the JSON representation of your ColdBox Relax Service DSL.  You can use it for safe keeping, versioning,
-			or giving it to your friends! You can also click on the download button below. You can also format your JSON by going
-			to <a href="http://jsonlint.com/" target="_blank">http://jsonlint.com/</a>
+			Below you can see the JSON representation of your API.  Relax uses the <a href="https://openapis.org/">Swagger/OpenAPI Specification</a>, so this representation is compatible with any third party tools which accept that specification.
 		</p>	
 		<textarea name="exportJSON" id="exportJSON" class="form-control" rows="20">#prc.jsonAPI#</textarea>
 		<hr/>
@@ -19,10 +17,14 @@
 	
 	<div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		<a href="#event.buildLink(prc.xehExportAPI)#/download/true" target="_blank" class="btn btn-primary">Download</a>
+		<a href="##" onclick="downloadJSON()" class="btn btn-primary">Download</a>
 	</div>
 </div>
 <script language="javascript">
+function downloadJSON(){
+	window.location.assign( '#event.buildLink(prc.xehExportAPI)#/download/true' );
+}
+
 $(document).ready(function() {
 	formatJSON('exportJSON');
 });

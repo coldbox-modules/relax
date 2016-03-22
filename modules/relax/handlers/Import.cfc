@@ -36,7 +36,7 @@ component extends="BaseHandler"{
 		// slugify name
 		rc.apiName = getInstance( "HTMLHelper@coldbox" ).slugify( rc.apiName );
 		// Import API
-		DSLService.importAPI( name=rc.apiName, json=rc.apiJSON );
+		APIService.importAPI( name=rc.apiName, json=rc.apiJSON );
 		// Flash Notice
 		flash.put( "notice" , "API imported successfully!" );
 

@@ -166,9 +166,9 @@
 		                        </div>
 		                        <!--- PRETTY CONTENT --->
 		                        <div class="tab-pane" id="pretty">
-		                        	<pre id="resultsPretty" class="brush: #getBrush(prc.results.fileContent)#">
+		                        	<pre id="resultsPretty"><code class="language-json">
 		                        		#getTreatedContent( prc.results.fileContent )#
-									</pre>
+									</code></pre>
 		                        </div>
 		                    </div>
 		                </div>

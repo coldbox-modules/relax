@@ -208,6 +208,4 @@ var app = function() {
 //Load global functions
 $(document).ready(function() {
     app.init();
-    // syntax highlight
-    SyntaxHighlighter.all();
 });
