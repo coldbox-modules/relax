@@ -1,0 +1,93 @@
+<%
+ var params = entity.parameters;
+%>
+
+<div class="parameter-list list-group">
+	<div class="col-xs-12 bg-default">
+		<div class="parameter-column key col-sm-3 col-xs-8">
+			Name
+		</div>
+
+		<div class="parameter column type col-sm-2 col-xs-4">
+			Type
+		</div>
+
+		<div class="parameter column description col-sm-5 col-xs-8">
+			Description
+		</div>
+
+		<div class="parameter column requirement col-sm-2 col-xs-4">
+		  Req?
+		</div>
+
+	</div>
+<% 
+	_.each( params ,function( param ){
+	    var paramUid = _.uniqueId('param_');
+%>
+
+	<div class="list-group-item parameter optional col-xs-12">
+
+	    <div class="parameter-column key col-sm-3 col-xs-8">
+	    	<code><%= param.name %></code>
+	    </div>
+
+	    <div class="parameter column type col-sm-2 col-xs-4">
+	    	<% if( 
+	    		!_.isUndefined( param.type ) 
+	    		&& 
+	    		( 
+	    			!_.isUndefined(param.in) 
+	    			|| 
+	    			param.in !== 'body' 
+	    		) 
+	    		){ 
+	    	%>
+	    	
+	    	<code><%= param.type %></code>
+	    	
+	    	<% 
+	    		} else if( 
+	    			!_.isUndefined( param.type ) 
+	    			&& 
+	    			!_.isUndefined( param.schema ) 
+	    			&& 
+	    			!_.isUndefined(param.schema.type) 
+	    		) { 
+	    	%>
+	    	
+	    	<code><%= param.schema.type %> (body)</code> 
+	    	
+	    	<% } else if( _.isUndefined( param.type ) ) { %>
+	    		N/A
+	    	<% } %>
+	    </div>
+
+	    <div class="parameter column description col-sm-5 col-xs-8">
+	    	<p><%= param.description.replace(/(?:\r\n|\r|\n)/g, '<br />') %></p>
+	    	<% if( !_.isUndefined( param.in ) ){ %>
+	    	<p>Provided in the <code><%=param.in%></code> of the request</p>
+	    	<% } %>
+	    	
+	    </div>
+
+	    <div class="parameter column requirement col-sm-2 col-xs-4">
+	      <i class="fa fa-<%= ( param.required ? 'check-circle text-danger' : 'circle-o text-muted' ) %>" data-toggle="tooltip" title="This parameter is <%= ( param.required ? 'required' : 'optional' ) %>"></i>
+	      <% if(  !_.isUndefined( param.schema ) ) { %>
+	     	<a href="#<%=paramUid%>" class="pull-right" data-toggle="collapse" aria-expanded="false" aria-controls="<%=paramUid%>">
+	    		<small><i class="fa fa-chevron-down"></i></small>
+	    	</a>
+	      <% } %>
+	    </div>
+
+	    <% if(  !_.isUndefined( param.schema ) ) { %>
+	    <div class="clearfix"></div>
+	    <div id="<%=paramUid%>" class="collapse panel panel-solid-default">
+    		<pre class="language-json"><%= formatJSONRaw( JSON.stringify( param.schema ) ).trim() %></pre>
+    	</div>
+    	<% } %>
+    	
+
+	</div>
+<%	}) %>
+</div>

@@ -15,10 +15,9 @@ component extends="BaseHandler"{
 	function preHandler( event, rc, prc ){
 		super.preHandler( argumentCollection=arguments );
 		// Get the loaded API for the user
-		prc.dsl				= DSLService.getLoadedAPI();
-		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
-		// custom css/js
-		prc.jsAppendList 	= "jquery.scrollTo-min";
+		prc.dsl				= APIService.getLoadedAPI().getNormalizedDocument();
+		prc.loadedAPIName 	= APIService.getLoadedAPIName();
+
 	}
 
 	/**
@@ -31,9 +30,8 @@ component extends="BaseHandler"{
 		prc.jsonAPI = serializeJSON( prc.dsl );
 
 		if( event.valueExists( "download" ) ){
-			var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.relax.title );
-			event.setHTTPHeader( name="content-disposition", value='attachment; filename="#title#.json"')
-				.renderData( data=prc.jsonAPI, type="json" );
+			event.setHTTPHeader( name="content-disposition", value='attachment; filename="#prc.loadedAPIName#.json"')
+				.renderData( data=prc.dsl, type="json" );
 		} else {
 			event.renderData( data=renderView( view="export/api", module="relax" ) );
 		}
@@ -57,7 +55,7 @@ component extends="BaseHandler"{
 	* Export as PDF
 	*/
 	function pdf( event, rc, prc ){
-		var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.relax.title );
+		var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.info.title);
 		html( event, rc, prc );
 		event.setLayout( "pdf" )
 			.setHTTPHeader( name="Content-Disposition", value="inline; filename=#title#.pdf" );
@@ -82,7 +80,10 @@ component extends="BaseHandler"{
 	*/
 	private function toWikiMarkup( event, rc, prc, type ){
 		html( event, rc, prc );
-		var data = wikitext.toWiki( wikiTranslator=arguments.type, htmlString=renderView( view="export/html", module="relax" ) );
+		if( !structKeyExists( rc, "content" ) ){
+			rc.content = renderView( view="export/html", module="relax" );
+		}
+		var data = wikitext.toWiki( translator=arguments.type, html=rc.content );
 		event.renderData( type="text", data=data );
 	}
 

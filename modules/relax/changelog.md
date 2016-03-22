@@ -2,7 +2,7 @@ CHANGELOG
 =========
 
 ## 2.3.0
-* RELAX-25 SSL support for assets
+* [RELAX-25] - SSL support for assets
 
 ## 2.2.0
 * [RELAX-22] - Updated build scripts for using DocBox

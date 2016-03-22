@@ -29,9 +29,10 @@ component extends="BaseHandler"{
 		event.paramValue( "entryTier", "production" );
 
 		// DSL Settings
-		prc.dsl				= DSLService.getLoadedAPI();
-		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
-		prc.loadedAPIs		= DSLService.listAPIs();
+		prc.dsl						= APIService.getLoadedAPI().getNormalizedDocument();
+		prc.serviceEntryPoints		= [];
+		prc.loadedAPIName 			= APIService.getLoadedAPIName();
+		prc.loadedAPIs				= APIService.listAPIs();
 
 		// exit handlers
 		prc.xehPurgeHistory = "relax/relaxer/purgeHistory";
@@ -59,6 +60,19 @@ component extends="BaseHandler"{
 		
 		// display relaxer
 		event.setView( "relaxer/index" );
+	}
+
+	any function send( event,rc,prc ){
+		event.noLayout();
+		prc.results = {};
+		try{
+			prc.results = relaxerService.send( argumentCollection=rc );
+		} catch( Any e ){
+			prc.results[ 'error' ] = "Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#";
+			prc.results[ 'message' ] = "Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#";
+			log.error( prc.results.error, e );
+		}
+		renderData( data=prc.results, type=listLast( prc.results.mimeType, '/' ) );
 	}
 
 	/**
