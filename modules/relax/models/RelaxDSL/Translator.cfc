@@ -14,28 +14,34 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 
 	public function init(  ){
 	  for( var templateDefault  in  VARIABLES.templateDefaults ){
-	    structAppend( VARIABLES.openAPITemplate, templateDefault );
+	  	for( var key in templateDefault ){
+	  		VARIABLES.openAPITemplate.put( key, templateDefault[ key ] );	
+	  	}
 	  }
 	}
 
 	public function translate( required any dataCFC ){
+
 		var OpenAPIParser = getWirebox().getInstance( "OpenAPIParser@relax" );
 
 		var translation = duplicate(VARIABLES.openAPITemplate);
 
-		translateGlobals( dataCFC, translation );
+		translateGlobals( ARGUMENTS.dataCFC, translation );
 
-		translatePaths( dataCFC, translation );
+		translatePaths( ARGUMENTS.dataCFC, translation );
 
 		return OpenAPIParser.parse( translation );	
 	}
 
-	private void function translateGlobals( required any dataCFC, required struct translation ){
-		var relax = dataCFC.relax
+	private void function translateGlobals( required any dataCFC, required translation ){
+		
+		var relax = ARGUMENTS.dataCFC.relax;
+
 		for( var key in relax ){
 			if( structKeyExists( translation, key) ) translation[ key ] = relax[ key ];
 			if( structKeyExists( translation[ "info" ], key) ) translation["info"][ key ] = relax[ key ];			
 		}
+
 
 		translateMimeTypes( dataCFC, translation );
 
@@ -49,7 +55,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 
 	}
 
-	private void function translateMimeTypes( required any dataCFC, required struct translation ){
+	private void function translateMimeTypes( required any dataCFC, required translation ){
 		var relax = dataCFC.relax;
 
 		if( structKeyExists( relax, "validExtensions" ) ){
@@ -68,7 +74,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		}
 	}
 
-	private void function translateSecurityDefinitions( required any dataCFC, required struct translation ){
+	private void function translateSecurityDefinitions( required any dataCFC, required translation ){
 		for ( var header in dataCFC.globalHeaders ){
 			if( !structKeyExists( translation, "securityDefinitions" ) ) translation[ "securityDefinitions" ] = createObject( "java", "java.util.LinkedHashMap" );
 
@@ -77,14 +83,14 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 				"name" : header[ "name" ],				
 				"description" : structKeyExists( header, "description" ) ? header[ "description" ] : "",
 				"in" : "header"
-			}
+			};
 			//override our special type if the header value is an api key
 			if( findNoCase( header[ "name" ], "api" ) && findNocCase( header[ "nane" ], "key" ) ) translation[ "securityDefinitions" ][ header[ "name" ] ].type = "apiKey";
 		}
 
 	}
 
-	private void function translateURLs( required any dataCFC, required struct translation ){
+	private void function translateURLs( required any dataCFC, required translation ){
 		var relax = dataCFC.relax;
 		if( isSimpleValue( relax.entryPoint ) ) relax.entryPoint = { "production" : relax.entryPoint };
 		for( var key in relax.entryPoint ){
@@ -98,9 +104,9 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		}
 	}
 
-	private void function processGlobalExtensions( required any dataCFC, required struct translation ){
+	private void function processGlobalExtensions( required any dataCFC, required translation ){
 		var relax = dataCFC.relax;
-		var extensions = [ "extensionDetection", "throwOnInvalidExtension", "entryPoint" ]
+		var extensions = [ "extensionDetection", "throwOnInvalidExtension", "entryPoint" ];
 
 		for( var ext in extensions ){
 			if( structKeyExists( relax, ext ) ){
@@ -110,21 +116,17 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 	}
 
 
-	private function translateHeaders ( required any dataCFC, required struct translation ){
+	private function translateHeaders ( required any dataCFC, required translation ){
 		
 	}
 
-	private function translatePaths( required any dataCFC, required struct translation ){
+	private function translatePaths( required any dataCFC, required translation ){
 		var resources = dataCFC.resources;
 
 		for ( var resource in resources ){
 			pathKey = translatePathKey( resource.pattern );
-
-			structAppend( translation[ "paths" ], 
-			{
-				"#pathkey#" : {
-					"x-resourceId": resource.resourceId
-				}
+			translation[ "paths" ].put( pathkey, {
+				"x-resourceId": resource.resourceId
 			} );
 			
 			translatePathMethods( translation[ "paths" ][ pathKey ], resource, translation );
@@ -147,27 +149,22 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 	private void function translatePathMethods( 
 		required struct path, 
 		required struct resource, 
-		required struct translation 
+		required translation 
 	){
 		pathKey = translatePathKey( resource.pattern );
 
 		//handle string action values for consistent formatting
 		if( isSimpleValue( resource.action ) ) {
+
 			resource.handlerMethod = resource.action;
 			resource.action = createObject( "java", "java.util.LinkedHashMap" );
-			
-			structAppend( resource.action, {
-					"#resource.defaultMethod#": resource.action,
-					"x-coldbox-handler" : resource.handler
-			} );
+			resource.action.put( resource.defaultMethod, resource.action );
 
 			var allowedMethods = listToArray( resource.methods );
 
 			for( method in allowedMethods ){
 				if( method != resource.defaultMethod ){
-					structAppend( resource.action, {
-						"#method#" : resource.action[ resource.defaultMethod ]
-					} );
+					resource.action.put( method, resource.action[ resource.defaultMethod ] );
 				}
 			}
 		}
@@ -175,6 +172,8 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		//assembly begins
 		for( var HTTPMethod in resource.action ){
 			if( 
+				!findNoCase( 'x-', HTTPMethod )
+				&&
 				structKeyExists( resource, "handlerMethod" ) 
 				&& 
 				isSimpleValue( resource.handlerMethod ) 
@@ -187,16 +186,15 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 			} else {
 				var operationalAction = "";
 			}
-			
-			structAppend( path, {
-				"#lcase( HTTPMethod )#" = {
-					"description": structKeyExists( resource,"description" ) ? resource.description : "",
-					"operationId" : resource.handler & operationalAction,
-					"produces": translation["produces"],
-					"responses" : createObject( "java", "java.util.LinkedHashMap" ),
-					"parameters" : createObject( "java", "java.util.LinkedHashMap" ),
-					"x-resourceId": lcase( hash( pathKey & lcase( HTTPMethod ) ) )
-				}
+
+			path.put( lcase( HTTPMethod ), {
+				"description": structKeyExists( resource,"description" ) ? resource.description : "",
+				"operationId" : resource.handler & operationalAction,
+				"produces": translation["produces"],
+				"responses" : createObject( "java", "java.util.LinkedHashMap" ),
+				"parameters" : createObject( "java", "java.util.LinkedHashMap" ),
+				"x-resourceId": lcase( hash( pathKey & lcase( HTTPMethod ) ) ),
+				"x-coldbox-handler" : resource.handler
 			});
 
 			if( !len( trim( path[ lcase( HTTPMethod ) ][ "operationId" ] ) ) ){
@@ -206,14 +204,12 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 
 			//handle our URL placeholders
 			for( var placeholder in resource.placeholders ){
-				structAppend( path[ lcase( HTTPMethod ) ]["parameters"], {
-					"#placeholder.name#" = {
-						"in": "path",
-						"description" : ( structKeyExists( placeholder,"description" ) ? placeholder.description : "" ),
-						"required": javacast( "boolean", placeholder.required ),
-						"type" : structKeyExists( placeholder, "type" ) ? placeholder.type : "string" ,
-						"x-defaultValue" :	structKeyExists( placeholder, "defaultValue" ) ? placeholder.defaultValue : ""
-					}
+				path[ lcase( HTTPMethod ) ]["parameters"].put( placeholder.name, {
+					"in": "path",
+					"description" : ( structKeyExists( placeholder,"description" ) ? placeholder.description : "" ),
+					"required": javacast( "boolean", placeholder.required ),
+					"type" : structKeyExists( placeholder, "type" ) ? placeholder.type : "string" ,
+					"x-defaultValue" :	structKeyExists( placeholder, "defaultValue" ) ? placeholder.defaultValue : ""
 				} );
 			}
 		}
@@ -224,7 +220,8 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		//append schema as responses
 		processPathSchemas( path, resource );
 
-		//append samples as 
+		//append samples as extended attributes
+		processPathSamples( path, resource );
 
 	}
 
@@ -241,13 +238,11 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 
 			for ( var method in appendTo ){
 				if( structKeyExists( path, lcase( method ) ) ){
-					structAppend( path[ lcase( method ) ]["parameters"], {
-						"#param.name#" = {
-							"in": ( method == "GET" ? "query" : "formData" ),
-							"description" : ( structKeyExists( param,"description" ) ? param.description : "" ),
-							"required": javacast( "boolean", param.required ),
-							"type": param.type
-						}
+					path[ lcase( method ) ]["parameters"].put( param.name, {
+						"in": ( method == "GET" ? "query" : "formData" ),
+						"description" : ( structKeyExists( param,"description" ) ? param.description : "" ),
+						"required": javacast( "boolean", param.required ),
+						"type": param.type
 					} );
 				}
 			}
@@ -265,7 +260,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 						"type" : "object"
 					},
 					"examples" : createObject( "java", "java.util.LinkedHashMap" )
-				}
+				};
 
 				switch( schema[ "format" ] ){
 					case "json":
@@ -282,9 +277,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 						var mimeType = REFindNoCase( schema[ "format" ], "html|text|string" ) ? "text/" & schema[ "format" ] : "application/" & schema[ "format" ];			
 				}
 
-				structAppend( schemaDefinition[ "examples" ], {
-					"#mimeType#" : body
-				});
+				schemaDefinition[ "examples" ].put( mimeType, body );
 
 
 				for( var methodKey in path ){
@@ -293,23 +286,18 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 						var statusCode = VARIABLES.HTTPMethodResponses[ methodPosition ];
 
 						if( !structKeyExists( path[ methodKey ][ "responses" ], statusCode) ){
-						
-							structAppend( path[ methodKey ][ "responses" ], {
-								"#statusCode#" : schemaDefinition
-							} );
+							
+							path[ methodKey ][ "responses" ].put( javacast('string',statusCode), schemaDefinition );
 						
 						} else if( structKeyExists( path[ methodKey ][ "responses" ], statusCode ) ) {
 
 							if( structKeyExists( path[ methodKey ][ "responses" ][ statusCode ][ "examples" ], mimeType ) ){
 							
-								structAppend( path[ methodKey ][ "responses" ], {
-									"default" : schemaDefinition
-								} );
+								path[ methodKey ][ "responses" ].put( "default", schemaDefinition );
 							
 							} else {
 
-								structAppend( path[ methodKey ][ "responses" ][ statusCode ][ "examples" ], schemaDefinition[ "examples" ] );
-							
+								path[ methodKey ][ "responses" ][ statusCode ][ "examples" ].put( mimeType, schemaDefinition[ "examples" ][ mimeType ] );							
 							}
 						
 							
@@ -322,7 +310,65 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		}
 	}
 
+	private function processPathSamples( required path, required resource ){
+		if( structKeyExists( resource.response, "samples" ) ){
+			for ( var sample in resource.response[ "samples" ] ){
+			
+				//RelaxDSL doesn't provide status codes, so we'll use our defaults
+				var sampleDefinition = {
+					"description" : sample[ "description" ],
+					"sample" : {
+						"type" : "object"
+					},
+					"examples" : createObject( "java", "java.util.LinkedHashMap" )
+				};
+
+				switch( sample[ "format" ] ){
+					case "json":
+						var body = deserializeJSON( sample[ "body" ]);
+						var mimeType = "application/json";
+						break;	
+					case "xml":
+						var body = sample[ "body" ];
+						var mimeType = "application/xml";
+	
+						break;
+					default:
+						var body = sample[ "body" ];
+						var mimeType = REFindNoCase( sample[ "format" ], "html|text|string" ) ? "text/" & sample[ "format" ] : "application/" & sample[ "format" ];			
+				}
 
 
+				sampleDefinition[ "examples" ].put( mimeType, body );
+
+
+				for( var methodKey in path ){
+					var methodPosition = arrayFindNoCase( VARIABLES.HTTPMethods, methodKey );
+					if( methodPosition ){
+						var statusCode = VARIABLES.HTTPMethodResponses[ methodPosition ];
+						
+						if( !structKeyExists( path[ methodKey ], "x-request-samples" ) ){
+							path[ methodKey ].put( "x-request-samples", sampleDefinition );
+						} else {
+
+							if( structKeyExists( path[ methodKey ][ "x-request-samples" ]["examples"], mimeType ) ){
+
+								path[ methodKey ][ "x-request-samples" ]["examples"].put( "default", sampleDefinition[ "examples" ][ mimeType ] );
+							
+							} else {
+
+								path[ methodKey ][ "x-request-samples" ]["examples"].put( mimeType, sampleDefinition[ "examples" ][ mimetype ] );
+							
+							}
+						
+							
+						
+						}	
+					}
+				}
+
+			}	
+		}
+	}
 
 }

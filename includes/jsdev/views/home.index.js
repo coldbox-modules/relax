@@ -5,12 +5,18 @@ define([
     'Backbone',
     'views/widgets/relaxer',
     'views/widgets/sidebar',
-    'models/RelaxAPI'
+    'models/RelaxAPI',
+    'clipboard',
+    'messenger',
+    'scrollify'
 ],  function(
             Backbone,
             Relaxer,
             SidebarWidget,
-            APIModel
+            APIModel,
+            Clipboard,
+            Messenger,
+            scrollify
         ){
         'use strict';
         var View = Backbone.View.extend({
@@ -23,6 +29,8 @@ define([
             */
             ,events:{
 
+                "click .btnCopyDocumentLink" : "onCopyResourceLink"
+            
             }
 
             /**
@@ -45,6 +53,10 @@ define([
             * ----------------------------------------------
             */
             ,setupSelectors: function(){
+                Messenger.options = {
+                    extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
+                    theme: 'flat'
+                };
                 return this;
             }
 
@@ -56,6 +68,7 @@ define([
             ,setupDefaults: function(){
                 var _this = this;
                 var promise = new Promise( function( resolve, reject ){
+                    _this.activeAPI = parseRequestParams().api;
                     //pull our list of APIs
                     _this.Model.fetch( {
                         success: function( model, resp ){
@@ -66,13 +79,14 @@ define([
                                 _this.sidebar = new SidebarWidget( {
                                     "view":_this,
                                     "apis":model.attributes.apis,
-                                    "default":model.attributes.default    
+                                    "default": _.isUndefined( _this.activeAPI ) ? model.attributes.default : _this.activeAPI   
                                 } );   
                                 
                             }
 
                             _this.defaultAPI = model.attributes.default;
-                            if( typeof( _this.activeAPI ) === 'undefined' ) _this.activeAPI = _this.defaultAPI;
+
+                            if( _.isUndefined( _this.activeAPI ) ) _this.activeAPI = _this.defaultAPI;
                             
                             //pull our single API
                             _this.Model.clear().set( 'id', _this.activeAPI );
@@ -138,10 +152,15 @@ define([
                 var pathTemplate = _.template( $( "#path-template" ).html() );
                 _.each( _.keys(paths), function( pathKey ){ 
                     $container.append( pathTemplate( { "key":pathKey , "path":paths[ pathKey ] } ) );
-                    setTimeout( function(  ){
-                        _this.renderContainerUI( $container );
-                    }, 2000)
                 });
+                
+                setTimeout( function(  ){
+                    _this.renderContainerUI( $container );
+                    _this.assignAnchorLinksToWindow();
+                    _this.expandHash();
+                    _this.renderClipboardIndicators();
+                }, 1500);
+
             }
             
             ,renderContainerUI: function( $container ){
@@ -153,12 +172,126 @@ define([
                     Prism.highlightElement(this); 
                 });
             }
+
+            ,renderClipboardIndicators: function(){
+                var _this = this;
+                var $clipableLinks = $( "#paths .path-panel, #paths .path-panel .method-panel", _this.$el );
+                var clipBtnTemplate = _.template( '<a href="javascript:void(0)" class="btnCopyDocumentLink btn btn-link text-muted btn-xs pull-left" data-toggle="tooltip" title="Copy link to this resource"><i class="fa fa-link"></i></a>' );
+                $clipableLinks.each( function(){
+                    var linkHash = $( this ).attr( 'id' );
+                    var $linkHeader = $( '.panel-heading .panel-title' , $( this ) ).first();
+                    if( $linkHeader.length > 0 ){
+                         var link = window.location.href;
+                         if( window.location.hash.length > 0 ){
+                             link = link.replace( window.location.hash , "#" + linkHash )
+                         } else {
+                             link += "#" + linkHash
+                         }
+
+                        var $btn = $linkHeader.prepend( clipBtnTemplate( { "link":link } ) );
+                        
+                        var clipboard = new Clipboard( $btn[0], {
+                            text: function(trigger) {
+                                return link;
+                            }
+                        } );
+
+                        _this.renderContainerUI( $linkHeader );     
+                    }
+                   
+                } );
+
+            }
+
             /**
 			* ----------------------------------------------
 			* Events
 			* ----------------------------------------------
 			*/
+
+            ,onCopyResourceLink: function(){
+                 Messenger().post({
+                    message: "Resource link copied to your clipboard",
+                    type: 'success',
+                    showCloseButton: true
+                });
+            }
+
+            /**
+            * ----------------------------------------------
+            * Utility Methods
+            * ----------------------------------------------
+            */
+
             
+            ,assignAnchorLinksToWindow: function( $container ){
+                var _this = this;
+                if( _.isUndefined( $container ) ) $container = $( 'body' );
+                var baseHref = $( 'base', 'head' ).attr( 'href' );
+                $( "a", $container ).each( function(){
+                   var $link = $( this );
+                   if( !_.isUndefined( $link.attr( 'href' ) ) && $link.attr( 'href' ).indexOf( "#" ) === 0  ){
+                       var hash = $link.attr( 'href' );
+                       $link.attr( 'href', window.location.pathname + window.location.search + hash );
+                       $link.on( 'click', function(  ){
+                            if( !$( this ).is( '[aria-controls]' ) ){
+                                _this.expandHash( hash );   
+                            }
+                       } );
+                   }
+                });
+            }
+
+            ,expandHash: function( hash ){
+                var _this = this;
+                if( _.isUndefined( hash ) ) hash = window.location.hash;
+                if( hash.length > 0 ){
+                    var $hashTarget = $( hash );
+                    if( $hashTarget.length > 0 ){
+                        _this.ensureHashTargetVisibility( $hashTarget ).then(function(){
+                            if( $hashTarget.is( '.panel' ) && $hashTarget.find( '.in' ).length === 0 ){
+                                $hashTarget.find( '[data-toggle="collapse"]' ).click();
+                                //$.scrollify({offset:200}).move( $hashTarget );
+                            } else {
+                                //$.scrollify({offset:200}).move( $hashTarget );
+                            }
+                        });
+
+                    }
+                }
+            }
+
+            ,ensureHashTargetVisibility: function( $hashTarget ){
+                var _this = this;
+
+                var promise = new Promise( function( resolve, reject ){
+
+                    if( $hashTarget.is(":visible") ) return resolve();
+
+                    //recurse up to the top level container
+                    var $domParents = $hashTarget.parentsUntil( ".api" );
+
+                    var totalParents = $domParents.length;
+                    var i = 1;
+                    $domParents.each( function(){
+                        var $parent = $( this );
+                        if( $parent.not( ":visible" ) && ( $parent.is( ".collapse:not(.in)" ) || $parent.is( '.tab-pane:not(.active)' ) ) ){ 
+                            $( '[aria-controls="' + $parent.attr( 'id' ) + '"]' ).click();
+                        } else if( $parent.not( ":visible" ) ) {
+                            $parent.css( 'display', 'block' );
+                        }
+
+                        i++;
+
+                        if( i === totalParents ){
+                            resolve();      
+                        }
+                    });
+
+                });
+
+                return promise;
+            }
             
 
         });

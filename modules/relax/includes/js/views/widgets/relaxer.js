@@ -1,4 +1,4 @@
-/*! Copyright 2016 - Ortus Solutions (Compiled: 19-03-2016) */
+/*! Copyright 2016 - Ortus Solutions (Compiled: 21-03-2016) */
 define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel) {
     "use strict";
     var Relaxer = Backbone.View.extend({
@@ -43,7 +43,7 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             var _this = this;
             var $container = $(".relaxer-results", _this.$el);
             var responseEcho = JSON.parse(jqXHR.responseText);
-            console.log(responseEcho);
+            console.debug(responseEcho);
             var responseObject = {
                 status: responseEcho.status_code,
                 statusText: responseEcho.status_text,

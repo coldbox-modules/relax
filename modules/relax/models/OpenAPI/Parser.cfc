@@ -108,6 +108,7 @@ component name="OpenAPIParser" accessors="true" {
 			if( structKeyExists( DocItem, "$ref" ) ) return fetchDocumentReference(DocItem[ "$ref" ]);
 
 			for( var key in DocItem){
+				
 				if( 
 					isStruct( DocItem[ key ] ) 
 					&& 
@@ -116,7 +117,8 @@ component name="OpenAPIParser" accessors="true" {
 					DocItem[ key ] = fetchDocumentReference( DocItem[ key ][ "$ref" ] );
 				} else if( isStruct( DocItem[ key ] ) ||  isArray( DocItem[ key ] ) ){
 					DocItem[ key ] = parseDocumentReferences( DocItem[ key ] );
-				} 
+				}
+				
 			}
 		}
 

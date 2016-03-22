@@ -37,9 +37,12 @@ component{
 			{
 				pattern="/apidoc/:api?",
 				handler="APIDoc",
-				action={"GET":"index","PUT":"update","PATCH":"update","DELETE":"delete"}
+				action={"GET":"index","POST":"create","PUT":"update","PATCH":"update","DELETE":"delete"}
 				
 			},
+			//Direct API requests
+			{ pattern="/export/:action/:apiname?", handler="Export", action="index" },
+			{ pattern="/api/:apiname?", handler="Home", action="index" },
 			// Module Entry Point
 			{ pattern="/", handler="Home", action="index" },
 			// Convention Route
@@ -52,6 +55,7 @@ component{
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
+
 		var configSettings = controller.getConfigSettings();
 		// parse parent settings
 		parseParentSettings();
@@ -102,7 +106,7 @@ component{
 
 		//RelaxDSL Translator
 		binder.map( "DSLTranslator@relax" )
-			.to( "#moduleMapping#.models.RelaxDSL.Translator" )
+			.to( "#moduleMapping#.models.RelaxDSL.Translator" );
 
 	}
 
@@ -137,7 +141,7 @@ component{
 			// History stack size, the number of history items to track in the RelaxURL
 			maxHistory = 10
 		};
-		*/
+		**/
 		// Read parent application config
 		var oConfig 		= controller.getSetting( "ColdBoxConfig" );
 		var relaxDSL		= oConfig.getPropertyMixin( "relax", "variables", structnew() );

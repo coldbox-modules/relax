@@ -1,9 +1,11 @@
-/*! Copyright 2016 - Ortus Solutions (Compiled: 19-03-2016) */
-define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/RelaxAPI" ], function(Backbone, Relaxer, SidebarWidget, APIModel) {
+/*! Copyright 2016 - Ortus Solutions (Compiled: 21-03-2016) */
+define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/RelaxAPI", "clipboard", "messenger", "scrollify" ], function(Backbone, Relaxer, SidebarWidget, APIModel, Clipboard, Messenger, scrollify) {
     "use strict";
     var View = Backbone.View.extend({
         el: "#main-content",
-        events: {},
+        events: {
+            "click .btnCopyDocumentLink": "onCopyResourceLink"
+        },
         initialize: function() {
             var _this = this;
             _this.Model = APIModel;
@@ -12,11 +14,16 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
             });
         },
         setupSelectors: function() {
+            Messenger.options = {
+                extraClasses: "messenger-fixed messenger-on-bottom messenger-on-right",
+                theme: "flat"
+            };
             return this;
         },
         setupDefaults: function() {
             var _this = this;
             var promise = new Promise(function(resolve, reject) {
+                _this.activeAPI = parseRequestParams().api;
                 _this.Model.fetch({
                     success: function(model, resp) {
                         _this.availableAPIs = _.clone(model.attributes.apis);
@@ -24,11 +31,11 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
                             _this.sidebar = new SidebarWidget({
                                 view: _this,
                                 apis: model.attributes.apis,
-                                "default": model.attributes.default
+                                "default": _.isUndefined(_this.activeAPI) ? model.attributes.default : _this.activeAPI
                             });
                         }
                         _this.defaultAPI = model.attributes.default;
-                        if (typeof _this.activeAPI === "undefined") _this.activeAPI = _this.defaultAPI;
+                        if (_.isUndefined(_this.activeAPI)) _this.activeAPI = _this.defaultAPI;
                         _this.Model.clear().set("id", _this.activeAPI);
                         _this.Model.fetch({
                             success: function(model, resp) {
@@ -77,10 +84,13 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
                     key: pathKey,
                     path: paths[pathKey]
                 }));
-                setTimeout(function() {
-                    _this.renderContainerUI($container);
-                }, 2e3);
             });
+            setTimeout(function() {
+                _this.renderContainerUI($container);
+                _this.assignAnchorLinksToWindow();
+                _this.expandHash();
+                _this.renderClipboardIndicators();
+            }, 1500);
         },
         renderContainerUI: function($container) {
             var _this = this;
@@ -90,6 +100,92 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
             $('pre[class*="language-"],code[class*="language-"]').each(function() {
                 Prism.highlightElement(this);
             });
+        },
+        renderClipboardIndicators: function() {
+            var _this = this;
+            var $clipableLinks = $("#paths .path-panel, #paths .path-panel .method-panel", _this.$el);
+            var clipBtnTemplate = _.template('<a href="javascript:void(0)" class="btnCopyDocumentLink btn btn-link text-muted btn-xs pull-left" data-toggle="tooltip" title="Copy link to this resource"><i class="fa fa-link"></i></a>');
+            $clipableLinks.each(function() {
+                var linkHash = $(this).attr("id");
+                var $linkHeader = $(".panel-heading .panel-title", $(this)).first();
+                if ($linkHeader.length > 0) {
+                    var link = window.location.href;
+                    if (window.location.hash.length > 0) {
+                        link = link.replace(window.location.hash, "#" + linkHash);
+                    } else {
+                        link += "#" + linkHash;
+                    }
+                    var $btn = $linkHeader.prepend(clipBtnTemplate({
+                        link: link
+                    }));
+                    var clipboard = new Clipboard($btn[0], {
+                        text: function(trigger) {
+                            return link;
+                        }
+                    });
+                    _this.renderContainerUI($linkHeader);
+                }
+            });
+        },
+        onCopyResourceLink: function() {
+            Messenger().post({
+                message: "Resource link copied to your clipboard",
+                type: "success",
+                showCloseButton: true
+            });
+        },
+        assignAnchorLinksToWindow: function($container) {
+            var _this = this;
+            if (_.isUndefined($container)) $container = $("body");
+            var baseHref = $("base", "head").attr("href");
+            $("a", $container).each(function() {
+                var $link = $(this);
+                if (!_.isUndefined($link.attr("href")) && $link.attr("href").indexOf("#") === 0) {
+                    var hash = $link.attr("href");
+                    $link.attr("href", window.location.pathname + window.location.search + hash);
+                    $link.on("click", function() {
+                        if (!$(this).is("[aria-controls]")) {
+                            _this.expandHash(hash);
+                        }
+                    });
+                }
+            });
+        },
+        expandHash: function(hash) {
+            var _this = this;
+            if (_.isUndefined(hash)) hash = window.location.hash;
+            if (hash.length > 0) {
+                var $hashTarget = $(hash);
+                if ($hashTarget.length > 0) {
+                    _this.ensureHashTargetVisibility($hashTarget).then(function() {
+                        if ($hashTarget.is(".panel") && $hashTarget.find(".in").length === 0) {
+                            $hashTarget.find('[data-toggle="collapse"]').click();
+                        } else {}
+                    });
+                }
+            }
+        },
+        ensureHashTargetVisibility: function($hashTarget) {
+            var _this = this;
+            var promise = new Promise(function(resolve, reject) {
+                if ($hashTarget.is(":visible")) return resolve();
+                var $domParents = $hashTarget.parentsUntil(".api");
+                var totalParents = $domParents.length;
+                var i = 1;
+                $domParents.each(function() {
+                    var $parent = $(this);
+                    if ($parent.not(":visible") && ($parent.is(".collapse:not(.in)") || $parent.is(".tab-pane:not(.active)"))) {
+                        $('[aria-controls="' + $parent.attr("id") + '"]').click();
+                    } else if ($parent.not(":visible")) {
+                        $parent.css("display", "block");
+                    }
+                    i++;
+                    if (i === totalParents) {
+                        resolve();
+                    }
+                });
+            });
+            return promise;
         }
     });
     return new View();

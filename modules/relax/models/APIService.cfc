@@ -121,12 +121,13 @@ component accessors="true" {
 			loadDSLAPI( dataCFC );
 			// Store the definitions
 			VARIABLES.APIDefinitions[ ARGUMENTS.name ] = getWirebox().getInstance( "DSLTranslator@relax" ).translate( dataCFC );	
+
 		} else {
 			//OpenAPI Checks
 			if( !isNull( dataCFC ) && structKeyExists( dataCFC.relax, "definition" ) ){
 				VARIABLES.APIDefinitions[ ARGUMENTS.name ] = loadOpenAPI( APIDirectory & dataCFC.relax.definition );	
 			} else if( isNull( dataCFC ) ){
-				var mimeExtensions = [ 'json','yaml','yaml','json.cfm' ]
+				var mimeExtensions = [ 'json','yaml','yaml','json.cfm' ];
 				//perform our naming convention type checks checks
 				for( var ext in mimeExtensions ){			
 					if( fileExists( APIDirectory & ARGUMENTs.name & "." & ext ) )	{
@@ -269,20 +270,54 @@ component accessors="true" {
 
 	/**
 	* Import a relax API
-	* @name The name of the API to import
-	* @json The JSON representation of the API
+	* @collection The collection which includes the API name and JSON representation
 	*/
-	DSLService function importAPI( required name, required json ){
-		var targetDir = VARIABLES.settings.APILocationExpanded & "/" & ARGUMENTS.name;
-		var targetAPI = targetDir & "/Relax.json";
+	struct function processAPIImport( required struct collection ){
+		var response = newResponse();
 
-		// create the directory enclosure
-		directoryCreate( VARIABLES.settings.APILocationExpanded & "/" & ARGUMENTS.name );
+		// validate data
+		if( !structKeyExists( collection, 'apiName' ) || !len( collection.apiName ) ){
+			response.message = "A valid API name was not provided for the import request.  Could not continue.";
+			return response;
+		} else if ( !structKeyExists( collection, 'apiJSON' ) ){
+			response.message = "A valid API name was not provided for the import request.  Could not continue.";
+			return response;
+		}else if( not isJSON( collection.apiJSON ) ){
+			response.message = "The JSON representation is not valid JSON. Please try again.";
+			return response;
+		}
 
-		// create the relax.json file
-		fileWrite(targetAPI, ARGUMENTS.json );
+		// slugify name
+		var apiName = getWirebox().getInstance( "HTMLHelper@coldbox" ).slugify( collection.apiName );
 
-		return this;
+		var targetDir = VARIABLES.settings.APILocationExpanded & "/" & apiName;
+		if( !directoryExists( targetDir ) ) directoryCreate( targetDir );
+
+		
+		//validate that our api document can be parsed
+		try{		
+			
+			var parsedAPI = getWirebox().getInstance( "OpenAPIParser@relax" ).parse( deserializeJSON( collection.apiJSON ) );
+		
+		} catch( any e ){
+		
+			response.message = "The API provided could not be parsed according to the OpenAPI specification.  Please check your syntax and ensure all required keys are provided.";
+			return response;
+		
+		}
+
+		var targetFile = targetDir & "/" & apiName & ".json";
+
+		fileWrite(targetFile, collection.apiJSON);
+
+		response.data = {
+			"name":apiName,
+			"document":parsedAPI.getNormalizedDocument()	
+		};
+		
+		response.success = true;
+
+		return response;
 	}
 
 	/**
@@ -293,6 +328,15 @@ component accessors="true" {
 		this[ ARGUMENTS.name ] 		= ARGUMENTS.UDF;
 
 		return this;
+	}
+
+	private function newResponse(){
+		return {
+			"success":false,
+			"data":{},
+			"message":"",
+			"errors":[]
+		};
 	}
 
 }

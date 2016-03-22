@@ -11,6 +11,37 @@ function openRemoteModal( url, params ){
     $remoteModal.modal( "show" );
 }
 
+function parseRequestParams(){
+    var location = window.location;
+
+    var params = {
+        hash : location.hash,
+        queryString : location.search,
+        path : location.pathname,
+        api : getQueryVariable( "api" )
+    };
+
+    //evaluate path information for apiname
+    var pathArray = params.path.split( '/' );
+    if( pathArray[ pathArray.length - 2 ] === 'api' && pathArray[ pathArray.length - 1 ].length ){
+        params.api = pathArray[ pathArray.length - 1 ];
+    }
+
+    return params;
+}
+
+//http://www.idealog.us/2006/06/javascript_to_p.html
+function getQueryVariable(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) == variable) {
+            return decodeURIComponent(pair[1]);
+        }
+    }
+}
+
 function formatAPIExample( example, mimetype ){
     switch( mimetype ){
         case "application/xml":
@@ -104,11 +135,22 @@ function escapeHtml(string) {
     });
 }
 
-function toggleResource(id){
-    var $div = $( "#resource_" + id );
-    $div.slideToggle();
+/**
+* Templating UDFs
+**/
+
+function renderXAttributes( entity, headerNode ){
+    var xAttributesTemplate = _.template( $( "#x-attributes-template" ).html() );
+    return xAttributesTemplate( {
+        "entity":entity,
+        "headerNode":headerNode
+    } );
 }
 
+
+/**
+* Prototype extensions
+*/
 String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };

@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ColdBox Relax - RESTful Tools For Lazy Experts</title>
     <!--- favicon --->
-    <link href="#prc.root#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="#prc.root#/includes/images/ortus-mini-icon.png" rel="shortcut icon" type="image/png" />
     <!--- SES --->
 	<base href="#replacenocase( event.buildLink( linkTo='', ssl=event.isSSL() ), "index.cfm", "" )#"/>
 	<!--- View Port --->

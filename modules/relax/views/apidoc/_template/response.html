@@ -47,7 +47,7 @@
 									tabIds[ typeRef ] = _.uniqueId( "example" );
 							%>
 							<li role="presentation">
-								<a href="#<%=tabIds[ typeRef ]%>" data-toggle="tab" aria-controls="<%=tabIds[ typeRef ]%>">Example<br>(<%=mimetype%>)</a>
+								<a href="#<%=tabIds[ typeRef ]%>" data-toggle="tab" aria-controls="<%=tabIds[ typeRef ]%>"><%=mimetype%></a>
 							</li>
 							<% }); %>
 						<% } %>

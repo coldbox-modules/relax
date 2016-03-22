@@ -7,21 +7,12 @@ var app = function() {
         toggleMenuRight();
         switcheryToggle();
         menu();
-        togglePanel();
-        closePanel();
     };
 
     var tooltips = function() {
         $('#toggle-left').tooltip();
     };
 
-    var togglePanel = function() {
-        $('.actions > .fa-chevron-down').click(function() {
-            $(this).parent().parent().next().slideToggle('fast');
-            $(this).toggleClass('fa-chevron-down fa-chevron-up');
-        });
-
-    };
 
     var toggleMenuLeft = function() {
         $('#toggle-left').bind('click', function(e) {
@@ -43,13 +34,6 @@ var app = function() {
             var switchery = new Switchery(html, { size: 'small' });
         });
     };
-
-    var closePanel = function() {
-        $('.actions > .fa-times').click(function() {
-            $(this).parent().parent().parent().fadeOut();
-        });
-
-    }
 
     var menu = function() {
         var subMenu = $('.sidebar .nav');
@@ -131,62 +115,6 @@ var app = function() {
 
     };
 
-    var weather = function() {
-        var icons = new Skycons({
-            "color": "white"
-        });
-
-        icons.set("clear-day", Skycons.CLEAR_DAY);
-        icons.set("clear-night", Skycons.CLEAR_NIGHT);
-        icons.set("partly-cloudy-day", Skycons.PARTLY_CLOUDY_DAY);
-        icons.set("partly-cloudy-night", Skycons.PARTLY_CLOUDY_NIGHT);
-        icons.set("cloudy", Skycons.CLOUDY);
-        icons.set("rain", Skycons.RAIN);
-        icons.set("sleet", Skycons.SLEET);
-        icons.set("snow", Skycons.SNOW);
-        icons.set("wind", Skycons.WIND);
-        icons.set("fog", Skycons.FOG);
-
-        icons.play();
-    }
-
-    //morris pie chart
-    var morrisPie = function() {
-
-        Morris.Donut({
-            element: 'donut-example',
-            data: [{
-                    label: "Chrome",
-                    value: 73
-                }, {
-                    label: "Firefox",
-                    value: 71
-                }, {
-                    label: "Safari",
-                    value: 69
-                }, {
-                    label: "Internet Explorer",
-                    value: 40
-                }, {
-                    label: "Opera",
-                    value: 20
-                }, {
-                    label: "Android Browser",
-                    value: 10
-                }
-
-            ],
-            colors: [
-                '#1abc9c',
-                '#293949',
-                '#e84c3d',
-                '#3598db',
-                '#2dcc70',
-                '#f1c40f'
-            ]
-        });
-    }
-
     //Sliders
     var sliders = function() {
         $('.slider-span').slider()
@@ -198,9 +126,7 @@ var app = function() {
         init: init,
         timer: timer,
         map: map,
-        sliders: sliders,
-        weather: weather,
-        morrisPie: morrisPie
+        sliders: sliders
 
     };
 }();

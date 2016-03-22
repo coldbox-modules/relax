@@ -36,6 +36,8 @@
 				<hr>
 			<% } %>
 
+			<%= renderXAttributes( method, 'h4' ) %>
+
 			<% if( _.keys( method.responses ).length ) { %>
 
 				<h4 class="panel-subtitle text-primary">Responses:</h4>
@@ -60,7 +62,62 @@
 
 			<% } %>
 
-			
+			<% 
+				if( !_.isUndefined( method[ "x-request-samples" ] ) ) { 
+					var tabIds = {};
+					var tabActivated = false;
+			%>			
+				<div class="col-xs-12 schema-container">
+					<h4 class="panel-subtitle text-primary">Sample Responses:</h4>
+					<p><%= method[ "x-request-samples" ].description %></p>
+					<div class="sample-tabs">
+						<ul class="nav nav-tabs" role="tablist">
+							<% 
+								_.each( 
+									method[ "x-request-samples" ].examples, 
+									function( example, mimetype ){ 
+										typeRef = mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
+										if( typeRef === 'json' ) typeRef = 'javascript';
+										tabIds[ typeRef ] = _.uniqueId( "sample" );
+							%>
+							<li role="presentation"<%= ( !tabActivated ? 'class="active"' : '' ) %>>
+								<a href="#<%=tabIds[ typeRef ]%>" data-toggle="tab" aria-controls="<%=tabIds[ typeRef ]%>">
+									<%=mimetype%>
+								</a>
+							</li>
+							<% 		
+								tabActivated=true;
+								
+									}
+								); 
+
+								tabActivated = false;
+							%>
+						</ul>
+
+						<div class="tab-content">
+							<% 
+								_.each( 
+									method[ "x-request-samples" ].examples, 
+									function( example, mimetype ){ 
+										typeRef = mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
+										if( typeRef === 'json' ) typeRef = 'javascript';
+							%>
+								
+								<div id="<%=tabIds[typeRef]%>" class="tab-pane fade sample-example<%= ( !tabActivated ? ' active in' : '' ) %>">
+									<div class="panel panel-solid-default">
+										<pre class="language-<%=typeRef%>"><%= formatAPIExample( example, mimetype ) %></pre>
+									</div>
+								</div>
+
+							<% 
+								tabActivated = true;
+								}); 
+							%>
+						</div><!-- /.tab-content -->
+					</div><!-- /.schema-tabs -->
+				</div><!-- /.schema-container -->
+			<% } %>			
 		</div>
 	</div>
 
