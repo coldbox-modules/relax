@@ -10,6 +10,12 @@ component name="OpenAPIDocument" accessors="true" {
 	property name="Wirebox" inject="wirebox";
 	property name="jLoader" inject="loader@cbjavaloader";
 	
+	/**
+	* Constructor
+	* 
+	* @param Doc	The document representation
+	* @param XPath	The XPath of the document to zoom this Document object to
+	**/
 	public function init( required struct Doc, required string XPath="" ){
 		
 		setDocument( ARGUMENTS.Doc );
@@ -24,10 +30,18 @@ component name="OpenAPIDocument" accessors="true" {
 		return this;
 	}
 
+	/**
+	* Convenience methot for setting the XPath of the Document
+	* 
+	* @param XPath	The XPath to zoom the parsed document to during recursion
+	**/
 	public function xPath( required string XPath ){
 		this.setXPath( ARGUMENTS.XPath );
 	}
 
+	/**
+	* Zooms this Document instance to the XPath
+	**/
 	public function zoomToXPath(){
 		if( isNull( getXPath() ) ) return;
 
@@ -35,6 +49,12 @@ component name="OpenAPIDocument" accessors="true" {
 
 	}
 
+	/**
+	* Sets the resourceId extension of a document path
+	* 
+	* @param resourceDoc	The document to parse for x-resourceId nodes
+	* @param hashPrefix		The prefix to use when hashing the x-resourceId value
+	**/
 	private void function setResourceIds(required struct resourceDoc, string hashPrefix="" ){
 		var appendableNodes = [ "paths","get","post","put","patch","delete","head","option" ];
 
@@ -62,22 +82,38 @@ component name="OpenAPIDocument" accessors="true" {
 
 	}
 
-	public function asStruct( required struct APIDoc ){	
+	/**
+	* Convenience method to return a flattened struct of the Document instance
+	**/
+	public function asStruct(){	
 		return getNormalizedDocument();
 	}
 
+	/**
+	* Convenience method to return a YAML string of the normalized document
+	**/
 	public function asYAML(){
 		return convertToYAML( getNormalizedDocument );
 	}
 
-	private string function convertToYAML( required struct APIDoc ){
+	/**
+	* Converts the entity doc to a YAML string
+	**/
+	private string function convertToYAML(){
 		throw( "Method not yet implemented" );
 	}
 
+	/**
+	* Convenience method to return a JSON representation of the normalized document
+	**/
 	public function asJSON(){
 		return serializeJSON( getNormalizedDocument() );
 	}
 
+	/**
+	* Normalizes the document recursively to provide a flattened representation
+	* @param APIDoc 	The document to normalized.  Defaults to the entity document
+	**/
 	public function getNormalizedDocument(struct APIDoc=this.getDocument()){
 		
 		var NormalizedDoc = structCopy( ARGUMENTS.APIDoc );
@@ -144,6 +180,10 @@ component name="OpenAPIDocument" accessors="true" {
 	}
 
 
+	/**
+	* Throws a foreign object type exception if detected when normalizing a document
+	* @param UnKnownObject 		The foreign object detected
+	**/
 	private function throwForeignObjectTypeException( required any UnKnownObject ){
 		throw( type="Relax.ForeignObjectException" ,message="Relax doesn't know what do with an object of type #getMetaData( UnKnownObject ).name#." );
 	}

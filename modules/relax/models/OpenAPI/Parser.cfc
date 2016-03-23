@@ -14,6 +14,10 @@ component name="OpenAPIParser" accessors="true" {
 	property name="Utils" inject="OpenAPIUtil@relax";
 
 
+	/**
+	* Constructor
+	* @param APIDocPath		The path of the top-level API description file.  Valid extensions: .json, .yaml, .json.cfm
+	**/
 	public function init( string APIDocPath ){
 		var refArray = listToArray( ARGUMENTS.APIDocPath, chr( 35 ) );
 
@@ -70,6 +74,12 @@ component name="OpenAPIParser" accessors="true" {
 	}
 
 
+	/**
+	* Parses an API Document recursively
+	* 
+	* @param APIDoc		The struct representation of the API Document
+	* @param [XPath]	The XPath to zoom the parsed document to during recursion
+	**/
 	public function parse( required struct APIDoc, required string XPath="" ){
 
 		setDocumentObject( getWirebox().getInstance( "OpenAPIDocument@relax" ).init( ARGUMENTS.APIDoc, ARGUMENTS.XPath) );
@@ -83,6 +93,11 @@ component name="OpenAPIParser" accessors="true" {
 		return this;
 	}
 
+	/**
+	* Loads a linked hash map from a JSON file
+	* 
+	* @param JSONData	The raw JSON string
+	**/
 	private function loadAsLinkedHashMap( required string JSONData ){
 
 		var JSONFactory = jLoader.create("com.fasterxml.jackson.core.JsonFactory" );
@@ -97,6 +112,12 @@ component name="OpenAPIParser" accessors="true" {
 			
 	}
 
+	/**
+	* Parses API Document $ref notations recursively
+	* 
+	* @param APIDoc		The struct representation of the API Document
+	* @param [XPath]	The XPath to zoom the parsed document to during recursion
+	**/
 	public function parseDocumentReferences( required any DocItem ){
 		
 		if( isArray( DocItem ) ) {
@@ -126,6 +147,11 @@ component name="OpenAPIParser" accessors="true" {
 
 	}
 
+	/**
+	* Retrieves the value from a nested struc when given an XPath argument
+	* 
+	* @param XPath	The XPath to zoom the parsed document to during recursion
+	**/
 	public function getInternalXPath( required string XPath ){
 		var PathArray = listToArray( XPath, "/" );
 		return getDocumentObject().locate( arrayToList( PathArray, "." ) );
@@ -138,6 +164,10 @@ component name="OpenAPIParser" accessors="true" {
 		return getDocumentObject().getNormalizedDocument();
 	}
 
+	/**
+	* Fetches a document $ref object
+	* @param $ref 	The $ref value
+	**/
 	private function fetchDocumentReference( required string $ref ){
 		
 		//resolve internal refrences before looking for externals
@@ -177,6 +207,10 @@ component name="OpenAPIParser" accessors="true" {
 		return ReferenceDocument;
 	}
 
+	/**
+	* Multi-use error throw
+	* @param InvalidContent 	The content which cause the exception
+	**/
 	private function throwInvalidJSONException( required string InvalidContent ){
 
 		throw( type="Relax.ParserException", message="The API Document Provided: #getBaseDocumentPath()# could not be converted to valid JSON" );

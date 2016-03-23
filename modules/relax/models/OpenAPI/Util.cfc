@@ -13,6 +13,7 @@ component name="OpenAPIUtil" accessors="true" {
 
 	/**
 	* Converts a Java object to native CFML structure
+	* @param Object Map  	The Java map object or array to be converted
 	*/
 	function toCF( Map ){
 
