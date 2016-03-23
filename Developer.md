@@ -5,7 +5,7 @@ Relax Module Development
 Environment Setup:
 -----------------
 
-Development requires the installation NPM.  To set up your development evironment from scratch, first install NPM, then:
+Development requires the installation of [https://www.npmjs.com/](NPM).  To set up your development evironment from scratch, first install NPM, then:
 
 ```
 npm install -g bower
