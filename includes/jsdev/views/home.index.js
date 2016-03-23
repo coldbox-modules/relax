@@ -1,7 +1,12 @@
 /**
 * This is the Backbone View for the Relax home
 **/
-define([
+define(
+    /**
+    * RequireJS Resources loaded in this view.  
+    * If not avaialable in the globals file, they will be loaded via HTTP request before the View is instantiated
+    **/
+    [
     'Backbone',
     'views/widgets/relaxer',
     'views/widgets/sidebar',
@@ -9,7 +14,11 @@ define([
     'clipboard',
     'messenger',
     'scrollify'
-],  function(
+    ],  
+    /**
+    * Function arguments are the local resource variables for the above
+    **/
+    function(
             Backbone,
             Relaxer,
             SidebarWidget,
@@ -20,6 +29,7 @@ define([
         ){
         'use strict';
         var View = Backbone.View.extend({
+            //The jQuery scope for this view
             el:"#main-content"
 
             /**
@@ -27,6 +37,7 @@ define([
             * Event bindings
             * ----------------------------------------------
             */
+            //event bindings - restricted to the scope of `this.el` ( DOM selector ) or `this.$el` ( jQuery object )
             ,events:{
 
                 "click .btnCopyDocumentLink" : "onCopyResourceLink"
@@ -41,6 +52,7 @@ define([
             ,initialize: function(){
                 var _this = this;
                 _this.Model = APIModel;
+
                 _this.setupDefaults().then( function( model ){
                     return _this.setupSelectors().render();
                 
@@ -49,7 +61,7 @@ define([
 
             /**
             * ----------------------------------------------
-            * Caches the selectors that are used more than once
+            * Sets up the selectors that are used more than once in this view
             * ----------------------------------------------
             */
             ,setupSelectors: function(){
@@ -62,7 +74,7 @@ define([
 
             /**
             * ----------------------------------------------
-            * Setup some default variables to be used later
+            * Setup the default variables used in this view
             * ----------------------------------------------
             */
             ,setupDefaults: function(){
@@ -124,6 +136,9 @@ define([
                 return this;
             }
 
+            /**
+            * Renders a standard loader message when fetching the API
+            **/
             ,renderLoaderMessage: function(){
                 var _this = this;
                 var APITitle = _this.availableAPIs[ _this.Model.get( 'id' ) ].title;
@@ -137,6 +152,9 @@ define([
 
             }
 
+            /**
+            * Renders the API Documentation
+            **/
             ,renderAPIDocumentation: function(){
                 var _this = this;
                 var APIDoc = _this.Model.attributes;
@@ -147,6 +165,11 @@ define([
 
             }
 
+            /**
+            * Renders the individual paths in the API document
+            * @param paths          The API Document paths object
+            * @param $container     The target container jQuery object
+            **/
             ,renderPaths: function( paths, $container ){
                 var _this = this;
                 var pathTemplate = _.template( $( "#path-template" ).html() );
@@ -163,6 +186,10 @@ define([
 
             }
             
+            /**
+            * Renders the default UI elements of a container ( e.g. tooltips, code formatting )
+            * @param $container     The target container jQuery object
+            **/
             ,renderContainerUI: function( $container ){
                 var _this = this;
                 $( '[data-toggle="tooltip"]', $container ).each( function(){
@@ -173,6 +200,9 @@ define([
                 });
             }
 
+            /**
+            * Renders and sets up the clipboard icons for paths and methods
+            **/
             ,renderClipboardIndicators: function(){
                 var _this = this;
                 var $clipableLinks = $( "#paths .path-panel, #paths .path-panel .method-panel", _this.$el );
@@ -209,6 +239,7 @@ define([
 			* ----------------------------------------------
 			*/
 
+            // Growl-style notifications for clipboard actions
             ,onCopyResourceLink: function(){
                  Messenger().post({
                     message: "Resource link copied to your clipboard",
@@ -223,7 +254,10 @@ define([
             * ----------------------------------------------
             */
 
-            
+            /**
+            * Assigns the anchor links in the document to the window href, rather than the base href attribute specified in the DOM <head>
+            * @param $container     The target container jQuery object
+            **/
             ,assignAnchorLinksToWindow: function( $container ){
                 var _this = this;
                 if( _.isUndefined( $container ) ) $container = $( 'body' );
@@ -242,6 +276,10 @@ define([
                 });
             }
 
+            /**
+            * Expands the UI to any referenced hashes in the window href
+            * @param hash   The hash to expand to ( e.g. window.location.hash )
+            **/
             ,expandHash: function( hash ){
                 var _this = this;
                 if( _.isUndefined( hash ) ) hash = window.location.hash;
@@ -261,6 +299,10 @@ define([
                 }
             }
 
+            /**
+            * Recurses up through the document to ensure any hash targets are visible
+            * @param $hashTarget     The target container which should be visible
+            **/
             ,ensureHashTargetVisibility: function( $hashTarget ){
                 var _this = this;
 

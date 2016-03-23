@@ -1,12 +1,21 @@
 /**
 * This is the Backbone View extension for Relaxer
 **/
-define([
+define(
+    /**
+    * RequireJS Resources loaded in this view.  
+    * If not avaialable in the globals file, they will be loaded via HTTP request before the View is instantiated
+    **/
+    [
     'Backbone',
     'views/widgets/relaxer',
     'views/widgets/sidebar',
     'models/RelaxAPI'
-],  function(
+    ],  
+    /**
+    * Function arguments are the local resource variables for the above
+    **/
+    function(
             Backbone,
             RelaxerWidget,
             SidebarWidget,
@@ -14,8 +23,10 @@ define([
         ){
         'use strict';
         var View = Backbone.View.extend({
+            //The jQuery scope for this view
             el: '#main-content'
             
+            //event bindings - restricted to the scope of `this.el` ( DOM selector ) or `this.$el` ( jQuery object )
             ,events:{
             }
 
@@ -30,7 +41,7 @@ define([
 
             /**
             * ----------------------------------------------
-            * Caches the selectors that are used more than once
+            * Sets up the selectors that are used more than once in this view
             * ----------------------------------------------
             */
             ,setupSelectors:function(){
@@ -39,7 +50,7 @@ define([
 
             /**
             * ----------------------------------------------
-            * Setup some default variables to be used later
+            * Setup the default variables used in this view
             * ----------------------------------------------
             */
             ,setupDefaults:function(){
