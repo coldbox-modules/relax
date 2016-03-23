@@ -9,9 +9,41 @@
 component name="RelaxDSLTranslator" accessors="true" singleton{
 	property name="wirebox" inject="wirebox";
 
-	//variable mixins for translation
-	include "translatorMixins.cfm";
+	/**
+	* Variable mixins used in translation
+	**/
 
+	//We need to use Linked Hashmaps to maintain struct order for serialization and deserialization
+	VARIABLES.openAPITemplate = createObject( "java", "java.util.LinkedHashMap" );
+
+	VARIABLES.templateDefaults = [ 
+	{"swagger": "2.0"},
+	{
+	  "info": {
+	      "version": "",
+	      "title": "",
+	      "description": "",
+	      "termsOfService": "",
+	      "contact": createObject( "java", "java.util.LinkedHashMap" ),
+	      "license": createObject( "java", "java.util.LinkedHashMap" )
+	    }
+	},
+	{"host": ""},
+	{"basePath": ""},
+	{"schemes": []},
+	{"consumes": ["application/json","multipart/form-data","application/x-www-form-urlencoded"]},
+	{"produces": ["application/json"]},
+	{"paths": createObject( "java", "java.util.LinkedHashMap" )}
+
+	];
+
+	//Utility arrays for default methods and responses
+	VARIABLES.HTTPMethods = [ "GET", "PUT", "POST" , "PATCH" , "DELETE" , "HEAD" ];
+	VARIABLES.HTTPMethodResponses = [ 200, 200, 201, 200, 204, 204 ];
+
+	/**
+	* Constructor
+	**/
 	public function init(  ){
 	  for( var templateDefault  in  VARIABLES.templateDefaults ){
 	  	for( var key in templateDefault ){
@@ -20,6 +52,10 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 	  }
 	}
 
+	/**
+	* Translates a RelaxDSL CFC in to the OpenAPI specification
+	* @param dataCFC 		The Relax.cfc object to translate
+	**/
 	public function translate( required any dataCFC ){
 
 		var OpenAPIParser = getWirebox().getInstance( "OpenAPIParser@relax" );
@@ -33,13 +69,18 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		return OpenAPIParser.parse( translation );	
 	}
 
+	/**
+	* Translate RelaxDSL global variables in to the OpenAPI specification
+	* @param dataCFC 		The Relax.cfc object to translate
+	* @param translation 	The translation template to append dataCFC globals
+	**/
 	private void function translateGlobals( required any dataCFC, required translation ){
 		
 		var relax = ARGUMENTS.dataCFC.relax;
 
 		for( var key in relax ){
-			if( structKeyExists( translation, key) ) translation[ key ] = relax[ key ];
-			if( structKeyExists( translation[ "info" ], key) ) translation["info"][ key ] = relax[ key ];			
+			if( structKeyExists( translation, key ) ) translation[ key ] = relax[ key ];
+			if( structKeyExists( translation[ "info" ], key ) ) translation[ "info" ][ key ] = relax[ key ];			
 		}
 
 
@@ -49,12 +90,15 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 
 		translateURLs( dataCFC, translation );
 
-		translateHeaders( dataCFC, translation );
-
 		processGlobalExtensions( dataCFC, translation );
 
 	}
 
+	/**
+	* Translate RelaxDSL mimetype annotations in to full mimetype values
+	* @param dataCFC 		The Relax.cfc object to translate
+	* @param translation 	The translation template to append dataCFC globals
+	**/
 	private void function translateMimeTypes( required any dataCFC, required translation ){
 		var relax = dataCFC.relax;
 
@@ -74,6 +118,11 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		}
 	}
 
+	/**
+	* Translate RelaxDSL security headers in to OpenAPI security definitions
+	* @param dataCFC 		The Relax.cfc object to translate
+	* @param translation 	The translation template to append dataCFC globals
+	**/
 	private void function translateSecurityDefinitions( required any dataCFC, required translation ){
 		for ( var header in dataCFC.globalHeaders ){
 			if( !structKeyExists( translation, "securityDefinitions" ) ) translation[ "securityDefinitions" ] = createObject( "java", "java.util.LinkedHashMap" );
@@ -90,6 +139,11 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 
 	}
 
+	/**
+	* Translate RelaxDSL entry points in to the OpenAPI specification
+	* @param dataCFC 		The Relax.cfc object to translate
+	* @param translation 	The translation template to append dataCFC globals
+	**/
 	private void function translateURLs( required any dataCFC, required translation ){
 		var relax = dataCFC.relax;
 		if( isSimpleValue( relax.entryPoint ) ) relax.entryPoint = { "production" : relax.entryPoint };
@@ -104,6 +158,11 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		}
 	}
 
+	/**
+	* Translate RelaxDSL Coldbox attributes in to OpenAPI extensions
+	* @param dataCFC 		The Relax.cfc object to translate
+	* @param translation 	The translation template to append dataCFC globals
+	**/
 	private void function processGlobalExtensions( required any dataCFC, required translation ){
 		var relax = dataCFC.relax;
 		var extensions = [ "extensionDetection", "throwOnInvalidExtension", "entryPoint" ];
@@ -115,11 +174,11 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		}
 	}
 
-
-	private function translateHeaders ( required any dataCFC, required translation ){
-		
-	}
-
+	/**
+	* Translate RelaxDSL resources in to OpenAPI paths
+	* @param dataCFC 		The Relax.cfc object to translate
+	* @param translation 	The translation template to append dataCFC globals
+	**/
 	private function translatePaths( required any dataCFC, required translation ){
 		var resources = dataCFC.resources;
 
@@ -134,6 +193,10 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		
 	}
 
+	/**
+	* Translate RelaxDSL Coldbox routes to use OpenAPI placeholders
+	* @param pattern 		The pattern to be translated
+	**/
 	private string function translatePathKey( pattern ){
 		var paths = listToArray( pattern, "/" );
 		for ( var i = 1; i <= arrayLen( paths ); i++ ){
@@ -146,6 +209,12 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		return "/" & arrayToList( paths, "/" );
 	}
 
+	/**
+	* Translate RelaxDSL resource patterns in to OpenAPI path methods
+	* @param path 			The path struct to be appended
+	* @param resource 		The RelaxDSL resource to be translated
+	* @param translation 	The top-level translation object - used as a reference for params
+	**/
 	private void function translatePathMethods( 
 		required struct path, 
 		required struct resource, 
@@ -225,6 +294,11 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 
 	}
 
+	/**
+	* Processes RelaxDSL resource parameters
+	* @param path 			The OpenAPI doc path to append the params
+	* @param resource 		The RelaxDSL resource
+	**/
 	private function processPathParameters( required path, resource ){
 		for( var param in resource[ "parameters" ]){
 			var appendTo = [];
@@ -249,6 +323,11 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		}
 	}
 
+	/**
+	* Processes RelaxDSL resource schemas
+	* @param path 			The OpenAPI doc path to append the schemas
+	* @param resource 		The RelaxDSL resource
+	**/
 	private function processPathSchemas( required path, required resource ){
 		if( structKeyExists( resource.response, "schemas" ) ){
 			for ( var schema in resource.response[ "schemas" ] ){
@@ -310,6 +389,11 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		}
 	}
 
+	/**
+	* Processes RelaxDSL samples to the paths
+	* @param path 			The OpenAPI doc path to append the samples
+	* @param resource 		The RelaxDSL resource
+	**/	
 	private function processPathSamples( required path, required resource ){
 		if( structKeyExists( resource.response, "samples" ) ){
 			for ( var sample in resource.response[ "samples" ] ){
