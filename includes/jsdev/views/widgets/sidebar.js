@@ -1,19 +1,30 @@
 /**
 * This is the Backbone View extension for MyView
 **/
-define([
+define(
+    /**
+    * RequireJS Resources loaded in this view.  
+    * If not avaialable in the globals file, they will be loaded via HTTP request before the View is instantiated
+    **/
+    [
     'Backbone',
     'models/RelaxAPI',
     'models/RelaxerHistory'
-],  function(
+    ], 
+    /**
+    * Function arguments are the local resource variables for the above
+    **/ 
+    function(
             Backbone,
             APIModel,
             HistoryModel
         ){
         'use strict';
         var View = Backbone.View.extend({
+            //The jQuery scope for this view
             el:".mc-sidebar"
 
+            //event bindings - restricted to the scope of `this.el` ( DOM selector ) or `this.$el` ( jQuery object )
             ,events:{
                 "change #myAPI":"onSelectAPI",
                 "click .btnExportMediaWiki":"onExportMediaWiki",
@@ -106,6 +117,9 @@ define([
                 return this;
             }
 
+            /**
+            * Renders the API selection container
+            **/
             ,renderAPISelectors:function(){
             	var _this = this;
                 var promise = new Promise( function( resolve,reject ){
@@ -119,7 +133,10 @@ define([
                 return promise;
             }
 
-            ,renderRelaxerResources:function( api ){
+            /**
+            * Renders the Relaxer resources container
+            **/
+            ,renderRelaxerResources:function(){
                 var _this = this;
                 var resourceTemplate = _.template( $( "#relaxer-resources-template" ).html() );
                 $( ".relaxer-resources", _this.$el ).html( resourceTemplate( {
@@ -128,6 +145,9 @@ define([
                 
             }
 
+            /**
+            * Initializes the relaxer history model
+            **/
             ,initializeRelaxerHistory:function(){
                 var _this = this;
 
@@ -143,6 +163,9 @@ define([
                 });
             }
 
+            /**
+            * Renders the Relaxer history
+            **/
             ,renderRelaxerHistory:function(){
                 var _this = this;
 
@@ -160,6 +183,10 @@ define([
 			* Event Methods
 			* ----------------------------------------------
 			*/
+            /**
+            * Assigns an API to the selector which, in turn, fires the change event
+            * @param api        The slug of the API to assign
+            **/
             ,assignAPI: function( api ){
                 var $selectorOptions = $( "#myAPI options" );
                 $selectorOptions.each( function(){
@@ -169,6 +196,18 @@ define([
                     }
                 } );
             }
+
+
+            /**
+            * ----------------------------------------------
+            * Event Methods
+            * ----------------------------------------------
+            */
+
+            /**
+            * Fires when an API is selected
+            * @param e      The event object
+            **/
             ,onSelectAPI: function( e ){
                 var _this = this;
                 var $select = $( e.currentTarget );
@@ -193,17 +232,14 @@ define([
                 });
             }
 
-
             /**
-            * ----------------------------------------------
-            * Event Methods
-            * ----------------------------------------------
-            */
-
-             /**
             * Exporter event methods
             **/
 
+            /**
+            * Fires when Exporting JSON
+            * @param e      The event object
+            **/
             ,onExportAPIJSON: function( e ){
                 var _this = this;
 
@@ -227,9 +263,9 @@ define([
             }
 
             /**
-            * Exporter event methods
+            * Fires when showing the import modal
+            * @param e      The event object
             **/
-            
             ,onShowImportAPI: function( e ){
                 var _this = this;
                 var importForm = _.template( $( "#api-import-form-template" ).html() );
@@ -255,11 +291,20 @@ define([
                 
             }
 
+
+            /**
+            * Confirmation function placeholder for future implementation of API overwrites
+            * @param e      The event object
+            **/
             ,onConfirmImportAPI: function( e ){
                 var _this = this;
                 _this.onProcessImportAPI( e );
             }
 
+            /**
+            * Fires when the api import name is changed
+            * @param e      The event object
+            **/
             ,onValidateAPIName: function( e ){
                 var _this = this;
                 var $apiName = $( e.currentTarget );
@@ -281,6 +326,10 @@ define([
                 }
             }
 
+            /**
+            * Fires when an API import is confirmed
+            * @param e      The event object
+            **/
             ,onProcessImportAPI: function( e ){
                 var _this = this;
                 var $btn = $( e.currentTarget );
@@ -330,6 +379,10 @@ define([
                 });
             }
 
+            /**
+            * Fires when exporting the API as Trac
+            * @param e      The event object
+            **/
             ,onExportTrac: function( e ){
                 var _this = this;
                 var documentationHTML = $( ".api-content" )[ 0 ].outerHTML;
@@ -351,6 +404,10 @@ define([
                 );
             }
 
+            /**
+            * Fires when exporting the API as MediaWiki
+            * @param e      The event object
+            **/
             ,onExportMediaWiki: function( e ){
                 var _this = this;
                 var documentationHTML = $( ".api-content" )[ 0 ].outerHTML;
@@ -372,6 +429,10 @@ define([
                 );   
             }
 
+            /**
+            * Fires when exporting the API as a PDF
+            * @param e      The event object
+            **/
             ,onExportPDF: function( e ){
                  var _this = this;
                 var documentationHTML = $( ".api-content" )[ 0 ].outerHTML;
@@ -393,6 +454,10 @@ define([
                 );  
             }
 
+            /**
+            * Fires when a Relaxer resource is clicked
+            * @param e      The event object
+            **/
             ,onRelaxerResourceSelect: function( e ){
                 var _this = this;
                 var $resourceSelector = $( e.currentTarget );
@@ -420,6 +485,10 @@ define([
             * ----------------------------------------------
             */
 
+            /**
+            * Returns a textarea with the raw export data
+            * @param exportContent      The export content string
+            **/
             ,exportWrapper: function( exportContent ){
                 return '<textarea id="exportContent" class="form-control" rows="20">' + exportContent + '</textarea>';
             }

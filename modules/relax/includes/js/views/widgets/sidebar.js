@@ -70,7 +70,7 @@ define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Back
             });
             return promise;
         },
-        renderRelaxerResources: function(api) {
+        renderRelaxerResources: function() {
             var _this = this;
             var resourceTemplate = _.template($("#relaxer-resources-template").html());
             $(".relaxer-resources", _this.$el).html(resourceTemplate({

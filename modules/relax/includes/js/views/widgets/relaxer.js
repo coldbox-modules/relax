@@ -143,16 +143,6 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             });
             return request;
         },
-        showResourceHelp: function() {
-            var val = $("#resourceID").val();
-            if (val != "null") {
-                var values = val.split(";");
-                openRemoteModal("#event.buildLink( prc.xehResourceDoc )#", {
-                    resourceID: values[0]
-                });
-            }
-            return false;
-        },
         addDynamicItem: function($trigger, inData) {
             var fieldType = $trigger.attr("data-type");
             var fieldsTemplate = _.template($("#dynamicFieldsTemplate").html());

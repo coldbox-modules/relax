@@ -1,15 +1,25 @@
 /**
 * This is the Backbone View For Relaxer
 **/
-define([
+define(
+    /**
+    * RequireJS Resources loaded in this view.  
+    * If not avaialable in the globals file, they will be loaded via HTTP request before the View is instantiated
+    **/
+    [
     'Backbone',
     'models/RelaxerHistory'
-],  function(
+    ],  
+    /**
+    * Function arguments are the local resource variables for the above
+    **/
+    function(
             Backbone,
             HistoryModel
         ){
         'use strict';
         var Relaxer = Backbone.View.extend({
+            //The jQuery scope for this view
             el:".relaxer"
 
             /**
@@ -17,6 +27,7 @@ define([
             * Event bindings
             * ----------------------------------------------
             */
+            //event bindings - restricted to the scope of `this.el` ( DOM selector ) or `this.$el` ( jQuery object )
             ,events:{
                 "click .dynamicAdd":"onAddDynamicItem",
                 "click .dynamicRemove":"onRemoveDynamicItem",
@@ -82,6 +93,11 @@ define([
                 return _this.this;
             }
 
+            /**
+            * Renders the Relaxer response
+            * @param jqXHR          The response jqXHR object
+            * @param textStatus     The response text status
+            **/
             ,renderRelaxerResponse:function( jqXHR, textStatus ){
                 var _this = this;
                 var $container = $( ".relaxer-results", _this.$el );
@@ -141,6 +157,10 @@ define([
 
             }
 
+            /**
+            * Relax send event
+            * @param e      The event object
+            **/
             ,onRelaxerSend: function( e ){
                 var _this = this;
                 var $btn = $( e.currentTarget );
@@ -173,10 +193,18 @@ define([
                 $.ajax( relaxerOptions ); 
             }
 
+            /**
+            * Dynamic object addition event
+            * @param e      The event object
+            **/
             ,onAddDynamicItem: function( e ){
                 return this.addDynamicItem( $(e.currentTarget) )
             }
 
+            /**
+            * Dynamic object removal
+            * @param e      The event object
+            **/
             ,onRemoveDynamicItem: function( e ){
                 var $btn = $( e.currentTarget );
                 var $field = $btn.closest( '.dynamicField' );
@@ -184,7 +212,10 @@ define([
                     $field.remove();
                 });
             }
-           
+            
+            /**
+            * Marshalls the relaxer response for the view
+            **/
             ,marshallRelaxerRequest: function(){
                 var _this = this;
                 var request = {
@@ -223,18 +254,11 @@ define([
                 return request;
             }
 
-            ,showResourceHelp: function(){
-                var val = $( "#resourceID" ).val();
-                if( val != "null"){
-                    var values = val.split(";");
-                    openRemoteModal( '#event.buildLink( prc.xehResourceDoc )#',{
-                        resourceID: values[ 0 ]
-                    });
-                }
-
-                return false;
-            }
-
+            /**
+            * Adds a dynamic item to the headers or params
+            * @param $trigger      The button used to fire the addition
+            * @param inData        Any data which should populate the dynamic item
+            **/
             ,addDynamicItem: function( $trigger, inData){
                 var fieldType = $trigger.attr("data-type");
                 var fieldsTemplate = _.template( $( "#dynamicFieldsTemplate" ).html() );
@@ -244,6 +268,9 @@ define([
                 } ) );
             }
 
+            /**
+            * Clears the relaxer history
+            **/
             ,clearHistory: function(){
                 //activate spinners
                 $("#historyLoader").fadeIn();
@@ -267,6 +294,10 @@ define([
                        "json");
             }
 
+            /**
+            * Renders the default container UI
+            * @param $container      The target container
+            **/
             ,renderContainerUI: function( $container ){
                 var _this = this;
                 $( '[data-toggle="tooltip"]', $container ).each( function(){
