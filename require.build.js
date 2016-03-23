@@ -1,5 +1,9 @@
 require.config({
-    //Note: paths are relative to the compiling cwd - see Gruntfile.js
+    /**
+    *  All of the libraries in the paths below will be packaged by RJS Optimizer
+    *  in to the modules/includes/js directory 
+    *  Note: paths are relative to the compiling cwd - see Gruntfile.js
+    **/
     paths:{
         require:'../../node_modules/requirejs/require'
         ,underscore:'../../bower_components/underscore/underscore-min'
@@ -22,6 +26,10 @@ require.config({
         ,messengerTheme: '../../modules/relax/includes/plugins/messenger/js/messenger-theme-flat'
     }
     
+    /**
+    * Shim config for window globals
+    * Specify any upstream dependencies and the global variables exported
+    **/
     ,shim:{
         underscore:{exports:'_'}
         ,jquery:{exports:['jQuery','$']}
@@ -37,5 +45,8 @@ require.config({
         ,scrollify:{deps: [ 'jquery' ]}
     }
 
+    /**
+    * Any items in the deps array will be pre-compiled in to the Relax module includes/js/globals.js file and will be available immediately on every request
+    **/
     ,deps:['jquery','bootstrap','underscore','Backbone','respond','switchery','navgoco','html5shiv','iCheck','fastclick','messenger','messengerTheme','scrollify']
 });
