@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ColdBox/coldbox-relax.svg?branch=development)](https://travis-ci.org/ColdBox/coldbox-relax)
+[![Build Status](https://travis-ci.org/coldbox-modules/coldbox-relax.svg?branch=development)](https://travis-ci.org/coldbox-modules/coldbox-relax)
 
 WELCOME TO COLDBOX RELAX
 ========================================
