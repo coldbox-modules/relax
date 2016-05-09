@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ColdBox/coldbox-relax.svg?branch=master)](https://travis-ci.org/ColdBox/coldbox-relax)
+[![Build Status](https://travis-ci.org/ColdBox/coldbox-relax.svg?branch=development)](https://travis-ci.org/ColdBox/coldbox-relax)
 
 WELCOME TO COLDBOX RELAX
 ========================================
@@ -15,8 +15,8 @@ Apache License, Version 2.0.
 
 ##IMPORTANT LINKS
 - Code: http://github.com/coldbox/coldbox-relax
-- Issues: https://github.com/ColdBox/coldbox-relax/issues
-- Documentation: https://github.com/ColdBox/coldbox-relax/wiki
+- Issues: https://ortussolutions.atlassian.net/projects/RELAX/issues
+- Documentation: http://coldbox-relax.ortusbooks.com
 
 ##SYSTEM REQUIREMENTS
 - Lucee 4.5+
