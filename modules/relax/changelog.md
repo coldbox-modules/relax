@@ -2,7 +2,18 @@ CHANGELOG
 =========
 
 ## 2.3.0
-* RELAX-25 SSL support for assets
+* [RELAX-25] - SSL support for assets
+* Converts development workflow to user Grunt/SASS/RJS Optimizer
+* [RELAX-5] - Implements OpenAPI Specification as Relax default
+* Implements backward compatiblity for RelaxDSL
+* [RELAX-3] - Relaxer is now async
+* [RELAX-11] - Relaxer functionality is now rendered in-page
+* [RELAX-7] - Udates DSL Documentation to use dynamic JS Templating
+* Documentation loading is now async
+* Adds OpenAPI specification documentation
+* Exports for Trac and WikiMedia are now async
+* Import issues resolved and converted to async
+* Converts code highlighter from SyntaxHighlighter to Prism.js
 
 ## 2.2.0
 * [RELAX-22] - Updated build scripts for using DocBox

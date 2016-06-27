@@ -1,0 +1,124 @@
+<%
+	var responseTemplate = _.template( $( "#response-template" ).html() );
+	var paramTemplate = _.template( $( "#parameter-template" ).html() );
+%>
+<div id="<%=method["x-resourceId"]%>" class="method-panel panel panel-info">
+		
+	<div class="panel-heading">
+		<h3 class="panel-title methodHeader">
+			<strong><%=key%></strong> 
+			<a class="pull-right btToggleMethod" role="button" data-toggle="collapse" href="#panel_<%=method["x-resourceId"]%>" aria-expanded="false" aria-controls="panel_<%=method["x-resourceId"]%>">
+				<i class="fa fa-chevron-down"></i>
+			</a>
+		</h3>
+	</div>
+
+	<div id="panel_<%=method["x-resourceId"]%>" class="collapse panel-body">
+		<div class="col-xs-12">
+			
+			<% if( !_.isUndefined( method.description ) ){  %>
+				<h4 class="panel-subtitle text-primary">Description:</h4>
+
+				<p><%= method.description.replace(/(?:\r\n|\r|\n)/g, '<br />') %></p>
+				
+				<hr>
+			<% } %>
+
+			<% if( !_.isUndefined( method.operationId ) ){  %>
+				<h4 class="panel-subtitle text-primary">Internal Operation: <small class="text-muted">(e.g. Handler.Action)</small></h4>
+				<code><%= method.operationId %></code>
+				<hr>
+			<% } %>
+
+			<% if( !_.isUndefined( method.parameters )  && method.parameters.length > 0 ){ %>
+				<h4 class="panel-subtitle text-primary">Parameters:</h4>
+				<%= paramTemplate( {"entity":method} ) %>
+				<hr>
+			<% } %>
+
+			<%= renderXAttributes( method, 'h4' ) %>
+
+			<% if( _.keys( method.responses ).length ) { %>
+
+				<h4 class="panel-subtitle text-primary">Responses:</h4>
+				<% 
+				_.each( _.keys(method.responses), function( responseKey ){ 
+					if( !isNaN( responseKey ) || responseKey === 'default' ){
+				%>
+					<%= responseTemplate( 
+						{
+							"resourceId": method["x-resourceId"] ,
+							"path":key,
+							"key":responseKey,
+							"response":method.responses[ responseKey ]
+						} 
+					) %>
+				
+				<% 
+					}
+				
+				}); 
+				%>
+
+			<% } %>
+
+			<% 
+				if( !_.isUndefined( method[ "x-request-samples" ] ) ) { 
+					var tabIds = {};
+					var tabActivated = false;
+			%>			
+				<div class="col-xs-12 schema-container">
+					<h4 class="panel-subtitle text-primary">Sample Responses:</h4>
+					<p><%= method[ "x-request-samples" ].description %></p>
+					<div class="sample-tabs">
+						<ul class="nav nav-tabs" role="tablist">
+							<% 
+								_.each( 
+									method[ "x-request-samples" ].examples, 
+									function( example, mimetype ){ 
+										typeRef = mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
+										if( typeRef === 'json' ) typeRef = 'javascript';
+										tabIds[ typeRef ] = _.uniqueId( "sample" );
+							%>
+							<li role="presentation"<%= ( !tabActivated ? 'class="active"' : '' ) %>>
+								<a href="#<%=tabIds[ typeRef ]%>" data-toggle="tab" aria-controls="<%=tabIds[ typeRef ]%>">
+									<%=mimetype%>
+								</a>
+							</li>
+							<% 		
+								tabActivated=true;
+								
+									}
+								); 
+
+								tabActivated = false;
+							%>
+						</ul>
+
+						<div class="tab-content">
+							<% 
+								_.each( 
+									method[ "x-request-samples" ].examples, 
+									function( example, mimetype ){ 
+										typeRef = mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
+										if( typeRef === 'json' ) typeRef = 'javascript';
+							%>
+								
+								<div id="<%=tabIds[typeRef]%>" class="tab-pane fade sample-example<%= ( !tabActivated ? ' active in' : '' ) %>">
+									<div class="panel panel-solid-default">
+										<pre class="language-<%=typeRef%>"><%= formatAPIExample( example, mimetype ) %></pre>
+									</div>
+								</div>
+
+							<% 
+								tabActivated = true;
+								}); 
+							%>
+						</div><!-- /.tab-content -->
+					</div><!-- /.schema-tabs -->
+				</div><!-- /.schema-container -->
+			<% } %>			
+		</div>
+	</div>
+
+</div>

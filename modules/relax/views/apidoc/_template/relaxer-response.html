@@ -1,0 +1,64 @@
+<%
+    var headersUID = _.uniqueId( "relaxResponseHeaders" );
+    var rawUID = _.uniqueId( "relaxResponseRaw" );
+    var prettyUID = _.uniqueId( "relaxResponsePretty" );
+%>
+<div id="resultsBox">
+	<div class="panel panel-default">
+        <div class="panel-body">
+            <div class="tab-wrapper tab-primary">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#<%=prettyUID%>" data-toggle="tab">Response Result</a></li>
+                    <li><a href="#<%=headersUID%>" data-toggle="tab">Response Headers</a></li>
+					<li><a href="#<%=rawUID%>" data-toggle="tab">Raw Response</a></li>
+                </ul>
+                <div class="tab-content">
+                    <!--- PRETTY CONTENT --->
+                    <div class="tab-pane active pretty-results" id="<%=prettyUID%>">
+                        <%
+                            var mimetype = response.getResponseHeader( "Content-Type" ).split( ";" )[ 0 ];
+                            var langRef = mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
+                            if( langRef === 'json' ) langRef = 'javascript';
+                        %>
+                        <div class="panel panel-solid-default">
+                           <pre class="resultsPretty language-<%=langRef%>"><%= formatAPIExample( response.responseText, mimetype ) %></pre>
+                        </div>
+                    </div>
+                	<!--- RAW HEADERS --->
+                    <div class="tab-pane" id="<%=headersUID%>">
+                    	<table class="table table-hover table-striped table-condensed" width="100%">
+							<tr>
+								<th width="200" class="text-right">Response Status</th>
+								<td>
+									Status Code: <code><%= response.status %></code><br>
+                                    <% if( response.statusText.length > 0 ) { %>
+                                      Status Text: <code><%= response.statusText %></code>
+                                    <% } %> 
+								</td>
+							</tr>
+                            <% _.each( _.keys( response.getAllResponseHeaders() ), function( headerKey ){ %>
+
+    							<tr>
+    								<th class="text-right"><%=headerKey%></th>
+    								<td>
+    									<%=response.getResponseHeader( headerKey )%>
+    								</td>
+    							</tr>
+
+                            <% }); %>
+						</table>
+                    </div>
+                    <!--- RAW CONTENT --->
+                    <div class="tab-pane raw-results" id="<%=rawUID%>">
+                    	<div class="panel panel-solid-default">
+                            <form>
+                                <textarea id="resultsRAW" class="textfield form-control" rows="30" style="width:100%"><%=response.responseText%></textarea>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div><!-- /.tab-content -->
+            </div><!-- /.tab-wrapper -->
+        </div> <!-- /.panel-body -->
+    </div> <!-- /.panel -->
+</div>

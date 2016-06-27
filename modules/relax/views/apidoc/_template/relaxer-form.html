@@ -1,0 +1,128 @@
+<form class="relaxerForm form-block" action="javascript:void(0)">
+	<%
+		var advancedSettingsUID = _.uniqueId( "advSettings" );
+		if( _.isUndefined( relaxer ) ) var relaxer = {};
+	%>
+	<div class="col-xs-12 col-sm-4 col-md-3">
+		<!--- HTTP Method --->
+		<select name="httpMethod" title="Choose your HTTP Method" class="httpMethod form-control input-lg">
+			<option value="GET"<%= (relaxer.method === 'get' ? ' selected' : '' )%>>GET</option>
+			<option value="PUT"<%= (relaxer.method === 'put' ? ' selected' : '' )%>>PUT</option>
+			<option value="POST"<%= (relaxer.method === 'post' ? ' selected' : '' )%>>POST</option>
+			<option value="DELETE"<%= (relaxer.method === 'delete' ? ' selected' : '' )%>>DELETE</option>
+			<option value="HEAD"<%= (relaxer.method === 'head' ? ' selected' : '' )%>>HEAD</option>
+			<option value="OPTIONS"<%= (relaxer.method === 'options' ? ' selected' : '' )%>>OPTIONS</option>
+		</select>
+	</div>
+
+
+	<div class="input-group col-xs-12 col-sm-8 col-md-9 input-group-lg">
+			<!--- Resource or URL --->
+			<input title="The resource to hit" type="text" name="httpResource" class="httpResource form-control" value="<%=relaxer.endpoint%>" />
+			<!--- Button Bar --->
+		<div class="input-group-btn">
+		
+			<button type="button" class="btn btn-primary btnSendRequest" title="Send Request">Send <i class="fa fa-paper-plane"></i></button>
+
+		</div>
+	</div>
+
+	<% if( relaxer.extensionDetection ){ %>
+	<div class="col-xs-12">
+		<!--- Format --->
+		<select name="httpFormat" title="The resource format extension (if available)" class="httpFormat form-control input-sm">
+			<option value="">none</option>
+			<option>xml</option>
+			<option>json</option>
+			<option>jsont</option>
+			<option>rss</option>
+		</select>
+	</div>
+	<% } %>
+	<div class="col-xs-12">
+		<a class="btn btn-primary btn-block btn-lg" title="Advanced Settings" data-toggle="collapse" href="#<%=advancedSettingsUID%>" aria-expanded="false" aria-controls="<%=advancedSettingsUID%>">
+			<i class="fa fa-gears"></i> Show Advanced Options
+		</a>
+
+		<!--- Advanced Settings --->
+		<div id="<%=advancedSettingsUID%>" class="collapse well advancedSettings">
+			<!--- HTTP Headers --->
+			<fieldset class="requestHeaders">
+				<% 
+					var headersUID = _.uniqueId( "headers" );
+				%> 
+				<legend>
+					<a data-toggle="collapse" href="#<%=headersUID%>" aria-expanded="false" aria-controls="<%=headersUID%>">
+					Request Headers
+						<i class="pull-right fa fa-caret-down"></i>
+					</a>
+				</legend>
+
+				<!--- Headers Holder --->
+				<div id="<%=headersUID%>" class="httpHeaders collapse">
+					<div class="headersFormGroup dynamicAdditions"></div>
+					<!--- Add Header --->
+					<button class="btn btn-default btn-sm dynamicAdd" data-type="header" title="Add Header" id="addHeaderButton" onclick="return false;"><i class="fa fa-plus"></i></button>
+				</div>
+			</fieldset>
+
+			<!--- Query Params --->
+			<fieldset class="requestParams">
+				<% 
+					var paramsUID = _.uniqueId( "params" );
+				%>
+				<legend>
+					<a data-toggle="collapse" href="#<%=paramsUID%>" aria-expanded="false" aria-controls="<%=paramsUID%>">
+					Request Parameters
+						<i class="pull-right fa fa-caret-down"></i>
+					</a>
+				</legend>
+
+				<!--- Parameters Holder --->
+				<div id="<%=paramsUID%>" class="httpParameters collapse">
+					<div class="parametersFormGroup dynamicAdditions"></div>
+					<!--- Add Header --->
+					<button class="btn btn-default btn-sm dynamicAdd" data-type="parameter" title="Add Parameter" id="addParameterButton" onclick="return false;"><i class="fa fa-plus"></i></button>
+				</div>
+			</fieldset>
+
+			<!--- HTTP Proxy --->
+			<fieldset>
+				<% 
+					var proxyUID = _.uniqueId( "proxy" );
+				%> 
+				<legend>
+					<a data-toggle="collapse" href="#<%=proxyUID%>" aria-expanded="false" aria-controls="<%=proxyUID%>">
+					HTTP Proxy Settings
+						<i class="pull-right fa fa-caret-down"></i>
+					</a>
+				</legend>
+				<div class="collapse" id="<%=proxyUID%>">
+					Host:
+					<input title="HTTP Proxy"  type="text" class="form-control" name="httpProxy" id="httpProxy"  size="30" value="<%=relaxer.httpProxy%>" />
+					Port:
+					<input title="HTTP Proxy Port"  type="text" class="form-control" name="httpProxyPort" id="httpProxyPort" size="30" value="<%=relaxer.httpProxyPort%>" />
+				</div>
+			</fieldset>
+
+			<!--- HTTP Basic Auth --->
+			<fieldset>
+				<% 
+					var authUID = _.uniqueId( "auth" );
+				%> 
+				<legend>
+					<a data-toggle="collapse" href="#<%=authUID%>" aria-expanded="false" aria-controls="<%=authUID%>">
+					HTTP Authentication Settings
+						<i class="pull-right fa fa-caret-down"></i>
+					</a>
+				</legend>
+				<div class="collapse" id="<%=authUID%>">
+					Username:
+					<input title="Username"  type="text" class="form-control" name="username" id="username" size="30" value="<%=relaxer.authUsername%>" />
+					Password:
+					<input title="Password"  type="text" class="form-control" name="password" id="password" size="30" value="<%=relaxer.authPassword%>" />
+				</div>
+			</fieldset>
+		</div>
+	</div>
+</form>

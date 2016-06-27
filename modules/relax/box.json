@@ -1,7 +1,7 @@
 {
 	"name" 		: "ColdBox Relax",
-	"author" 	: "Luis Majano <lmajano@ortussolutions.com",
-	"version"	: "@build.version@+@build.number@",
+	"author" 	: "Luis Majano <lmajano@ortussolutions.com>",
+	"version"	: "2.1.0",
 	"slug"		: "relax",
 	"type"		: "modules",
 	"keywords"	: "RESTFul,modeling,web services",
@@ -24,6 +24,7 @@
 		"Jon Clausen <jon_clausen@silowebworks.com>"
 	],
 	"dependencies" : {
+		"cbjavaloader" : "1.0.0",
 		"wikitext" : "1.0.0"
 	},
     "ignore":[

@@ -22,7 +22,7 @@ component{
 	// Auto-map models
 	this.autoMapModels		= true;
 	// Module Dependencies That Must Be Loaded First, use internal names or aliases
-	this.dependencies		= [];
+	this.dependencies		= [ "cbjavaloader","wikitext" ];
 
 	/**
 	* Configure App
@@ -33,8 +33,18 @@ component{
 
 		// SES Routes
 		routes = [
+			// APIDoc API Routes
+			{
+				pattern="/apidoc/:api?",
+				handler="APIDoc",
+				action={"GET":"index","POST":"create","PUT":"update","PATCH":"update","DELETE":"delete"}
+				
+			},
+			//Direct API requests
+			{ pattern="/export/:action/:apiname?", handler="Export", action="index" },
+			{ pattern="/api/:apiname?", handler="Home", action="index" },
 			// Module Entry Point
-			{ pattern="/", handler="home", action="index" },
+			{ pattern="/", handler="Home", action="index" },
 			// Convention Route
 			{ pattern="/:handler/:action?" }
 		];
@@ -45,9 +55,59 @@ component{
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
+
 		var configSettings = controller.getConfigSettings();
 		// parse parent settings
 		parseParentSettings();
+
+		//ensure cbjavaloader is an activated module
+		if(!Wirebox.getColdbox().getModuleService().isModuleActive('cbjavaloader')){
+			Wirebox.getColdbox().getModuleService().reload('cbjavaloader');	
+		}
+		
+		
+		// load jars
+		wirebox.getInstance("loader@cbjavaloader").appendPaths( modulePath & "/lib");
+		
+
+		/**	
+		* Utilities
+		**/
+
+		//models.Mongo.Util
+		binder.map( "OpenAPIUtil@relax" )
+			.to( "#moduleMapping#.models.OpenAPI.Util" )
+			.asSingleton();
+
+
+		/**
+		* Manual Instantiation Instances
+		**/
+
+		//models.OpenAPI.Document
+		binder.map( "OpenAPIDocument@relax" )
+			.to( '#moduleMapping#.models.OpenAPI.Document' )
+			.noInit();
+
+
+		//models.OpenAPI.Parser
+		binder.map( "OpenAPIParser@relax" )
+			.to( '#moduleMapping#.models.OpenAPI.Parser' )
+			.noInit();
+
+		//RelaxDSL Parser
+		binder.map( "RelaxDSL@relax" )
+			.to( "#moduleMapping#.models.RelaxDSL.Document" );
+
+		//RelaxDSL Document
+		binder.map( "RelaxDoc@relax" )
+			.to( "#moduleMapping#.models.RelaxDSL.Generator" );
+
+
+		//RelaxDSL Translator
+		binder.map( "DSLTranslator@relax" )
+			.to( "#moduleMapping#.models.RelaxDSL.Translator" );
+
 	}
 
 	/**
@@ -60,7 +120,7 @@ component{
 	* Pre process for relax, makes sure an API is loaded
 	*/
 	function preProcess( event, interceptData ) eventPattern="^relax.*"{
-		var DSLService = wirebox.getInstance( "DSLService@relax" );
+		var DSLService = wirebox.getInstance( "APIService@relax" );
 		// load the default API if none loaded
 		if( !DSLService.isLoadedAPI() ){
 			DSLService.loadAPI( controller.getConfigSettings().relax.defaultAPI );
@@ -81,7 +141,7 @@ component{
 			// History stack size, the number of history items to track in the RelaxURL
 			maxHistory = 10
 		};
-		*/
+		**/
 		// Read parent application config
 		var oConfig 		= controller.getSetting( "ColdBoxConfig" );
 		var relaxDSL		= oConfig.getPropertyMixin( "relax", "variables", structnew() );

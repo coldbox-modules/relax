@@ -1,0 +1,190 @@
+<%
+console.log( api );
+var pathKeys = _.keys(api.paths);
+var responseCodeTemplate = _.template( $( "#httpcodes-template" ).html() );
+var securityDefinitionsTemplate = _.template( $( "#security-definitions-template" ).html() );
+var paramTemplate = _.template( $( "#parameter-template" ).html() );
+%>
+<p class="hidden-print">
+    The <em>Relax DSL</em> is loaded for your API: <code><%= api.id %></code>.
+</p>
+
+<div class="panel panel-default">
+    <div id="api-content-tabs" class="panel-body">
+        <div class="tab-wrapper tab-primary">
+            <% if( !$( "body" ).hasClass( "print" ) ){ %>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#overview" data-toggle="tab" aria-controls="overview">Service Overview</a></li>
+                    <li><a href="#paths" data-toggle="tab" aria-controls="paths">API Path Reference</a></li>
+                    <li><a href="#httpcodes" data-toggle="tab" aria-controls="httpcodes">HTTP Response Reference</a></li>
+                </ul>
+            <% } %>
+            <% if( $( "body" ).hasClass( "print" ) ){ %>
+                <h2 class="text-primary">API Service Overview:</h2>
+            <% } %>
+            <div class="tab-content">
+                <div id="overview" class="tab-pane active service-summary">
+                    <!--- Service Title and Description --->
+                    <h2><%= api.info.title %></h2>
+                    
+                    <% if( !_.isUndefined( api.info.version ) && api.info.version.length > 0 ) { %>
+                        <h4>Version: <span class="label label-primary"><%= api.info.version %></span></h4>
+                    <% } %>
+
+                    <dl>
+                        <dt class="text-info">Introduction:</dt>
+                        <dd><%= api.info.description.replace(/(?:\r\n|\r|\n)/g, '<br />') %></dd>
+                        <% if( typeof( api.info.contact ) && !_.isEmpty( api.info.contact ) ){ %>
+                            <dt class="text-info">Contact:</dt>
+                            <dd class="address">
+                                <ul>
+                                <% _.each( _.keys( api.info.contact ), function(contactKey){ %>
+                                    <li class="list-unstyled">
+                                        <strong><%= contactKey.toProperCase() %>:</strong> 
+                                        
+                                        <% if( api.info.contact[ contactKey ].indexOf( "http" ) === 0 ) { %>
+                                            <a href="<%= api.info.contact[ contactKey ] %>" target="_blank">
+                                        <% } %>
+                                        
+                                        <%= api.info.contact[ contactKey ] %>
+                                        
+                                        <% if( api.info.contact[ contactKey ].indexOf( "http" ) === 0 ) { %>
+                                            </a>
+                                        <% } %>
+                                    </li>
+                                <% }) %>
+                                </ul>
+                            </dd>
+                        <% } %>
+
+                        <% if( !_.isUndefined( api.info.license ) && !_.isUndefined( api.info.license.url ) ){ %>
+                            
+                            <dt class="text-info">License: 
+                                <a href="<%=api.info.license.url%>">
+                                    <%= ( 
+                                        !_.isUndefined( api.info.license.name ) && api.info.license.name.length > 0 
+                                            ? api.info.license.name 
+                                            : api.info.license.url 
+                                        )
+                                    %>
+                                    <i class="fa fa-link"></i>
+                                </a>
+                            </dt>
+
+                        <% } %>
+
+                        <% if( !_.isUndefined( api.info.termsOfService ) && api.info.termsOfService.length > 0 ) { %>
+                            <% if( api.info.termsOfService.indexOf( "http" ) === 0 ){ %>          
+                                <dt class="text-info">
+                                    Terms of Service: <a href="<%= api.info.termsOfService %>"><%= api.info.termsOfService %></a>
+                                </dt>
+                            <% } else { %>
+                                <dt class="text-info">Terms of Service:</dt>
+                                <dd>
+                                    <%= api.info.termsOfService.replace(/(?:\r\n|\r|\n)/g, '<br />') %>
+                                </dd>
+                            <% } %>
+                        <% } %>
+
+
+                        <% if( !_.isUndefined( api.externalDocs )  && !_.isUndefined( api.externalDocs.url ) ){ %>
+                            <dt class="text-info">External Docs: 
+                                <a href="<%=api.externalDocs.url%>">
+                                    <%= ( 
+                                        !_.isUndefined( api.externalDocs.description ) && api.externalDocs.description.length > 0 
+                                            ? api.externalDocs.description 
+                                            : api.externalDocs.url 
+                                        )
+                                    %>
+                                    <i class="fa fa-globe"></i>
+                                </a>
+                            </dt>
+                        <% } %>
+                    </dl>
+
+                    <h3>Service Entry Points</h3>
+                    <ul class="list-unstyled">
+                        <li>
+                            <em>Default:</em> 
+                            <a href="<%= ( !_.isUndefined( api.scheme ) ? api.scheme + '://' : window.location.protocol + "//" ) %><%=api.host%>">
+                                <%= ( !_.isUndefined( api.scheme ) ? api.scheme + '://' : window.location.protocol + "//" ) %><%=api.host%>
+                            </a>
+                        </li>
+                        <% if( !_.isUndefined( api[ "x-entryPoint" ] ) ) { %>
+                            <% _.each( _.keys( api[ "x-entryPoint" ] ),function( tierName ){ %>
+                                <li><em><%=tierName.toProperCase()%>:</em> <a href="<%=api[ "x-entryPoint" ][ tierName ]%>"><%=api[ "x-entryPoint" ][ tierName ]%></a></li>
+                            <% }); %>
+                        <% } %>
+                        
+                    </ul>
+
+                    <!--- Paths --->
+                    <h3>Service Available Paths</h3>
+
+                   <p> 
+                   <% _.each( pathKeys, function( key){ %>
+
+                        <a class="btn btn-xs btn-primary path-nav" href="#<%= api.paths[ key ][ "x-resourceId" ] %>"><%= key %></a>
+                    
+                    <% }); %>
+                    </p>
+                    <h3>MIME Types Consumed</h3>
+                    <p>
+                    <% _.each( api.consumes, function(type){ %>
+
+                        <span class="label label-primary consumes-nav" data-mimetype="type"><%= type %></span>
+                    
+                    <% }); %>
+                    </p>
+                    <!--- API Return Formats --->
+                    <h3>MIME Types Returned</h3>
+                    <p>
+                    <% _.each( api.produces, function(type){ %>
+
+                        <span class="label label-primary consumes-nav" data-mimetype="type"><%= type %></span>
+                    
+                    <% }); %>
+                    </p>
+
+                    <% if( !_.isUndefined( api[ "x-extensionDetection" ] ) ) { %>
+                        <h3>Extension Detection:  <code><%= api[ "x-extensionDetection"] %></code></h3>
+                    <% } %>
+
+                    <% if( !_.isUndefined( api[ "x-throwOnInvalidExtension" ] ) ) { %>
+                        <h3>Throws on Invalid Extension:  <code><%= api[ "x-throwOnInvalidExtension"] %></code></h3>
+                    <% } %>
+
+                    <% if( !_.isUndefined( api.securityDefinitions ) ) { 
+                    %>
+                        <!-- Security Definitions -->
+                        <h3>Security Definitions</h3>
+                        <%= securityDefinitionsTemplate( { "definitions":api.securityDefinitions } ) %>
+                    <% } %>
+
+                    <% if( !_.isUndefined( api.parameters ) ) { %>
+                        <!--- API Global Parameters --->
+                        <h3>Global Parameters</h3>
+                        <%= paramTemplate( { "entity":api } ) %>
+                    <% } %>
+
+                    <%= renderXAttributes( api ) %>
+                    
+                    <div class="clearfix"></div>
+
+                </div>
+                <div class="tab-pane hidden-print" id="httpcodes">
+                    <%= responseCodeTemplate() %>
+                </div>
+
+                <% if( $( "body" ).hasClass( "print" ) ){ %>
+                    <h2 class="text-primary">API Path Reference:</h2>
+                <% } %>
+
+                <div id="paths" class="tab-pane paths-content">
+                    <h3>Available Paths:</h3>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

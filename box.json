@@ -13,6 +13,7 @@
     "installPaths":{
         "coldbox":"coldbox",
         "testbox":"testbox",
-        "wikitext":"modules/wikitext"
+        "wikitext":"modules/wikitext",
+        "cbjavaloader":"modules/cbjavaloader"
     }
 }

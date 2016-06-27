@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Available Relax APIs</h3>
+    </div>
+    <div class="panel-body">
+    	Load another API:<br/>
+
+		<p class="text-center">
+			<br>
+			<!--- My Apis --->
+			<select name="myAPI" id="myAPI" title="Your defined Relaxed APIs" class="form-control input-sm">
+				<% for( var key in apis ){ %>
+					<option value="<%=key%>" <%= (key == defaultAPI) ? 'selected="selected"' : '' %>><%=apis[key].title%> (<%=key%>)</option>
+				<% } %>
+			</select>
+		</p>
+    </div>
+</div>
