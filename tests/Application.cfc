@@ -15,6 +15,8 @@ component extends="ApplicationProxy"{
 	this.mappings[ "/tests" ] = getDirectoryFromPath( getCurrentTemplatePath() );
 	rootPath = REReplaceNoCase( this.mappings[ "/tests" ], "/tests(\\|/)", "" );
 	this.mappings[ "/root" ]   = rootPath;
+	//Test harness correction for sub-directories on ortus stg server
+	this.mappings[ "/" ] = rootPath;
 
 	COLDBOX_APP_ROOT_PATH = rootPath & "/";
 	// The web server mapping to this application. Used for remote purposes or static purposes
