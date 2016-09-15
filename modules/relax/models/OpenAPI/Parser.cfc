@@ -12,13 +12,16 @@ component name="OpenAPIParser" accessors="true" {
 	property name="Wirebox" inject="wirebox";
 	property name="jLoader" inject="loader@cbjavaloader";
 	property name="Utils" inject="OpenAPIUtil@relax";
+	property name="moduleConfig" inject="coldbox:setting:relax";
 
+	include "/relax/models/mixins/hashMap.cfm";
 
 	/**
 	* Constructor
 	* @param APIDocPath		The path of the top-level API description file.  Valid extensions: .json, .yaml, .json.cfm
 	**/
 	public function init( string APIDocPath ){
+		
 		var refArray = listToArray( ARGUMENTS.APIDocPath, chr( 35 ) );
 
 		var DocPath = refArray[ 1 ];
@@ -106,10 +109,9 @@ component name="OpenAPIParser" accessors="true" {
 
 		var Parser = JSONFactory.createParser( ARGUMENTS.JSONData );
 		var Mapper = jLoader.create( "java.util.Map" );
-		writeDump(var=Parser,top=1);
-		abort;
-		var HashMap = jLoader.create( "java.util.LinkedHashMap" );
-			
+		var HashMap = createLinkedHashMap();
+		
+		HashMap.putAll( deSerializeJSON( JSONData ) );	
 	}
 
 	/**

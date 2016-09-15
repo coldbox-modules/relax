@@ -155,8 +155,12 @@ component{
 			sessionsEnabled	= getApplicationMetadata().sessionManagement
 		};
 
-		// Apend it
+		// Append it
 		structAppend( configStruct.relax, relaxDSL, true );
+
+		// Set our server type for compatibility checks on java objects
+		configStruct.relax[ "serverType" ] = structKeyExists( server, "lucee" ) ? "lucee" : "coldfusion";
+		configStruct.relax[ "serverVersion" ] = configStruct.relax[ "serverType" ] == "lucee" ? server[ "lucee" ][ "version" ] : server[ "coldfusion" ][ "productversion" ];
 
 		/** 
 		*  As a convenience, turn off flash auto-saves if sessions are disabled, 

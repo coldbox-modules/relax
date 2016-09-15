@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="#prc.root#/includes/css/relax.css">
     
     <!-- Runtime CSS -->
-	<cfloop array="#event.getPrivateValue("runtimeAssets",[]).css#" index="css">
+	<cfloop array="#event.getPrivateValue("runtimeAssets",arrayNew( 1 )).css#" index="css">
 		<cfset addAsset(css)>
 	</cfloop>
     </cfoutput>
