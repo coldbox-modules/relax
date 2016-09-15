@@ -2,6 +2,7 @@
 * My BDD Test
 */
 component extends="BaseOpenAPISpec"{
+	this.loadColdbox=true;
 	
 /*********************************** LIFE CYCLE Methods ***********************************/
 
@@ -23,7 +24,6 @@ component extends="BaseOpenAPISpec"{
 			it( "Tests the ability to instantiate an OpenAPI Document Object", function(  ){
 				var DocumentObject = Wirebox.getInstance( "OpenAPIDocument@relax" ).init( VARIABLES.testDocument );
 				expect( DocumentObject ).toBeComponent();
-				expect( DocumentObject ).toBeInstanceOf( "modules.relax.models.OpenAPI.Document" );
 				expect( DocumentObject ).toHaveKey( "getDocument" );
 
 				//test that path items have resource IDs

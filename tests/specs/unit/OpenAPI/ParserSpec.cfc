@@ -3,6 +3,7 @@
 */
 component extends="BaseOpenAPISpec"{
 	
+	this.loadColdbox=true;
 /*********************************** LIFE CYCLE Methods ***********************************/
 
 	function beforeAll(){
@@ -51,9 +52,9 @@ component extends="BaseOpenAPISpec"{
 
 	function runParserTypeChecks( required Parser ){
 
-		expect( ARGUMENTS.Parser ).toBeInstanceOf( "modules.relax.models.OpenAPI.Parser" );
+		expect( ARGUMENTS.Parser ).toBeInstanceOf( "Parser" );
 		expect( ARGUMENTS.Parser ).toHaveKey( "getDocumentObject" );
-		expect( ARGUMENTS.Parser.getDocumentObject() ).toBeInstanceOf( "modules.relax.models.OpenAPI.Document" );
+		expect( ARGUMENTS.Parser.getDocumentObject() ).toBeInstanceOf( "Document" );
 		expect( ARGUMENTS.Parser ).toHaveKey( "getSchemaType" );
 		expect( ARGUMENTS.Parser.getSchemaType() ).toBeString();
 		expect( ARGUMENTS.Parser ).toHaveKey( "getBaseDocumentPath" );
@@ -67,13 +68,13 @@ component extends="BaseOpenAPISpec"{
 
 			it( "Tests for the recursive presence of OpenAPIDocument objects within Parser #Parser.getSchemaType()# document object" , function(){
 				var ParserDoc = Parser.getDocumentObject();
-				expect( ParserDoc ).toBeInstanceOf( "modules.relax.models.OpenAPI.Document" );
+				expect( ParserDoc ).toBeInstanceOf( "Document" );
 				expect( ParserDoc ).toHaveKey( "getDocument" );
 				var APIDoc = ParserDoc.getDocument();
 				expect( APIDoc ).toBeStruct();
 				expect( APIDoc ).toHaveKey( "paths" );
 				expect( APIDoc.paths ).toHaveKey( "/pets" );
-				expect( APIDoc.paths[ "/pets" ] ).toBeInstanceOf( "modules.relax.models.OpenAPI.Parser" );
+				expect( APIDoc.paths[ "/pets" ] ).toBeInstanceOf( "Parser" );
 				runParserTypeChecks( APIDoc.paths[ "/pets" ] );
 
 			});
