@@ -1,0 +1,16 @@
+{
+    "force":true,
+    "openbrowser":"false",
+    "app":{
+        "cfengine":"adobe@2016"
+    },
+    "name":"relax-cf2016",
+    "web":{
+        "rewrites":{
+            "enable":true
+        },
+        "http":{
+            "port":"50616"
+        }
+    }
+}

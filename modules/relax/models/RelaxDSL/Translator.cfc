@@ -8,49 +8,51 @@
 */
 component name="RelaxDSLTranslator" accessors="true" singleton{
 	property name="wirebox" inject="wirebox";
+	property name="moduleConfig" inject="coldbox:setting:relax";
 
-	/**
-	* Variable mixins used in translation
-	**/
+	include "/relax/models/mixins/hashMap.cfm";
 
-	//We need to use Linked Hashmaps to maintain struct order for serialization and deserialization
-	VARIABLES.openAPITemplate = createObject( "java", "java.util.LinkedHashMap" );
+	public function onDIComplete(){
+		/**
+		* Variable mixins used in translation
+		**/
+		//We need to use Linked Hashmaps to maintain struct order for serialization and deserialization
+		VARIABLES.openAPITemplate = createLinkedHashMap();
 
-	VARIABLES.templateDefaults = [ 
-	{"swagger": "2.0"},
-	{
-	  "info": {
-	      "version": "",
-	      "title": "",
-	      "description": "",
-	      "termsOfService": "",
-	      "contact": createObject( "java", "java.util.LinkedHashMap" ),
-	      "license": createObject( "java", "java.util.LinkedHashMap" )
-	    }
-	},
-	{"host": ""},
-	{"basePath": ""},
-	{"schemes": []},
-	{"consumes": ["application/json","multipart/form-data","application/x-www-form-urlencoded"]},
-	{"produces": ["application/json"]},
-	{"paths": createObject( "java", "java.util.LinkedHashMap" )}
+		VARIABLES.templateDefaults = [ 
+		{"swagger": "2.0"},
+		{
+		  "info": {
+		      "version": "",
+		      "title": "",
+		      "description": "",
+		      "termsOfService": "",
+		      "contact": createLinkedHashMap(),
+		      "license": createLinkedHashMap()
+		    }
+		},
+		{"host": ""},
+		{"basePath": ""},
+		{"schemes": []},
+		{"consumes": ["application/json","multipart/form-data","application/x-www-form-urlencoded"]},
+		{"produces": ["application/json"]},
+		{"paths": createLinkedHashMap()}
 
-	];
+		];
 
-	//Utility arrays for default methods and responses
-	VARIABLES.HTTPMethods = [ "GET", "PUT", "POST" , "PATCH" , "DELETE" , "HEAD" ];
-	VARIABLES.HTTPMethodResponses = [ 200, 200, 201, 200, 204, 204 ];
+		//Utility arrays for default methods and responses
+		VARIABLES.HTTPMethods = [ "GET", "PUT", "POST" , "PATCH" , "DELETE" , "HEAD" ];
+		VARIABLES.HTTPMethodResponses = [ 200, 200, 201, 200, 204, 204 ];
+		for( var templateDefault  in  VARIABLES.templateDefaults ){
 
-	/**
-	* Constructor
-	**/
-	public function init(  ){
-	  for( var templateDefault  in  VARIABLES.templateDefaults ){
-	  	for( var key in templateDefault ){
-	  		VARIABLES.openAPITemplate.put( key, templateDefault[ key ] );	
-	  	}
-	  }
+			for( var key in templateDefault ){
+				VARIABLES.openAPITemplate[key] =  templateDefault[ key ];	
+			}
+		}
+
 	}
+
+
 
 	/**
 	* Translates a RelaxDSL CFC in to the OpenAPI specification
@@ -125,7 +127,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 	**/
 	private void function translateSecurityDefinitions( required any dataCFC, required translation ){
 		for ( var header in dataCFC.globalHeaders ){
-			if( !structKeyExists( translation, "securityDefinitions" ) ) translation[ "securityDefinitions" ] = createObject( "java", "java.util.LinkedHashMap" );
+			if( !structKeyExists( translation, "securityDefinitions" ) ) translation[ "securityDefinitions" ] = createLinkedHashMap();
 
 			translation[ "securityDefinitions" ][ header[ "name" ] ] = {
 				"type" : structKeyExists( header, "type" ) ? ( header[ "type" ] == "string" ? "basic" : header[ "type" ] ) : "basic",
@@ -226,7 +228,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		if( isSimpleValue( resource.action ) ) {
 
 			resource.handlerMethod = resource.action;
-			resource.action = createObject( "java", "java.util.LinkedHashMap" );
+			resource.action = createLinkedHashMap();
 			resource.action.put( resource.defaultMethod, resource.action );
 
 			var allowedMethods = listToArray( resource.methods );
@@ -260,8 +262,8 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 				"description": structKeyExists( resource,"description" ) ? resource.description : "",
 				"operationId" : resource.handler & operationalAction,
 				"produces": translation["produces"],
-				"responses" : createObject( "java", "java.util.LinkedHashMap" ),
-				"parameters" : createObject( "java", "java.util.LinkedHashMap" ),
+				"responses" : createLinkedHashMap(),
+				"parameters" : createLinkedHashMap(),
 				"x-resourceId": lcase( hash( pathKey & lcase( HTTPMethod ) ) ),
 				"x-coldbox-handler" : resource.handler
 			});
@@ -338,7 +340,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 					"schema" : {
 						"type" : "object"
 					},
-					"examples" : createObject( "java", "java.util.LinkedHashMap" )
+					"examples" : createLinkedHashMap()
 				};
 
 				switch( schema[ "format" ] ){
@@ -404,7 +406,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 					"sample" : {
 						"type" : "object"
 					},
-					"examples" : createObject( "java", "java.util.LinkedHashMap" )
+					"examples" : createLinkedHashMap()
 				};
 
 				switch( sample[ "format" ] ){

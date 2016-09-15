@@ -83,7 +83,7 @@
                     ]
                 ,function(){
                     <!--- loop around the jsAppendList, to add page specific js --->
-                    <cfloop array="#event.getPrivateValue("runtimeAssets",[]).js#" index="js">
+                    <cfloop array="#event.getPrivateValue("runtimeAssets",arrayNew( 1 )).js#" index="js">
                         require(['#js#']);
                     </cfloop>    
                 });

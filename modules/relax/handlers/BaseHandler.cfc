@@ -39,10 +39,14 @@ component {
 		};
 
 		prc.addCSS = function( assetPath ){
+			// workaround for ACF11 closure support
+			var prc = application.cbController.getRequestService().getContext().getCollection( private=true );
 			arrayAppend( prc.runtimeAssets.css, assetPath );
 		};
 
-		prc.addJS = function(assetPath){
+		prc.addJS = function( assetPath ){
+			// workaround for ACF11 closure support
+			var prc = application.cbController.getRequestService().getContext().getCollection( private=true );
 			arrayAppend( prc.runtimeAssets.js, assetPath );
 		};
 

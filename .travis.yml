@@ -17,6 +17,7 @@ install:
 - box server start
 before_script:
 # Startup the app
-- curl http://localhost:50680/
+- curl http://127.0.0.1:50680/
+- mkdir tests/results
 script:
   - ant -f workbench/build.xml

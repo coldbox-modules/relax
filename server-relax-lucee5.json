@@ -1,0 +1,14 @@
+{
+    "force":true,
+    "openbrowser":"false",
+    "engine":"lucee@5",
+    "name":"relax-lucee5",
+    "web":{
+        "rewrites":{
+            "enable":true
+        },
+        "http":{
+            "port":"50605"
+        }
+    }
+}
