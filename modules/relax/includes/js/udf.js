@@ -109,7 +109,7 @@ function formatJSON( id ){
 * @return       string
 **/
 function formatJSONRaw( jsonData ){
-    if( !jsonData.length ){ return ''; }
+    if( typeof jsonData == "undefined" || !jsonData.length ){ return ''; }
     try{
         var result = jsonlint.parse( jsonData );
         
