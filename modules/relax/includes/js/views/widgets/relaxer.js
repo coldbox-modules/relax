@@ -45,14 +45,14 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             var responseEcho = JSON.parse(jqXHR.responseText);
             console.debug(responseEcho);
             var responseObject = {
-                status: responseEcho.status_code,
-                statusText: responseEcho.status_text,
-                responseText: responseEcho.filecontent,
+                status: responseEcho.Statuscode,
+                statusText: responseEcho.Statuscode,
+                responseText: responseEcho.Filecontent,
                 getAllResponseHeaders: function() {
-                    return responseEcho.responseheader;
+                    return responseEcho.Responseheader;
                 },
                 getResponseHeader: function(headerName) {
-                    return responseEcho.responseheader[headerName];
+                    return responseEcho.Responseheader[headerName];
                 }
             };
             $container.html(_this.relaxerResponseTemplate({
@@ -91,6 +91,9 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
                 url: "/relax/relaxer/send",
                 method: "POST",
                 data: JSON.stringify(relaxerRequest),
+                beforeSend: function(xhrObj){
+                    xhrObj.setRequestHeader("Content-Type", "text/html");
+                },
                 complete: function(jqXHR, textStatus) {
                     $btn.html(btnDefaultHTML);
                     _this.renderRelaxerResponse(jqXHR, textStatus);
