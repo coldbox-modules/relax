@@ -155,6 +155,7 @@
     	<subant target="${test.target}">
           	<fileset dir="tests" includes="test.xml"/>
     		<property name="environment" value="${environment}" />
+    		<property name="appdir" value="${basedir}" />
         </subant>
     </target>
     

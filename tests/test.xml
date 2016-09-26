@@ -91,11 +91,11 @@ PLEASE NOTE THAT YOU MUST ALTER THE RUNNER'S URL ACCORDING TO YOUR ENVIRONMENT.
 	
 	<target name="run" depends="init" description="Run our tests and produce awesome results">  
 		<!-- Ensure all test dependencies are installed -->
-		<exec executable="box" dir="${basedir}">
+		<exec executable="box" dir="${appdir}">
 			<arg line="install --force" />
 		</exec>
 		<!-- Startup the apidocs server, wait for a few seconds for server to start -->
-		<exec executable="box" dir="${basedir}">
+		<exec executable="box" dir="${appdir}">
 			<arg line="server start" />
 		</exec>
 		<sleep seconds="5"/>
