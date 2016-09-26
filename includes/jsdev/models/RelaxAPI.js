@@ -11,7 +11,7 @@ define([
             /**
             * The API Path of the model ( sans the ID value )
             */
-            urlRoot: '/relax/apidoc'
+            urlRoot: window.relax.apiDocBaseUrl
             /**
             * ----------------------------------------------
             * Initializes this model
@@ -19,7 +19,7 @@ define([
             */
             ,initialize:function( attributes, options ){
             	
-            	if( typeof( moduleAPIRoot ) === 'undefined' ) moduleAPIRoot = '/relax/';
+            	if( typeof( moduleAPIRoot ) === 'undefined' ) moduleAPIRoot = window.relax.baseUrl;
             	
                 this.urlRoot = moduleAPIRoot + 'apidoc';
 

@@ -73,7 +73,14 @@
     <script type="application/javascript">
         require(['#prc.root#/includes/js/es6-shim.js'],function(){
             require(['#prc.root#/includes/js/globals.js'],function(globals){
+                require.config( {
+                   baseUrl : '#prc.root#/includes/js/',
+                } );
                 window[ "_" ] = _;
+                window[ "relax" ] = {
+                    baseUrl:"#prc.root#/",
+                    apiDocBaseUrl:"#prc.root#/apidoc"
+                }
                 require(
                     [
                         '#prc.root#/includes/js/jsonlint.js',

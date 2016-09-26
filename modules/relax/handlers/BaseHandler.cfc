@@ -38,34 +38,32 @@ component {
 			"css":[]
 		};
 
-		prc.addCSS = function( assetPath ){
-			// workaround for ACF11 closure support
-			var prc = application.cbController.getRequestService().getContext().getCollection( private=true );
-			arrayAppend( prc.runtimeAssets.css, assetPath );
-		};
-
-		prc.addJS = function( assetPath ){
-			// workaround for ACF11 closure support
-			var prc = application.cbController.getRequestService().getContext().getCollection( private=true );
-			arrayAppend( prc.runtimeAssets.js, assetPath );
-		};
-
 		// Naming convention is: {handler}.css
 		var cssPathCheck = cssViewPath & "#lcase(handler)#.css";
-		if( fileExists( expandPath( cssPathCheck )) ){ prc.addCSS( cssPathCheck ); }
+		if( fileExists( expandPath( cssPathCheck )) ){ addCSS( cssPathCheck ); }
 
 		// Naming convention is: {handler}-{action}.css
 		var cssPathCheck = cssViewPath & "#lcase(handler)#-#action#.css";
-		if( fileExists( expandPath( cssPathCheck )) ){ prc.addCSS( cssPathCheck ); }
+		if( fileExists( expandPath( cssPathCheck )) ){ addCSS( cssPathCheck ); }
 
 		// Naming convention is: {handler}.js
 		var jsPathCheck = jsViewPath & "#lcase(handler)#.js";
-		if( fileExists( expandPath(jsPathCheck) ) ){ prc.addJS( jsPathCheck ); }
+		if( fileExists( expandPath(jsPathCheck) ) ){ addJS( jsPathCheck ); }
 
 		// Naming convention is: {handler}.{action}.js
 		var jsPathCheck = jsViewPath & "#lcase(handler)#.#action#.js";
-		if( fileExists( expandPath(jsPathCheck) ) ){ prc.addJS( jsPathCheck ); }
+		if( fileExists( expandPath(jsPathCheck) ) ){ addJS( jsPathCheck ); }
 
+	}
+
+	function addCSS( assetPath ){
+		var prc = getController().getRequestService().getContext().getCollection( private=true );
+		arrayAppend( prc.runtimeAssets.css, assetPath );
+	};
+
+	function addJS( assetPath ){
+		var prc = getController().getRequestService().getContext().getCollection( private=true );
+		arrayAppend( prc.runtimeAssets.js, assetPath );
 	}
 
 }

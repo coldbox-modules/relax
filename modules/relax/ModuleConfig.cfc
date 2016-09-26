@@ -35,18 +35,18 @@ component{
 		routes = [
 			// APIDoc API Routes
 			{
-				pattern="/apidoc/:api?",
+				pattern="apidoc/:api?",
 				handler="APIDoc",
 				action={"GET":"index","POST":"create","PUT":"update","PATCH":"update","DELETE":"delete"}
 				
 			},
 			//Direct API requests
-			{ pattern="/export/:action/:apiname?", handler="Export", action="index" },
-			{ pattern="/api/:apiname?", handler="Home", action="index" },
+			{ pattern="export/:action/:apiname?", handler="Export", action="index" },
+			{ pattern="api/:apiname?", handler="Home", action="index" },
 			// Module Entry Point
-			{ pattern="/", handler="Home", action="index" },
+			{ pattern="", handler="Home", action="index" },
 			// Convention Route
-			{ pattern="/:handler/:action?" }
+			{ pattern=":handler/:action?" }
 		];
 
 	}

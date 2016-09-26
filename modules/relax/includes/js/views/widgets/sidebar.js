@@ -1,4 +1,4 @@
-/*! Copyright 2016 - Ortus Solutions (Compiled: 23-03-2016) */
+/*! Copyright 2016 - Ortus Solutions (Compiled: 15-09-2016) */
 define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Backbone, APIModel, HistoryModel) {
     "use strict";
     var View = Backbone.View.extend({
@@ -12,7 +12,7 @@ define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Back
         },
         initialize: function(options) {
             var _this = this;
-            if (typeof moduleAPIRoot === "undefined") moduleAPIRoot = "/relax/";
+            if (typeof moduleAPIRoot === "undefined") moduleAPIRoot = window.relax.baseUrl;
             if (!_.isUndefined(options.apis)) {
                 _this.availableAPIs = options.apis;
                 _this.defaultAPI = options.default;

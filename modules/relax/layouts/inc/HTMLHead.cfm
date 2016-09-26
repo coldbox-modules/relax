@@ -31,7 +31,7 @@
         <!--- <cfdump var="#event#" abort> --->
     <script type="application/javascript">
         var rootAssetPath = '#prc.root#';
-        var moduleAPIRoot = '/relax/';
+        var moduleAPIRoot = '#(len( getSetting( "AppMapping" ) ) ? '/' & getSetting( "AppMapping" ) : '')#/relax/';
     </script>
     </cfoutput>
 

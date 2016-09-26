@@ -41,7 +41,7 @@ define(
             ,initialize:function( options ){
             	var _this = this;
 
-                if( typeof( moduleAPIRoot ) === 'undefined' ) moduleAPIRoot = '/relax/';
+                if( typeof( moduleAPIRoot ) === 'undefined' ) moduleAPIRoot = window.relax.baseUrl;
 
                 if( !_.isUndefined( options.apis ) ){
                   _this.availableAPIs = options.apis;  
