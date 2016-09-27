@@ -10,8 +10,6 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 	property name="wirebox" inject="wirebox";
 	property name="moduleConfig" inject="coldbox:setting:relax";
 
-	include "/relax/models/mixins/hashMap.cfm";
-
 	public function onDIComplete(){
 		/**
 		* Variable mixins used in translation

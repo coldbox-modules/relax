@@ -14,8 +14,6 @@ component name="OpenAPIParser" accessors="true" {
 	property name="Utils" inject="OpenAPIUtil@relax";
 	property name="moduleConfig" inject="coldbox:setting:relax";
 
-	include "/relax/models/mixins/hashMap.cfm";
-
 	/**
 	* Constructor
 	* @param APIDocPath		The path of the top-level API description file.  Valid extensions: .json, .yaml, .json.cfm

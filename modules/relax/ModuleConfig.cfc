@@ -31,6 +31,9 @@ component{
 		// Layout Settings
 		layoutSettings = { defaultLayout = "relax.cfm" };
 
+		// Add our mixins
+		arrayAppend( controller.getSetting( "ApplicationHelper" ), "#moduleMapping#/models/mixins/textFormat.cfm" );
+
 		// SES Routes
 		routes = [
 			// APIDoc API Routes
@@ -93,6 +96,7 @@ component{
 		//models.OpenAPI.Parser
 		binder.map( "OpenAPIParser@relax" )
 			.to( '#moduleMapping#.models.OpenAPI.Parser' )
+			.mixins( '/#this.cfmapping#/models/mixins/hashMap.cfm' )
 			.noInit();
 
 		//RelaxDSL Parser
@@ -106,7 +110,8 @@ component{
 
 		//RelaxDSL Translator
 		binder.map( "DSLTranslator@relax" )
-			.to( "#moduleMapping#.models.RelaxDSL.Translator" );
+			.to( "#moduleMapping#.models.RelaxDSL.Translator" )
+			.mixins( '/#this.cfmapping#/models/mixins/hashMap.cfm' );
 
 	}
 
