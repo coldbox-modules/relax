@@ -11,6 +11,8 @@ settings.xml
 /node_modules/*
 /node_modules
 tests/results/*
+apidocs/docbox/
+artifacts/
 workbench/build.number
 build/*
 modules/*
