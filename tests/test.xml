@@ -58,6 +58,7 @@ PLEASE NOTE THAT YOU MUST ALTER THE RUNNER'S URL ACCORDING TO YOUR ENVIRONMENT.
 		
 		<!-- Start Init -->
 		<delete dir="${report.dir}" />
+		<mkdir dir="${report.dir}" />
 		<mkdir dir="${junitreport.dir}" />
 		<!-- update permissions -->
 		<antcall target="update.permissions" /> 
@@ -92,8 +93,9 @@ PLEASE NOTE THAT YOU MUST ALTER THE RUNNER'S URL ACCORDING TO YOUR ENVIRONMENT.
 		</exec>
 		<!-- Startup the apidocs server, wait for a few seconds for server to start -->
 		<exec executable="box" dir="${appdir}">
-			<arg line="server start" />
+			<arg line="server start --force" />
 		</exec>
+
 		<sleep seconds="5"/>
 
 		<!-- Directory Runner 
@@ -109,6 +111,11 @@ PLEASE NOTE THAT YOU MUST ALTER THE RUNNER'S URL ACCORDING TO YOUR ENVIRONMENT.
 		<get dest="${report.dir}/results.txt" 
 			 src="${url.runner}&amp;reporter=${test.reporter}&amp;labels=${test.labels}&amp;reportPath=${report.dir}&amp;propertiesSummary=true" 
 			 verbose="true"/>
+
+		<!-- stop our server -->
+		<exec executable="box" dir="${appdir}">
+			<arg line="server stop --force" />
+		</exec>
 		
 		<!-- Bundles Runner
 			You can also run tests for specific bundles by using the runner with the bundles params
