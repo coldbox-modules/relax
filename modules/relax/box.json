@@ -25,7 +25,7 @@
 	],
 	"dependencies" : {
 		"cbjavaloader" : "1.0.0",
-		"wikitext" : "1.0.0"
+		"wikitext" : "1.1.0"
 	},
     "ignore":[
         "**/.*",
