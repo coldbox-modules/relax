@@ -4,11 +4,11 @@
     "slug":"Relax-shell",
     "private":false,
     "dependencies":{
-        "coldbox":"4.1.0+00002",
-        "wikitext":"1.1.0"
+        "coldbox":"^4.1.0+00002",
+        "wikitext":"^1.1.0"
     },
     "devDependencies":{
-        "testbox":"2.2.0"
+        "testbox":"^2.2.0"
     },
     "installPaths":{
         "coldbox":"coldbox",
