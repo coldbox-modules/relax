@@ -22,12 +22,16 @@ component{
 	// Auto-map models
 	this.autoMapModels		= true;
 	// Module Dependencies That Must Be Loaded First, use internal names or aliases
-	this.dependencies		= [ "cbjavaloader","wikitext" ];
+	this.dependencies		= [ "swagger-sdk","wikitext" ];
 
 	/**
 	* Configure App
 	*/
 	function configure(){
+		//ensure cbjavaloader is an activated module
+		if(!Wirebox.getColdbox().getModuleService().isModuleActive('swagger-sdk')){
+			Wirebox.getColdbox().getModuleService().reload('swagger-sdk');	
+		}
 		// Layout Settings
 		layoutSettings = { defaultLayout = "relax.cfm" };
 
@@ -63,15 +67,6 @@ component{
 		// parse parent settings
 		parseParentSettings();
 
-		//ensure cbjavaloader is an activated module
-		if(!Wirebox.getColdbox().getModuleService().isModuleActive('cbjavaloader')){
-			Wirebox.getColdbox().getModuleService().reload('cbjavaloader');	
-		}
-		
-		
-		// load jars
-		wirebox.getInstance("loader@cbjavaloader").appendPaths( modulePath & "/lib");
-		
 
 		/**	
 		* Utilities
@@ -79,9 +74,7 @@ component{
 
 		//models.Mongo.Util
 		binder.map( "OpenAPIUtil@relax" )
-			.to( "#moduleMapping#.models.OpenAPI.Util" )
-			.asSingleton();
-
+			.toDSL( "OpenAPIUtil@SwaggerSDK" );
 
 		/**
 		* Manual Instantiation Instances
@@ -89,15 +82,12 @@ component{
 
 		//models.OpenAPI.Document
 		binder.map( "OpenAPIDocument@relax" )
-			.to( '#moduleMapping#.models.OpenAPI.Document' )
-			.noInit();
+			.toDSL( "OpenAPIDocument@SwaggerSDK" );
 
 
 		//models.OpenAPI.Parser
 		binder.map( "OpenAPIParser@relax" )
-			.to( '#moduleMapping#.models.OpenAPI.Parser' )
-			.mixins( '/#this.cfmapping#/models/mixins/hashMap.cfm' )
-			.noInit();
+			.toDSL( "OpenAPIParser@SwaggerSDK" );
 
 		//RelaxDSL Parser
 		binder.map( "RelaxDSL@relax" )
@@ -111,7 +101,7 @@ component{
 		//RelaxDSL Translator
 		binder.map( "DSLTranslator@relax" )
 			.to( "#moduleMapping#.models.RelaxDSL.Translator" )
-			.mixins( '/#this.cfmapping#/models/mixins/hashMap.cfm' );
+			.mixins( '/SwaggerSDK/models/mixins/hashMap.cfm' );
 
 	}
 
@@ -133,7 +123,7 @@ component{
 	}
 
 	/**
-	* Prepare settings and returns true if using i18n else false.
+	* Prepare settings
 	*/
 	private function parseParentSettings(){
 		/**
@@ -162,10 +152,6 @@ component{
 
 		// Append it
 		structAppend( configStruct.relax, relaxDSL, true );
-
-		// Set our server type for compatibility checks on java objects
-		configStruct.relax[ "serverType" ] = structKeyExists( server, "lucee" ) ? "lucee" : "coldfusion";
-		configStruct.relax[ "serverVersion" ] = configStruct.relax[ "serverType" ] == "lucee" ? server[ "lucee" ][ "version" ] : server[ "coldfusion" ][ "productversion" ];
 
 		/** 
 		*  As a convenience, turn off flash auto-saves if sessions are disabled, 

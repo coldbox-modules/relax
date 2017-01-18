@@ -9,44 +9,18 @@
 component name="RelaxDSLTranslator" accessors="true" singleton{
 	property name="wirebox" inject="wirebox";
 	property name="moduleConfig" inject="coldbox:setting:relax";
+	property name="SwaggerUtil" inject="OpenAPIUtil@SwaggerSDK";
 
 	public function onDIComplete(){
 		/**
 		* Variable mixins used in translation
 		**/
 		//We need to use Linked Hashmaps to maintain struct order for serialization and deserialization
-		VARIABLES.openAPITemplate = createLinkedHashMap();
-
-		VARIABLES.templateDefaults = [ 
-		{"swagger": "2.0"},
-		{
-		  "info": {
-		      "version": "",
-		      "title": "",
-		      "description": "",
-		      "termsOfService": "",
-		      "contact": createLinkedHashMap(),
-		      "license": createLinkedHashMap()
-		    }
-		},
-		{"host": ""},
-		{"basePath": ""},
-		{"schemes": []},
-		{"consumes": ["application/json","multipart/form-data","application/x-www-form-urlencoded"]},
-		{"produces": ["application/json"]},
-		{"paths": createLinkedHashMap()}
-
-		];
+		VARIABLES.openAPITemplate = getSwaggerUtil().newTemplate();
 
 		//Utility arrays for default methods and responses
-		VARIABLES.HTTPMethods = [ "GET", "PUT", "POST" , "PATCH" , "DELETE" , "HEAD" ];
-		VARIABLES.HTTPMethodResponses = [ 200, 200, 201, 200, 204, 204 ];
-		for( var templateDefault  in  VARIABLES.templateDefaults ){
-
-			for( var key in templateDefault ){
-				VARIABLES.openAPITemplate[key] =  templateDefault[ key ];	
-			}
-		}
+		VARIABLES.HTTPMethods = getSwaggerUtil().defaultMethods();
+		VARIABLES.HTTPMethodResponses = getSwaggerUtil().defaultSuccessResponses();
 
 	}
 

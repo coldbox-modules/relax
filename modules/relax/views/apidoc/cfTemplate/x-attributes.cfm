@@ -1,6 +1,6 @@
 <cfscript>
 	entity = args.entity;
-	headerNode =  !structKeyExsts( args, 'headerNode' ) ? 'h3' : args.headerNode;
+	headerNode =  !structKeyExists( args, 'headerNode' ) ? 'h3' : args.headerNode;
 	skippedAttributes = [ 'x-resourceId','x-entryPoint','x-extensionDetection','x-throwOnInvalidExtension', 'x-request-samples' ];
 	xAttributes = [];
 	for( nodeName in entity ){

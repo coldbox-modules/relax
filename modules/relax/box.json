@@ -1,14 +1,15 @@
 {
 	"name" 		: "ColdBox Relax",
 	"author" 	: "Luis Majano <lmajano@ortussolutions.com>",
-	"version"	: "2.1.0",
+	"version"	: "@build.version@+@build.number@",
 	"slug"		: "relax",
 	"type"		: "modules",
 	"keywords"	: "RESTFul,modeling,web services",
-	"homepage"			: "https://github.com/ColdBox/coldbox-relax",
-	"documentation"		: "https://github.com/ColdBox/coldbox-relax/wiki",
-	"repository"		: { "type" : "git", "url" : "https://github.com/ColdBox/coldbox-relax" },
-	"bugs"				: "https://github.com/ColdBox/coldbox-relax/issues",
+	"location"          : "http://downloads.ortussolutions.com/ortussolutions/coldbox-modules/relax/@build.version@/relax-@build.version@.zip",
+	"homepage"			: "https://github.com/coldbox-modules/coldbox-relax",
+	"documentation"		: "https://github.com/coldbox-modules/coldbox-relax/wiki",
+	"repository"		: { "type" : "git", "url" : "https://github.com/coldbox-modules/coldbox-relax" },
+	"bugs"				: "https://github.com/coldbox-modules/coldbox-relax/issues",
 	"shortDescription"	: "RESTFul Tools For Lazy Experts",
 	"engines"	: [
 		{ "type" : "lucee", "version" : ">4.5" },
@@ -27,9 +28,5 @@
 		"cbjavaloader" : "1.0.0",
 		"wikitext" : "1.0.0"
 	},
-    "ignore":[
-        "**/.*",
-        "tests",
-        "*/.md"
-    ]
+    "ignore":[]
 }

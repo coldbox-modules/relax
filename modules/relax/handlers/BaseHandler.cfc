@@ -3,11 +3,12 @@
 * www.ortussolutions.com
 * ---
 */
-component {
+component accessors=true{
 
 	// DI
 	property name="settings" 		inject="coldbox:setting:relax";
 	property name="APIService"		inject="id:APIService@relax";
+	property name="Coldbox"			inject="coldbox";
 
 	/**
 	* Pre handler
@@ -57,12 +58,12 @@ component {
 	}
 
 	function addCSS( assetPath ){
-		var prc = getController().getRequestService().getContext().getCollection( private=true );
+		var prc = getColdbox().getRequestService().getContext().getCollection( private=true );
 		arrayAppend( prc.runtimeAssets.css, assetPath );
 	};
 
 	function addJS( assetPath ){
-		var prc = getController().getRequestService().getContext().getCollection( private=true );
+		var prc = getColdbox().getRequestService().getContext().getCollection( private=true );
 		arrayAppend( prc.runtimeAssets.js, assetPath );
 	}
 

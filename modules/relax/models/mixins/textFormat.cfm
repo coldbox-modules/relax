@@ -9,4 +9,12 @@
 		//now return the text formatted in HTML
 		return replace(str,chr(10),"<br />","ALL");
 	}
+
+	function titleCase( str ){
+		var hyphenatedArray = listToArray( str, '-' );
+		for( var i=1; i<=arraylen( hyphenatedArray );i++ ){
+			hyphenatedArray[ i ] = REReplace(str, "\b(\S)(\S*)\b", "\u\1\L\2", "all");
+		}
+		return arrayToList( hyphenatedArray, '-' );
+	}
 </cfscript>
