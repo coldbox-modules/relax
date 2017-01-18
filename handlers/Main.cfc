@@ -4,7 +4,8 @@
 component{
 
 	// Index
-	any function index( event, rc, prc ){
+	any function index( event, rc, prc ) 
+	{
 		event.setView( "main/index" );
 	}
 
