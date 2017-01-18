@@ -22,11 +22,13 @@
 	"contributors"		: [
 		"Brad Wood <bdw429s@gmail.com>", 
 		"Curt Gratz <gratzc@compknowhow.com>",
-		"Jon Clausen <jon_clausen@silowebworks.com>"
+		"Jon Clausen <jon_clausen@silowebworks.com>",
+		"Evagoras Charalambous <evagoras@gmail.com>"
 	],
 	"dependencies" : {
-		"cbjavaloader" : "1.0.0",
-		"wikitext" : "1.0.0"
+		"cbjavaloader" : "^1.0.0",
+		"swagger-sdk" : "^1.0.0",
+		"wikitext" : "^1.0.0"
 	},
-    "ignore":[]
+    "ignore":["changelog.md"]
 }

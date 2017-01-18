@@ -4,11 +4,15 @@ This ANT build can be used to execute your tests with automation using our inclu
 You can executes directories, bundles and so much more.  It can also produce JUnit reports using the
 ANT junitreport tag.  This is meant to be a template for you to spice up.
 
+There are two targets you can use: run and run-junit
+
 Execute the default 'run' target
 ant -f test.xml
 OR
 ant -f test.xml run
 
+Execute the 'run-junit' target
+ant -f test.xml run-junit
 
 PLEASE NOTE THAT YOU MUST ALTER THE RUNNER'S URL ACCORDING TO YOUR ENVIRONMENT.
 -->
@@ -87,16 +91,6 @@ PLEASE NOTE THAT YOU MUST ALTER THE RUNNER'S URL ACCORDING TO YOUR ENVIRONMENT.
 	</target>
 	
 	<target name="run" depends="init" description="Run our tests and produce awesome results">  
-		<!-- Ensure all test dependencies are installed -->
-		<exec executable="box" dir="${appdir}">
-			<arg line="install --force" />
-		</exec>
-		<!-- Startup the apidocs server, wait for a few seconds for server to start -->
-		<exec executable="box" dir="${appdir}">
-			<arg line="server start --force" />
-		</exec>
-
-		<sleep seconds="5"/>
 
 		<!-- Directory Runner 
 			Executes recursively all tests in the passed directory and stores the results in the 
@@ -109,13 +103,8 @@ PLEASE NOTE THAT YOU MUST ALTER THE RUNNER'S URL ACCORDING TO YOUR ENVIRONMENT.
 			 - Labels
 		-->
 		<get dest="${report.dir}/results.txt" 
-			 src="${url.runner}&amp;reporter=${test.reporter}&amp;labels=${test.labels}&amp;reportPath=${report.dir}&amp;propertiesSummary=true" 
+			 src="${url.runners.default}&amp;directory=${test.directory}&amp;recurse=${test.recurse}&amp;reporter=${test.reporter}&amp;labels=${test.labels}&amp;reportPath=${report.dir}&amp;propertiesSummary=true&amp;directoryExcludes=${test.directoryExcludes}&amp;cfid=123&amp;cftoken=123" 
 			 verbose="true"/>
-
-		<!-- stop our server -->
-		<exec executable="box" dir="${appdir}">
-			<arg line="server stop --force" />
-		</exec>
 		
 		<!-- Bundles Runner
 			You can also run tests for specific bundles by using the runner with the bundles params
@@ -126,7 +115,7 @@ PLEASE NOTE THAT YOU MUST ALTER THE RUNNER'S URL ACCORDING TO YOUR ENVIRONMENT.
 			 - Labels
 
 		<get dest="${report.dir}/results.html" 
-			 src="${url.runner}&amp;bundles=${test.bundles}&amp;reporter=${test.reporter}&amp;labels=${test.labels}&amp;propertiesSummary=true" 
+			 src="${url.runners.default}&amp;bundles=${test.bundles}&amp;reporter=${test.reporter}&amp;labels=${test.labels}&amp;propertiesSummary=true" 
 			 verbose="true"/>
 		 -->
 		
@@ -139,6 +128,114 @@ PLEASE NOTE THAT YOU MUST ALTER THE RUNNER'S URL ACCORDING TO YOUR ENVIRONMENT.
 	       <file file="${report.dir}/results.txt"/>
 	    </loadresource>
 	    <echo message="${testresults}"/>
+        <!-- Fail build if they failed -->
+        <fail if="test.failed"/>
+	</target>
+
+	<target name="runEngine" depends="init" description="Generic run method for alternate CFML engines">  
+		<property name="reportDir" value="${report.dir}/${engine}" />
+
+		<mkdir dir="${reportDir}" />
+		<!-- Touch our TEST.properties file so ACF can find it -->
+		<chmod file="${reportDir}/**" perm="775" type="both" />
+
+		<macrodef name="propertycopy">
+		  <attribute name="name"/>
+		  <attribute name="from"/>
+		  <sequential>
+		    <property name="@{name}" value="${@{from}}"/>
+		  </sequential>
+		</macrodef>
+
+		<property name="runnerPath" value="url.runners.${engine}"/>
+		<propertycopy name="urlRunner" from="${runnerPath}"/>
+		
+		<mkdir dir="${reportDir}" />
+
+		<get dest="${reportDir}/results.txt" 
+			 src="${urlRunner}&amp;directory=${test.directory}&amp;recurse=${test.recurse}&amp;reporter=${test.reporter}&amp;labels=${test.labels}&amp;reportPath=${reportDir}&amp;propertiesSummary=true&amp;directoryExcludes=${test.directoryExcludes}&amp;cfid=123&amp;cftoken=123" 
+			 verbose="true"/>
+
+        <!-- Read Result Properties -->
+        <property file="${reportDir}/TEST.properties"/>
+        <!-- Echo them out -->
+        <echoproperties regex="^(test|total).*"/>
+        <!-- Echo actual results -->
+        <loadresource property="testresults">
+	       <file file="${reportDir}/results.txt"/>
+	    </loadresource>
+	    <echo message="${testresults}"/>
+        <!-- Fail build if they failed -->
+        <fail if="test.failed"/>
+	</target>
+
+	<target name="run-junit" depends="init" description="Run our tests and produce ANT JUnit reports">  
+
+		<!-- Directory Runner 
+			Executes recursively all tests in the passed directory and stores the results in the 
+			'dest' param.  So if you want to rename the file, do so here.
+
+			 Available params for directory runner:
+			 - Reporter = ANTJunit fixed
+			 - Directory
+			 - Recurse
+			 - Labels
+			 - ReportPath : The path where reports will be stored, by default it is the ${report.dir} directory.
+		-->
+		<get dest="${report.dir}/results.xml" 
+					 src="${url.runners.default}&amp;directory=${test.directory}&amp;recurse=${test.recurse}&amp;reporter=ANTJunit&amp;labels=${test.labels}&amp;reportPath=${report.dir}&amp;propertiesSummary=true&amp;directoryExcludes=${test.directoryExcludes}&amp;cfid=123&amp;cftoken=123" 
+					 verbose="true"/>
+		
+		<!-- Bundles Runner
+			You can also run tests for specific bundles by using the runner with the bundles params
+
+			Available params for runner:
+			 - Reporter
+			 - Bundles
+			 - Labels
+
+		<get dest="${report.dir}/results.html" 
+			 src="${url.runners.default}&amp;bundles=${test.bundles}&amp;reporter=${test.reporter}&amp;labels=${test.labels}&amp;propertiesSummary=true" 
+			 verbose="true"/>
+		 -->
+		
+		<!-- Check if file was created -->
+		<if>
+			<available file="${report.dir}/TEST.properties" />
+			<then>
+			</then>
+			<else>
+				<fail message="Build failed as ${report.dir}/TEST.properties was not found!" />
+			</else>
+		</if>
+		
+		<!-- Create fancy junit reports -->
+		<junitreport todir="${junitreport.dir}">  
+			<fileset dir="${report.dir}">  
+				<include name="TEST-*.xml"/>  
+			</fileset>
+			<report format="frames" todir="${junitreport.dir}">
+				<param name="TITLE" expression="My Awesome TestBox Results"/>
+			</report>
+		</junitreport> 
+		
+		<!-- Create fancy junit reports -->
+		<junitreport todir="${junitreport.dir}">  
+			<fileset dir="${report.dir}">  
+				<include name="TEST-*.xml"/>  
+			</fileset>
+			<report format="noframes" todir="${junitreport.dir}">
+				<param name="TITLE" expression="My Awesome TestBox Results"/>
+			</report>
+		</junitreport> 
+		<!-- Rename report -->
+		<move file="${junitreport.dir}/junit-noframes.html" tofile="${junitreport.dir}/index.html" />
+        <!-- Read Result Properties -->
+        <property file="${report.dir}/TEST.properties"/>
+        <!-- Echo them out -->
+        <echoproperties regex="^(test|total).*"/>
+		<!-- update permissions again -->
+		<antcall target="update.permissions" /> 
         <!-- Fail build if they failed -->
         <fail if="test.failed"/>
 	</target>

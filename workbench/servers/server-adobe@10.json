@@ -1,0 +1,17 @@
+{
+    "force":true,
+    "app":{
+        "cfengine":"adobe@10"
+    },
+    "openbrowser":"false",
+    "name":"acf10",
+    "web":{
+        "http":{
+            "port":"49610"
+        },
+        "webroot":"/Users/jonclausen/Sites/ortus/BoxModules/cbox-i18n/"
+    },
+    "JVM":{
+        "heapSize":"1024"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "force":true,
+    "app":{
+        "cfengine":"lucee@4.5"
+    },
+    "openbrowser":"false",
+    "web":{
+        "http":{
+            "port":"50680"
+        },
+        "webroot":"/Users/jonclausen/Sites/ortus/BoxModules/coldbox-relax/"
+    },
+    "name":"lucee@4.5"
+}

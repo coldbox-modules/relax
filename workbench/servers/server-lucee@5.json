@@ -1,0 +1,17 @@
+{
+    "force":true,
+    "app":{
+        "cfengine":"lucee@5"
+    },
+    "openbrowser":"false",
+    "name":"lucee@5",
+    "web":{
+        "http":{
+            "port":"50685"
+        },
+        "webroot":"/Users/jonclausen/Sites/ortus/BoxModules/cbox-i18n/"
+    },
+    "JVM":{
+        "heapSize":"1024"
+    }
+}

@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+## 2.3.1
+* Migrates core OpenAPI parsing to swagger-sdk module
+* Implements one-click route population and testing in API test tool
+* Misc bug fixes and additional support for recursion
+
 ## 2.3.0
 * [RELAX-25] - SSL support for assets
 * Converts development workflow to user Grunt/SASS/RJS Optimizer

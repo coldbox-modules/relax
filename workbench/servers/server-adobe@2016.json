@@ -1,0 +1,20 @@
+{
+    "force":true,
+    "app":{
+        "cfengine":"adobe@2016",
+        "webConfigDir":"/Users/jonclausen/Sites/ortus/hk-cb-sample2",
+        "serverConfigDir":"/Users/jonclausen/Sites/ortus/hk-cb-sample2"
+    },
+    "openbrowser":"false",
+    "name":"acf2016",
+    "web":{
+        "http":{
+            "port":"49616"
+        },
+        "webroot":"/Users/jonclausen/Sites/ortus/BoxModules/cbox-module-template/"
+    },
+    "JVM":{
+        "heapSize":"1024"
+    },
+    "engine":"adobe@2016"
+}
