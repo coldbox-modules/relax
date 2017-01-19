@@ -4,12 +4,11 @@
         "cfengine":"adobe@11"
     },
     "openbrowser":"false",
-    "name":"acf11",
+    "name":"adobe@11",
     "web":{
         "http":{
             "port":"49611"
-        },
-        "webroot":"/Users/jonclausen/Sites/ortus/BoxModules/cbox-module-template/"
+        }
     },
     "JVM":{
         "heapSize":"1024"
