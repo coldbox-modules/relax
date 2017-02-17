@@ -1,4 +1,4 @@
-/*! Copyright 2016 - Ortus Solutions (Compiled: 15-09-2016) */
+/*! Copyright 2017 - Ortus Solutions (Compiled: 30-01-2017) */
 define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel) {
     "use strict";
     var Relaxer = Backbone.View.extend({
@@ -44,21 +44,27 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             var $container = $(".relaxer-results", _this.$el);
             var responseEcho = JSON.parse(jqXHR.responseText);
             console.debug(responseEcho);
-            var responseObject = {
-                status: responseEcho.Statuscode,
-                statusText: responseEcho.Statuscode,
-                responseText: responseEcho.Filecontent,
-                getAllResponseHeaders: function() {
-                    return responseEcho.Responseheader;
-                },
-                getResponseHeader: function(headerName) {
-                    return responseEcho.Responseheader[headerName];
-                }
-            };
-            $container.html(_this.relaxerResponseTemplate({
-                response: responseObject
-            }));
-            _this.renderContainerUI($container);
+            if (typeof responseEcho.status_code === "undefined") {
+                var errorMessage = responseEcho.errordetail ? responseEcho.errordetail : responseEcho.error;
+                $container.html('<div class="clearfix"></div>');
+                $container.after('<p id="relaxer-response-error" class="alert alert-danger">There was an error servicing your request.  The response received was: <em>' + errorMessage + "</em></p>");
+            } else {
+                var responseObject = {
+                    status: responseEcho.status_code,
+                    statusText: responseEcho.status_text,
+                    responseText: responseEcho.filecontent,
+                    getAllResponseHeaders: function() {
+                        return responseEcho.responseheader;
+                    },
+                    getResponseHeader: function(headerName) {
+                        return responseEcho.responseheader[headerName];
+                    }
+                };
+                $container.html(_this.relaxerResponseTemplate({
+                    response: responseObject
+                }));
+                _this.renderContainerUI($container);
+            }
         },
         getRelaxerFormData: function() {
             var _this = this;
@@ -81,6 +87,7 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
         onRelaxerSend: function(e) {
             var _this = this;
             var $btn = $(e.currentTarget);
+            $("#relaxer-response-error").remove();
             var btnDefaultHTML = $btn.html();
             $btn.find("i").removeClass("fa-paper-plane").addClass("fa-spin fa-spinner");
             if ($(".advancedSettings", _this.$el).hasClass("in")) $(".advancedSettings", _this.$el).removeClass("in");
@@ -91,9 +98,6 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
                 url: "/relax/relaxer/send",
                 method: "POST",
                 data: JSON.stringify(relaxerRequest),
-                beforeSend: function(xhrObj){
-                    xhrObj.setRequestHeader("Content-Type", "text/html");
-                },
                 complete: function(jqXHR, textStatus) {
                     $btn.html(btnDefaultHTML);
                     _this.renderRelaxerResponse(jqXHR, textStatus);

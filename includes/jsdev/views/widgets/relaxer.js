@@ -106,22 +106,31 @@ define(
                 
                 console.debug( responseEcho );
 
-                //reformat our echo to emulate a jqXHR object
-                var responseObject = {
-                    "status": responseEcho.status_code,
-                    "statusText": responseEcho.status_text,
-                    "responseText": responseEcho.filecontent,
-                    getAllResponseHeaders: function(){ 
-                        return responseEcho.responseheader;
-                    },
-                    getResponseHeader: function( headerName ){
-                        return responseEcho.responseheader[ headerName ];
+                if( typeof( responseEcho.status_code ) === 'undefined' ){
+
+                    var errorMessage = responseEcho.errordetail ? responseEcho.errordetail : responseEcho.error;
+                    $container.html('<div class="clearfix"></div>');
+                    $container.after( '<p id="relaxer-response-error" class="alert alert-danger">There was an error servicing your request.  The response received was: <em>' +errorMessage+ '</em></p>' )
+                    
+                } else {
+
+                    //reformat our echo to emulate a jqXHR object
+                    var responseObject = {
+                        "status": responseEcho.status_code,
+                        "statusText": responseEcho.status_text,
+                        "responseText": responseEcho.filecontent,
+                        getAllResponseHeaders: function(){ 
+                            return responseEcho.responseheader;
+                        },
+                        getResponseHeader: function( headerName ){
+                            return responseEcho.responseheader[ headerName ];
+                        }
                     }
+
+                    $container.html( _this.relaxerResponseTemplate( {"response":responseObject} ) );
+                    _this.renderContainerUI( $container );
+   
                 }
-
-                $container.html( _this.relaxerResponseTemplate( {"response":responseObject} ) );
-                _this.renderContainerUI( $container );
-
             }
 
 
@@ -164,6 +173,8 @@ define(
             ,onRelaxerSend: function( e ){
                 var _this = this;
                 var $btn = $( e.currentTarget );
+
+                $( "#relaxer-response-error" ).remove();
                 
                 //save our html so we can use it when the request is done
                 var btnDefaultHTML = $btn.html();

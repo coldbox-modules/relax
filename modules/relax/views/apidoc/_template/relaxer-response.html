@@ -14,7 +14,7 @@
                 </ul>
                 <div class="tab-content">
                     <!--- PRETTY CONTENT --->
-                    <div class="tab-pane active pretty-results" id="<%=prettyUID%>">
+                    <div class="tab-pane active pretty-results relaxer-pretty-results" id="<%=prettyUID%>">
                         <%
                             var mimetype = response.getResponseHeader( "Content-Type" ).split( ";" )[ 0 ];
                             var langRef = mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 	<!--- RAW HEADERS --->
-                    <div class="tab-pane" id="<%=headersUID%>">
+                    <div class="tab-pane relaxer-headers" id="<%=headersUID%>">
                     	<table class="table table-hover table-striped table-condensed" width="100%">
 							<tr>
 								<th width="200" class="text-right">Response Status</th>

@@ -66,14 +66,28 @@ component extends="BaseHandler"{
 		event.noLayout();
 		prc.results = {};
 		try{
+			
 			//deserialize our json packet
 			requestData = deSerializeJSON(getHttpRequestData().content);
 			prc.results = relaxerService.send( requestData = requestData );
+
 		} catch( Any e ){
-			prc.results[ 'error' ] = "Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#";
-			prc.results[ 'message' ] = "Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#";
+			
 			prc.results[ 'mimeType' ] = "application/json";
+				
+			if( getSetting( "environment" ) != 'production' ){
+				
+				prc.results[ 'error' ] = "Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#";
+				prc.results[ 'message' ] = "Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#";
+				
+			} else {
+
+				prc.results[ 'error' ] = "Invalid request. Please correct the URL and parameters of your endpoint and try again";
+			
+			}
+
 			log.error( prc.results.error, e );
+		
 		}
 
 		event.renderData( data=prc.results, type="json" );

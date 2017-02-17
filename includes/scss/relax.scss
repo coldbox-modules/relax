@@ -35,6 +35,26 @@ body:not(.print){
 }
 
 /**
+* Relaxer Results
+**/
+.relaxer-results{
+	#resultsBox{	
+		margin-top: 20px;
+	}
+	.tab-pane.relaxer-headers{
+		table{
+			max-width: 100%;
+			td{
+				overflow-x: auto;
+			    text-align: left;
+			    max-width: 500px;
+			}
+
+		}
+	}
+}
+
+/**
 * Print Layout Styles
 **/
 body.print{

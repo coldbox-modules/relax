@@ -101,13 +101,17 @@ component singleton accessors="true"{
 	function send(
 		requestData
 	){
+		if( isSimpleValue( requestData ) ){
+			writeDump(var=requestData,top=1);
+			abort;
+		}
 		var results 	= structnew();
 		var response 	= "";
 		var i			= 1;
 		var tmpValue	= "";
 		var attribs		= structnew();
 		var httpRequest	= {
-			httpMethod 		= arguments.requestData.method,
+			httpMethod 		= structKeyExists( arguments.requestData, "method" ) ? arguments.requestData.method : "GET",
 			httpResource 	= arguments.requestData.url,
 			httpHeaders 	= arguments.requestData.headers,
 			httpParams 		= arguments.requestData.data
