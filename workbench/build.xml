@@ -198,8 +198,6 @@
 
     	<antcall target="startServer" inheritRefs="true" />
 
-    	<sleep seconds="5"/>
-
 		<subant target="runEngine">
           	<fileset dir="tests" includes="test.xml"/>
     		<property name="engine" value="${cfengine}" />
