@@ -10,6 +10,7 @@ settings.xml
 /bower_components
 /node_modules/*
 /node_modules
+workbench/servers/.engine
 tests/results/*
 apidocs/docbox/
 artifacts/

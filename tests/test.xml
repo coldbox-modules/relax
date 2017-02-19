@@ -103,12 +103,8 @@ PLEASE NOTE THAT YOU MUST ALTER THE RUNNER'S URL ACCORDING TO YOUR ENVIRONMENT.
 			 - Labels
 		-->
 		
-
-		<!-- Just in case make sure our report path exists -->
-		<mkdir dir="${report.dir}" />
-		
 		<get dest="${report.dir}/results.txt" 
-			 src="${url.runners.default}&amp;directory=${test.directory}&amp;recurse=${test.recurse}&amp;reporter=${test.reporter}&amp;labels=${test.labels}&amp;reportPath=${report.dir}&amp;propertiesSummary=true&amp;directoryExcludes=${test.directoryExcludes}" 
+			 src="${url.runners.default}&amp;directory=${test.directory}&amp;recurse=${test.recurse}&amp;reporter=${test.reporter}&amp;labels=${test.labels}&amp;reportPath=${report.dir}&amp;propertiesSummary=true&amp;directoryExcludes=${test.directoryExcludes}&amp;cfid=123&amp;cftoken=123" 
 			 verbose="true"/>
 		
 		<!-- Bundles Runner
@@ -138,15 +134,7 @@ PLEASE NOTE THAT YOU MUST ALTER THE RUNNER'S URL ACCORDING TO YOUR ENVIRONMENT.
 	</target>
 
 	<target name="runEngine" depends="init" description="Generic run method for alternate CFML engines">  
-		<property name="reportDir" value="${report.dir}/${engine}" />
-
-		<mkdir dir="${reportDir}" />
-
-		<!-- Touch our TEST.properties file so ACF can find it -->
-		<touch file="${reportDir}/TEST.properties"/>
-		<touch file="${reportDir}/results.txt"/>
-		<chmod file="${reportDir}/**" perm="775" type="both" />
-
+		
 		<macrodef name="propertycopy">
 		  <attribute name="name"/>
 		  <attribute name="from"/>
@@ -157,20 +145,18 @@ PLEASE NOTE THAT YOU MUST ALTER THE RUNNER'S URL ACCORDING TO YOUR ENVIRONMENT.
 
 		<property name="runnerPath" value="url.runners.${engine}"/>
 		<propertycopy name="urlRunner" from="${runnerPath}"/>
-		
-		<mkdir dir="${reportDir}" />
 
-		<get dest="${reportDir}/results.txt" 
-			 src="${urlRunner}&amp;directory=${test.directory}&amp;recurse=${test.recurse}&amp;reporter=${test.reporter}&amp;labels=${test.labels}&amp;reportPath=${reportDir}&amp;propertiesSummary=true&amp;directoryExcludes=${test.directoryExcludes}&amp;cfid=123" 
+		<get dest="${report.dir}/results.txt" 
+			 src="${urlRunner}&amp;directory=${test.directory}&amp;recurse=${test.recurse}&amp;reporter=${test.reporter}&amp;labels=${test.labels}&amp;reportPath=${report.dir}&amp;propertiesSummary=true&amp;directoryExcludes=${test.directoryExcludes}&amp;cfid=123&amp;cftoken=123" 
 			 verbose="true"/>
 
         <!-- Read Result Properties -->
-        <property file="${reportDir}/TEST.properties"/>
+        <property file="${report.dir}/TEST.properties"/>
         <!-- Echo them out -->
         <echoproperties regex="^(test|total).*"/>
         <!-- Echo actual results -->
         <loadresource property="testresults">
-	       <file file="${reportDir}/results.txt"/>
+	       <file file="${report.dir}/results.txt"/>
 	    </loadresource>
 	    <echo message="${testresults}"/>
         <!-- Fail build if they failed -->
