@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <project name="build" basedir="../" default="build">
+
 	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
 	<property name="project.name" 		value="coldbox-relax" />
 	<property name="module.name" 		value="relax" />
@@ -15,7 +16,7 @@
       <isset property="isTravis"/>
     </condition>
 
-    <condition property="build.branch" else="production">
+    <condition property="build.branch" else="development">
       <isset property="build.branch"/>
     </condition>
 
@@ -64,10 +65,9 @@
 				<property file="workbench/build.number"/>
 			</then>
 		</if>
-
 		
 		<!-- Build Label -->
-		<property name="build.label" value="${project.name}-${project.version}.${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
+		<property name="build.label" value="${project.name}-${project.version}+${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
 		<!-- Get Build Dependencies -->
  		<antcall target="getDependencies" />
 		<!-- Cleanup + Init -->
@@ -87,41 +87,32 @@
       	<copy todir="${dir.build}" encoding="UTF-8">
         	<fileset dir="modules/${module.name}" />
         </copy>
+
         <!-- Copy readme -->
-        <if>
-	        <available file="readme.md"/>
-	        <then>
-		        <copy todir="${dir.build}" encoding="UTF-8" file="readme.md" overwrite="true" />
-	        </then>
-	    </if>
+		<copy todir="${dir.build}" encoding="UTF-8" file="readme.md" overwrite="true" />
         <!-- Copy changelog -->
-        <if>
-	        <available file="changelog.md"/>
-	        <then>
-	            <copy todir="${dir.build}" encoding="UTF-8" file="changelog.md" overwrite="true" />
-	        </then>
-	    </if>
+		<copy todir="${dir.build}" encoding="UTF-8" file="changelog.md" overwrite="true" />
         
         <!-- Replace Version + Build Numbers -->
         <!-- Semantic Versioning for Unstable Builds -->
         <echo>Updating placeholders for version ${project.version}, branch ${build.branch}, build ${build.number}</echo>
 
-
 		<replaceregexp match='@build.version@' replace="${project.version}" flags="ig" byline="true" encoding="UTF-8">
 		  <fileset dir="${dir.build}" />
 		</replaceregexp>
-
+	
+		<!-- Determine snapshot vs master artifact -->
 		<if>
 			<equals arg1="${build.branch}" arg2="development" />
 			<then>
-
-				<replaceregexp match='@build.number@' replace="${build.number}-be" flags="ig" byline="true" encoding="UTF-8">
+				<!-- Update to version-snapshot -->
+				<replaceregexp match='@build.number@' replace="-snapshot" flags="ig" byline="true" encoding="UTF-8">
 				  <fileset dir="${dir.build}" />
 				</replaceregexp>
 
 			</then>
 			<else>
-
+				
 				<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
 				  <fileset dir="${dir.build}" />
 				</replaceregexp>
@@ -194,7 +185,6 @@
 		<zip destfile="${dir.exports}/${project.name}-apidocs-${project.version}.zip" basedir="${dir.api}"></zip>
  	</target>
 
-
 	<!-- CFML Engine Tests -->
     <target name="run-tests" description="In-loop runner for engine tests">
     	
@@ -223,7 +213,6 @@
 			<arg line="install" />
 		</exec>
 	</target>
-
 
 	<target name="startServer" description="Starts a single server">
 		<exec executable="box" dir="${basedir}">
