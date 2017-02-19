@@ -1,7 +1,8 @@
 {
     "force":true,
     "app":{
-        "cfengine":"adobe@10"
+        "cfengine":"adobe@10",
+        "serverHomeDirectory":"./.engine/adobe@10"
     },
     "openbrowser":"false",
     "name":"adobe@10",

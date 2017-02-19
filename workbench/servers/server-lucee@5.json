@@ -1,7 +1,8 @@
 {
     "force":true,
     "app":{
-        "cfengine":"lucee@5"
+        "cfengine":"lucee@5",
+        "serverHomeDirectory":"./.engine/lucee@5"
     },
     "openbrowser":"false",
     "name":"lucee@5",

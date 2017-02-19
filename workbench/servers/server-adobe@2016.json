@@ -1,7 +1,8 @@
 {
     "force":true,
     "app":{
-        "cfengine":"adobe@2016"
+        "cfengine":"adobe@2016",
+        "serverHomeDirectory":"./.engine/adobe@2016"
     },
     "openbrowser":"false",
     "name":"adobe@2016",
