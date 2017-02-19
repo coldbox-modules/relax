@@ -29,7 +29,7 @@ before_install:
 
 install:
   # Install Commandbox
-  - sudo apt-get update && sudo apt-get --assume-yes install haveged commandbox
+  - sudo apt-get update && sudo apt-get --assume-yes install haveged rsync commandbox
   # Test that the box binary is available and ready for our tests
   - box version
   # If using auto-publish, you will need to provide your API token with this line:
@@ -48,7 +48,7 @@ after_failure:
   
 before_deploy:
   - mkdir s3deploy
-  - cp -r ./artifacts/cbi18n/* ./s3deploy/
+  - rsync -av ./artifacts/coldbox-relax/ ./s3deploy/
   - rm -f ./s3deploy/box-repo.json
 
 deploy:
@@ -64,7 +64,7 @@ deploy:
   secret_access_key: $AWS_ACCESS_SECRET
   bucket: "downloads.ortussolutions.com"
   local-dir: s3deploy
-  upload-dir: ortussolutions/coldbox-modules/cbi18n
+  upload-dir: ortussolutions/coldbox-modules/relax
   acl: public_read
 
 after_deploy:

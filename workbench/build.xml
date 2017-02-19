@@ -105,23 +105,29 @@
         <!-- Replace Version + Build Numbers -->
         <!-- Semantic Versioning for Unstable Builds -->
         <echo>Updating placeholders for version ${project.version}, branch ${build.branch}, build ${build.number}</echo>
+
+
+		<replaceregexp match='@build.version@' replace="${project.version}" flags="ig" byline="true" encoding="UTF-8">
+		  <fileset dir="${dir.build}" />
+		</replaceregexp>
+
 		<if>
 			<equals arg1="${build.branch}" arg2="development" />
 			<then>
-				<replaceregexp match='@build.version@' replace="${project.version}-snapshot" flags="ig" byline="true" encoding="UTF-8">
+
+				<replaceregexp match='@build.number@' replace="${build.number}-be" flags="ig" byline="true" encoding="UTF-8">
 				  <fileset dir="${dir.build}" />
 				</replaceregexp>
+
 			</then>
 			<else>
-				<replaceregexp match='@build.version@' replace="${project.version}" flags="ig" byline="true" encoding="UTF-8">
+
+				<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
 				  <fileset dir="${dir.build}" />
 				</replaceregexp>
+
 			</else>
 		</if>
-		
-		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
-		  <fileset dir="${dir.build}" />
-		</replaceregexp>
 		
 		<!-- Api Docs -->
 		<antcall target="build.apidocs" />
