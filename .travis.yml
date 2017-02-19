@@ -55,6 +55,7 @@ deploy:
   on:
     branch: 
       - master
+      - development
     condition: "$ENGINE = lucee@4.5"
   skip_cleanup: true
   provider: s3
