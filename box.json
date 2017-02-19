@@ -5,7 +5,8 @@
     "private":false,
     "dependencies":{
         "coldbox":"^4.1.0+00002",
-        "wikitext":"^1.1.0"
+        "wikitext":"^1.1.0",
+        "swagger-sdk":"^1.0.1+20"
     },
     "devDependencies":{
         "testbox":"^2.2.0"
@@ -14,6 +15,7 @@
         "coldbox":"coldbox",
         "testbox":"testbox",
         "wikitext":"modules/wikitext",
-        "cbjavaloader":"modules/cbjavaloader"
+        "cbjavaloader":"modules/cbjavaloader",
+        "swagger-sdk":"modules/swagger-sdk"
     }
 }
