@@ -1,5 +1,9 @@
 {
     "force":true,
+    "app":{
+        "cfengine":"lucee@4.5",
+        "serverHomeDirectory":"workbench/servers/.engine/lucee@4.5"
+    },
     "openbrowser":"false",
     "web":{
         "http":{
@@ -8,8 +12,5 @@
         "rewrites":{
             "enable":true
         }
-    },
-    "JVM":{
-        "heapSize":"1024"
     }
 }
