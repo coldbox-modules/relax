@@ -34,7 +34,7 @@ install:
   - sudo chmod -R 775 tests/results
 
 script:
-  - sudo ant -DisTravis=true -Dcfengine=$ENGINE -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f workbench/build.xml
+  - ant -DisTravis=true -Dcfengine=$ENGINE -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f workbench/build.xml
 
 after_failure:
   # Spit out our Commandbox log in case we need to debug
