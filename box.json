@@ -9,13 +9,15 @@
         "swagger-sdk":"^1.0.1+20"
     },
     "devDependencies":{
-        "testbox":"^2.2.0"
+        "testbox":"^2.2.0",
+        "workbench":"git+https://github.com/Ortus-Solutions/unified-workbench.git"
     },
     "installPaths":{
         "coldbox":"coldbox",
         "testbox":"testbox",
         "wikitext":"modules/wikitext",
         "cbjavaloader":"modules/cbjavaloader",
-        "swagger-sdk":"modules/swagger-sdk"
+        "swagger-sdk":"modules/swagger-sdk",
+        "workbench":"workbench"
     }
 }
