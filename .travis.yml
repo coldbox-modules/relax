@@ -5,6 +5,10 @@ notifications:
     secure: FIHlTn/YO7Wgumm1uIqmoEsqjQA7fV0AE94Rjc5yKzM3AquQa8HicgDVVk0d2GrKRnl0xt3j4ZJV//VJyIjlCd/QVKuj48R2ChjEY2im3+99HFPafCUI5/S2uyowKU6mJTFonH9v6p41eqxdbiAxJdDGOT0V2Gpt3UBSNuHz8ED9/aIHqv+P7M+VD6Xd2XYwctPniWlaSWx57sWcnG/VkFG45qFQAyha64uxOOe4M3ZmG/n5FfauZ8cBVLiRKEIr+CyNhh1ujfzi7+4uzMlSNL5t/BbZamAQuZzqGzGQ9RVvIlyPgUGNJtDEE/hWS09aagXF5T6EMj00szizErh4J1/x4qZwml5+TcBN31E0QmAhCtZe85sr3tYgic+hEz9XX1yymQzf/C7n4to2yNvq0r4g51xDk8IuP95WEh7zaqLlvFZvBFgxpHZBMYlRvhytjOYDeIFRMcGwHZcXosaG2ejqDwcGq/LC4oeG4sSwmg9sdRrtcmcanrNqrBka86WYO6LntI3JdZ86/1ACEUHzhCCwvrKELc9Ji1xxGAgS7QKH+s2/hnJuiMyv73gOVLKYC+wPMLt+fvOmPLSEl+PJiAIlToBq1KUBg03RSQLfPOLD7OrJ8VvDZsEPwejqlGDyc4wRglS9OTi7SnN5LYHSDNDdGdREegWqq9qDHEYEVLI=
 
 env:
+  global:
+    - PROJECT_NAME=coldbox-relax
+    - MODULE_ID=relax
+    - MODULE_VERSION=2.3.2
   matrix:
     - ENGINE=lucee@4.5
     - ENGINE=lucee@5
@@ -29,7 +33,7 @@ before_install:
 
 install:
   # Install Commandbox
-  - sudo apt-get update && sudo apt-get --assume-yes install haveged rsync commandbox
+  - sudo apt-get update && sudo apt-get --assume-yes install git haveged rsync commandbox
   # Test that the box binary is available and ready for our tests
   - box version
   # If using auto-publish, you will need to provide your API token with this line:
@@ -38,34 +42,61 @@ install:
   - mkdir tests/results
   - sudo chmod -R 775 tests/results
 
+# Build script - note module versioning is passed to ANT
 script:
-  - ant -DisTravis=true -Dcfengine=$ENGINE -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f workbench/build.xml
+  # run our dependency install to ensure the workbench is in place
+  - box install
+  # add our module-specific build properties
+  - printf "\nproject.version=$MODULE_VERSION" >> workbench/build.properties
+  - printf "\nproject.name=$PROJECT_NAME" >> workbench/build.properties
+  - printf "\nmodule.name=$MODULE_ID" >> workbench/build.properties
+  - printf "\ncfengine=$ENGINE" >> workbench/build.properties
+  # execute our build
+  - ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f workbench/build.xml
 
 after_failure:
+  - cd $TRAVIS_BUILD_DIR
   # Spit out our Commandbox log in case we need to debug
   - box server log name=$ENGINE
   - cat `box system-log`
   
 before_deploy:
-  - mkdir s3deploy
-  - rsync -av ./artifacts/coldbox-relax/ ./s3deploy/
+  - cd $TRAVIS_BUILD_DIR
+  - mkdir -p s3deploy
+  - rsync -av ./artifacts/$MODULE_ID/ ./s3deploy/
   - rm -f ./s3deploy/box-repo.json
 
 deploy:
-  on:
-    branch: 
-      - master
-      - development
-    condition: "$ENGINE = lucee@4.5"
-  skip_cleanup: true
-  provider: s3
-  #AWS Credentials need to be set in Travis
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_ACCESS_SECRET
-  bucket: "downloads.ortussolutions.com"
-  local-dir: s3deploy
-  upload-dir: ortussolutions/coldbox-modules/relax
-  acl: public_read
+  #Module Deployment
+  - provider: s3
+    on:
+      branch: 
+        - master
+        - development
+      condition: "$ENGINE = lucee@4.5"
+    skip_cleanup: true
+    #AWS Credentials need to be set in Travis
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_ACCESS_SECRET
+    bucket: "downloads.ortussolutions.com"
+    local-dir: s3deploy
+    upload-dir: ortussolutions/coldbox-modules/$MODULE_ID
+    acl: public_read
+  #API Docs Deployment
+  - provider: s3
+    on:
+      branch: 
+        - master
+      condition: "$ENGINE = lucee@4.5"
+    skip_cleanup: true
+    #AWS Credentials need to be set in Travis
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_ACCESS_SECRET
+    bucket: "apidocs.ortussolutions.com"
+    local-dir: build/apidocs
+    upload-dir: coldbox-modules/$MODULE_ID
+    acl: public_read
+
 
 after_deploy:
   - cd $TRAVIS_BUILD_DIR/build && box forgebox publish
