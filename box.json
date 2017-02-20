@@ -4,20 +4,20 @@
     "slug":"Relax-shell",
     "private":false,
     "dependencies":{
-        "coldbox":"^4.1.0+00002",
+        "coldbox":"^4.3.0+188",
         "wikitext":"^1.1.0",
-        "swagger-sdk":"^1.0.1+20"
+        "swagger-sdk":"^1.0.2+28-be"
     },
     "devDependencies":{
-        "testbox":"^2.2.0",
+        "testbox":"^2.4.0+80"
         "workbench":"git+https://github.com/Ortus-Solutions/unified-workbench.git"
     },
     "installPaths":{
-        "coldbox":"coldbox",
-        "testbox":"testbox",
-        "wikitext":"modules/wikitext",
         "cbjavaloader":"modules/cbjavaloader",
-        "swagger-sdk":"modules/swagger-sdk",
+        "coldbox":"coldbox",
+        "wikitext":"modules/wikitext",
+        "testbox":"testbox",
+        "swagger-sdk":"modules/swagger-sdk"
         "workbench":"workbench"
     }
 }

@@ -1,21 +1,16 @@
 {
 	"name" 		: "ColdBox Relax",
-	"author" 	: "Luis Majano <lmajano@ortussolutions.com>",
+	"author" 	: "Ortus Solutions <info@ortussolutions.com>",
 	"version"	: "@build.version@+@build.number@",
 	"slug"		: "relax",
 	"type"		: "modules",
 	"keywords"	: "RESTFul,modeling,web services",
 	"location"          : "http://downloads.ortussolutions.com/ortussolutions/coldbox-modules/relax/@build.version@/relax-@build.version@.zip",
 	"homepage"			: "https://github.com/coldbox-modules/coldbox-relax",
-	"documentation"		: "https://github.com/coldbox-modules/coldbox-relax/wiki",
+	"documentation"		: "https://coldbox-relax.ortusbooks.com",
 	"repository"		: { "type" : "git", "url" : "https://github.com/coldbox-modules/coldbox-relax" },
 	"bugs"				: "https://github.com/coldbox-modules/coldbox-relax/issues",
 	"shortDescription"	: "RESTFul Tools For Lazy Experts",
-	"engines"	: [
-		{ "type" : "lucee", "version" : ">4.5" },
-		{ "type" : "railo", "version" : ">3.1" },
-		{ "type" : "adobe", "version" : ">9.0" }
-	],
 	"license"			: [ 
 		{ "type" : "Apache2", "url" : "http://www.apache.org/licenses/LICENSE-2.0.html" } 
 	],
@@ -30,5 +25,8 @@
 		"swagger-sdk" : "^1.0.0",
 		"wikitext" : "^1.0.0"
 	},
-    "ignore":["changelog.md"]
+    "ignore":[
+        "**/.*",
+        "tests"
+    ]
 }

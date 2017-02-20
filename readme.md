@@ -14,14 +14,13 @@ test RESTFul web services, monitor RESTFul web services and document RESTFul web
 Apache License, Version 2.0.
 
 ##IMPORTANT LINKS
-- Code: http://github.com/coldbox/coldbox-relax
+- Code: https://github.com/coldbox/coldbox-relax
 - Issues: https://ortussolutions.atlassian.net/projects/RELAX/issues
-- Documentation: http://coldbox-relax.ortusbooks.com
+- Documentation: https://coldbox-relax.ortusbooks.com
 
 ##SYSTEM REQUIREMENTS
 - Lucee 4.5+
-- Railo 4+
-- ColdFusion 9+
+- ColdFusion 10+
 
 INSTRUCTIONS
 ============
