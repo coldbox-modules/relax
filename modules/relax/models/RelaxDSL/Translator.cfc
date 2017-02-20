@@ -17,7 +17,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 		**/
 		//We need to use Linked Hashmaps to maintain struct order for serialization and deserialization
 		VARIABLES.openAPITemplate = getSwaggerUtil().newTemplate();
-
+		
 		//Utility arrays for default methods and responses
 		VARIABLES.HTTPMethods = getSwaggerUtil().defaultMethods();
 		VARIABLES.HTTPMethodResponses = getSwaggerUtil().defaultSuccessResponses();
@@ -34,7 +34,7 @@ component name="RelaxDSLTranslator" accessors="true" singleton{
 
 		var OpenAPIParser = getWirebox().getInstance( "OpenAPIParser@relax" );
 
-		var translation = duplicate(VARIABLES.openAPITemplate);
+		var translation = duplicate( VARIABLES.openAPITemplate );
 
 		translateGlobals( ARGUMENTS.dataCFC, translation );
 
