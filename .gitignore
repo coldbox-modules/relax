@@ -14,7 +14,7 @@ workbench/servers/.engine
 tests/results/*
 apidocs/docbox/
 artifacts/
-workbench/build.number
+workbench/
 build/*
 modules/*
 !modules/relax
