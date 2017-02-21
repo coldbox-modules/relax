@@ -9,7 +9,7 @@
         "swagger-sdk":"^1.0.2+28-be"
     },
     "devDependencies":{
-        "testbox":"^2.4.0+80"
+        "testbox":"^2.4.0+80",
         "workbench":"git+https://github.com/Ortus-Solutions/unified-workbench.git"
     },
     "installPaths":{
@@ -17,7 +17,7 @@
         "coldbox":"coldbox",
         "wikitext":"modules/wikitext",
         "testbox":"testbox",
-        "swagger-sdk":"modules/swagger-sdk"
+        "swagger-sdk":"modules/swagger-sdk",
         "workbench":"workbench"
     }
 }

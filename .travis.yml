@@ -63,7 +63,7 @@ after_failure:
 before_deploy:
   - cd $TRAVIS_BUILD_DIR
   - mkdir -p s3deploy
-  - rsync -av ./artifacts/$MODULE_ID/ ./s3deploy/
+  - rsync -av ./artifacts/$PROJECT_NAME/ ./s3deploy/
   - rm -f ./s3deploy/box-repo.json
 
 deploy:
