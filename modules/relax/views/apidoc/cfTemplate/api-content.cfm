@@ -210,15 +210,25 @@
                 #paramTemplate( { "entity":api } )#
             </cfif>
 
-            #renderView( view='apidoc/cfTemplate/x-attributes', args={"entity":api} )#
+            #renderView( 
+                view='apidoc/cfTemplate/x-attributes', 
+                args={"entity":api} 
+            )#
             
             <div class="clearfix"></div>
 
         </div>
 
         <h2>API Path Reference:</h2>
-        <cfloop collection="#api["paths"]#" item="path">        
-            #renderView( view='apidoc/cfTemplate/api-path', viewArgs={"api":api,"path":api[ path ]} )#
+        <cfloop array="#structKeyArray( api["paths"] )#" item="pathKey">
+            #renderView( 
+                view='apidoc/cfTemplate/api-path', 
+                args={ 
+                    "api":api,
+                    "key":pathKey,
+                    "path":api["paths"][ pathKey ]
+                } 
+            )#
         </cfloop>
     </div>
 </cfoutput>
