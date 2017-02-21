@@ -56,6 +56,7 @@ script:
 
 after_failure:
   - cd $TRAVIS_BUILD_DIR
+  # Display the contents of our root directory
   # Spit out our Commandbox log in case we need to debug
   - box server log name=$ENGINE
   - cat `box system-log`
