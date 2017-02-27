@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+## 2.3.2
+* ACF Compatibility updates
+* PDF/HTML Export strategy updates
+* Performance enhancements for OpenAPI doc parsing
+* Improvements to `$ref` parsing and recursion
+
 ## 2.3.1
 * Migrates core OpenAPI parsing to swagger-sdk module
 * Implements one-click route population and testing in API test tool
