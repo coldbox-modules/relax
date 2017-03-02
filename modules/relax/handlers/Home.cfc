@@ -59,7 +59,7 @@ component extends="BaseHandler"{
 	/**
 	* OpenAPI/Swagger Documentation
 	*/
-	function OpenAPIDocs( event, rc, prc ){
+	function openAPIDocs( event, rc, prc ){
 		event.setView( "home/openAPIDocs" );
 	}
 
