@@ -8,7 +8,7 @@ component{
 	// Module Properties
 	this.title 				= "ColdBox Relax";
 	this.author 			= "Ortus Solutions";
-	this.webURL 			= "http://www.ortussolutions.com";
+	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "RESTful Tools For Lazy Experts";
 	this.version			= "@build.version@+@build.number@";
 	this.viewParentLookup 	= true;
@@ -22,16 +22,12 @@ component{
 	// Auto-map models
 	this.autoMapModels		= true;
 	// Module Dependencies That Must Be Loaded First, use internal names or aliases
-	this.dependencies		= [ "swagger-sdk","cbjavaloader","wikitext" ];
+	this.dependencies		= [ "cbjavaloader", "swagger-sdk", "wikitext" ];
 
 	/**
 	* Configure App
 	*/
 	function configure(){
-		//ensure cbjavaloader is an activated module
-		if(!Wirebox.getColdbox().getModuleService().isModuleActive('swagger-sdk')){
-			Wirebox.getColdbox().getModuleService().reload('swagger-sdk');	
-		}
 		// Layout Settings
 		layoutSettings = { defaultLayout = "relax.cfm" };
 
