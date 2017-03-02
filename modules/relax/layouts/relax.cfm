@@ -87,9 +87,6 @@
                         <a href="#event.buildLink( prc.xehOpenAPIDocs )#" ><i class="fa fa-rocket"></i><span>OpenAPI Docs</span></a>
                     </li>
 
-	                <li <cfif event.getCurrentAction() eq "DSLDocs">class="active"</cfif>>
-	                    <a href="#event.buildLink( prc.xehDSLDocs )#" ><i class="fa fa-code"></i><span>RelaxDSL Docs</span></a>
-	                </li>
 	                <li>
 	                    <a href="##" title="Version Information"><i class="fa fa-info"></i>Relax v#getModuleConfig( 'relax' ).version#</a>
 	                </li>

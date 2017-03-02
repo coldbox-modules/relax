@@ -93,11 +93,6 @@ component{
 		binder.map( "RelaxDSL@relax" )
 			.to( "#moduleMapping#.models.RelaxDSL.Document" );
 
-		//RelaxDSL Document
-		binder.map( "RelaxDoc@relax" )
-			.to( "#moduleMapping#.models.RelaxDSL.Generator" );
-
-
 		//RelaxDSL Translator
 		binder.map( "DSLTranslator@relax" )
 			.to( "#moduleMapping#.models.RelaxDSL.Translator" )

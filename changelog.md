@@ -6,6 +6,7 @@ CHANGELOG
 * PDF/HTML Export strategy updates
 * Performance enhancements for OpenAPI doc parsing
 * Improvements to `$ref` parsing and recursion
+* Deprecated DSL docs in favor of Swagger Open API Spec
 
 ## 2.3.1
 * Migrates core OpenAPI parsing to swagger-sdk module
