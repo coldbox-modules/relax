@@ -81,7 +81,7 @@ deploy:
     secret_access_key: $AWS_ACCESS_SECRET
     bucket: "downloads.ortussolutions.com"
     local-dir: s3deploy
-    upload-dir: ortussolutions/coldbox-modules/$MODULE_ID
+    upload-dir: ortussolutions/coldbox-modules/$PROJECT_NAME
     acl: public_read
   #API Docs Deployment
   - provider: s3
@@ -95,7 +95,7 @@ deploy:
     secret_access_key: $AWS_ACCESS_SECRET
     bucket: "apidocs.ortussolutions.com"
     local-dir: build/apidocs
-    upload-dir: coldbox-modules/$MODULE_ID
+    upload-dir: coldbox-modules/$PROJECT_NAME
     acl: public_read
 
 

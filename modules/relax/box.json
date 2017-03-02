@@ -5,7 +5,7 @@
 	"slug"		: "relax",
 	"type"		: "modules",
 	"keywords"	: "RESTFul,modeling,web services",
-	"location"          : "http://downloads.ortussolutions.com/ortussolutions/coldbox-modules/relax/@build.version@/coldbox-relax-@build.version@.zip",
+	"location"          : "http://downloads.ortussolutions.com/ortussolutions/coldbox-modules/coldbox-relax/@build.version@/coldbox-relax-@build.version@.zip",
 	"homepage"			: "https://github.com/coldbox-modules/coldbox-relax",
 	"documentation"		: "https://coldbox-relax.ortusbooks.com",
 	"repository"		: { "type" : "git", "url" : "https://github.com/coldbox-modules/coldbox-relax" },
