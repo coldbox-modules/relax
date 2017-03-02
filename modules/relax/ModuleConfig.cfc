@@ -38,9 +38,15 @@ component{
 		routes = [
 			// APIDoc API Routes
 			{
-				pattern="apidoc/:api?",
-				handler="APIDoc",
-				action={"GET":"index","POST":"create","PUT":"update","PATCH":"update","DELETE":"delete"}
+				pattern = "apidoc/:api?",
+				handler = "APIDoc",
+				action 	= { 
+					"GET" 		: "index",
+					"POST" 		: "create",
+					"PUT" 		: "update",
+					"PATCH" 	: "update",
+					"DELETE" 	: "delete"
+				}
 				
 			},
 			//Direct API requests
@@ -58,11 +64,9 @@ component{
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-
 		var configSettings = controller.getConfigSettings();
 		// parse parent settings
 		parseParentSettings();
-
 
 		/**	
 		* Utilities
