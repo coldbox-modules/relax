@@ -17,7 +17,6 @@ component extends="BaseHandler"{
 		// Get the loaded API for the user
 		prc.dsl				= APIService.getLoadedAPI().getNormalizedDocument();
 		prc.loadedAPIName 	= APIService.getLoadedAPIName();
-
 	}
 
 	/**
@@ -46,7 +45,11 @@ component extends="BaseHandler"{
 		prc.expandedResourceDivs = true;
 
 		// View
-		event.setView( name="export/html", layout="html" );
+		event.setView( 
+			name 	= "apidoc/cfTemplate/api-content", 
+			layout 	= "html", 
+			args 	= { "api" : prc.dsl } 
+		);
 	}
 
 	/**

@@ -29,7 +29,10 @@
 
 				<cfif structKeyExists( args.method, "parameters" ) and isArray( args.method[ "parameters" ] )>
 					<h4 class="panel-subtitle text-primary">Parameters:</h4>
-					#renderView( view="apidoc/cfTemplate/parameters", args={ "entity":args.method } )#
+					#renderView( 
+						view = "apidoc/cfTemplate/parameters", 
+						args = { "entity" : args.method } 
+					)#
 					<hr>					
 				</cfif>
 

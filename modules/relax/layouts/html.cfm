@@ -8,7 +8,9 @@
 <cfinclude template="inc/HTMLHead.cfm"/>
 <body class="off-canvas" style="background-color: white">
 	<div class="container">
-		<cfoutput>#renderView( view='apidoc/cfTemplate/api-content',args={"api":prc.dsl})#</cfoutput>
+		<cfoutput>
+		#renderView()#
+		</cfoutput>
 	</div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <cfscript>
-	params = args.entity[ "parameters" ];
+	parameters = args.entity[ "parameters" ];
 </cfscript>
 <cfoutput>
 	<div class="parameter-list list-group">
@@ -22,7 +22,7 @@
 
 		</div>
 
-		<cfloop collection="#params#" index="param">
+		<cfloop array="#parameters#" index="param">
 			<cfscript>
 				paramUid = "param_" & createUUID();
 			</cfscript>
@@ -67,7 +67,7 @@
 						<div class="clearfix"></div>
 					    <div id="#paramUid#" class="panel panel-solid-default">
 				    		<pre class="language-json">
-				    			#trim( param[ "schema" ] )#
+				    			#trim( serializeJSON( param[ "schema" ] ) )#
 				    		</pre>
 				    	</div>
 			    	    
