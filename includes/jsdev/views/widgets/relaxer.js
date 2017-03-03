@@ -328,26 +328,6 @@ define(
                     </p>\
                 </div>'
 
-            ,headerFormTemplate:_.template( '\ 
-                <p style="margin:0px">\
-                    <input title="Header Name"  type="text" class="form-control" name="headerNames"  size="30" value="#rc.headerNames[ i ]#" />\
-                    <input title="Header Value" type="text" class="form-control" name="headerValues" size="50"\
-                           value="<cfif arrayLen( rc.headerValues ) and arrayIsDefined( rc.headerValues, i )>#rc.headerValues[ i ]#</cfif>"/>\
-                    <button class="btn btn-danger btn-sm dynamicRemove" onclick="return false;"><i class="fa fa-remove"></i></button>\
-                </p>\
-            ')
-
-            ,parameterFormTemplate:_.template( '\
-                <p style="margin:0px">\
-                    <input title="Parameter Name"  type="text" class="form-control" name="parameterNames"  size="30" value="#rc.parameterNames[ i ]#" />\
-                    <input title="Parameter Value" type="text" class="form-control" name="parameterValues" size="50"\
-                           value="<cfif arrayLen( rc.parameterValues ) and arrayIsDefined( rc.parameterValues, i )>#rc.parameterValues[ i ]#</cfif>" />\
-                    <button class="btn btn-danger btn-sm dynamicRemove" onclick="return false;"><i class="fa fa-remove"></i></button>\
-                </p>\
-            ')
-            
-            
-
         });
 
         return Relaxer;

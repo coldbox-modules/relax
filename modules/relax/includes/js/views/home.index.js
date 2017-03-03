@@ -1,4 +1,4 @@
-/*! Copyright 2017 - Ortus Solutions (Compiled: 30-01-2017) */
+/*! Copyright 2017 - Ortus Solutions (Compiled: 03-03-2017) */
 define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/RelaxAPI", "clipboard", "messenger", "scrollify" ], function(Backbone, Relaxer, SidebarWidget, APIModel, Clipboard, Messenger, scrollify) {
     "use strict";
     var View = Backbone.View.extend({
@@ -31,7 +31,7 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
                             _this.sidebar = new SidebarWidget({
                                 view: _this,
                                 apis: model.attributes.apis,
-                                "default": _.isUndefined(_this.activeAPI) ? model.attributes.default : _this.activeAPI
+                                default: _.isUndefined(_this.activeAPI) ? model.attributes.default : _this.activeAPI
                             });
                         }
                         _this.defaultAPI = model.attributes.default;
