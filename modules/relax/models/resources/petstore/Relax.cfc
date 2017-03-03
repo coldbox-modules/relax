@@ -21,7 +21,7 @@ component output="false"{
 				"production" : "http://www.myapi.com"
 			},
 			// Our relative link to the definition representation file for this resource - JSON or YAML
-			definition = "petstore.json"	
+			definition = "petstore.json"
 			//definition = "petstore.yaml"	
 		};
 	}

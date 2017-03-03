@@ -14,19 +14,19 @@ component extends="BaseHandler"{
 	*/
 	function index( event, rc, prc ){
 		// some defaults
-		event.paramValue( "httpResource", "" );
-		event.paramValue( "httpFormat", "" );
-		event.paramValue( "httpMethod", "GET" );
-		event.paramValue( "headerNames", "" );
-		event.paramValue( "headerValues", "" );
-		event.paramValue( "parameterNames", "" );
-		event.paramValue( "parameterValues", "" );
-		event.paramValue( "sendRequest", false );
-		event.paramValue( "username", "" );
-		event.paramValue( "password", "" );
-		event.paramValue( "httpProxy", "" );
-		event.paramValue( "httpProxyPort", "" );
-		event.paramValue( "entryTier", "production" );
+		event.paramValue( "httpResource", "" )
+			.paramValue( "httpFormat", "" )
+			.paramValue( "httpMethod", "GET" )
+			.paramValue( "headerNames", "" )
+			.paramValue( "headerValues", "" )
+			.paramValue( "parameterNames", "" )
+			.paramValue( "parameterValues", "" )
+			.paramValue( "sendRequest", false )
+			.paramValue( "username", "" )
+			.paramValue( "password", "" )
+			.paramValue( "httpProxy", "" )
+			.paramValue( "httpProxyPort", "" )
+			.paramValue( "entryTier", "production" );
 
 		// DSL Settings
 		prc.dsl						= APIService.getLoadedAPI().getNormalizedDocument();
@@ -63,16 +63,11 @@ component extends="BaseHandler"{
 	}
 
 	any function send( event,rc,prc ){
-		event.noLayout();
 		prc.results = {};
 		try{
-			
-			//deserialize our json packet
-			requestData = deSerializeJSON(getHttpRequestData().content);
-			prc.results = relaxerService.send( requestData = requestData );
-
+			// deserialize our incoming json packet of request data
+			prc.results = relaxerService.send( argumentCollection = event.getHTTPContent( json=true ) );
 		} catch( Any e ){
-			
 			prc.results[ 'mimeType' ] = "application/json";
 				
 			if( getSetting( "environment" ) != 'production' ){

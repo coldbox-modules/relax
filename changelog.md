@@ -7,6 +7,10 @@ CHANGELOG
 * Performance enhancements for OpenAPI doc parsing
 * Improvements to `$ref` parsing and recursion
 * Deprecated DSL docs in favor of Swagger Open API Spec
+* Relaxer service not sending form data correctly
+* Refactoring of Relaxer to support typed API on calls to HTTP
+* Relaxer not sending http proxy ports
+* Relaxer not sending right name for params
 
 ## 2.3.1
 * Migrates core OpenAPI parsing to swagger-sdk module

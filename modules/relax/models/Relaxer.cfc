@@ -85,85 +85,68 @@ component singleton accessors="true"{
 	}
 	
 	/**
-	* Send a Relaxer Request
-	* @httpMethod 		HTTP Method
-	* @httpResource 	HTTP Resource to hit
-	* @httpFormat 		HTTP Format extension if used.
-	* @headerNames 		HTTP header names (list)
-	* @headerValues 	HTTP header values (list)
-	* @parameterNames 	HTTP parameters names (list)
-	* @parameterValues	HTTP parameters values (list)
-	* @username 		HTTP Basic Auth Username
-	* @password 		HTTP Basic Auth password
+	* Send a Relaxer Request according to data
+	* @method 			HTTP Method
+	* @resource 		HTTP Resource to hit
+	* @headers 			HTTP headers (struct)
+	* @params 			HTTP FORM Data (struct)
+	* @authUsername 	HTTP Basic Auth Username
+	* @authPassword 	HTTP Basic Auth password
 	* @httpProxy 		HTTP Proxy server host
 	* @httpProxyPort 	HTTP Proxy server host port
+	* @timeout 			HTTP Timeout defaults to 20
 	*/
 	function send(
-		requestData
+		string method = "GET",
+		required string resource,
+		struct headers = {},
+		struct params = {},
+		string authUsername,
+		string authPassword,
+		string HTTPProxy,
+		numeric HTTPProxyPort=80,
+		numeric timeout=20
 	){
-		if( isSimpleValue( requestData ) ){
-			writeDump(var=requestData,top=1);
-			abort;
-		}
-		var results 	= structnew();
-		var response 	= "";
-		var i			= 1;
-		var tmpValue	= "";
-		var attribs		= structnew();
-		var httpRequest	= {
-			httpMethod 		= structKeyExists( arguments.requestData, "method" ) ? arguments.requestData.method : "GET",
-			httpResource 	= arguments.requestData.url,
-			httpHeaders 	= arguments.requestData.headers,
-			httpParams 		= arguments.requestData.data
-		};
-
-		if( structKeyExists( arguments.requestData, "httpProxy" ) ){
-			httpRequest[ 'httpProxy' ] = arguments.requestData.httpProxy;
-			httpRequest[ 'httpProxyPort' ] = arguments.requestData.httpProxyPort;
-		}
-
-		if( structKeyExists( arguments.requestData, "authUsername" ) ){
-			httpRequest[ "username" ] = arguments.requestData.username;
-			httpPrequest[ "password" ] = arguments.requestData.password;
-		}
-
 		// Log what we are sending out
 		if( variables.log.canDebug() ){
-			variables.log.debug( "Relaxed URL Request to #httpRequest.httpMethod#:#httpRequest.httpResource#",
-						   	     "RequestData: #serializeJSON( httpRequest )#" );
+			variables.log.debug( 
+				"Relaxed URL Request to #arguments.method#:#arguments.resource#",
+				"RequestData: #serializeJSON( arguments )#" 
+			);
 		}
 
-		// optional attribs
-		if( structKeyExists( httpRequest, "username" ) ){ attribs.username = httpRequest.username; }
-		if( structKeyExists( httpRequest, "password" ) ){ attribs.password = httpRequest.password; }
-		if( structKeyExists( httpRequest, "httpProxy" ) ){ attribs.proxyServer = httpRequest.httpProxy; }
-		if( structKeyExists( httpRequest, "httpProxyPort" ) ){ attribs.proxyPort = httpRequest.httpProxyPort; }
+		// optional attributes
+		var attribs = {};
+		if( structKeyExists( arguments, "authUsername" ) ){ attribs.username = arguments.authUsername; }
+		if( structKeyExists( arguments, "authPassword" ) ){ attribs.password = arguments.authPassword; }
+		if( structKeyExists( arguments, "HTTPProxy" ) ){ attribs.proxyServer = arguments.HTTPProxy; }
+		attribs.proxyPort 	= arguments.HTTPProxyPort;
 
 		// Record History
-		pushHistory( httpRequest );
+		pushHistory( arguments );
 
-		var httpService = new http(
-			method				= "#httpRequest.httpMethod#",
-			url					= "#httpRequest.httpResource#",
-			timeout				= "20",
+		// Prepare HTTP Request
+		var HTTPService = new http(
+			method				= arguments.method,
+			url					= arguments.resource,
+			timeout				= arguments.timeout,
 			resolveURL			= "true",
 			userAgent			= "ColdBox Relaxer",
-			attributecollection	= "#attribs#",
-			charset				= "UTF-8"
+			charset				= "UTF-8",
+			attributecollection	= "#attribs#"
 		);
 
 		// Add Headers
-		for( var headerName in httpRequest.httpHeaders ){
-			httpService.addParam( type="header", name=headerName, value=httpRequest.httpHeaders[ headerName ] );
+		for( var thisHeader in arguments.headers ){
+			HTTPService.addParam( type="header", name=thisHeader, value=arguments.headers[ thisHeader ] );
 		} 
 
-		// Add Parameters
-		for( var paramName in httpRequest.httpParams ){
-			httpService.addParam( type="header", name=paramName, value=httpRequest.httpParams[ paramName ] );
+		// Add Form Parameters
+		for( var thisParam in arguments.params ){
+			HTTPService.addParam( type="formfield", name=thisParam, value=arguments.params[ thisParam ] );
 		} 
 
-		return httpService.send().getPrefix();
-
+		return HTTPService.send().getPrefix();
 	}
 
 }
