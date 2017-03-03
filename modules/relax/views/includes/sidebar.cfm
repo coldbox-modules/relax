@@ -46,22 +46,22 @@
 	        </div>
 	        <div class="panel-body">
 	        	<p>You can export your Relaxed Service Documentation in several formats: <br/></p>
-				<!--- Export COmmands --->
+				<!--- Export Commands --->
 				<p class="text-center">
 					<!--- html --->
-					<a href="#event.buildLink( prc.xehExportHTML)#"
+					<a href="#event.buildLink( prc.xehExportHTML )#"
 						target="_blank"
 						class="btn btn-primary"
 					   	title="Export as HTML">
 						<i class="fa fa-lg fa-html5"></i>
 					</a>
 					<!--- pdf --->
-					<!---<a href="#event.buildLink( prc.xehExportPDF)#" class="btn btn-primary"
-						data-toggle="tooltip"
+					<a href="#event.buildLink( prc.xehExportPDF )#" class="btn btn-primary"
 					    target="_blank"
+					    class="btn btn-primary"
 						title="Export as PDF">
 						<i class="fa fa-lg fa-file-pdf-o"></i>
-					</a>--->
+					</a>
 					<!--- mediawiki --->
 					<a href="javascript:void(0)" class="btn btn-primary btnExportMediaWiki"
 					    data-toggle="tooltip"

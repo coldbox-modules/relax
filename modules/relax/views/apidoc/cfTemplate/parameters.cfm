@@ -66,9 +66,11 @@
 				    <cfif structKeyExists( param, "schema" )>
 						<div class="clearfix"></div>
 					    <div id="#paramUid#" class="panel panel-solid-default">
-				    		<pre class="language-json">
-				    			#trim( serializeJSON( param[ "schema" ] ) )#
-				    		</pre>
+				    		<cfif prc.pdf ?: false>
+                                <code>#trim( serializeJSON( param[ "schema" ] ) )#</code>
+                            <cfelse>
+                                <pre class="language-json">#trim( serializeJSON( param[ "schema" ] ) )#</pre>
+                            </cfif>
 				    	</div>
 			    	    
 				    </cfif>

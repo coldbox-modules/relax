@@ -47,7 +47,7 @@ component extends="BaseHandler"{
 		// View
 		event.setView( 
 			name 	= "apidoc/cfTemplate/api-content", 
-			layout 	= "html", 
+			layout 	= "html",
 			args 	= { "api" : prc.dsl } 
 		);
 	}
@@ -56,15 +56,18 @@ component extends="BaseHandler"{
 	* Export as PDF
 	*/
 	function pdf( event, rc, prc ){
-		
-		var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.info.title);
-		
-		if( !structKeyExists( rc, 'pagecontent' ) ){
-			html( event, rc, prc );	
-		}
+		// args setup
+		prc.pdf 					= true;
+		prc.expandedResourceDivs 	= true;
+		prc.exportTitle 			= getInstance( "htmlhelper@coldbox" )
+			.slugify( prc.dsl.info.title ) & " v" & prc.dsl.info.version;
 
-		event.setLayout( "pdf" )
-			.setHTTPHeader( name="Content-Disposition", value="inline; filename=#title#.pdf" );
+		event.setView( 
+			name 	= "apidoc/cfTemplate/api-content", 
+			layout 	= "pdf",
+			args 	= { "api" : prc.dsl } 
+		)
+		.setHTTPHeader( name="Content-Disposition", value="inline; filename=#prc.exportTitle#.pdf" );
 	}
 
 	/**

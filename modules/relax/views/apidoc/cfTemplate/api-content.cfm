@@ -193,7 +193,12 @@
 
                                     </p>
                                     <strong>Scopes:</strong><br>
-                                    <pre class="language-json">#serializeJSON(definition.scopes)#</pre>
+                                    
+                                    <cfif prc.pdf ?: false>
+                                        <code>#serializeJSON( definition.scopes )#</code>
+                                    <cfelse>
+                                        <pre class="language-json">#serializeJSON( definition.scopes )#</pre>
+                                    </cfif>
                                 </td>
                             </tr>
                         </cfif>

@@ -11,6 +11,7 @@ CHANGELOG
 * Refactoring of Relaxer to support typed API on calls to HTTP
 * Relaxer not sending http proxy ports
 * Relaxer not sending right name for params
+* PDF Export Capabilities
 
 ## 2.3.1
 * Migrates core OpenAPI parsing to swagger-sdk module

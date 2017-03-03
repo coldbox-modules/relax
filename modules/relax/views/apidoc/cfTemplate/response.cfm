@@ -63,7 +63,13 @@
 										}
 									</cfscript>
 
-									<pre class="language-#typeRef#">#schemaExample#</pre>
+									
+									<cfif prc.pdf ?: false>
+		                                <code>#schemaExample#</code>
+		                            <cfelse>
+		                                <pre class="language-#typeRef#">#schemaExample#</pre>
+		                            </cfif>
+
 								</div>
 							</div>
 
