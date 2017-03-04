@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html>
-<!--<![endif]-->
-<cfinclude template="inc/HTMLHead.cfm"/>
-<body class="off-canvas" style="background-color: white">
-	<div class="container">
-		<cfoutput>
-		#renderView()#
-		</cfoutput>
-	</div>
-</body>
+<html lang="en">
+	<cfoutput>
+		<head>
+			<title>#prc.exportTitle#</title>
+			<!-- Normalize our CSS for portability -->
+			<style type="text/css">
+			<cfinclude template="#prc.root#/includes/css/export.css"/>
+			</style>
+		</head>
+		<body class="export" style="background-color: white">
+			<div class="container">
+				<cfoutput>
+				#renderView()#
+				</cfoutput>
+			</div>
+		</body>
+	</cfoutput>
+
 </html>

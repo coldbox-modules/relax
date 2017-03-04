@@ -49,6 +49,9 @@ component extends="BaseHandler"{
 		rc.print 				 = true;
 		prc.expandedResourceDivs = true;
 
+		prc.exportTitle 			= getInstance( "htmlhelper@coldbox" )
+			.slugify( prc.dsl[ "info" ][ "title" ] ) & " v" & prc.dsl[ "info" ][ "version" ];
+
 		// View
 		event.setView( 
 			name 	= "apidoc/cfTemplate/api-content", 

@@ -43,6 +43,8 @@ module.exports = function(grunt) {
 			    },
 			    files: {
 					'modules/relax/includes/css/theme.css': 'includes/scss/theme.scss',
+					'modules/relax/includes/css/relax.css': 'includes/scss/relax.scss',
+					'modules/relax/includes/css/export.css': 'includes/scss/export.scss'
 				}
 			 }
 		},

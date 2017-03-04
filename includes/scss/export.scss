@@ -1,0 +1,51 @@
+/**
+*  This is our lighter-weight theme file for PDF and HTML exports
+**/
+
+//global variables
+@import "variables";
+// Variables, Mixins
+@import "theme/_variables.scss";
+@import "theme/_mixins.scss";
+
+
+//Select Bootstrap Libraries
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/tables";
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/labels";
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/badges";
+
+/*
+ *
+ *   SpaceLab Theme - Select imports
+ *
+*/
+
+
+@import "theme/_base.scss"; 
+@import "theme/_badges.scss";
+@import "theme/_backgrounds.scss";  
+@import "theme/_buttons.scss";
+@import "theme/_forms.scss"; 
+@import "theme/_main-content.scss";        
+@import "theme/_colors.scss";
+@import "theme/_icons.scss"; 
+@import "theme/_pages.scss";
+@import "theme/_panels.scss";  
+@import "theme/_tiles.scss";
+
+body.export{
+	padding: 20px; 
+
+	pre{
+		border: 1px #ccc solid;
+		padding: 10px;
+		background-color: #efefef;
+		max-width: 100%;
+		overflow-x: scroll;
+	}
+}
