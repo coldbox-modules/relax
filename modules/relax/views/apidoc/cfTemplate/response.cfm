@@ -7,7 +7,7 @@
 			</h3>
 		</div>
 
-		<div id="panel_#args.resourceId#-#args.key#" class="panel-body">
+		<div class="panel-body">
 			<div class="col-xs-12">
 				<cfif structKeyExists( args.response, "description" ) and len( args.response[ "description" ] )>
 					
@@ -30,7 +30,7 @@
 							</h3>
 						</div>
 
-						<div id="panel_#tabIds[ "schemaUID" ]#" class="panel-body schema-definition">
+						<div class="panel-body schema-definition">
 							#renderView( view="apidoc/cfTemplate/schema", args={ "entity": args.response } )#
 						</div>
 						
@@ -40,7 +40,7 @@
 						<cfloop collection="#args.response.examples#" item="mimetype">
 							<cfscript>
 								typeRef = listLast( mimetype, "/" );
-								if( typeRef == "json" ) typeRef = "javascript";
+								if( typeRef EQ "json" ) typeRef = "javascript";
 								tabIds[ typeRef ] = "example" & createUUID();
 							</cfscript>
 
@@ -50,7 +50,7 @@
 								</h3>
 							</div>
 
-							<div id="panel_#tabIds[ "schemaUID" ]#" class="panel-body schema-example">
+							<div class="panel-body schema-example">
 								<div class="panel panel-solid-default">
 									<cfscript>
 										switch( typeRef ){

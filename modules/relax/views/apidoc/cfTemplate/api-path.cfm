@@ -12,7 +12,7 @@
         </div>
 
         <!--- Div Content --->
-        <div id="panel_#args.path[ "x-resourceId" ]#" class="panel-body">
+        <div class="panel-body">
 
             #renderView( 
                 view = 'apidoc/cfTemplate/x-attributes', 

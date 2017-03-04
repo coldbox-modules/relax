@@ -7,7 +7,7 @@
 			</h3>
 		</div>
 
-		<div id="panel_#args.method[ "x-resourceId" ]#" class="panel-body">
+		<div class="panel-body">
 			<div class="col-xs-12">
 				
 				<cfif structKeyExists( args.method, "description" ) && len( args.method[ "description" ] )>
@@ -70,12 +70,12 @@
 								<cfloop collection="#args.method[ "x-request-samples" ][ "examples" ]#" item="mimetype">
 									<cfscript>
 										typeRef = listLast( mimetype, "/" );
-										if( typeRef == 'json' ) typeRef = 'javascript';
+										if( typeRef EQ 'json' ) typeRef = 'javascript';
 										tabIds[ typeRef ] = "sample" & createUUID();
 									</cfscript>
 
-									<li role="presentation"<%= ( !tabActivated ? 'class="active"' : '' ) %>>
-										<a href="###tabIds[ typeRef ]#" data-toggle="tab" aria-controls="#tabIds[ typeRef ]#">
+									<li role="presentation">
+										<a href="###tabIds[ typeRef ]#" data-toggle="tab">
 											#mimetype#
 										</a>
 									</li>
@@ -89,7 +89,7 @@
 								<cfloop collection="#args.method[ "x-request-samples" ][ "examples" ]#" item="mimetype">
 									<cfscript>
 										typeRef = listLast( mimetype, "/" );
-										if( typeRef == 'json' ) typeRef = 'javascript';
+										if( typeRef EQ 'json' ) typeRef = 'javascript';
 									</cfscript>
 								</cfloop>
 									

@@ -5,9 +5,9 @@
 	xAttributes = [];
 	for( nodeName in entity ){
 		if( findNoCase( nodeName, 'x-' ) && !arrayContains( skippedAttributes, nodeName ) ){
-			var attributeArray = listToArray( nodeName, '-' );
+			attributeArray = listToArray( nodeName, '-' );
 			arrayDeleteAt( attributeArray, 1 );
-			var attributeName = titleCase( arrayToList( attributeArray, ' ' ) );
+			attributeName = titleCase( arrayToList( attributeArray, ' ' ) );
 			arrayAppend( xAttributes, {
 				"name": attributeName,
 				"value": entity[ nodeName ]

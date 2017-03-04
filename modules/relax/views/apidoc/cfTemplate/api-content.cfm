@@ -159,8 +159,8 @@
                             </td>
 
                             <td class="definition column description">
-                                <cfif definition.type == 'oauth2'>
-                                    <a href="###definitionUid#" class="pull-right" data-toggle="collapse" aria-expanded="false" aria-controls="#definitionUid#">
+                                <cfif definition.type EQ 'oauth2'>
+                                    <a href="###definitionUid#" class="pull-right" data-toggle="collapse" aria-expanded="false">
                                         <small><i class="fa fa-chevron-down"></i></small>
                                     </a>
                                 </cfif>
@@ -176,7 +176,7 @@
                             </td>
 
                         </tr>
-                        <cfif definition.type == 'oauth2'>
+                        <cfif definition.type EQ 'oauth2'>
                             <tr class="definition optional" id="#definitionUid#">
                                 <td colspan="3">
                                     <p>
@@ -203,7 +203,6 @@
                             </tr>
                         </cfif>
                     </cfloop>
-                    </div>
                 </table>                    
             </cfif>
             
@@ -223,15 +222,20 @@
         </div>
 
         <h2>API Path Reference:</h2>
-        <cfloop array="#structKeyArray( api[ "paths" ] )#" item="pathKey">
-            #renderView( 
-                view    = 'apidoc/cfTemplate/api-path', 
-                args    = { 
-                    "api" : api,
-                    "key" : pathKey,
-                    "path": api[ "paths" ][ pathKey ]
-                }
-            )#
+
+        <cfloop array="#structKeyArray( api[ "paths" ] )#" index="pathKey">
+            <!-- ACF Compatibility Fix for a null pointer exception -->
+            <cfscript>
+                writeOutput( renderView( 
+                    view    = 'apidoc/cfTemplate/api-path', 
+                    args    = { 
+                        "api" : api,
+                        "key" : pathKey,
+                        "path": api[ "paths" ][ pathKey ]
+                    }
+                ) );
+            </cfscript>
         </cfloop>
+
     </div>
 </cfoutput>
