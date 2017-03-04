@@ -65,8 +65,10 @@ component extends="BaseHandler"{
 	any function send( event,rc,prc ){
 		prc.results = {};
 		try{
+			
 			// deserialize our incoming json packet of request data
 			prc.results = relaxerService.send( argumentCollection = event.getHTTPContent( json=true ) );
+
 		} catch( Any e ){
 			prc.results[ 'mimeType' ] = "application/json";
 				

@@ -230,7 +230,7 @@ define(
                 var $btn = $( e.currentTarget );
                 var infoPath = $btn.data( 'path' );
 
-                
+
             }
             
             /**
@@ -239,7 +239,7 @@ define(
             ,marshallRelaxerRequest: function(){
                 var _this = this;
                 var request = {
-                    url : $( '[name="httpResource"]', _this.$relaxerForm ).val(),
+                    resource : $( '[name="httpResource"]', _this.$relaxerForm ).val(),
                     method : $( '[name="httpMethod"]', _this.$relaxerForm ).val(),
                     headers : {},
                     data : {}
@@ -286,6 +286,11 @@ define(
                     "field":_.isUndefined( inData )?{}:inData,
                     "fieldType":fieldType
                 } ) );
+            }
+
+            ,renderHistory: function(){
+                $("#historyLoader").fadeIn();
+                $("#requestHistoryContainer").css("opacity",".5");
             }
 
             /**

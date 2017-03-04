@@ -51,6 +51,10 @@ component{
 			},
 			//Direct API requests
 			{ pattern="export/:action/:apiname?", handler="Export", action="index" },
+			//Relaxer routes - explicit first, then our dynamic API selector
+			{ pattern="relaxer/send", handler="Relaxer", action="send" },
+			{ pattern="relaxer/purgeHistory", handler="Relaxer", action="purgeHistory" },
+			{ pattern="relaxer/resourceDocd", handler="Relaxer", action="resourceDoc" },
 			{ pattern="relaxer/:apiname?", handler="Relaxer", action="index" },
 			{ pattern="api/:apiname?", handler="Home", action="index" },
 			// Module Entry Point

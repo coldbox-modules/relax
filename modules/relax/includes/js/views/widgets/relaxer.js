@@ -129,7 +129,7 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
         marshallRelaxerRequest: function() {
             var _this = this;
             var request = {
-                url: $('[name="httpResource"]', _this.$relaxerForm).val(),
+                resource: $('[name="httpResource"]', _this.$relaxerForm).val(),
                 method: $('[name="httpMethod"]', _this.$relaxerForm).val(),
                 headers: {},
                 data: {}
@@ -163,6 +163,10 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
                 field: _.isUndefined(inData) ? {} : inData,
                 fieldType: fieldType
             }));
+        },
+        renderHistory: function() {
+            $("#historyLoader").fadeIn();
+            $("#requestHistoryContainer").css("opacity", ".5");
         },
         clearHistory: function() {
             $("#historyLoader").fadeIn();
