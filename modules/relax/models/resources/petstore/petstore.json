@@ -16,6 +16,11 @@
     }
   },
   "host": "petstore.swagger.io",
+  "x-entryPoint": {
+      "DEV": "http://dev.myapi.com",
+      "STG": "http://stg.myapi.com",
+      "PRODUCTION": "http://www.myapi.com"
+  },
   "basePath": "/api",
   "schemes": [
     "http"

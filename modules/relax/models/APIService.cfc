@@ -6,7 +6,7 @@
 */
 component accessors="true" {
 	// DI
-	property name="Wirebox" inject="wirebox";
+	property name="wirebox" 	inject="wirebox";
 	property name="log" 		inject="logbox:logger:{this}";
 	
 	/**
@@ -31,9 +31,9 @@ component accessors="true" {
 	*/
 	function init( required settings ){
 
-		VARIABLES.settings 			= ARGUMENTS.settings;
-		VARIABLES.APIDefinitions 	= {};
-		VARIABLES.sessionsEnabled 	= ARGUMENTS.settings.sessionsEnabled;
+		variables.settings 			= arguments.settings;
+		variables.APIDefinitions 	= {};
+		variables.sessionsEnabled 	= arguments.settings.sessionsEnabled;
 		
 		return this;
 	}
@@ -42,7 +42,7 @@ component accessors="true" {
 	* Get a listing of all the APIs in the resources folder
 	*/
 	query function listAPIs(){
-		return directoryList( VARIABLES.settings.APILocationExpanded, false, "query", "", "asc" );
+		return directoryList( variables.settings.APILocationExpanded, false, "query", "", "asc" );
 	}
 
 	/**
@@ -50,7 +50,7 @@ component accessors="true" {
 	* @name The name of the API to get.
 	*/
 	function getAPI( required name ){
-		return VARIABLES.APIDefinitions[ ARGUMENTS.name ];
+		return variables.APIDefinitions[ arguments.name ];
 	}
 
     /**
@@ -60,9 +60,9 @@ component accessors="true" {
 		var apiName = getLoadedAPIName();
 
 		// lazy load API if not in scope
-		if( !structKeyExists( VARIABLES.APIDefinitions, apiName ) ){ loadAPI( apiName ); }
+		if( !structKeyExists( variables.APIDefinitions, apiName ) ){ loadAPI( apiName ); }
 		// return it.
-		return VARIABLES.APIDefinitions[ apiName ];
+		return variables.APIDefinitions[ apiName ];
 	}
 
 	/**
@@ -76,6 +76,9 @@ component accessors="true" {
     	return ( structKeyExistS( session, "relax-api" ) ? session[ "relax-api" ] : "" );
     }
 
+    /**
+     * Get the name of the default API
+     */
     string function getDefaultAPIName(){
     	return getSettings().defaultAPI;
     }
@@ -90,7 +93,7 @@ component accessors="true" {
 	/**
 	* Clears user data
 	*/
-	DSLService function clearUserData(){
+	APIService function clearUserData(){
 		if( !getSessionsEnabled() ) return this;
 
 		structDelete( session, "relax-api" );
@@ -102,17 +105,21 @@ component accessors="true" {
 	* @name The API to load
 	*/
 	function loadAPI( required name ){
-		var APIDirectory = VARIABLES.settings.APILocationExpanded & "/" & ARGUMENTS.name & "/"; 
-		//determine if we have a legacy DSL configuration
+		var APIDirectory = variables.settings.APILocationExpanded & "/" & arguments.name & "/"; 
+		
+		// determine if we have a legacy DSL configuration
 		if( fileExists( APIDirectory & "Relax.cfc" ) ){
-			var dataCFC = createObject( "component", VARIABLES.settings.APILocation & ".#ARGUMENTS.name#.Relax" );
-		} else if ( fileExists( VARIABLES.settings.APILocationExpanded & "/#ARGUMENTS.name#/Relax.json" ) ) {
+			var dataCFC = createObject( "component", variables.settings.APILocation & ".#arguments.name#.Relax" );
+		} else if ( fileExists( variables.settings.APILocationExpanded & "/#arguments.name#/Relax.json" ) ) {
 			var dataCFC = deserializeJSON( fileRead( APIDirectory & "Relax.json" ) );
 		}
 
 		// If we have a configure() then call it 
-		if( !isNull( dataCFC ) && structKeyExists( dataCFC, "configure") ) processConfiguration( dataCFC );
+		if( !isNull( dataCFC ) && structKeyExists( dataCFC, "configure") ){
+			processConfiguration( dataCFC );
+		}
 
+		// Process Legacy Definitions
 		if( !isNull( dataCFC ) && isLegacyAPI( dataCFC ) ){
 			/**
 			* Legacy RelaxDSL API Checks
@@ -120,18 +127,18 @@ component accessors="true" {
 			**/
 			loadDSLAPI( dataCFC );
 			// Store the definitions
-			VARIABLES.APIDefinitions[ ARGUMENTS.name ] = getWirebox().getInstance( "DSLTranslator@relax" ).translate( dataCFC );	
-
-		} else {
-			//OpenAPI Checks
+			variables.APIDefinitions[ arguments.name ] = getWirebox().getInstance( "DSLTranslator@relax" ).translate( dataCFC );	
+		} 
+		// Open API Definitions
+		else {
 			if( !isNull( dataCFC ) && structKeyExists( dataCFC.relax, "definition" ) ){
-				VARIABLES.APIDefinitions[ ARGUMENTS.name ] = loadOpenAPI( APIDirectory & dataCFC.relax.definition );	
+				variables.APIDefinitions[ arguments.name ] = loadOpenAPI( APIDirectory & dataCFC.relax.definition );	
 			} else if( isNull( dataCFC ) ){
-				var mimeExtensions = [ 'json','yaml','yaml','json.cfm' ];
+				var mimeExtensions = [ 'json','json.cfm','yaml','yaml.cfm' ];
 				//perform our naming convention type checks checks
 				for( var ext in mimeExtensions ){			
-					if( fileExists( APIDirectory & ARGUMENTs.name & "." & ext ) )	{
-						VARIABLES.APIDefinitions[ ARGUMENTS.name ] = loadOpenAPI( APIDirectory & ARGUMENTs.name & "." & ext );
+					if( fileExists( APIDirectory & arguments.name & "." & ext ) )	{
+						variables.APIDefinitions[ arguments.name ] = loadOpenAPI( APIDirectory & arguments.name & "." & ext );
 						break;
 					}
 				}
@@ -141,34 +148,131 @@ component accessors="true" {
 
 		// Store user's selection
 		if( getSessionsEnabled() ){
-			session[ "relax-api" ] = ARGUMENTS.name;
+			session[ "relax-api" ] = arguments.name;
 		}
 
-		return VARIABLES.APIDefinitions[ ARGUMENTs.name ];
-
+		return variables.APIDefinitions[ arguments.name ];
 	}
 
-	private function isLegacyAPI( required any dataCFC ){
+	/**
+	* Process a relax configure method by injecting our Document.cfc methods first
+	* @dataCFC The data CFC to process
+	*/
+	APIService function processConfiguration( required dataCFC ){
+		// create language object
+		var dsl = getWirebox().getInstance( "RelaxDSL@relax" );
 
+		// decorate and mixin methods.
+		dataCFC.injectMixin = variables.injectMixin;
+
+		for( var key in dsl ){
+			// only inject methods/properties that do not exist
+			if( !structKeyExists( dataCFC, key ) ){
+
+				// check if a UDF
+				if( isCustomFunction( dsl[ key ] ) ){
+					dataCFC.injectMixin( key, dsl[ key ] );
+				}
+				// else a property injection
+				else{
+					dataCFC[ key ] = dsl[ key ];
+				}
+
+			}
+		}
+
+		// process configuration
+		dataCFC.configure();
+
+		return this;
+	}
+
+	/**
+	* Import a relax API
+	* @collection The collection which includes the API name and JSON representation
+	*/
+	struct function processAPIImport( required struct collection ){
+		var response = newResponse();
+
+		// validate data
+		if( !structKeyExists( collection, 'apiName' ) || !len( collection.apiName ) ){
+			response.message = "A valid API name was not provided for the import request.  Could not continue.";
+			return response;
+		} else if ( !structKeyExists( collection, 'apiJSON' ) ){
+			response.message = "A valid API name was not provided for the import request.  Could not continue.";
+			return response;
+		}else if( not isJSON( collection.apiJSON ) ){
+			response.message = "The JSON representation is not valid JSON. Please try again.";
+			return response;
+		}
+
+		// slugify name
+		var apiName = getWirebox().getInstance( "HTMLHelper@coldbox" ).slugify( collection.apiName );
+
+		var targetDir = variables.settings.APILocationExpanded & "/" & apiName;
+		if( !directoryExists( targetDir ) ) directoryCreate( targetDir );
+
+		
+		//validate that our api document can be parsed
+		try{		
+			
+			var parsedAPI = getWirebox().getInstance( "OpenAPIParser@relax" ).parse( deserializeJSON( collection.apiJSON ) );
+		
+		} catch( any e ){
+		
+			response.message = "The API provided could not be parsed according to the OpenAPI specification.  Please check your syntax and ensure all required keys are provided.";
+			return response;
+		
+		}
+
+		var targetFile = targetDir & "/" & apiName & ".json";
+
+		fileWrite(targetFile, collection.apiJSON);
+
+		response.data = {
+			"name":apiName,
+			"document":parsedAPI.getNormalizedDocument()	
+		};
+		
+		response.success = true;
+
+		return response;
+	}
+
+	//****************************************************** PRIVATE ******************************************************//
+
+	/**
+	 * Verifies if we have a legacy API or swagger
+	 * @dataCFC The CFC instance
+	 */
+	private boolean function isLegacyAPI( required any dataCFC ){
 		return (
 			(
-				structKeyExists(dataCFC,"resources")
+				structKeyExists( dataCFC, "resources" )
 				&&
 				arrayLen( dataCFC.resources )
 			)
 			or
 			( 
-				structKeyExists(dataCFC,"globalParameters")  
+				structKeyExists( dataCFC, "globalParameters" )  
 				&& 
 				arrayLen( dataCFC.globalParameters )
 			)
 		);
 	}
 
+	/**
+	 * Load an open api definition file via the Swagger SDK Parser object
+	 * @definitionFile The definition file to load
+	 */
 	private function loadOpenAPI( required string definitionFile ){
-		return getWirebox( ).getInstance( "OpenAPIParser@relax" ).init( definitionFile );
+		return getWirebox( ).getInstance( "OpenAPIParser@relax" ).init( arguments.definitionFile );
 	}
 
+	/**
+	 * Run Defaults and processing setup on a legacy DSL
+	 * @dataCFC The legacy DSL
+	 */
 	private function loadDSLAPI( required any dataCFC ){
 
 		// cleanup relax data
@@ -235,107 +339,26 @@ component accessors="true" {
 	}
 
 	/**
-	* Process a relax configure method
-	* @dataCFC The data CFC to process
-	*/
-	APIService function processConfiguration( required dataCFC ){
-
-		// create language object
-		var dsl = getWirebox().getInstance( "RelaxDSL@relax" );
-
-		// decorate and mixin methods.
-		dataCFC.injectMixin = VARIABLES.injectMixin;
-
-		for(var key in dsl ){
-			// only inject methods/properties that do not exist
-			if( !structKeyExists( dataCFC, key ) ){
-
-				// check if a UDF
-				if( isCustomFunction( dsl[ key ] ) ){
-					dataCFC.injectMixin( key, dsl[ key ] );
-				}
-				// else a property injection
-				else{
-					dataCFC[ key ] = dsl[ key ];
-				}
-
-			}
-		}
-
-		// process configuration
-		dataCFC.configure();
-
-		return this;
-	}
-
-	/**
-	* Import a relax API
-	* @collection The collection which includes the API name and JSON representation
-	*/
-	struct function processAPIImport( required struct collection ){
-		var response = newResponse();
-
-		// validate data
-		if( !structKeyExists( collection, 'apiName' ) || !len( collection.apiName ) ){
-			response.message = "A valid API name was not provided for the import request.  Could not continue.";
-			return response;
-		} else if ( !structKeyExists( collection, 'apiJSON' ) ){
-			response.message = "A valid API name was not provided for the import request.  Could not continue.";
-			return response;
-		}else if( not isJSON( collection.apiJSON ) ){
-			response.message = "The JSON representation is not valid JSON. Please try again.";
-			return response;
-		}
-
-		// slugify name
-		var apiName = getWirebox().getInstance( "HTMLHelper@coldbox" ).slugify( collection.apiName );
-
-		var targetDir = VARIABLES.settings.APILocationExpanded & "/" & apiName;
-		if( !directoryExists( targetDir ) ) directoryCreate( targetDir );
-
-		
-		//validate that our api document can be parsed
-		try{		
-			
-			var parsedAPI = getWirebox().getInstance( "OpenAPIParser@relax" ).parse( deserializeJSON( collection.apiJSON ) );
-		
-		} catch( any e ){
-		
-			response.message = "The API provided could not be parsed according to the OpenAPI specification.  Please check your syntax and ensure all required keys are provided.";
-			return response;
-		
-		}
-
-		var targetFile = targetDir & "/" & apiName & ".json";
-
-		fileWrite(targetFile, collection.apiJSON);
-
-		response.data = {
-			"name":apiName,
-			"document":parsedAPI.getNormalizedDocument()	
-		};
-		
-		response.success = true;
-
-		return response;
-	}
-
-	/**
 	* Injection method
+	* @name Name of function
+	* @UDF The UDF to inject
 	*/
 	private function injectMixin( required name, required UDF ){
-		variables[ ARGUMENTS.name ] = ARGUMENTS.UDF;
-		this[ ARGUMENTS.name ] 		= ARGUMENTS.UDF;
+		variables[ arguments.name ] = arguments.UDF;
+		this[ arguments.name ] 		= arguments.UDF;
 
 		return this;
 	}
 
+	/**
+	 * New response struct for importers
+	 */
 	private function newResponse(){
 		return {
-			"success":false,
-			"data":{},
-			"message":"",
-			"errors":[]
+			"success" 	: false,
+			"data" 		: {},
+			"message" 	: "",
+			"errors" 	: []
 		};
 	}
 

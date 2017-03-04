@@ -1,44 +1,4 @@
-<!-----------------------------------------------------------------------
-********************************************************************************
-Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-www.coldbox.org | www.luismajano.com | www.ortussolutions.com
-********************************************************************************
-
-Author     :	Luis Majano
-Description :
-	Relax Resources Definition.  For documentation on how to build this CFC
-	look at our documenation here: http://wiki.coldbox.org/wiki/Projects:Relax.cfm
-	
-	The methods you can use for defining your RESTful service are:
-	
-	// Service is used to define the service
-	- service(title:string,
-		      description:string,
-			  entryPoint:string or struct
-			  extensionDetection:boolean,
-			  validExtensions:list,
-			  throwOnInvalidExtensions:boolean);
-	
-	// GlobalHeader() is used to define global headers which can be concatenated
-	- globalHeader(name:string, description:string, required:boolean, default:any, type:string);
-	
-	// globalParam() is used to define global params which can be concatenated
-	- globalParam(name:string, description:string, required:boolean, default:any, type:string);
-	
-	// Resources are defined by concatenating the following methods
-	// The resource() takes in all arguments that match the SES addRoutes() method
-	resource(pattern:string, handler:string, action:string or struct)
-		.description(string)
-		.methods(string or list)
-		.header(name:string, description:string, required:boolean, default:any, type:string)
-		.param(name:string, description:string, required:boolean, default:any, type:string)
-		.placeholder(name:string, description:string, required:boolean, default:any, type:string)
-		.schema(format:string, description:string, body:string)
-		.sample(format:string, description:string, body:string);
-		
------------------------------------------------------------------------>
-<cfcomponent output="false">
-<cfscript>
+component{
 	
 	// I save the location of this CFC path to use resources located here
 	variables.dirPath = getDirectoryFromPath( getMetadata(this).path ); 
@@ -117,5 +77,5 @@ Description :
 	 		.sample(format="json", description="The basic user information will be returned in a flat object.", body=fileRead("#dirPath#samples/user/user.json"))
 			.sample(format="json", description="If the requested user is not found, or some other error has occurred, the resopnse will be like the following.", body=fileRead("#dirPath#samples/user/failure.json"));
 	}
-</cfscript>
-</cfcomponent>
+
+}
