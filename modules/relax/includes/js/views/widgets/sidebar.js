@@ -1,10 +1,11 @@
-/*! Copyright 2017 - Ortus Solutions (Compiled: 03-03-2017) */
+/*! Copyright 2017 - Ortus Solutions (Compiled: 04-03-2017) */
 define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Backbone, APIModel, HistoryModel) {
     "use strict";
     var View = Backbone.View.extend({
         el: ".mc-sidebar",
         events: {
             "change #myAPI": "onSelectAPI",
+            "click .btnExportJSON": "onExportAPIJSON",
             "click .btnExportFormat": "onExportFormat",
             "click .btnImportAPI": "onShowImportAPI",
             "change .relaxerResourceSelector": "onRelaxerResourceSelect"
@@ -124,12 +125,10 @@ define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Back
         },
         onExportAPIJSON: function(e) {
             var _this = this;
-            var documentationHTML = $(".api-content")[0].outerHTML;
-            $.get(moduleAPIRoot + "apidoc/" + $('[name="myAPI"]', _this.$el).val(), function(apiJSON) {
+            var $btn = $(e.currentTarget);
+            $.get($btn.data("link") + "/" + $('[name="myAPI"]', _this.$el).val(), function(exportHTML) {
                 var $modal = $("#modal");
-                var modalContent = '<div class="panel panel-solid-default"><pre>' + translationContent + "</pre></div>";
-                $modal.find(".modal-header").html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                         <h3><i class="fa fa-lg fa-paw"></i> API Export: Trac </h3>');
-                $modal.find(".modal-body").html(_this.exportWrapper(modalContent));
+                $modal.html(exportHTML);
                 $modal.modal("show");
             });
         },

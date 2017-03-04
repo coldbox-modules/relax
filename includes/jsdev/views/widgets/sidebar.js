@@ -26,9 +26,10 @@ define(
 
             //event bindings - restricted to the scope of `this.el` ( DOM selector ) or `this.$el` ( jQuery object )
             ,events:{
-                "change #myAPI":"onSelectAPI",
-                "click .btnExportFormat":"onExportFormat",
-                "click .btnImportAPI":"onShowImportAPI",
+                "change #myAPI"                     : "onSelectAPI",
+                "click .btnExportJSON"              : "onExportAPIJSON",
+                "click .btnExportFormat"            : "onExportFormat",
+                "click .btnImportAPI"               : "onShowImportAPI",
                 "change .relaxerResourceSelector":"onRelaxerResourceSelect"
             }
 
@@ -217,7 +218,7 @@ define(
                     success:function( model, resp ){
 
                         history.pushState( null, null, moduleAPIRoot + "api/" + $select.val()  );
-                        
+
                         if( _this.$el.hasClass( 'relaxer-sidebar' ) ){
                             _this.renderRelaxerResources();
                         } else {
@@ -241,20 +242,15 @@ define(
             **/
             ,onExportAPIJSON: function( e ){
                 var _this = this;
+                var $btn = $( e.currentTarget );
 
-                var documentationHTML = $( ".api-content" )[ 0 ].outerHTML;
                 $.get( 
                     
-                    moduleAPIRoot + "apidoc/" + $( '[name="myAPI"]', _this.$el ).val(),
+                    $btn.data( 'link' ) + "/" + $( '[name="myAPI"]', _this.$el ).val(),
 
-                    function( apiJSON ){
+                    function( exportHTML ){
                        var $modal = $( "#modal" );
-                       var modalContent = '<div class="panel panel-solid-default"><pre>' + translationContent + '</pre></div>';
-                       $modal.find( ".modal-header" ).html( 
-                        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
-                         <h3><i class="fa fa-lg fa-paw"></i> API Export: Trac </h3>' 
-                        );
-                       $modal.find( ".modal-body" ).html( _this.exportWrapper( modalContent ) );
+                       $modal.html( exportHTML );
                        $modal.modal("show");
                     }
                 );

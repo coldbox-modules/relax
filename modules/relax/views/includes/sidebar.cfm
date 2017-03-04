@@ -19,10 +19,9 @@
 
 				<p class="text-center">
 					<!--- Export --->
-					<a href="#event.buildLink( prc.xehExportAPI )#"
-						data-toggle="modal" 
-						data-target="##modal"
-						class="btn btn-primary"
+					<a href="javascript:void(0)"
+						data-link="#event.buildLink( prc.xehExportAPI )#"
+						class="btn btn-primary btnExportJSON"
 					   	title="Export API">
 							<i class="fa fa-lg fa-cloud-download"></i> Export
 					</a>
