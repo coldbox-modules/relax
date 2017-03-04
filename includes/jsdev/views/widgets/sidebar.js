@@ -27,8 +27,7 @@ define(
             //event bindings - restricted to the scope of `this.el` ( DOM selector ) or `this.$el` ( jQuery object )
             ,events:{
                 "change #myAPI":"onSelectAPI",
-                "click .btnExportMediaWiki":"onExportMediaWiki",
-                "click .btnExportTrac":"onExportTrac",
+                "click .btnExportFormat":"onExportFormat",
                 "click .btnImportAPI":"onShowImportAPI",
                 "change .relaxerResourceSelector":"onRelaxerResourceSelect"
             }
@@ -380,78 +379,18 @@ define(
             }
 
             /**
-            * Fires when exporting the API as Trac
+            * Fires when exporting a specific format
             * @param e      The event object
             **/
-            ,onExportTrac: function( e ){
+            ,onExportFormat: function( e ){
                 var _this = this;
-                var documentationHTML = $( ".api-content" )[ 0 ].outerHTML;
-                $.post( 
-                    moduleAPIRoot + "export/trac", 
-                    {
-                    "content":documentationHTML
-                    },
-                    function( translationContent ){
-                       var $modal = $( "#modal" );
-                       var modalContent = '<div class="panel panel-solid-default"><pre>' + translationContent + '</pre></div>';
-                       $modal.find( ".modal-header" ).html( 
-                        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
-                         <h3><i class="fa fa-lg fa-paw"></i> API Export: Trac </h3>' 
-                        );
-                       $modal.find( ".modal-body" ).html( _this.exportWrapper( modalContent ) );
-                       $modal.modal("show");
-                    }
-                );
-            }
+                var $btn = $( e.currentTarget );
 
-            /**
-            * Fires when exporting the API as MediaWiki
-            * @param e      The event object
-            **/
-            ,onExportMediaWiki: function( e ){
-                var _this = this;
-                var documentationHTML = $( ".api-content" )[ 0 ].outerHTML;
-                $.post( 
-                    moduleAPIRoot + "export/mediawiki", 
-                    {
-                    "content":documentationHTML
-                    },
-                    function( translationContent ){
-                       var $modal = $( "#modal" );
-                       var modalContent = '<div class="panel panel-solid-default"><pre>' + translationContent + '</pre></div>';
-                       $modal.find( ".modal-header" ).html( 
-                        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
-                         <h3><i class="fa fa-lg fa-code-o"></i> API Export: MediaWiki</h3>' 
-                        );
-                       $modal.find( ".modal-body" ).html( _this.exportWrapper( modalContent ) );
-                       $modal.modal("show");
-                    }
-                );   
-            }
+                var location = $btn.data( 'link' );
+                var selectedAPI = $( '[name="myAPI"]', _this.el ).val();
+               
+                window.open( location + "/" + selectedAPI );
 
-            /**
-            * Fires when exporting the API as a PDF
-            * @param e      The event object
-            **/
-            ,onExportPDF: function( e ){
-                 var _this = this;
-                var documentationHTML = $( ".api-content" )[ 0 ].outerHTML;
-                $.post( 
-                    moduleAPIRoot + "export/pdf", 
-                    {
-                        "pagecontent":documentationHTML
-                    },
-                    function( translationContent ){
-                       var $modal = $( "#modal" );
-                       var modalContent = '<div class="panel panel-solid-default"><pre>' + translationContent + '</pre></div>';
-                       $modal.find( ".modal-header" ).html( 
-                        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
-                         <h3><i class="fa fa-lg fa-code-o"></i> API Export: MediaWiki</h3>' 
-                        );
-                       $modal.find( ".modal-body" ).html( _this.exportWrapper( modalContent ) );
-                       $modal.modal("show");
-                    }
-                );  
             }
 
             /**

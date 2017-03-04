@@ -5,8 +5,7 @@ define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Back
         el: ".mc-sidebar",
         events: {
             "change #myAPI": "onSelectAPI",
-            "click .btnExportMediaWiki": "onExportMediaWiki",
-            "click .btnExportTrac": "onExportTrac",
+            "click .btnExportFormat": "onExportFormat",
             "click .btnImportAPI": "onShowImportAPI",
             "change .relaxerResourceSelector": "onRelaxerResourceSelect"
         },
@@ -216,44 +215,12 @@ define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Back
                 }
             });
         },
-        onExportTrac: function(e) {
+        onExportFormat: function(e) {
             var _this = this;
-            var documentationHTML = $(".api-content")[0].outerHTML;
-            $.post(moduleAPIRoot + "export/trac", {
-                content: documentationHTML
-            }, function(translationContent) {
-                var $modal = $("#modal");
-                var modalContent = '<div class="panel panel-solid-default"><pre>' + translationContent + "</pre></div>";
-                $modal.find(".modal-header").html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                         <h3><i class="fa fa-lg fa-paw"></i> API Export: Trac </h3>');
-                $modal.find(".modal-body").html(_this.exportWrapper(modalContent));
-                $modal.modal("show");
-            });
-        },
-        onExportMediaWiki: function(e) {
-            var _this = this;
-            var documentationHTML = $(".api-content")[0].outerHTML;
-            $.post(moduleAPIRoot + "export/mediawiki", {
-                content: documentationHTML
-            }, function(translationContent) {
-                var $modal = $("#modal");
-                var modalContent = '<div class="panel panel-solid-default"><pre>' + translationContent + "</pre></div>";
-                $modal.find(".modal-header").html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                         <h3><i class="fa fa-lg fa-code-o"></i> API Export: MediaWiki</h3>');
-                $modal.find(".modal-body").html(_this.exportWrapper(modalContent));
-                $modal.modal("show");
-            });
-        },
-        onExportPDF: function(e) {
-            var _this = this;
-            var documentationHTML = $(".api-content")[0].outerHTML;
-            $.post(moduleAPIRoot + "export/pdf", {
-                pagecontent: documentationHTML
-            }, function(translationContent) {
-                var $modal = $("#modal");
-                var modalContent = '<div class="panel panel-solid-default"><pre>' + translationContent + "</pre></div>";
-                $modal.find(".modal-header").html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                         <h3><i class="fa fa-lg fa-code-o"></i> API Export: MediaWiki</h3>');
-                $modal.find(".modal-body").html(_this.exportWrapper(modalContent));
-                $modal.modal("show");
-            });
+            var $btn = $(e.currentTarget);
+            var location = $btn.data("link");
+            var selectedAPI = $('[name="myAPI"]', _this.el).val();
+            window.open(location + "/" + selectedAPI);
         },
         onRelaxerResourceSelect: function(e) {
             var _this = this;

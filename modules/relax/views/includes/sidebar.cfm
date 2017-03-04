@@ -49,32 +49,37 @@
 				<!--- Export Commands --->
 				<p class="text-center">
 					<!--- html --->
-					<a 	href="#event.buildLink( prc.xehExportHTML )#"
-						target="_blank"
-						class="btn btn-primary"
+					<a 	href="javascript:void(0)"
+						data-format="html"
+						data-link="#event.buildLink( prc.xehExportHTML )#"
+						class="btn btn-primary btnExportFormat"
+						data-toggle="tooltip"
 					   	title="Export as HTML">
 						<i class="fa fa-lg fa-html5"></i>
 					</a>
 					<!--- pdf --->
-					<a 	href="#event.buildLink( prc.xehExportPDF )#" 
-						class="btn btn-primary"
-					    target="_blank"
-					    class="btn btn-primary"
+					<a 	href="javascript:void(0)"
+						data-format="pdf"
+						data-link="#event.buildLink( prc.xehExportPDF )#"
+						class="btn btn-primary btnExportFormat"
+						data-toggle="tooltip"
 						title="Export as PDF">
 						<i class="fa fa-lg fa-file-pdf-o"></i>
 					</a>
 					<!--- mediawiki --->
-					<a 	href="#event.buildLink( prc.xehExportwiki )#"
-						class="btn btn-primary"
-						target="_blank"
-					    data-toggle="tooltip"
+					<a 	href="javascript:void(0)"
+						data-format="trac"
+						data-link="#event.buildLink( prc.xehExportWiki )#"
+						class="btn btn-primary btnExportFormat"
+						data-toggle="tooltip"
 					    title="Export as MediaWiki">
 						<i class="fa fa-lg fa-file-code-o"></i>
 					</a>
 					<!--- trac --->
-					<a 	href="#event.buildLink( prc.xehExportTrac )#"
-					    class="btn btn-primary"
-					    target="_blank"
+					<a 	href="javascript:void(0)"
+						data-format="trac"
+						data-link="#event.buildLink( prc.xehExportTrac )#"
+						class="btn btn-primary btnExportFormat"
 						data-toggle="tooltip"
 					    title="Export as TracMarkup">
 						<i class="fa fa-lg fa-paw"></i>

@@ -14,7 +14,12 @@ component extends="BaseHandler"{
 	*/
 	function preHandler( event, rc, prc ){
 		super.preHandler( argumentCollection=arguments );
+		
 		// Get the loaded API for the user
+		if( structKeyExists( rc, "apiname" ) ){
+			APIService.loadAPI( rc.apiname );
+		}
+
 		prc.dsl				= APIService.getLoadedAPI().getNormalizedDocument();
 		prc.loadedAPIName 	= APIService.getLoadedAPIName();
 	}
@@ -91,7 +96,7 @@ component extends="BaseHandler"{
 	private function toWikiMarkup( event, rc, prc, type ){
 		html( event, rc, prc );
 		if( !structKeyExists( rc, "content" ) ){
-			rc.content = renderView( view="export/html", module="relax" );
+			rc.content = renderView( view="apidoc/cfTemplate/api-content", args={"api":prc.dsl}, module="relax" );
 		}
 		var data = wikitext.toWiki( translator=arguments.type, html=rc.content );
 		event.renderData( type="text", data=data );
