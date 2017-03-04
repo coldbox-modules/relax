@@ -51,6 +51,7 @@ component{
 			},
 			//Direct API requests
 			{ pattern="export/:action/:apiname?", handler="Export", action="index" },
+			{ pattern="relaxer/:apiname?", handler="Relaxer", action="index" },
 			{ pattern="api/:apiname?", handler="Home", action="index" },
 			// Module Entry Point
 			{ pattern="", handler="Home", action="index" },

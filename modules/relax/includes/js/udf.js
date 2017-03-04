@@ -34,7 +34,14 @@ function parseRequestParams(){
 
     //evaluate path information for apiname
     var pathArray = params.path.split( '/' );
-    if( pathArray[ pathArray.length - 2 ] === 'api' && pathArray[ pathArray.length - 1 ].length ){
+    if( 
+        ( 
+            pathArray[ pathArray.length - 2 ] === 'api'
+            ||
+            pathArray[ pathArray.length - 2 ] === 'relaxer'
+        )
+        && pathArray[ pathArray.length - 1 ].length
+    ){
 
         params.api = pathArray[ pathArray.length - 1 ];
     

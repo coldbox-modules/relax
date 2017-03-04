@@ -29,9 +29,10 @@ define(
             */
             //event bindings - restricted to the scope of `this.el` ( DOM selector ) or `this.$el` ( jQuery object )
             ,events:{
-                "click .dynamicAdd":"onAddDynamicItem",
-                "click .dynamicRemove":"onRemoveDynamicItem",
-                "click .btnSendRequest":"onRelaxerSend"
+                "click .dynamicAdd"             : "onAddDynamicItem",
+                "click .dynamicRemove"          : "onRemoveDynamicItem",
+                "click .btnSendRequest"         : "onRelaxerSend",
+                "click .relaxer-resource-info"  : "onDisplayResourceInfo"
             }
             /**
             * ----------------------------------------------
@@ -222,6 +223,14 @@ define(
                 $field.fadeOut( 300, function(){
                     $field.remove();
                 });
+            }
+
+            ,onDisplayResourceInfo:function( e ){
+                var _this = this;
+                var $btn = $( e.currentTarget );
+                var infoPath = $btn.data( 'path' );
+
+                
             }
             
             /**

@@ -111,7 +111,11 @@ define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Back
             if (!_.isUndefined(_this.View.renderLoaderMessage)) _this.View.renderLoaderMessage();
             _this.ViewModel.fetch({
                 success: function(model, resp) {
-                    history.pushState(null, null, moduleAPIRoot + "api/" + $select.val());
+                    if ($(".relaxer .relaxer-form").length) {
+                        history.pushState(null, null, moduleAPIRoot + "relaxer/" + selectedAPI);
+                    } else {
+                        history.pushState(null, null, moduleAPIRoot + "api/" + selectedAPI);
+                    }
                     if (_this.$el.hasClass("relaxer-sidebar")) {
                         _this.renderRelaxerResources();
                     } else {

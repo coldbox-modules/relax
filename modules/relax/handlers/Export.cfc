@@ -14,11 +14,6 @@ component extends="BaseHandler"{
 	*/
 	function preHandler( event, rc, prc ){
 		super.preHandler( argumentCollection=arguments );
-		
-		// Get the loaded API for the user
-		if( structKeyExists( rc, "apiname" ) ){
-			APIService.loadAPI( rc.apiname );
-		}
 
 		prc.dsl				= APIService.getLoadedAPI().getNormalizedDocument();
 		prc.loadedAPIName 	= APIService.getLoadedAPIName();

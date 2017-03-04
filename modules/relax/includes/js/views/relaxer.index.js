@@ -5,7 +5,11 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
         el: "#main-content",
         events: {},
         initialize: function() {
-            return this.setupSelectors().setupDefaults().render();
+            var _this = this;
+            _this.Model = APIModel;
+            _this.setupDefaults().then(function(model) {
+                return _this.setupSelectors().render();
+            });
         },
         setupSelectors: function() {
             return this;
@@ -15,15 +19,29 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
             if (_.isUndefined(rootAssetPath)) {
                 var rootAssetPath = "/modules/relax";
             }
-            _this.sidebar = new SidebarWidget({
-                view: _this
+            var promise = new Promise(function(resolve, reject) {
+                _this.activeAPI = parseRequestParams().api;
+                _this.Model.fetch({
+                    success: function(model, resp) {
+                        _this.activeAPI = parseRequestParams().api;
+                        _this.sidebar = new SidebarWidget({
+                            view: _this,
+                            apis: model.attributes.apis,
+                            default: _.isUndefined(_this.activeAPI) ? model.attributes.default : _this.activeAPI
+                        });
+                        var $relaxer = $(".relaxer", _this.el);
+                        _this.Relaxer = new RelaxerWidget({
+                            el: ".relaxer",
+                            $el: $relaxer
+                        });
+                        return resolve(_this.Model);
+                    },
+                    error: function(model, resp) {
+                        return reject(_this.Model);
+                    }
+                });
             });
-            var $relaxer = $(".relaxer", _this.el);
-            _this.Relaxer = new RelaxerWidget({
-                el: ".relaxer",
-                $el: $relaxer
-            });
-            return this;
+            return promise;
         },
         render: function() {
             var _this = this;

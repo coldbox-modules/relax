@@ -6,7 +6,8 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
         events: {
             "click .dynamicAdd": "onAddDynamicItem",
             "click .dynamicRemove": "onRemoveDynamicItem",
-            "click .btnSendRequest": "onRelaxerSend"
+            "click .btnSendRequest": "onRelaxerSend",
+            "click .relaxer-resource-info": "onDisplayResourceInfo"
         },
         initialize: function(options) {
             var _this = this;
@@ -119,6 +120,11 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             $field.fadeOut(300, function() {
                 $field.remove();
             });
+        },
+        onDisplayResourceInfo: function(e) {
+            var _this = this;
+            var $btn = $(e.currentTarget);
+            var infoPath = $btn.data("path");
         },
         marshallRelaxerRequest: function() {
             var _this = this;

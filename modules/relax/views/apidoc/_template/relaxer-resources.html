@@ -44,6 +44,7 @@ var httpMethodKeys = [ 'get','put','post','patch','delete','options','head' ];
                         <a data-toggle="collapse" data-parent="#accordion" href="#tab-<%=path[ "x-resourceId" ]%>" aria-expanded="true" aria-controls="tab-<%=path[ "x-resourceId" ]%>">
                         <%=pathName%>
                         </a>
+                        <a data-path="<%=pathName%>" data-resourceID="<%=path[ "x-resourceId" ]%>" class="relaxer-resource-info text-primary pull-right"><i class="fa fa-info-circle"></i></a>
                     </h4>
                 </div>
                 <div id="tab-<%=path[ "x-resourceId" ]%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="tab-<%=path[ "x-resourceId" ]%>">

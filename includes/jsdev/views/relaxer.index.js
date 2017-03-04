@@ -36,7 +36,14 @@ define(
             * ----------------------------------------------
             */
             ,initialize:function(){
-                return this.setupSelectors().setupDefaults().render();
+
+                var _this = this;
+                
+                _this.Model = APIModel;
+                
+                _this.setupDefaults().then( function( model ){
+                    return _this.setupSelectors().render();
+                });
             }
 
             /**
@@ -59,19 +66,36 @@ define(
             		var rootAssetPath = '/modules/relax';
             	}
 
-                _this.sidebar = new SidebarWidget( {
-                    "view":_this
-                });
+                var promise = new Promise( function( resolve, reject ){
+                    _this.activeAPI = parseRequestParams().api;
+                    //pull our list of APIs
+                    _this.Model.fetch( {
+                        success: function( model, resp ){
+                            _this.activeAPI = parseRequestParams().api;
 
-                var $relaxer = $( ".relaxer", _this.el );
+                            _this.sidebar = new SidebarWidget( {
+                                "view"      : _this,
+                                "apis"      : model.attributes.apis,
+                                "default"   : _.isUndefined( _this.activeAPI ) ? model.attributes.default : _this.activeAPI
+                            });
+
+                            var $relaxer = $( ".relaxer", _this.el );
+                            
+                            _this.Relaxer = new RelaxerWidget({
+                                "el":".relaxer",
+                                "$el":$relaxer
+                            });
+
                 
-                _this.Relaxer = new RelaxerWidget({
-                    "el":".relaxer",
-                    "$el":$relaxer
+                            return resolve( _this.Model );
+                        }
+                        ,error: function( model, resp ){
+                            return reject( _this.Model );
+                        }
+                    });
                 });
 
-    
-                return this;
+                return promise;
             }
 
             /**
