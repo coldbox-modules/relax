@@ -111,7 +111,7 @@ define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Back
             if (!_.isUndefined(_this.View.renderLoaderMessage)) _this.View.renderLoaderMessage();
             _this.ViewModel.fetch({
                 success: function(model, resp) {
-                    console.debug(model.attributes);
+                    history.pushState(null, null, moduleAPIRoot + "api/" + $select.val());
                     if (_this.$el.hasClass("relaxer-sidebar")) {
                         _this.renderRelaxerResources();
                     } else {
