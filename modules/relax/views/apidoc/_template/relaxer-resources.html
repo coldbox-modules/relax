@@ -27,7 +27,7 @@ var httpMethodKeys = [ 'get','put','post','patch','delete','options','head' ];
                 name="resourceTier" 
                 class="form-control input-sm" 
                 type="text" 
-                value="<%= ( !_.isUndefined( api.scheme ) ? api.scheme + '://' : window.location.protocol + "//" ) %><%=api.host%>"
+                value="<%= ( !_.isUndefined( api.scheme ) ? api.scheme + '://' : window.location.protocol + "//" ) %><%=api.host + api.basePath%>"
             />
         <% } %>  
     </div><!-- /.form-group -->
