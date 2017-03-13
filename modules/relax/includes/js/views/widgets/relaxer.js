@@ -7,7 +7,6 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             "click .dynamicAdd": "onAddDynamicItem",
             "click .dynamicRemove": "onRemoveDynamicItem",
             "click .btnSendRequest": "onRelaxerSend",
-            "click .relaxer-resource-info": "onDisplayResourceInfo",
             "click .btnReplayHistoryIndex": "onReplayHistoryIndex",
             "click .btnClearHistory": "clearHistory"
         },
@@ -118,7 +117,6 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             var $btn = $(e.currentTarget);
             var historyIndex = parseInt($btn.closest(".relaxer-history-panel").data("index"));
             var indexData = _this.HistoryModel.attributes.history[historyIndex];
-            console.log(indexData.request);
             $('[name="httpResource"]', _this.$relaxerForm).val(indexData.request.resource);
             $('[name="httpMethod"]', _this.$relaxerForm).val(indexData.request.method);
             $(".httpHeaders", _this.$relaxerForm).find(".dynamicField").remove();
@@ -148,11 +146,6 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             $field.fadeOut(300, function() {
                 $field.remove();
             });
-        },
-        onDisplayResourceInfo: function(e) {
-            var _this = this;
-            var $btn = $(e.currentTarget);
-            var infoPath = $btn.data("path");
         },
         marshallRelaxerRequest: function() {
             var _this = this;

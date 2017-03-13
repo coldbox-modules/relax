@@ -30,6 +30,7 @@ define(
                 "click .btnExportJSON"              : "onExportAPIJSON",
                 "click .btnExportFormat"            : "onExportFormat",
                 "click .btnImportAPI"               : "onShowImportAPI",
+                "click .relaxer-resource-info"      : "onDisplayResourceInfo",
                 "change .relaxerResourceSelector"   : "onRelaxerResourceSelect"
             }
 
@@ -202,6 +203,30 @@ define(
             * Event Methods
             * ----------------------------------------------
             */
+
+
+            /**
+            * Path info tooltip click
+            **/
+            ,onDisplayResourceInfo:function( e ){
+                var _this = this;
+                var $btn = $( e.currentTarget );
+                var infoPath = $btn.data( 'path' );
+
+                var pathTemplate = _.template( $( '#path-template' ).html() );
+
+                var pathData = _this.ViewModel.attributes.paths[ infoPath ];
+
+
+                var $modal = $( "#modal" );
+                var blankModalHTML = '<div class="modal-content" style="left:10px;top: 50px;"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h2></h2></div><div class="modal-body"></div><div class="modal-footer"></div></div>';
+                $modal.html( blankModalHTML );
+                $( '.modal-header h2', $modal ).html( 'Path Documentation for: <code>' + infoPath + '</code>' );
+                $( '.modal-body', $modal ).html( pathTemplate( { "key":infoPath , "path":pathData }  ) );
+                $modal.modal("show");
+                $( 'h3.pathHeader', $modal ).find( 'a[role="button"]' ).click();
+
+            }
 
             /**
             * Fires when an API is selected

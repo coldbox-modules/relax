@@ -32,7 +32,6 @@ define(
                 "click .dynamicAdd"             : "onAddDynamicItem",
                 "click .dynamicRemove"          : "onRemoveDynamicItem",
                 "click .btnSendRequest"         : "onRelaxerSend",
-                "click .relaxer-resource-info"  : "onDisplayResourceInfo",
                 "click .btnReplayHistoryIndex"  : "onReplayHistoryIndex",
                 "click .btnClearHistory"        : "clearHistory"
             }
@@ -106,8 +105,6 @@ define(
                 var $container = $( ".relaxer-results", _this.$el );
 
                 var responseEcho = JSON.parse( jqXHR.responseText );
-                
-                //console.debug( responseEcho );
 
                 if( typeof( responseEcho.status_code ) === 'undefined' ){
 
@@ -210,14 +207,12 @@ define(
             }
 
             ,onReplayHistoryIndex: function( e ){
-                
+
                 var _this = this;
                 var $btn = $( e.currentTarget );
                 var historyIndex = parseInt( $btn.closest( '.relaxer-history-panel' ).data( 'index' ) );
 
                 var indexData = _this.HistoryModel.attributes.history[ historyIndex ];
-
-                console.log( indexData.request );
 
                 $( '[name="httpResource"]', _this.$relaxerForm ).val( indexData.request.resource );
                 $( '[name="httpMethod"]', _this.$relaxerForm ).val( indexData.request.method );
@@ -267,14 +262,6 @@ define(
                 $field.fadeOut( 300, function(){
                     $field.remove();
                 });
-            }
-
-            ,onDisplayResourceInfo:function( e ){
-                var _this = this;
-                var $btn = $( e.currentTarget );
-                var infoPath = $btn.data( 'path' );
-
-
             }
             
             /**
