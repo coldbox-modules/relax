@@ -9,11 +9,16 @@ var app = function() {
         menu();
     };
 
+    /**
+    * Manually instatiates bootstrap tooltips
+    **/
     var tooltips = function() {
         $('#toggle-left').tooltip();
     };
 
-
+    /**
+    * Global method to close the left navigation
+    **/
     var toggleMenuLeft = function() {
         $('#toggle-left').bind('click', function(e) {
            $('body').removeClass('off-canvas-open')    
@@ -22,12 +27,18 @@ var app = function() {
         });
     };
 
+    /**
+    * Global method to open the left navigation
+    **/
     var toggleMenuRight = function() {
          $('#toggle-right').click(function(){
              $('.off-canvas').toggleClass('off-canvas-open');
          });
     };
 
+    /**
+    * Global UI menu switch method
+    **/
     var switcheryToggle = function() {
         var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
         elems.forEach(function(html) {
@@ -35,6 +46,9 @@ var app = function() {
         });
     };
 
+    /**
+    * Left nav navgogo instantiation
+    **/
     var menu = function() {
         var subMenu = $('.sidebar .nav');
         $(subMenu).navgoco({

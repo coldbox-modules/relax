@@ -206,6 +206,9 @@ define(
                 $.ajax( relaxerOptions ); 
             }
 
+            /**
+            * Action to replay a history item from the saved index
+            **/
             ,onReplayHistoryIndex: function( e ){
 
                 var _this = this;
@@ -322,7 +325,10 @@ define(
                     "fieldType":fieldType
                 } ) );
             }
-
+            
+            /**
+            * Renders a history item
+            **/
             ,renderHistory: function(){
                 var _this = this;
                 var historyTemplate = _.template( $( "#relaxer-history-template" ).html() );

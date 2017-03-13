@@ -4,7 +4,8 @@
 * ---
 * Translator for RelaxDSL APIs in to OpenAPI Format
 *  
-* @deprecate v3.0.0
+* @deprecated v3.0.0
+* @eol			v4.0.0
 */
 component name="RelaxDSLTranslator" accessors="true"{
 	property name="wirebox" inject="wirebox";

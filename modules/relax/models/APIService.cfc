@@ -123,7 +123,8 @@ component accessors="true" {
 		if( !isNull( dataCFC ) && isLegacyAPI( dataCFC ) ){
 			/**
 			* Legacy RelaxDSL API Checks
-			* @deprecate v3.0.0
+			* @deprecated 	v3.0.0
+			* @eol			v4.0.0
 			**/
 			loadDSLAPI( dataCFC );
 			// Store the definitions

@@ -5,7 +5,8 @@
 * Relax offers you a nice programmatic DSL to define RESTFul web services.  All functions defined in this DSL can be concatenated with each other to 
 * create expressive and human readable representations of your API Definitions.
 * 
-* @deprecate v3.0.0
+* @deprecated 	v3.0.0
+* @eol			v4.0.0
 */
 component accessors="true"{
 
