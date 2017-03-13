@@ -6,7 +6,7 @@
 *  
 * @deprecate v3.0.0
 */
-component name="RelaxDSLTranslator" accessors="true" singleton{
+component name="RelaxDSLTranslator" accessors="true"{
 	property name="wirebox" inject="wirebox";
 	property name="moduleConfig" inject="coldbox:setting:relax";
 	property name="SwaggerUtil" inject="OpenAPIUtil@SwaggerSDK";
