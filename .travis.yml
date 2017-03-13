@@ -15,6 +15,10 @@ env:
     - ENGINE=adobe@11
     - ENGINE=adobe@2016
 
+cache:
+  directories:
+  - $HOME/.CommandBox
+
 branches:
   only:
   - development
