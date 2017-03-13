@@ -10,6 +10,7 @@
 		<div class="relaxer">
 			<div class="relaxer-form"></div>
 			<div class="relaxer-results"></div>
+			<div class="relaxer-history"></div>
 		</div>
 
 		<!--- Loader --->

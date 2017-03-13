@@ -13,8 +13,6 @@
 
 	    <div class="panel panel-default relaxer-resources"></div>
 
-	    <div class="panel panel-default relaxer-history"></div>
-
 </div> <!--- end sidebar --->
 
 

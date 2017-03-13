@@ -104,16 +104,17 @@ var paramTemplate = _.template( $( "#parameter-template" ).html() );
 
                     <h3>Service Entry Points</h3>
                     <ul class="list-unstyled">
-                        <li>
-                            <em>Default:</em> 
-                            <a href="<%= ( !_.isUndefined( api.scheme ) ? api.scheme + '://' : window.location.protocol + "//" ) %><%=api.host%>">
-                                <%= ( !_.isUndefined( api.scheme ) ? api.scheme + '://' : window.location.protocol + "//" ) %><%=api.host%>
-                            </a>
-                        </li>
                         <% if( !_.isUndefined( api[ "x-entryPoint" ] ) ) { %>
                             <% _.each( _.keys( api[ "x-entryPoint" ] ),function( tierName ){ %>
-                                <li><em><%=tierName.toProperCase()%>:</em> <a href="<%=api[ "x-entryPoint" ][ tierName ]%>"><%=api[ "x-entryPoint" ][ tierName ]%></a></li>
+                                <li><em><%=tierName.toProperCase()%>:</em> <a href="<%=api[ "x-entryPoint" ][ tierName ] + api[ "basePath" ] %>"><%=api[ "x-entryPoint" ][ tierName ]  + api[ "basePath" ] %></a></li>
                             <% }); %>
+                        <% } else { %>
+                            <li>
+                                <em>Default:</em> 
+                                <a href="<%= ( !_.isUndefined( api.scheme ) ? api.scheme + '://' : window.location.protocol + "//" ) %><%=api.host%><%= api[ "basePath" ] %>">
+                                    <%= ( !_.isUndefined( api.scheme ) ? api.scheme + '://' : window.location.protocol + "//" ) %><%=api.host %><%= api[ "basePath" ] %>
+                                </a>
+                            </li>
                         <% } %>
                         
                     </ul>

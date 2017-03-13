@@ -32,7 +32,9 @@ define(
                 "click .dynamicAdd"             : "onAddDynamicItem",
                 "click .dynamicRemove"          : "onRemoveDynamicItem",
                 "click .btnSendRequest"         : "onRelaxerSend",
-                "click .relaxer-resource-info"  : "onDisplayResourceInfo"
+                "click .relaxer-resource-info"  : "onDisplayResourceInfo",
+                "click .btnReplayHistoryIndex"  : "onReplayHistoryIndex",
+                "click .btnClearHistory"        : "clearHistory"
             }
             /**
             * ----------------------------------------------
@@ -105,7 +107,7 @@ define(
 
                 var responseEcho = JSON.parse( jqXHR.responseText );
                 
-                console.debug( responseEcho );
+                //console.debug( responseEcho );
 
                 if( typeof( responseEcho.status_code ) === 'undefined' ){
 
@@ -198,11 +200,53 @@ define(
                              "request":relaxerRequest,
                              "response":jqXHR
                          } );
+
+                        _this.renderHistory();
                     }
                 };
                 relaxerOptions.error = relaxerOptions.success;
 
                 $.ajax( relaxerOptions ); 
+            }
+
+            ,onReplayHistoryIndex: function( e ){
+                
+                var _this = this;
+                var $btn = $( e.currentTarget );
+                var historyIndex = parseInt( $btn.closest( '.relaxer-history-panel' ).data( 'index' ) );
+
+                var indexData = _this.HistoryModel.attributes.history[ historyIndex ];
+
+                console.log( indexData.request );
+
+                $( '[name="httpResource"]', _this.$relaxerForm ).val( indexData.request.resource );
+                $( '[name="httpMethod"]', _this.$relaxerForm ).val( indexData.request.method );
+
+                //Clear any previous form data
+                $( '.httpHeaders', _this.$relaxerForm ).find( '.dynamicField' ).remove();
+                $( '.requestParams', _this.$relaxerForm ).find( '.dynamicField' ).remove();
+                $( '[name="httpProxy"]', _this.$relaxerForm ).val( '' );
+                $( '[name="username"]', _this.$relaxerForm ).val( '' );
+                $( '[name="password"]', _this.$relaxerForm ).val( '' );
+
+                _.each( indexData.request.headers, function( headerValue, headerName, headers ){
+
+                    $( '.httpHeaders .btn.dynamicAdd', _this.$relaxerForm ).click();
+                    var $dynamicField = $( '.httpHeaders .dynamicField', _this.$relaxerForm  ).last();
+                    $( '[name="headerName"]', $dynamicField ).val( headerName );
+                    $( '[name="headerValue"]', $dynamicField ).val( headerValue );
+
+                } );
+
+                _.each( indexData.request.data, function( paramValue, paramName, params ){
+
+                    $( '.httpParameters .btn.dynamicAdd', _this.$relaxerForm ).click();
+                    var $dynamicField = $( '.httpParameters .dynamicField', _this.$relaxerForm  ).last();
+                    $( '[name="parameterName"]', $dynamicField ).val( paramName );
+                    $( '[name="parameterValue"]', $dynamicField ).val( paramValue );
+                    
+                } );
+
             }
 
             /**
@@ -289,34 +333,37 @@ define(
             }
 
             ,renderHistory: function(){
-                $("#historyLoader").fadeIn();
-                $("#requestHistoryContainer").css("opacity",".5");
+                var _this = this;
+                var historyTemplate = _.template( $( "#relaxer-history-template" ).html() );
+                var $historyContainer = $( '.relaxer-history', _this.el );
+                
+                $historyContainer.empty();
+                
+                if( _this.HistoryModel.attributes.history.length > 0 ){
+                    $historyContainer.html( 
+                        historyTemplate( {
+                           "history"            : _this.HistoryModel.attributes.history,
+                           "responseTemplate"   : _.template( $( "#relaxer-response-template" ).html() )
+                        } )
+                    );
+                    _this.renderContainerUI( $historyContainer );
+                }
             }
 
             /**
             * Clears the relaxer history
             **/
-            ,clearHistory: function(){
-                //activate spinners
-                $("#historyLoader").fadeIn();
-                $("#requestHistoryContainer").css("opacity",".5");
-                // clean history
-                $.post( '#event.buildLink( prc.xehPurgeHistory )#',{},
-                       function(response){
-                        // deactivate spinner
-                        $("#historyLoader").fadeOut();
-                        $("#requestHistoryContainer").css("opacity","1");
-                        // setup message
-                        $("#requestHistoryMessages").html(response.messages)
-                            .slideDown().delay(1500).slideUp();
-                        // Check if we can remove it
-                        if(!response.error){
-                            $('#requestHistory')
-                                .empty()
-                                .append('<option value="null">No History</option>');
-                        }
-                       },
-                       "json");
+            ,clearHistory: function( e ){
+                var _this = this;
+                var $btn = $( e.currentTarget );
+
+                var $historyContainer = $( '.relaxer-history', _this.el );
+
+                $historyContainer.fadeOut( 600, function(){
+                    _this.HistoryModel.attributes.history = [];
+                    _this.renderHistory();
+                    $historyContainer.show();
+                });
             }
 
             /**

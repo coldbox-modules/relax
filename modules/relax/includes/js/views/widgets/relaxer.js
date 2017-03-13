@@ -1,4 +1,4 @@
-/*! Copyright 2017 - Ortus Solutions (Compiled: 04-03-2017) */
+/*! Copyright 2017 - Ortus Solutions (Compiled: 13-03-2017) */
 define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel) {
     "use strict";
     var Relaxer = Backbone.View.extend({
@@ -7,7 +7,9 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             "click .dynamicAdd": "onAddDynamicItem",
             "click .dynamicRemove": "onRemoveDynamicItem",
             "click .btnSendRequest": "onRelaxerSend",
-            "click .relaxer-resource-info": "onDisplayResourceInfo"
+            "click .relaxer-resource-info": "onDisplayResourceInfo",
+            "click .btnReplayHistoryIndex": "onReplayHistoryIndex",
+            "click .btnClearHistory": "clearHistory"
         },
         initialize: function(options) {
             var _this = this;
@@ -44,7 +46,6 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             var _this = this;
             var $container = $(".relaxer-results", _this.$el);
             var responseEcho = JSON.parse(jqXHR.responseText);
-            console.debug(responseEcho);
             if (typeof responseEcho.status_code === "undefined") {
                 var errorMessage = responseEcho.errordetail ? responseEcho.errordetail : responseEcho.error;
                 $container.html('<div class="clearfix"></div>');
@@ -106,10 +107,37 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
                         request: relaxerRequest,
                         response: jqXHR
                     });
+                    _this.renderHistory();
                 }
             };
             relaxerOptions.error = relaxerOptions.success;
             $.ajax(relaxerOptions);
+        },
+        onReplayHistoryIndex: function(e) {
+            var _this = this;
+            var $btn = $(e.currentTarget);
+            var historyIndex = parseInt($btn.closest(".relaxer-history-panel").data("index"));
+            var indexData = _this.HistoryModel.attributes.history[historyIndex];
+            console.log(indexData.request);
+            $('[name="httpResource"]', _this.$relaxerForm).val(indexData.request.resource);
+            $('[name="httpMethod"]', _this.$relaxerForm).val(indexData.request.method);
+            $(".httpHeaders", _this.$relaxerForm).find(".dynamicField").remove();
+            $(".requestParams", _this.$relaxerForm).find(".dynamicField").remove();
+            $('[name="httpProxy"]', _this.$relaxerForm).val("");
+            $('[name="username"]', _this.$relaxerForm).val("");
+            $('[name="password"]', _this.$relaxerForm).val("");
+            _.each(indexData.request.headers, function(headerValue, headerName, headers) {
+                $(".httpHeaders .btn.dynamicAdd", _this.$relaxerForm).click();
+                var $dynamicField = $(".httpHeaders .dynamicField", _this.$relaxerForm).last();
+                $('[name="headerName"]', $dynamicField).val(headerName);
+                $('[name="headerValue"]', $dynamicField).val(headerValue);
+            });
+            _.each(indexData.request.data, function(paramValue, paramName, params) {
+                $(".httpParameters .btn.dynamicAdd", _this.$relaxerForm).click();
+                var $dynamicField = $(".httpParameters .dynamicField", _this.$relaxerForm).last();
+                $('[name="parameterName"]', $dynamicField).val(paramName);
+                $('[name="parameterValue"]', $dynamicField).val(paramValue);
+            });
         },
         onAddDynamicItem: function(e) {
             return this.addDynamicItem($(e.currentTarget));
@@ -165,20 +193,27 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             }));
         },
         renderHistory: function() {
-            $("#historyLoader").fadeIn();
-            $("#requestHistoryContainer").css("opacity", ".5");
+            var _this = this;
+            var historyTemplate = _.template($("#relaxer-history-template").html());
+            var $historyContainer = $(".relaxer-history", _this.el);
+            $historyContainer.empty();
+            if (_this.HistoryModel.attributes.history.length > 0) {
+                $historyContainer.html(historyTemplate({
+                    history: _this.HistoryModel.attributes.history,
+                    responseTemplate: _.template($("#relaxer-response-template").html())
+                }));
+                _this.renderContainerUI($historyContainer);
+            }
         },
-        clearHistory: function() {
-            $("#historyLoader").fadeIn();
-            $("#requestHistoryContainer").css("opacity", ".5");
-            $.post("#event.buildLink( prc.xehPurgeHistory )#", {}, function(response) {
-                $("#historyLoader").fadeOut();
-                $("#requestHistoryContainer").css("opacity", "1");
-                $("#requestHistoryMessages").html(response.messages).slideDown().delay(1500).slideUp();
-                if (!response.error) {
-                    $("#requestHistory").empty().append('<option value="null">No History</option>');
-                }
-            }, "json");
+        clearHistory: function(e) {
+            var _this = this;
+            var $btn = $(e.currentTarget);
+            var $historyContainer = $(".relaxer-history", _this.el);
+            $historyContainer.fadeOut(600, function() {
+                _this.HistoryModel.attributes.history = [];
+                _this.renderHistory();
+                $historyContainer.show();
+            });
         },
         renderContainerUI: function($container) {
             var _this = this;

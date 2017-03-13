@@ -30,7 +30,7 @@ define(
                 "click .btnExportJSON"              : "onExportAPIJSON",
                 "click .btnExportFormat"            : "onExportFormat",
                 "click .btnImportAPI"               : "onShowImportAPI",
-                "change .relaxerResourceSelector":"onRelaxerResourceSelect"
+                "change .relaxerResourceSelector"   : "onRelaxerResourceSelect"
             }
 
             /**
@@ -175,7 +175,6 @@ define(
                 $historyContainer.empty().html( historyTemplate( {
                     "history":_this.HistoryModel.attributes.history
                 } ) );
-
             }
             
             /**
@@ -402,19 +401,28 @@ define(
                 var $resourceSelector = $( e.currentTarget );
                 var resource = $resourceSelector.val().split( ";" );
                 var methodName = resource[ 0 ];
-                var pathName = resource[ 1 ];
-                var apiPath = _this.ViewModel.attributes.paths[ pathName ];
-                var apiMethod = apiPath[ methodName ];
-                var tierEntry = $( '[name="resourceTier"]' ).val();
-                //populate our URL and set the method
-                $( '[name="httpResource"]' ).val( tierEntry + pathName );
-                var $methodSelect = $( '[name="httpMethod"]' );
-                $( 'option', $methodSelect ).each( function(){
-                    var $option = $( this );
-                    if( methodName.toUpperCase() === $option.val() ) $option.prop( 'selected', true );
-                });
+                
+                if( methodName === 'null' ){
+                
+                    $( '[name="httpResource"]' ).val( '' );    
+                
+                } else {
 
-                //handle any advanced options or headers specified in the path
+                    var pathName = resource[ 1 ];
+                    var apiPath = _this.ViewModel.attributes.paths[ pathName ];
+                    var apiMethod = apiPath[ methodName ];
+                    var tierEntry = $( '[name="resourceTier"]' ).val();
+                    //populate our URL and set the method
+                    $( '[name="httpResource"]' ).val( tierEntry + pathName );
+                    var $methodSelect = $( '[name="httpMethod"]' );
+                    $( 'option', $methodSelect ).each( function(){
+                        var $option = $( this );
+                        if( methodName.toUpperCase() === $option.val() ) $option.prop( 'selected', true );
+                    });
+
+                    //handle any advanced options or headers specified in the path
+
+                }
 
             }
 

@@ -15,7 +15,6 @@ component{
 			// Service Description
 			description = "A very cool RESTFul Service",
 			// Service entry point, can be a single string or name value pairs to denote tiers
-			//entryPoint = "http://www.myapi.com",
 			entryPoint = {
 				dev  = "http://dev.myapi.com",
 				production = "http://www.myapi.com"
