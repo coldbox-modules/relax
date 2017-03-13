@@ -1,12 +1,16 @@
 CHANGELOG
 =========
 
-## 2.3.2
+## 3.0.0
+* Standardizes OpenAPI specification
+* Relax DSL marked as deprecated ( EOL @ 4.0.0 )
 * ACF Compatibility updates
 * PDF/HTML Export strategy updates
+* UI Bug fixes and enhancements
+* Relaxer Test Tool UI and history replay improvements
+* ACF Compatibility updates
 * Performance enhancements for OpenAPI doc parsing
 * Improvements to `$ref` parsing and recursion
-* Deprecated DSL docs in favor of Swagger Open API Spec
 * Relaxer service not sending form data correctly
 * Refactoring of Relaxer to support typed API on calls to HTTP
 * Relaxer not sending http proxy ports
