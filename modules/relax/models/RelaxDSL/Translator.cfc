@@ -128,7 +128,11 @@ component name="RelaxDSLTranslator" accessors="true"{
 			translation[ "host" ] = REReplaceNoCase( entryPointArray[ 1 ], "http://|https://", "", "ALL" );
 			arrayDeleteAt( entryPointArray, 1 );
 			translation[ "basePath" ] = "/";
-			if( arrayLen( entryPointArray ) ) translation[ "basePath" ] = translation[ "basePath" ] & arrayToList( entryPointArray, "/" );
+			if( arrayLen( entryPointArray ) ){
+				translation[ "basePath" ] = translation[ "basePath" ] & arrayToList( entryPointArray, "/" );
+				relax.entryPoint[ key ] = replaceNoCase( relax.entryPoint[ key ],  translation["basePath"], "" );				
+
+			}
 		}
 	}
 
