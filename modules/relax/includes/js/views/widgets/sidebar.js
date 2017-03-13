@@ -1,4 +1,4 @@
-/*! Copyright 2017 - Ortus Solutions (Compiled: 04-03-2017) */
+/*! Copyright 2017 - Ortus Solutions (Compiled: 13-03-2017) */
 define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Backbone, APIModel, HistoryModel) {
     "use strict";
     var View = Backbone.View.extend({
@@ -230,16 +230,20 @@ define([ "Backbone", "models/RelaxAPI", "models/RelaxerHistory" ], function(Back
             var $resourceSelector = $(e.currentTarget);
             var resource = $resourceSelector.val().split(";");
             var methodName = resource[0];
-            var pathName = resource[1];
-            var apiPath = _this.ViewModel.attributes.paths[pathName];
-            var apiMethod = apiPath[methodName];
-            var tierEntry = $('[name="resourceTier"]').val();
-            $('[name="httpResource"]').val(tierEntry + pathName);
-            var $methodSelect = $('[name="httpMethod"]');
-            $("option", $methodSelect).each(function() {
-                var $option = $(this);
-                if (methodName.toUpperCase() === $option.val()) $option.prop("selected", true);
-            });
+            if (methodName === "null") {
+                $('[name="httpResource"]').val("");
+            } else {
+                var pathName = resource[1];
+                var apiPath = _this.ViewModel.attributes.paths[pathName];
+                var apiMethod = apiPath[methodName];
+                var tierEntry = $('[name="resourceTier"]').val();
+                $('[name="httpResource"]').val(tierEntry + pathName);
+                var $methodSelect = $('[name="httpMethod"]');
+                $("option", $methodSelect).each(function() {
+                    var $option = $(this);
+                    if (methodName.toUpperCase() === $option.val()) $option.prop("selected", true);
+                });
+            }
         },
         exportWrapper: function(exportContent) {
             return '<textarea id="exportContent" class="form-control" rows="20">' + exportContent + "</textarea>";
