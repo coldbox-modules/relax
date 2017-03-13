@@ -9,8 +9,8 @@
 		<h2>Relaxer API Test Tool</h2>
 		<div class="relaxer">
 			<div class="relaxer-form"></div>
-			<div class="relaxer-results"></div>
-			<div class="relaxer-history"></div>
+			<div class="relaxer-results col-xs-12"></div>
+			<div class="relaxer-history col-xs-12"></div>
 		</div>
 
 		<!--- Loader --->

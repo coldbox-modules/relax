@@ -117,6 +117,7 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             var $btn = $(e.currentTarget);
             var historyIndex = parseInt($btn.closest(".relaxer-history-panel").data("index"));
             var indexData = _this.HistoryModel.attributes.history[historyIndex];
+            $(".relaxer-results", _this.el).empty();
             $('[name="httpResource"]', _this.$relaxerForm).val(indexData.request.resource);
             $('[name="httpMethod"]', _this.$relaxerForm).val(indexData.request.method);
             $(".httpHeaders", _this.$relaxerForm).find(".dynamicField").remove();
@@ -136,6 +137,7 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
                 $('[name="parameterName"]', $dynamicField).val(paramName);
                 $('[name="parameterValue"]', $dynamicField).val(paramValue);
             });
+            $('[name="httpResource"]', _this.$relaxerForm).focus();
         },
         onAddDynamicItem: function(e) {
             return this.addDynamicItem($(e.currentTarget));

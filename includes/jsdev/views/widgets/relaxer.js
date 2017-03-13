@@ -194,8 +194,8 @@ define(
                         $btn.html( btnDefaultHTML );
                         _this.renderRelaxerResponse( jqXHR, textStatus );
                         _this.HistoryModel.attributes.history.push( {
-                             "request":relaxerRequest,
-                             "response":jqXHR
+                             "request"  : relaxerRequest,
+                             "response" : jqXHR
                          } );
 
                         _this.renderHistory();
@@ -213,6 +213,8 @@ define(
                 var historyIndex = parseInt( $btn.closest( '.relaxer-history-panel' ).data( 'index' ) );
 
                 var indexData = _this.HistoryModel.attributes.history[ historyIndex ];
+
+                $( '.relaxer-results', _this.el ).empty();
 
                 $( '[name="httpResource"]', _this.$relaxerForm ).val( indexData.request.resource );
                 $( '[name="httpMethod"]', _this.$relaxerForm ).val( indexData.request.method );
@@ -241,6 +243,8 @@ define(
                     $( '[name="parameterValue"]', $dynamicField ).val( paramValue );
                     
                 } );
+
+                $( '[name="httpResource"]', _this.$relaxerForm ).focus();
 
             }
 
