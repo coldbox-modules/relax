@@ -17,7 +17,7 @@ component{
 			// Service entry point, can be a single string or name value pairs to denote tiers
 			//entryPoint = "http://www.myapi.com",
 			entryPoint = {
-				"production" 	: "http://forgebox.io/api/v1",
+				"production" 	: "https://forgebox.io/api/v1",
 				"staging" 		: "http://forgebox.stg.ortussolutions.com/api/v1",
 				"development" 	: "http://localhost:9095/api/v1"
 			},
