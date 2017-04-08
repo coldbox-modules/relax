@@ -1,4 +1,4 @@
-/*! Copyright 2017 - Ortus Solutions (Compiled: 13-03-2017) */
+/*! Copyright 2017 - Ortus Solutions (Compiled: 08-04-2017) */
 define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel) {
     "use strict";
     var Relaxer = Backbone.View.extend({
@@ -29,7 +29,11 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
         },
         setupDefaults: function() {
             var _this = this;
+            var storedHistory = localStorage.getItem("RelaxerStoredHistory");
             _this.HistoryModel = new HistoryModel();
+            if (storedHistory) {
+                _this.HistoryModel.set(JSON.parse(storedHistory));
+            }
             _this.relaxerFormTemplate = _.template($("#relaxer-form-template").html());
             _this.relaxerResponseTemplate = _.template($("#relaxer-response-template").html());
             return this;
@@ -39,6 +43,7 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             var relaxerFormData = _this.getRelaxerFormData();
             $(".relaxer-form", _this.el).html(_this.relaxerFormTemplate(relaxerFormData));
             _this.onRelaxerRendered();
+            _this.renderHistory();
             return _this.this;
         },
         renderRelaxerResponse: function(jqXHR, textStatus) {
@@ -106,6 +111,7 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
                         request: relaxerRequest,
                         response: jqXHR
                     });
+                    localStorage.setItem("RelaxerStoredHistory", JSON.stringify(_this.HistoryModel.attributes));
                     _this.renderHistory();
                 }
             };
@@ -206,6 +212,7 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             var $historyContainer = $(".relaxer-history", _this.el);
             $historyContainer.fadeOut(600, function() {
                 _this.HistoryModel.attributes.history = [];
+                localStorage.removeItem("RelaxerStoredHistory");
                 _this.renderHistory();
                 $historyContainer.show();
             });

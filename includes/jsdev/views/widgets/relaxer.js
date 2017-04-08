@@ -75,7 +75,18 @@ define(
             */
             ,setupDefaults:function(){
                 var _this = this;
+
+
+                var storedHistory = localStorage.getItem( 'RelaxerStoredHistory' );
+
                 _this.HistoryModel = new HistoryModel();
+
+                if( storedHistory ){
+
+                    _this.HistoryModel.set( JSON.parse( storedHistory ) );
+
+                }
+
                 _this.relaxerFormTemplate = _.template( $( "#relaxer-form-template" ).html() );
                 _this.relaxerResponseTemplate = _.template( $( "#relaxer-response-template" ).html() );
 
@@ -92,6 +103,7 @@ define(
                 var relaxerFormData = _this.getRelaxerFormData();
                 $( ".relaxer-form", _this.el ).html( _this.relaxerFormTemplate( relaxerFormData ) );
                 _this.onRelaxerRendered();
+                _this.renderHistory();
                 return _this.this;
             }
 
@@ -193,10 +205,13 @@ define(
                     complete: function( jqXHR, textStatus ){
                         $btn.html( btnDefaultHTML );
                         _this.renderRelaxerResponse( jqXHR, textStatus );
+
                         _this.HistoryModel.attributes.history.push( {
                              "request"  : relaxerRequest,
                              "response" : jqXHR
                          } );
+
+                        localStorage.setItem( 'RelaxerStoredHistory', JSON.stringify( _this.HistoryModel.attributes ) );
 
                         _this.renderHistory();
                     }
@@ -357,9 +372,15 @@ define(
                 var $historyContainer = $( '.relaxer-history', _this.el );
 
                 $historyContainer.fadeOut( 600, function(){
+
                     _this.HistoryModel.attributes.history = [];
+
+                    localStorage.removeItem( 'RelaxerStoredHistory' );
+                    
                     _this.renderHistory();
+                    
                     $historyContainer.show();
+
                 });
             }
 
