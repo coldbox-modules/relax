@@ -1,6 +1,8 @@
 /**
 *  This is our lighter-weight theme file for PDF and HTML exports
 **/
+// Export variable overrides
+$font-size-base: 18px;
 
 //global variables
 @import "variables";
@@ -13,10 +15,7 @@
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/tables";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/labels";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/badges";
 
 /*
@@ -38,7 +37,13 @@
 @import "theme/_panels.scss";  
 @import "theme/_tiles.scss";
 
+@page {
+  size: 8.5in 11in;/* width height */
+  margin: 0mm;
+}
+
 body.export{
+
 	padding: 20px; 
 
 	pre{
@@ -48,4 +53,23 @@ body.export{
 		max-width: 100%;
 		overflow-x: scroll;
 	}
+
+	code{
+		overflow:hidden;
+	}
+
+	margin: 13mm 5mm 13mm 5mm;
+
+	thead {display: table-header-group;}
+  	table {
+        -fs-table-paginate: paginate;
+        tr{
+        		page-break-inside: avoid!important;
+        		-webkit-region-break-inside: avoid; 
+        	th,td{
+        		page-break-inside: avoid!important;
+        		-webkit-region-break-inside: avoid; 	
+        	}
+        }
+    }
 }
