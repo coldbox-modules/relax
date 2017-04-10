@@ -39,7 +39,17 @@
 
             	#renderView( view='apidoc/cfTemplate/x-attributes', args={"entity":args.method,"headerNode":"h4"} )#
 				
-            	<cfif !structIsEmpty( args.method[ "responses" ] )>
+            	<cfif 
+            		!structIsEmpty( args.method[ "responses" ] )
+            		and
+            		arrayLen( structKeyArray( args.method[ "responses" ] ) ) GT 1
+            		and
+            		(
+            			!structKeyExists( prc, "pdf" )
+            			or
+            			!prc.pdf
+            		)
+            	>
 	            	<h4 class="panel-subtitle text-primary">Responses:</h4>
 	            	<cfloop array="#structKeyArray( args.method[ "responses" ] )#" index="responseKey">
 		            	<cfif isNumeric( responseKey ) or responseKey eq 'default'>
@@ -60,6 +70,8 @@
 				<!--- Hide Schema Examples in PDF --->
             	<cfif 
             		structKeyExists( args.method, "x-request-samples" )
+            		and
+            		arrayLen( structKeyArray( args.method[ "x-request-samples" ] ) ) GT 1
             		and
             		(
             			!structKeyExists( prc, "pdf" )

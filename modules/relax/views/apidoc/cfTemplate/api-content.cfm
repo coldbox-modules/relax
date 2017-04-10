@@ -90,31 +90,33 @@
             <!--- Paths --->
             <h3>Service Available Paths</h3>
 
-           <p>
+           <ul>
 
             <cfloop collection="#api[ "paths" ]#" item="key">
-                <a class="btn btn-xs btn-primary path-nav" href="###api[ "paths" ][ key ][ "x-resourceId" ]#">
-                    #key#
-                </a>
+                <li><code><a class="path-nav" href="###api[ "paths" ][ key ][ "x-resourceId" ]#">#key#</a></code></li>
             </cfloop>
             
-            </p>
+            </ul>
 
             <h3>MIME Types Consumed</h3>
             
-            <p>
+            <ul>
                 <cfloop array="#api[ "consumes" ]#" index="type">
-                    <span class="label label-primary consumes-nav" data-mimetype="type">#type#</span>
+                    <li>
+                        <code><span class="consumes-nav" data-mimetype="type">#type#</span></code>
+                    </li>
                 </cfloop>
-            </p>
+            </ul>
 
             <!--- API Return Formats --->
             <h3>MIME Types Returned</h3>
-            <p>
+            <ul>
                 <cfloop array="#api[ "produces" ]#" index="type">
-                    <span class="label label-primary consumes-nav" data-mimetype="type">#type#</span>
+                    <li>
+                        <code><span class="consumes-nav" data-mimetype="type">#type#</span></code>
+                    </li>
                 </cfloop>
-            </p>
+            </ul>
 
             <cfif structKeyExists( api, "x-extensionDetection" )>
                 <h3>Extension Detection:  <code>#api[ "x-extensionDetection" ]#</code></h3>
@@ -129,15 +131,15 @@
                 <h3>Security Definitions</h3>
                 <table class="definition-list table table-striped">
                     <tr class="text-muted">
-                        <th class="definition-column key">
+                        <th class="definition-column key" style="text-align:left">
                             Name
                         </th>
 
-                        <th class="definition column type">
+                        <th class="definition column type" style="text-align:left">
                             Type
                         </th>
 
-                        <th class="definition column description">
+                        <th class="definition column description" style="text-align:left">
                             Description
                         </th>
                     </tr>

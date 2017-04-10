@@ -1,22 +1,35 @@
 /**
 *  This is our lighter-weight theme file for PDF and HTML exports
 **/
-// Export variable overrides
-$font-size-base: 18px;
 
 //global variables
 @import "variables";
 // Variables, Mixins
-@import "theme/_variables.scss";
+@import "theme/_variables.scss";   
 @import "theme/_mixins.scss";
 
+// Greyscale for exports
+$brand-primary:         #333;
+$primaryColor:			$brand-primary;
+$brand-success:         #666666;
+$successColor:			$brand-success;
+$brand-info:            #696969;
+$infoColor:				$brand-info;
+$brand-warning:         #999999;
+$warningColor:			$brand-warning;
+$brand-default:			#cccccc;
+$defaultColor:			$brand-default;
+$brand-danger:          #d9534f;
+$dangerColor:			$brand-danger;
 
 //Select Bootstrap Libraries
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/badges";
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/panels";
 
 /*
  *
@@ -30,8 +43,7 @@ $font-size-base: 18px;
 @import "theme/_backgrounds.scss";  
 @import "theme/_buttons.scss";
 @import "theme/_forms.scss"; 
-@import "theme/_main-content.scss";        
-@import "theme/_colors.scss";
+@import "theme/_main-content.scss";  
 @import "theme/_icons.scss"; 
 @import "theme/_pages.scss";
 @import "theme/_panels.scss";  
