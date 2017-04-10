@@ -52,10 +52,19 @@ body.export{
 		background-color: #efefef;
 		max-width: 100%;
 		overflow-x: scroll;
+		white-space: pre-wrap;       /* css-3 */
+		white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+		white-space: -pre-wrap;      /* Opera 4-6 */
+		white-space: -o-pre-wrap;    /* Opera 7 */
+		word-wrap: break-word; 
 	}
 
 	code{
-		overflow:hidden;
+		white-space: pre-wrap;       /* css-3 */
+		white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+		white-space: -pre-wrap;      /* Opera 4-6 */
+		white-space: -o-pre-wrap;    /* Opera 7 */
+		word-wrap: break-word; 
 	}
 
 	margin: 13mm 5mm 13mm 5mm;

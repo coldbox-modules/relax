@@ -57,7 +57,16 @@
 					
             	</cfif>
 
-            	<cfif structKeyExists( args.method, "x-request-samples" )>
+				<!--- Hide Schema Examples in PDF --->
+            	<cfif 
+            		structKeyExists( args.method, "x-request-samples" )
+            		and
+            		(
+            			!structKeyExists( prc, "pdf" )
+            			or
+            			!prc.pdf
+            		)
+            	>
             		<cfscript>
 	            		tabIds = {};
 	            		tabActivated = false;

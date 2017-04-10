@@ -224,7 +224,7 @@
         <h2>API Path Reference:</h2>
 
         <cfloop array="#structKeyArray( api[ "paths" ] )#" index="pathKey">
-            <!-- ACF Compatibility Fix for a null pointer exception -->
+            <!--- ACF Compatibility Fix for a null pointer exception --->
             <cfscript>
                 writeOutput( renderView( 
                     view    = 'apidoc/cfTemplate/api-path', 

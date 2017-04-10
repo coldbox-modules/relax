@@ -17,8 +17,18 @@
 
 				</cfif>
 			</div>
-
-			<cfif structKeyExists( args.response, "schema" ) or structKeyExists( args.response, "examples" )>
+			<!--- Hide Schema Examples in PDF --->
+			<cfif 
+				( 
+					structKeyExists( args.response, "schema" ) 
+					or structKeyExists( args.response, "examples" ) 
+				)
+				and
+				( !structKeyExists( prc, "pdf" )
+            		or
+            	  !prc.pdf
+            	)
+			>
 				<cfset tabIds = {} >
 				<div class="col-xs-12 schema-container">
 					<h4 class="panel-subtitle text-primary">Schema and Examples:</h4>
