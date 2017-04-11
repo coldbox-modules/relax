@@ -179,7 +179,7 @@ component{
 			// The number of history items in the session storage ( deprecated )
 			maxHistory		= 10,
 			// Whether to cache the API Service as a singleton, preventing each request from loading
-			cache 			= true
+			cache 			= false
 		};
 
 		// Append it
