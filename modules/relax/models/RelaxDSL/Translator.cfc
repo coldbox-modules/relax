@@ -7,21 +7,33 @@
 * @deprecated v3.0.0
 * @eol			v4.0.0
 */
-component name="RelaxDSLTranslator" accessors="true"{
-	property name="wirebox" inject="wirebox";
-	property name="moduleConfig" inject="coldbox:setting:relax";
-	property name="SwaggerUtil" inject="OpenAPIUtil@SwaggerSDK";
+component 
+	name="RelaxDSLTranslator" 
+	accessors="true"
+	singleton
+{
+	property 
+		name="wirebox" 
+		inject="wirebox";
+	
+	property 
+		name="moduleConfig" 
+		inject="coldbox:setting:relax";
+	
+	property 
+		name="SwaggerUtil" 
+		inject="OpenAPIUtil@SwaggerSDK";
 
 	public function onDIComplete(){
 		/**
 		* Variable mixins used in translation
 		**/
 		//We need to use Linked Hashmaps to maintain struct order for serialization and deserialization
-		VARIABLES.openAPITemplate = getSwaggerUtil().newTemplate();
+		variables.openAPITemplate = getSwaggerUtil().newTemplate();
 		
 		//Utility arrays for default methods and responses
-		VARIABLES.HTTPMethods = getSwaggerUtil().defaultMethods();
-		VARIABLES.HTTPMethodResponses = getSwaggerUtil().defaultSuccessResponses();
+		variables.HTTPMethods = getSwaggerUtil().defaultMethods();
+		variables.HTTPMethodResponses = getSwaggerUtil().defaultSuccessResponses();
 
 	}
 
@@ -35,7 +47,7 @@ component name="RelaxDSLTranslator" accessors="true"{
 
 		var OpenAPIParser = getWirebox().getInstance( "OpenAPIParser@relax" );
 
-		var translation = duplicate( VARIABLES.openAPITemplate );
+		var translation = duplicate( variables.openAPITemplate );
 
 		translateGlobals( ARGUMENTS.dataCFC, translation );
 
@@ -281,13 +293,13 @@ component name="RelaxDSLTranslator" accessors="true"{
 	private function processPathParameters( required path, resource ){
 		for( var param in resource[ "parameters" ]){
 			var appendTo = [];
-			for( var method in VARIABLES.HTTPMethods ){
+			for( var method in variables.HTTPMethods ){
 				if( findNoCase( " " & method & " " , param.description ) ){
 					arrayAppend( appendTo, method );
 				}
 			}
 			//append to all if we didn't find an HTTP method reference
-			if( !arrayLen( appendTo ) ) appendTo = VARIABLES.HTTPMethods;
+			if( !arrayLen( appendTo ) ) appendTo = variables.HTTPMethods;
 
 			for ( var method in appendTo ){
 				if( structKeyExists( path, lcase( method ) ) ){
@@ -339,9 +351,9 @@ component name="RelaxDSLTranslator" accessors="true"{
 
 
 				for( var methodKey in path ){
-					var methodPosition = arrayFindNoCase( VARIABLES.HTTPMethods, methodKey );
+					var methodPosition = arrayFindNoCase( variables.HTTPMethods, methodKey );
 					if( methodPosition ){
-						var statusCode = VARIABLES.HTTPMethodResponses[ methodPosition ];
+						var statusCode = variables.HTTPMethodResponses[ methodPosition ];
 
 						if( !structKeyExists( path[ methodKey ][ "responses" ], statusCode) ){
 							
@@ -406,9 +418,9 @@ component name="RelaxDSLTranslator" accessors="true"{
 
 
 				for( var methodKey in path ){
-					var methodPosition = arrayFindNoCase( VARIABLES.HTTPMethods, methodKey );
+					var methodPosition = arrayFindNoCase( variables.HTTPMethods, methodKey );
 					if( methodPosition ){
-						var statusCode = VARIABLES.HTTPMethodResponses[ methodPosition ];
+						var statusCode = variables.HTTPMethodResponses[ methodPosition ];
 						
 						if( !structKeyExists( path[ methodKey ], "x-request-samples" ) ){
 							path[ methodKey ].put( "x-request-samples", sampleDefinition );

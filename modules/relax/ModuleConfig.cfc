@@ -69,9 +69,10 @@ component{
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		var configSettings = controller.getConfigSettings();
 		// parse parent settings
 		parseParentSettings();
+
+		var configSettings = controller.getConfigSettings().relax;
 
 		/**	
 		* Utilities
@@ -102,6 +103,14 @@ component{
 		binder.map( "DSLTranslator@relax" )
 			.to( "#moduleMapping#.models.RelaxDSL.Translator" )
 			.mixins( '/SwaggerSDK/models/mixins/hashMap.cfm' );
+
+
+		// If caching is turned on, make our service a singleton ( in development, we would want it to remain a transient )
+		if( configSettings.cache ){
+			binder.map( "APIService@relax" )
+				.to( "#moduleMapping#.models.APIService" )
+				.asSingleton();
+		}
 
 	}
 
@@ -144,10 +153,16 @@ component{
 
 		// Default Config Structure
 		configStruct.relax = {
+			// The mapped location of the API definitions
 			APILocation 	= "#moduleMapping#.models.resources",
+			// The default API to load within the RELAX UI
 			defaultAPI 		= "myapi",
+			// Whether to enable session storage for history and preferences ( deprecated, as UI now uses JS localStorage )
+			sessionsEnabled	= getApplicationMetadata().sessionManagement,
+			// The number of history items in the session storage ( deprecated )
 			maxHistory		= 10,
-			sessionsEnabled	= getApplicationMetadata().sessionManagement
+			// Whether to cache the API Service as a singleton, preventing each request from loading
+			cache 			= false
 		};
 
 		// Append it
