@@ -4,11 +4,19 @@
 * ---
 * The Relaxer service
 */
-component singleton accessors="true"{
+component 
+	accessors="true"
+	singleton 
+{
 
 	// DI
-	property name="log" 		inject="logbox:logger:{this}";
-	property name="DSLService"	inject="DSLService@relax";
+	property 
+		name="log" 		
+		inject="logbox:logger:{this}";
+
+	property 
+		name="DSLService"	
+		inject="APIService@relax";
 
 	/**
 	* Constructor
@@ -57,12 +65,17 @@ component singleton accessors="true"{
 
 		// check if history exists?
 		if( DSLService.getSessionsEnabled() ){
+			
 			if( !structKeyExists( session, "relax-history" ) ){
 				session[ "relax-history" ] = [];
 			}
+			
 			stack = session[ "relax-history" ];
+
 		} else {
+			
 			stack = [];
+		
 		}
 
 		// Check limit on it
@@ -85,103 +98,68 @@ component singleton accessors="true"{
 	}
 	
 	/**
-	* Send a Relaxer Request
-	* @httpMethod 		HTTP Method
-	* @httpResource 	HTTP Resource to hit
-	* @httpFormat 		HTTP Format extension if used.
-	* @headerNames 		HTTP header names (list)
-	* @headerValues 	HTTP header values (list)
-	* @parameterNames 	HTTP parameters names (list)
-	* @parameterValues	HTTP parameters values (list)
-	* @username 		HTTP Basic Auth Username
-	* @password 		HTTP Basic Auth password
+	* Send a Relaxer Request according to data
+	* @method 			HTTP Method
+	* @resource 		HTTP Resource to hit
+	* @headers 			HTTP headers (struct)
+	* @params 			HTTP FORM Data (struct)
+	* @authUsername 	HTTP Basic Auth Username
+	* @authPassword 	HTTP Basic Auth password
 	* @httpProxy 		HTTP Proxy server host
 	* @httpProxyPort 	HTTP Proxy server host port
+	* @timeout 			HTTP Timeout defaults to 20
 	*/
 	function send(
-		httpMethod = "GET",
-		httpResource = "",
-		httpFormat = "",
-		headerNames = "",
-		headerValues = "",
-		parameterNames = "",
-		parameterValues = "",
-		username = "",
-		password = "",
-		httpProxy = "",
-		httpProxyPort = ""
+		string method = "GET",
+		required string resource,
+		struct headers = {},
+		struct params = {},
+		string authUsername,
+		string authPassword,
+		string HTTPProxy,
+		numeric HTTPProxyPort=80,
+		numeric timeout=20
 	){
-		var results 	= structnew();
-		var response 	= "";
-		var i			= 1;
-		var tmpValue	= "";
-		var attribs		= structnew();
-		var history		= {
-			httpMethod 		= arguments.httpMethod,
-			httpResource 	= arguments.httpResource,
-			httpFormat 		= arguments.httpFormat,
-			headerNames 	= arguments.headerNames,
-			headerValues 	= arguments.headerValues,
-			parameterNames 	= arguments.parameterNames,
-			parameterValues = arguments.parameterValues,
-			username		= arguments.username,
-			password		= arguments.password,
-			httpProxy		= arguments.httpProxy,
-			httpProxyPort	= arguments.httpProxyPort
-		};
-
-		// Record History
-		pushHistory( history );
-
-		// Format Extension detected? If so, add it to resource.
-		if( len( arguments.httpFormat ) ){
-			arguments.httpResource = arguments.httpResource & "." & arguments.httpFormat;
-		}
-
 		// Log what we are sending out
 		if( variables.log.canDebug() ){
-			variables.log.debug( "Relaxed URL Request to #arguments.httpMethod#:#arguments.httpResource#:#arguments.httpFormat#",
-						   	     "Headers: #arguments.headerNames#->#arguments.headerValues#; Parameters: #arguments.parameterNames#->#arguments.parameterValues#" );
+			variables.log.debug( 
+				"Relaxed URL Request to #arguments.method#:#arguments.resource#",
+				"RequestData: #serializeJSON( arguments )#" 
+			);
 		}
 
-		// inflate headers
-		arguments.headerNames  = listToArray( arguments.headerNames );
-		arguments.headerValues = listToArray( arguments.headerValues );
+		// optional attributes
+		var attribs = {};
+		if( structKeyExists( arguments, "authUsername" ) ){ attribs.username = arguments.authUsername; }
+		if( structKeyExists( arguments, "authPassword" ) ){ attribs.password = arguments.authPassword; }
+		if( structKeyExists( arguments, "HTTPProxy" ) ){ attribs.proxyServer = arguments.HTTPProxy; }
+		attribs.proxyPort 	= arguments.HTTPProxyPort;
 
-		// inflate parameters
-		arguments.parameterNames  = listToArray( arguments.parameterNames );
-		arguments.parameterValues = listToArray( arguments.parameterValues );
+		// Record History
+		pushHistory( arguments );
 
-		// optional attribs
-		if( len( arguments.username ) ){ attribs.username = arguments.username; }
-		if( len( arguments.password ) ){ attribs.password = arguments.password; }
-		if( len( arguments.httpProxy ) ){ attribs.proxyServer = arguments.httpProxy; }
-		if( len( arguments.httpProxyPort ) ){ attribs.proxyPort = arguments.httpProxyPort; }
-
-		var httpService = new http(
-			method				= "#arguments.httpMethod#",
-			url					= "#arguments.httpResource#",
-			timeout				= "20",
+		// Prepare HTTP Request
+		var HTTPService = new http(
+			method				= arguments.method,
+			url					= arguments.resource,
+			timeout				= arguments.timeout,
 			resolveURL			= "true",
 			userAgent			= "ColdBox Relaxer",
-			attributecollection	= "#attribs#",
-			charset				= "UTF-8"
+			charset				= "UTF-8",
+			attributecollection	= "#attribs#"
 		);
 
 		// Add Headers
-		for( var x=1; x lte arrayLen( arguments.headerNames ); x++ ){
-			var thisValue = ( arrayIsDefined( arguments.headerValues, x ) ? arguments.headerValues[ x ] : "" );
-			httpService.addParam( type="header", name=arguments.headerNames[ x ], value=thisValue );
+		for( var thisHeader in arguments.headers ){
+			HTTPService.addParam( type="header", name=thisHeader, value=arguments.headers[ thisHeader ] );
 		} 
 
-		// Add Parameters
-		for( var x=1; x lte arrayLen( arguments.parameterNames ); x++ ){
-			var thisValue = ( arrayIsDefined( arguments.parameterValues, x ) ? arguments.parameterValues[ x ] : "" );
-			httpService.addParam( type="url", name=arguments.parameterNames[ x ], value=thisValue );
-		}
+		// Add Form Parameters
+		for( var thisParam in arguments.params ){
+			HTTPService.addParam( type="formfield", name=thisParam, value=arguments.params[ thisParam ] );
+		} 
 
-		return httpService.send().getPrefix();
-
+		return HTTPService.send().getPrefix();
 	}
 
 }

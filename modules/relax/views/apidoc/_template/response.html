@@ -1,0 +1,83 @@
+<%
+	var schemaTemplate = _.template( $( "#schema-template" ).html() );
+	var exampleTemplate = _.template( $( "#example-template" ).html() );
+	var typeRef;
+%>
+<div id="<%=resourceId + '-' + key %>" class="method-panel panel panel-primary">
+		
+	<div class="panel-heading">
+		<h3 class="panel-title methodHeader">
+			<strong><%=key%></strong> 
+			<a class="pull-right btToggleMethod" role="button" data-toggle="collapse" href="#panel_<%=resourceId + '-' + key %>" aria-expanded="false" aria-controls="panel_<%=resourceId + '-' + key %>">
+				<i class="fa fa-chevron-down"></i>
+			</a>
+		</h3>
+	</div>
+
+	<div id="panel_<%=resourceId + '-' + key %>" class="collapse panel-body">
+		<div class="col-xs-12">
+			<% if( !_.isUndefined( response.description ) ){  %>
+				<h4 class="panel-subtitle text-primary">Description:</h4>
+				<p><%= response.description.replace(/(?:\r\n|\r|\n)/g, '<br />') %></p>
+				<hr>
+			<% } %>
+		</div>
+
+		<% 
+			if( !_.isUndefined( response.schema ) || !_.isUndefined( response.examples ) ){  
+				var tabIds = {};
+		%>	
+			<div class="col-xs-12 schema-container">
+				<h4 class="panel-subtitle text-primary">Schema and Examples:</h4>
+						
+				<div class="schema-tabs">
+					<ul class="nav nav-tabs" role="tablist">
+						<% if( !_.isUndefined( response.schema ) ){  
+							tabIds.schemaUID = _.uniqueId("schema");
+						%>	
+							<li role="presentation" class="active">
+								<a href="#<%=tabIds.schemaUID%>" data-toggle="tab" aria-controls="<%=tabIds.schemaUID%>">Schema Definition</a>
+							</li>
+						<% } %>
+						<% if( !_.isUndefined( response.examples ) ) { %>
+							<% 
+								_.each( response.examples, function( example, mimetype ){ 
+									typeRef = mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
+									if( typeRef === 'json' ) typeRef = 'javascript';
+									tabIds[ typeRef ] = _.uniqueId( "example" );
+							%>
+							<li role="presentation">
+								<a href="#<%=tabIds[ typeRef ]%>" data-toggle="tab" aria-controls="<%=tabIds[ typeRef ]%>"><%=mimetype%></a>
+							</li>
+							<% }); %>
+						<% } %>
+					</ul>
+
+					<div class="tab-content">
+						<% if( !_.isUndefined( response.schema ) ){ %>
+							<div id="<%=tabIds.schemaUID%>" class="tab-pane fade in active schema-definition">
+								<%= schemaTemplate( { "entity": response } ) %>
+							</div>
+						<% } %>
+						<% if( !_.isUndefined( response.examples ) ) { %>
+							<% 
+								_.each( response.examples, function( example, mimetype ){ 
+									typeRef = mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
+									if( typeRef === 'json' ) typeRef = 'javascript';
+							%>
+								
+								<div id="<%=tabIds[typeRef]%>" class="tab-pane fade schema-example">
+									<div class="panel panel-solid-default">
+										<pre class="language-<%=typeRef%>"><%= formatAPIExample( example, mimetype ) %></pre>
+									</div>
+								</div>
+
+							<% }); %>
+						<% } %>
+					</div><!-- /.tab-content -->
+				</div><!-- /.schema-tabs -->
+			</div><!-- /.schema-container -->
+		<% } %>
+	</div><!-- /.panel-body -->
+
+</div><!-- /.panel -->

@@ -8,7 +8,7 @@ component{
 	// Module Properties
 	this.title 				= "ColdBox Relax";
 	this.author 			= "Ortus Solutions";
-	this.webURL 			= "http://www.ortussolutions.com";
+	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "RESTful Tools For Lazy Experts";
 	this.version			= "@build.version@+@build.number@";
 	this.viewParentLookup 	= true;
@@ -22,7 +22,7 @@ component{
 	// Auto-map models
 	this.autoMapModels		= true;
 	// Module Dependencies That Must Be Loaded First, use internal names or aliases
-	this.dependencies		= [];
+	this.dependencies		= [ "cbjavaloader", "swagger-sdk", "wikitext" ];
 
 	/**
 	* Configure App
@@ -31,12 +31,64 @@ component{
 		// Layout Settings
 		layoutSettings = { defaultLayout = "relax.cfm" };
 
+		// Add our mixins
+		arrayAppend( controller.getSetting( "ApplicationHelper" ), "#moduleMapping#/models/mixins/textFormat.cfm" );
+
 		// SES Routes
 		routes = [
+			// APIDoc API Routes
+			{
+				pattern = "apidoc/:api?",
+				handler = "APIDoc",
+				action 	= { 
+					"GET" 		: "index",
+					"POST" 		: "create",
+					"PUT" 		: "update",
+					"PATCH" 	: "update",
+					"DELETE" 	: "delete"
+				}
+				
+			},
+			//Direct API requests
+			{ 
+				pattern = "export/:action/:apiname?", 
+				handler = "Export", 
+				action  = "index" 
+			},
+			//Relaxer routes - explicit first, then our dynamic API selector
+			{ 
+				pattern = "relaxer/send", 
+				handler = "Relaxer", 
+				action  = "send" 
+			},
+			{ 
+				pattern = "relaxer/purgeHistory", 
+				handler = "Relaxer", 
+				action  = "purgeHistory" 
+			},
+			{ 
+				pattern = "relaxer/resourceDocd", 
+				handler = "Relaxer", 
+				action  = "resourceDoc" 
+			},
+			{ 
+				pattern = "relaxer/:apiname?", 
+				handler = "Relaxer", 
+				action  = "index" 
+			},
+			{ 
+				pattern = "api/:apiname?", 
+				handler = "Home", 
+				action  = "index" 
+			},
 			// Module Entry Point
-			{ pattern="/", handler="home", action="index" },
+			{ 
+				pattern = "", 
+				handler = "Home", 
+				action  = "index" 
+			},
 			// Convention Route
-			{ pattern="/:handler/:action?" }
+			{ pattern 	= ":handler/:action?" }
 		];
 
 	}
@@ -45,9 +97,49 @@ component{
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		var configSettings = controller.getConfigSettings();
 		// parse parent settings
 		parseParentSettings();
+
+		var configSettings = controller.getConfigSettings().relax;
+
+		/**	
+		* Utilities
+		**/
+
+		//models.Mongo.Util
+		binder.map( "OpenAPIUtil@relax" )
+			.toDSL( "OpenAPIUtil@SwaggerSDK" );
+
+		/**
+		* Manual Instantiation Instances
+		**/
+
+		//models.OpenAPI.Document
+		binder.map( "OpenAPIDocument@relax" )
+			.toDSL( "OpenAPIDocument@SwaggerSDK" );
+
+
+		//models.OpenAPI.Parser
+		binder.map( "OpenAPIParser@relax" )
+			.toDSL( "OpenAPIParser@SwaggerSDK" );
+
+		//RelaxDSL Parser
+		binder.map( "RelaxDSL@relax" )
+			.to( "#moduleMapping#.models.RelaxDSL.Document" );
+
+		//RelaxDSL Translator
+		binder.map( "DSLTranslator@relax" )
+			.to( "#moduleMapping#.models.RelaxDSL.Translator" )
+			.mixins( '/SwaggerSDK/models/mixins/hashMap.cfm' );
+
+
+		// If caching is turned on, make our service a singleton ( in development, we would want it to remain a transient )
+		if( configSettings.cache ){
+			binder.map( "APIService@relax" )
+				.to( "#moduleMapping#.models.APIService" )
+				.asSingleton();
+		}
+
 	}
 
 	/**
@@ -59,8 +151,8 @@ component{
 	/**
 	* Pre process for relax, makes sure an API is loaded
 	*/
-	function preProcess( event, interceptData ) eventPattern="^relax.*"{
-		var DSLService = wirebox.getInstance( "DSLService@relax" );
+	function preProcess( event, interceptData ) eventPattern= "^relax.*"{
+		var DSLService = wirebox.getInstance( "APIService@relax" );
 		// load the default API if none loaded
 		if( !DSLService.isLoadedAPI() ){
 			DSLService.loadAPI( controller.getConfigSettings().relax.defaultAPI );
@@ -68,20 +160,9 @@ component{
 	}
 
 	/**
-	* Prepare settings and returns true if using i18n else false.
+	* Prepare settings
 	*/
 	private function parseParentSettings(){
-		/**
-		Sample:
-		relax = {
-			// The location of the relaxed APIs, defaults to /models/resources
-			APILocation = "#appMapping#.models.resources",
-			// Default API to load
-			defaultAPI = "myapi",
-			// History stack size, the number of history items to track in the RelaxURL
-			maxHistory = 10
-		};
-		*/
 		// Read parent application config
 		var oConfig 		= controller.getSetting( "ColdBoxConfig" );
 		var relaxDSL		= oConfig.getPropertyMixin( "relax", "variables", structnew() );
@@ -89,13 +170,19 @@ component{
 
 		// Default Config Structure
 		configStruct.relax = {
+			// The mapped location of the API definitions
 			APILocation 	= "#moduleMapping#.models.resources",
+			// The default API to load within the RELAX UI
 			defaultAPI 		= "myapi",
+			// Whether to enable session storage for history and preferences ( deprecated, as UI now uses JS localStorage )
+			sessionsEnabled	= getApplicationMetadata().sessionManagement,
+			// The number of history items in the session storage ( deprecated )
 			maxHistory		= 10,
-			sessionsEnabled	= getApplicationMetadata().sessionManagement
+			// Whether to cache the API Service as a singleton, preventing each request from loading
+			cache 			= false
 		};
 
-		// Apend it
+		// Append it
 		structAppend( configStruct.relax, relaxDSL, true );
 
 		/** 

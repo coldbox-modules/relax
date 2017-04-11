@@ -14,11 +14,9 @@ component extends="BaseHandler"{
 	*/
 	function preHandler( event, rc, prc ){
 		super.preHandler( argumentCollection=arguments );
-		// Get the loaded API for the user
-		prc.dsl				= DSLService.getLoadedAPI();
-		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
-		// custom css/js
-		prc.jsAppendList 	= "jquery.scrollTo-min";
+
+		prc.dsl				= APIService.getLoadedAPI().getNormalizedDocument();
+		prc.loadedAPIName 	= APIService.getLoadedAPIName();
 	}
 
 	/**
@@ -31,9 +29,8 @@ component extends="BaseHandler"{
 		prc.jsonAPI = serializeJSON( prc.dsl );
 
 		if( event.valueExists( "download" ) ){
-			var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.relax.title );
-			event.setHTTPHeader( name="content-disposition", value='attachment; filename="#title#.json"')
-				.renderData( data=prc.jsonAPI, type="json" );
+			event.setHTTPHeader( name="content-disposition", value='attachment; filename="#prc.loadedAPIName#.json"')
+				.renderData( data=prc.dsl, type="json" );
 		} else {
 			event.renderData( data=renderView( view="export/api", module="relax" ) );
 		}
@@ -46,21 +43,35 @@ component extends="BaseHandler"{
 		// args setup
 		rc.print 				 = true;
 		prc.expandedResourceDivs = true;
-		// exit handlers
-		prc.xehResourceDoc  = "relax/Home/resourceDoc";
+
+		prc.exportTitle 			= getInstance( "htmlhelper@coldbox" )
+			.slugify( prc.dsl[ "info" ][ "title" ] ) & " v" & prc.dsl[ "info" ][ "version" ];
 
 		// View
-		event.setView( name="export/html", layout="html" );
+		event.setView( 
+			name 	= "apidoc/cfTemplate/api-content", 
+			layout 	= "html",
+			args 	= { "api" : prc.dsl } 
+		);
 	}
 
 	/**
 	* Export as PDF
 	*/
 	function pdf( event, rc, prc ){
-		var title = getInstance( "htmlhelper@coldbox" ).slugify( prc.dsl.relax.title );
-		html( event, rc, prc );
-		event.setLayout( "pdf" )
-			.setHTTPHeader( name="Content-Disposition", value="inline; filename=#title#.pdf" );
+		// args setup
+		prc.pdf 					= true;
+		prc.expandedResourceDivs 	= true;
+
+		prc.exportTitle 			= getInstance( "htmlhelper@coldbox" )
+			.slugify( prc.dsl[ "info" ][ "title" ] ) & " v" & prc.dsl[ "info" ][ "version" ];
+
+		event.setView( 
+			name 	= "apidoc/cfTemplate/api-content", 
+			layout 	= "pdf",
+			args 	= { "api" : prc.dsl } 
+		)
+		.setHTTPHeader( name="Content-Disposition", value="inline; filename=#prc.exportTitle#.pdf" );
 	}
 
 	/**
@@ -82,7 +93,10 @@ component extends="BaseHandler"{
 	*/
 	private function toWikiMarkup( event, rc, prc, type ){
 		html( event, rc, prc );
-		var data = wikitext.toWiki( wikiTranslator=arguments.type, htmlString=renderView( view="export/html", module="relax" ) );
+		if( !structKeyExists( rc, "content" ) ){
+			rc.content = renderView( view="apidoc/cfTemplate/api-content", args={"api":prc.dsl}, module="relax" );
+		}
+		var data = wikitext.toWiki( translator=arguments.type, html=rc.content );
 		event.renderData( type="text", data=data );
 	}
 

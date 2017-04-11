@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ColdBox/coldbox-relax.svg?branch=master)](https://travis-ci.org/ColdBox/coldbox-relax)
+[![Build Status](https://travis-ci.org/coldbox-modules/coldbox-relax.svg?branch=development)](https://travis-ci.org/coldbox-modules/coldbox-relax)
 
 WELCOME TO COLDBOX RELAX
 ========================================
@@ -14,14 +14,13 @@ test RESTFul web services, monitor RESTFul web services and document RESTFul web
 Apache License, Version 2.0.
 
 ##IMPORTANT LINKS
-- Code: http://github.com/coldbox/coldbox-relax
-- Issues: https://github.com/ColdBox/coldbox-relax/issues
-- Documentation: https://github.com/ColdBox/coldbox-relax/wiki
+- Code: https://github.com/coldbox/coldbox-relax
+- Issues: https://ortussolutions.atlassian.net/projects/RELAX/issues
+- Documentation: https://coldbox-relax.ortusbooks.com
 
 ##SYSTEM REQUIREMENTS
 - Lucee 4.5+
-- Railo 4+
-- ColdFusion 9+
+- ColdFusion 10+
 
 INSTRUCTIONS
 ============

@@ -19,6 +19,14 @@ component{
 	// COLDBOX APPLICATION KEY OVERRIDE
 	COLDBOX_APP_KEY 		 = "";
 
+	this.mappings[ "/coldbox" ] = COLDBOX_APP_ROOT_PATH & "coldbox";
+	this.mappings[ "/testbox" ] = COLDBOX_APP_ROOT_PATH & "testbox";
+	//overrides needed to ensure tests perform across all platforms
+	this.mappings[ "/modules" ] = COLDBOX_APP_ROOT_PATH & "modules";
+	this.mappings[ "/relax" ] = COLDBOX_APP_ROOT_PATH & "modules/relax";
+	this.mappings[ "/tests" ] = COLDBOX_APP_ROOT_PATH & "tests";
+	this.mappings[ "/root" ]   = COLDBOX_APP_ROOT_PATH;
+	
 	// application start
 	public boolean function onApplicationStart(){
 		application.cbBootstrap = new coldbox.system.Bootstrap( COLDBOX_CONFIG_FILE, COLDBOX_APP_ROOT_PATH, COLDBOX_APP_KEY, COLDBOX_APP_MAPPING );

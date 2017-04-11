@@ -14,24 +14,25 @@ component extends="BaseHandler"{
 	*/
 	function index( event, rc, prc ){
 		// some defaults
-		event.paramValue( "httpResource", "" );
-		event.paramValue( "httpFormat", "" );
-		event.paramValue( "httpMethod", "GET" );
-		event.paramValue( "headerNames", "" );
-		event.paramValue( "headerValues", "" );
-		event.paramValue( "parameterNames", "" );
-		event.paramValue( "parameterValues", "" );
-		event.paramValue( "sendRequest", false );
-		event.paramValue( "username", "" );
-		event.paramValue( "password", "" );
-		event.paramValue( "httpProxy", "" );
-		event.paramValue( "httpProxyPort", "" );
-		event.paramValue( "entryTier", "production" );
+		event.paramValue( "httpResource", "" )
+			.paramValue( "httpFormat", "" )
+			.paramValue( "httpMethod", "GET" )
+			.paramValue( "headerNames", "" )
+			.paramValue( "headerValues", "" )
+			.paramValue( "parameterNames", "" )
+			.paramValue( "parameterValues", "" )
+			.paramValue( "sendRequest", false )
+			.paramValue( "username", "" )
+			.paramValue( "password", "" )
+			.paramValue( "httpProxy", "" )
+			.paramValue( "httpProxyPort", "" )
+			.paramValue( "entryTier", "production" );
 
 		// DSL Settings
-		prc.dsl				= DSLService.getLoadedAPI();
-		prc.loadedAPIName 	= DSLService.getLoadedAPIName();
-		prc.loadedAPIs		= DSLService.listAPIs();
+		prc.dsl						= APIService.getLoadedAPI().getNormalizedDocument();
+		prc.serviceEntryPoints		= [];
+		prc.loadedAPIName 			= APIService.getLoadedAPIName();
+		prc.loadedAPIs				= APIService.listAPIs();
 
 		// exit handlers
 		prc.xehPurgeHistory = "relax/relaxer/purgeHistory";
@@ -59,6 +60,34 @@ component extends="BaseHandler"{
 		
 		// display relaxer
 		event.setView( "relaxer/index" );
+	}
+
+	any function send( event,rc,prc ){
+		prc.results = {};
+		try{
+			
+			// deserialize our incoming json packet of request data
+			prc.results = relaxerService.send( argumentCollection = event.getHTTPContent( json=true ) );
+
+		} catch( Any e ){
+			prc.results[ 'mimeType' ] = "application/json";
+				
+			if( getSetting( "environment" ) != 'production' ){
+				
+				prc.results[ 'error' ] = "Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#";
+				prc.results[ 'message' ] = "Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#";
+				
+			} else {
+
+				prc.results[ 'error' ] = "Invalid request. Please correct the URL and parameters of your endpoint and try again";
+			
+			}
+
+			log.error( prc.results.error, e );
+		
+		}
+
+		event.renderData( data=prc.results, type="json" );
 	}
 
 	/**
