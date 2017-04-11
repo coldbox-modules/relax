@@ -50,17 +50,45 @@ component{
 				
 			},
 			//Direct API requests
-			{ pattern="export/:action/:apiname?", handler="Export", action="index" },
+			{ 
+				pattern = "export/:action/:apiname?", 
+				handler = "Export", 
+				action  = "index" 
+			},
 			//Relaxer routes - explicit first, then our dynamic API selector
-			{ pattern="relaxer/send", handler="Relaxer", action="send" },
-			{ pattern="relaxer/purgeHistory", handler="Relaxer", action="purgeHistory" },
-			{ pattern="relaxer/resourceDocd", handler="Relaxer", action="resourceDoc" },
-			{ pattern="relaxer/:apiname?", handler="Relaxer", action="index" },
-			{ pattern="api/:apiname?", handler="Home", action="index" },
+			{ 
+				pattern = "relaxer/send", 
+				handler = "Relaxer", 
+				action  = "send" 
+			},
+			{ 
+				pattern = "relaxer/purgeHistory", 
+				handler = "Relaxer", 
+				action  = "purgeHistory" 
+			},
+			{ 
+				pattern = "relaxer/resourceDocd", 
+				handler = "Relaxer", 
+				action  = "resourceDoc" 
+			},
+			{ 
+				pattern = "relaxer/:apiname?", 
+				handler = "Relaxer", 
+				action  = "index" 
+			},
+			{ 
+				pattern = "api/:apiname?", 
+				handler = "Home", 
+				action  = "index" 
+			},
 			// Module Entry Point
-			{ pattern="", handler="Home", action="index" },
+			{ 
+				pattern = "", 
+				handler = "Home", 
+				action  = "index" 
+			},
 			// Convention Route
-			{ pattern=":handler/:action?" }
+			{ pattern 	= ":handler/:action?" }
 		];
 
 	}
@@ -123,7 +151,7 @@ component{
 	/**
 	* Pre process for relax, makes sure an API is loaded
 	*/
-	function preProcess( event, interceptData ) eventPattern="^relax.*"{
+	function preProcess( event, interceptData ) eventPattern= "^relax.*"{
 		var DSLService = wirebox.getInstance( "APIService@relax" );
 		// load the default API if none loaded
 		if( !DSLService.isLoadedAPI() ){
@@ -135,17 +163,6 @@ component{
 	* Prepare settings
 	*/
 	private function parseParentSettings(){
-		/**
-		Sample:
-		relax = {
-			// The location of the relaxed APIs, defaults to /models/resources
-			APILocation = "#appMapping#.models.resources",
-			// Default API to load
-			defaultAPI = "myapi",
-			// History stack size, the number of history items to track in the RelaxURL
-			maxHistory = 10
-		};
-		**/
 		// Read parent application config
 		var oConfig 		= controller.getSetting( "ColdBoxConfig" );
 		var relaxDSL		= oConfig.getPropertyMixin( "relax", "variables", structnew() );
@@ -162,7 +179,7 @@ component{
 			// The number of history items in the session storage ( deprecated )
 			maxHistory		= 10,
 			// Whether to cache the API Service as a singleton, preventing each request from loading
-			cache 			= false
+			cache 			= true
 		};
 
 		// Append it

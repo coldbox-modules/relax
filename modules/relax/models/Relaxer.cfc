@@ -4,11 +4,19 @@
 * ---
 * The Relaxer service
 */
-component singleton accessors="true"{
+component 
+	accessors="true"
+	singleton 
+{
 
 	// DI
-	property name="log" 		inject="logbox:logger:{this}";
-	property name="DSLService"	inject="APIService@relax";
+	property 
+		name="log" 		
+		inject="logbox:logger:{this}";
+
+	property 
+		name="DSLService"	
+		inject="APIService@relax";
 
 	/**
 	* Constructor
@@ -57,12 +65,17 @@ component singleton accessors="true"{
 
 		// check if history exists?
 		if( DSLService.getSessionsEnabled() ){
+			
 			if( !structKeyExists( session, "relax-history" ) ){
 				session[ "relax-history" ] = [];
 			}
+			
 			stack = session[ "relax-history" ];
+
 		} else {
+			
 			stack = [];
+		
 		}
 
 		// Check limit on it

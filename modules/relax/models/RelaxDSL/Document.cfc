@@ -319,11 +319,16 @@ component accessors="true"{
 		
 		// verify response exist, else init it
 		if( NOT structKeyExists( this._definedResources[ this._currentResource ], "response" ) ){
+
 			this._definedResources[ this._currentResource ].response = {};
+		
 		}
+		
 		// verify datakey exist, else init it
 		if( NOT structKeyExists( this._definedResources[ this._currentResource ].response, dataKey ) ){
+		
 			this._definedResources[ this._currentResource ].response[ dataKey ] = [];
+		
 		}
 		
 		// append schema
@@ -409,11 +414,20 @@ component accessors="true"{
 	function verifyResourcePivot(){
     	// verify pivot
 		if( NOT len(this._currentResource) ){
-			throw( message="You cannot call this method unless you concatenate it with a 'resource()' call first.", type="RelaxDSL.InvalidContext" );
+		
+			throw( 
+				message = "You cannot call this method unless you concatenate it with a 'resource()' call first.", 
+				type    = "RelaxDSL.InvalidContext" 
+			);
+		
 		} else if ( NOT structKeyExists( this._definedResources, this._currentResource) ){
-			throw( message="The current resource: '#this._currentResource#' is not defined in the resources.",
-				   detail="Defined resources are: #structKeyList( this._definedResources )#",
-				   type="RelaxDSL.InvalidContext" );
+		
+			throw( 
+				message = "The current resource: '#this._currentResource#' is not defined in the resources.",
+				detail  = "Defined resources are: #structKeyList( this._definedResources )#",
+				type    = "RelaxDSL.InvalidContext" 
+			);
+		
 		} 
 	}
    
