@@ -67,6 +67,7 @@ before_deploy:
   - mkdir -p s3deploy
   - rsync -av ./artifacts/$PROJECT_NAME/ ./s3deploy/
   - rm -f ./s3deploy/box-repo.json
+  - if [[ ( $ENGINE = lucee@4.5 ) && ( $TRAVIS_PULL_REQUEST = false ) && ( ${TRAVIS_REPO_SLUG%%\/*} == 'coldbox-modules' ) ]]; then RELEASABLE=true; else RELEASABLE=false; fi
 
 deploy:
   #Module Deployment
@@ -75,7 +76,7 @@ deploy:
       branch: 
         - master
         - development
-      condition: "( $ENGINE = lucee@4.5 ) && ( $TRAVIS_PULL_REQUEST = false ) && ( ${TRAVIS_REPO_SLUG%%\/*} == 'coldbox-modules' )"
+      condition: "$RELEASABLE=true"
     skip_cleanup: true
     #AWS Credentials need to be set in Travis
     access_key_id: $AWS_ACCESS_KEY
@@ -90,7 +91,7 @@ deploy:
       branch: 
         - master
         - development
-      condition: "( $ENGINE = lucee@4.5 ) && ( $TRAVIS_PULL_REQUEST = false ) && ( ${TRAVIS_REPO_SLUG%%\/*} == 'coldbox-modules' )"
+      condition: "$RELEASABLE=true"
     skip_cleanup: true
     #AWS Credentials need to be set in Travis
     access_key_id: $AWS_ACCESS_KEY
