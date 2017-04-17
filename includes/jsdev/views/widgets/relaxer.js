@@ -312,7 +312,7 @@ define(
                 }
 
                 if( $( '[name="password"]', _this.$relaxerForm ).val().length > 0 ){
-                    request.authPassword = $( '[name="username"]', _this.$relaxerForm ).val();
+                    request.authPassword = $( '[name="password"]', _this.$relaxerForm ).val();
                 }
                 
                 $( ".requestHeaders", _this.$relaxerForm ).find(".dynamicField").each( function(){
