@@ -114,6 +114,7 @@ component
 		required string resource,
 		struct headers = {},
 		struct params = {},
+		string body = "",
 		string authUsername,
 		string authPassword,
 		string HTTPProxy,
@@ -152,12 +153,19 @@ component
 		// Add Headers
 		for( var thisHeader in arguments.headers ){
 			HTTPService.addParam( type="header", name=thisHeader, value=arguments.headers[ thisHeader ] );
-		} 
+		}
 
 		// Add Form Parameters
 		for( var thisParam in arguments.params ){
-			HTTPService.addParam( type="formfield", name=thisParam, value=arguments.params[ thisParam ] );
-		} 
+
+			var paramType = arguments.method == 'GET' ? 'URL' : 'formField';
+
+			HTTPService.addParam( type=paramType, name=thisParam, value=arguments.params[ thisParam ] );
+		}
+
+		if( len( arguments.body ) ){
+			HTTPService.addParam( type="body", value=arguments.body );
+		}
 
 		return HTTPService.send().getPrefix();
 	}
