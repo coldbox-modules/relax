@@ -2,6 +2,11 @@ CHANGELOG
 =========
 
 ## 3.0.0
+* Fixes a bug where Relaxer auth password was being transmitted as username
+* Fixes an issue where Relaxer history became unusable because of bad response
+* Fixes an issue where form parameters where not being interpreted correctly by the Relaxer Service
+
+## 3.0.0
 * Standardizes OpenAPI specification
 * Relax DSL marked as deprecated ( EOL @ 4.0.0 )
 * ACF Compatibility updates
