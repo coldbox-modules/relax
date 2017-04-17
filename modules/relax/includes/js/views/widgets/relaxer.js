@@ -1,4 +1,4 @@
-/*! Copyright 2017 - Ortus Solutions (Compiled: 10-04-2017) */
+/*! Copyright 2017 - Ortus Solutions (Compiled: 17-04-2017) */
 define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel) {
     "use strict";
     var Relaxer = Backbone.View.extend({
@@ -198,12 +198,18 @@ define([ "Backbone", "models/RelaxerHistory" ], function(Backbone, HistoryModel)
             var historyTemplate = _.template($("#relaxer-history-template").html());
             var $historyContainer = $(".relaxer-history", _this.el);
             $historyContainer.empty();
+            if (_.isUndefined(_this.HistoryModel.attributes.history)) return;
             if (_this.HistoryModel.attributes.history.length > 0) {
-                $historyContainer.html(historyTemplate({
-                    history: _this.HistoryModel.attributes.history,
-                    responseTemplate: _.template($("#relaxer-response-template").html())
-                }));
-                _this.renderContainerUI($historyContainer);
+                try {
+                    $historyContainer.html(historyTemplate({
+                        history: _this.HistoryModel.attributes.history,
+                        responseTemplate: _.template($("#relaxer-response-template").html())
+                    }));
+                    _this.renderContainerUI($historyContainer);
+                } catch (err) {
+                    localStorage.removeItem("RelaxerStoredHistory");
+                    $historyContainer.append('<p class="alert alert-danger">Oops! There was an error in rendering your relaxer history.  We may have received some bad information from a recent request that could not be parsed. As a result, we have had to clear your history data in order to continue.</p>');
+                }
             }
         },
         clearHistory: function(e) {
