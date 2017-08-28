@@ -1,7 +1,8 @@
 CHANGELOG
 =========
 
-## 3.0.0
+## 3.0.1
+* Fixes a bug where POST methods were passing a conditional key used in preHandler
 * Fixes a bug where Relaxer auth password was being transmitted as username
 * Fixes an issue where Relaxer history became unusable because of bad response
 * Fixes an issue where form parameters where not being interpreted correctly by the Relaxer Service
