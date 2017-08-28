@@ -16,7 +16,12 @@
                     <!--- PRETTY CONTENT --->
                     <div class="tab-pane active pretty-results relaxer-pretty-results" id="<%=prettyUID%>">
                         <%
-                            var mimetype = response.getResponseHeader( "Content-Type" ).split( ";" )[ 0 ];
+                            var contentType = response.getResponseHeader( "Content-Type" );
+                            if( !contentType ){
+                                var mimetype = "text/html"
+                            } else{
+                                var mimetype = response.getResponseHeader( "Content-Type" ).split( ";" )[ 0 ];    
+                            }
                             var langRef = mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
                             if( langRef === 'json' ) langRef = 'javascript';
                         %>

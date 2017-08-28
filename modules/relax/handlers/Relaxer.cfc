@@ -64,10 +64,19 @@ component extends="BaseHandler"{
 
 	any function send( event,rc,prc ){
 		prc.results = {};
+
 		try{
+
+			var payload = event.getHTTPContent( json=true );
+
+			/** Handle our interpolation of legacy client naming conventions **/
+			if( structKeyExists( payload, "data" ) ){
+				payload[ "params" ] = payload.data;
+				structDelete( payload, "data" );
+			}
 			
 			// deserialize our incoming json packet of request data
-			prc.results = relaxerService.send( argumentCollection = event.getHTTPContent( json=true ) );
+			prc.results = relaxerService.send( argumentCollection = payload );
 
 		} catch( Any e ){
 			prc.results[ 'mimeType' ] = "application/json";
