@@ -27,7 +27,7 @@ component accessors=true{
 		prepareRuntimeAssets( argumentCollection=arguments );
 
 		// Get any explicitly passed api
-		if( structKeyExists( rc, "apiname" ) ){
+		if( !event.getHTTPMethod() == "POST" && structKeyExists( rc, "apiname" ) ){
 			APIService.loadAPI( rc.apiname );
 		}
 	}
