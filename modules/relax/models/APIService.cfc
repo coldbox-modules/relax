@@ -6,8 +6,10 @@
 */
 component accessors="true" {
 	// DI
-	property name="wirebox" 	inject="wirebox";
-	property name="log" 		inject="logbox:logger:{this}";
+	property name="wirebox" 	  inject="wirebox";
+	property name="log" 		  inject="logbox:logger:{this}";
+	property name="moduleService" inject="coldbox:moduleService";
+	property name="templateCache" inject="cachebox:template";
 	
 	/**
 	* Storage for API Definitions
@@ -42,7 +44,24 @@ component accessors="true" {
 	* Get a listing of all the APIs in the resources folder
 	*/
 	query function listAPIs(){
-		return directoryList( variables.settings.APILocationExpanded, false, "query", "", "asc" );
+
+		var apiListing = directoryList( variables.settings.APILocationExpanded, false, "query", "", "asc" );
+
+		if( moduleService.isModuleRegistered( "cbswagger" ) ){
+
+			var definition = wirebox.getInstance( "RoutesParser@cbswagger" ).createDocFromRoutes().getDocument();
+
+			if( !len( definition[ "info" ][ "title" ] ) ){
+				definition[ "info" ][ "title" ] = 'cbSwagger';
+			}
+
+			var row = queryAddRow( apiListing );
+			querySetCell( apiListing, 'name', 'cbswagger', row );
+			querySetCell( apiListing, 'type', 'cbswagger', row );
+			querySetCell( apiListing, 'attributes', serializeJSON( definition[ "info" ] ), row );
+		}
+
+		return apiListing;
 	}
 
 	/**

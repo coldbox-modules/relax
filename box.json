@@ -6,18 +6,20 @@
     "dependencies":{
         "coldbox":"^4.3.0+188",
         "wikitext":"^1.1.0",
-        "swagger-sdk":"^1.0.2+28-be"
+        "swagger-sdk":"^1.0.2+28-be",
+        "cbswagger":"^1.2.1-snapshot"
     },
     "devDependencies":{
         "testbox":"^2.4.0+80",
         "workbench":"git+https://github.com/Ortus-Solutions/unified-workbench.git"
     },
     "installPaths":{
-        "cbjavaloader":"modules/cbjavaloader",
-        "coldbox":"coldbox",
-        "wikitext":"modules/wikitext",
-        "testbox":"testbox",
-        "swagger-sdk":"modules/swagger-sdk",
-        "workbench":"workbench"
+        "cbjavaloader":"modules/cbjavaloader/",
+        "coldbox":"coldbox/",
+        "wikitext":"modules/wikitext/",
+        "testbox":"testbox/",
+        "swagger-sdk":"modules/swagger-sdk/",
+        "cbswagger":"modules/cbswagger/",
+        "workbench":"workbench/"
     }
 }

@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+## 3.0.2
+* Adds integration with `cbswagger` module to introspect application RESTful route metadata
+
 ## 3.0.1
 * Fixes a bug where POST methods were passing a conditional key used in preHandler
 * Fixes a bug where Relaxer auth password was being transmitted as username

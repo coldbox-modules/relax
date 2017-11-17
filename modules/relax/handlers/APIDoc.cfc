@@ -50,7 +50,12 @@ component extends="BaseHandler"{
 
 		if( structKeyExists( rc, "api" ) ){
 
-			marshallAPIDocument( argumentCollection=ARGUMENTS );
+			if( rc.api != 'cbswagger' ){
+				marshallAPIDocument( argumentCollection=ARGUMENTS );			
+			} else {
+				rc.data = getInstance( "RoutesParser@cbswagger" ).createDocFromRoutes().getNormalizedDocument()
+				rc.statusCode = STATUS.SUCCESS;
+			}
 		
 		} else {
 		
@@ -119,7 +124,11 @@ component extends="BaseHandler"{
 		rc.statusCode = STATUS.SUCCESS;
 
 		for( var API in availableAPIs ){
-			rc.data.apis[ API.name ] = APIService.loadAPI( API.name ).getDocumentObject().getDocument()[ "info" ];
+			if( API.type == 'cbswagger' ){
+				rc.data.apis[ API.name ] = deserializeJSON( API.attributes );	
+			} else {
+				rc.data.apis[ API.name ] = APIService.loadAPI( API.name ).getDocumentObject().getDocument()[ "info" ];	
+			}
 			rc.data.apis[ API.name ][ "href" ] = '/relax/apidoc/' & API.name;
 		}
 		
