@@ -9,7 +9,6 @@ component accessors="true" {
 	property name="wirebox" 	  inject="wirebox";
 	property name="log" 		  inject="logbox:logger:{this}";
 	property name="moduleService" inject="coldbox:moduleService";
-	property name="templateCache" inject="cachebox:template";
 	
 	/**
 	* Storage for API Definitions
