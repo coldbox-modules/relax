@@ -53,7 +53,7 @@ component extends="BaseHandler"{
 			if( rc.api != 'cbswagger' ){
 				marshallAPIDocument( argumentCollection=ARGUMENTS );			
 			} else {
-				rc.data = getInstance( "RoutesParser@cbswagger" ).createDocFromRoutes().getNormalizedDocument()
+				rc.data = getInstance( "RoutesParser@cbswagger" ).createDocFromRoutes().getNormalizedDocument();
 				rc.statusCode = STATUS.SUCCESS;
 			}
 		

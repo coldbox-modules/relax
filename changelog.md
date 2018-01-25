@@ -1,6 +1,8 @@
 CHANGELOG
 =========
 
+## 3.0.3
+* Fixes `cbswagger` dependency tracking
 ## 3.0.2
 * Adds integration with `cbswagger` module to introspect application RESTful route metadata
 

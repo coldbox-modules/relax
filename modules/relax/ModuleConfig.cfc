@@ -22,7 +22,7 @@ component{
 	// Auto-map models
 	this.autoMapModels		= true;
 	// Module Dependencies That Must Be Loaded First, use internal names or aliases
-	this.dependencies		= [ "cbjavaloader", "swagger-sdk", "wikitext" ];
+	this.dependencies		= [ "cbjavaloader", "cbswagger", "wikitext" ];
 
 	/**
 	* Configure App
