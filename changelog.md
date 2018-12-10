@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+## 3.0.4
+* Bumps cbjavaloader dependency version to ^2
+
 ## 3.0.3
 * Fixes `cbswagger` dependency tracking
 ## 3.0.2
