@@ -1,7 +1,7 @@
 <cfsilent>
 <cfparam name="args.sidebar"    default="true">
 <cfparam name="args.header"     default="true">
-<cfparam name="args.print"      default="false">    
+<cfparam name="args.print"      default="false">
 </cfsilent>
 <!DOCTYPE html>
 <cfoutput>
@@ -14,7 +14,7 @@
 
 <cfinclude template="inc/HTMLHead.cfm"/>
 
-<body class="off-canvas <cfif !args.print>animated fadeIn><cfelse>print</cfif>" <cfif args.print>style="background-color: white"</cfif>>    
+<body class="off-canvas <cfif !args.print>animated fadeIn><cfelse>print</cfif>" <cfif args.print>style="background-color: white"</cfif>>
    <cfif args.print>
        <a href="javascript:void(0)" id="btnCopyGeneratedSource" class="btn btn-default pull-right" data-toggle="tooltip" data-placement="bottom" title="Copy generated source to clipboard"><i class="fa fa-clipboard"></i></a>
    </cfif>
@@ -39,9 +39,9 @@
                 <ul>
                 	<li>
                   		<a  href="#event.buildLink( prc.xehRelax )#"
-                            data-toggle="modal" 
-                            data-target="##modal" 
-                            class="btn btn-default dropdown-toggle options" 
+                            data-toggle="modal"
+                            data-target="##modal"
+                            class="btn btn-default dropdown-toggle options"
                             title="Time to relax?">
                         	<i class="fa fa-gamepad"></i>
                     	</a>
@@ -51,7 +51,7 @@
                       		RESTFul Tools For Lazy Experts<i class="fa fa-angle-down"></i>
                     	</a>
                         <ul class="dropdown-menu animated fadeInDown">
-                            
+
                         	<li>
                         		<a href="//www.ortussolutions.com" title="The experts behind ColdBox"><i class="fa fa-bolt"></i> By Ortus Solutions</a>
                         	</li>
@@ -77,7 +77,7 @@
 	        <h5 class="sidebar-header">Navigation</h5>
 	            <ul class="nav nav-pills nav-stacked">
 	                <li <cfif event.getCurrentEvent() eq "relax:home.index">class="active"</cfif>>
-	                    <a href="#event.buildLink( prc.xehHome )#"><i class="fa fa-dashboard"></i><span>API Manager</span></a>
+	                    <a href="#event.buildLink( prc.xehHome )#"><i class="fa fa-desktop"></i><span>API Manager</span></a>
 	                </li>
 	                <li <cfif event.getCurrentHandler() eq "relax:relaxer">class="active"</cfif>>
 	                    <a href="#event.buildLink( prc.xehRelaxer )#" title="Pronounced 'Relax-ER'"><i class="fa fa-flask"></i><span>API Test Tool</span></a>
@@ -94,7 +94,7 @@
 	    </nav>
 	    <!--sidebar end-->
 	    </cfif>
-	
+
 		<!--main content start-->
 	    <section class="main-content-wrapper" <cfif args.print>style="margin-left:0px"</cfif>>
 	        <section id="main-content">

@@ -1,1 +1,843 @@
-!function(a,b){"use strict";"function"==typeof define&&define.amd?define(["jquery"],function(c){return b(c,a,a.document)}):"object"==typeof module&&module.exports?module.exports=b(require("jquery"),a,a.document):b(jQuery,a,a.document)}("undefined"!=typeof window?window:this,function(a,b,c,d){"use strict";function e(c,d,e,f){if(r===c&&(e=!1),z===!0)return!0;if(n[c]){if(w=!1,e&&G.before(c,o),s=1,E=m[c],C===!1&&r>c&&f===!1&&p[c]&&(s=parseInt(o[c].outerHeight()/u.height()),E=parseInt(m[c])+(o[c].outerHeight()-u.height())),G.updateHash&&G.sectionName&&(C!==!0||0!==c))if(history.pushState)try{history.replaceState(null,null,n[c])}catch(a){b.console&&console.warn("Scrollify warning: Page must be hosted to manipulate the hash value.")}else b.location.hash=n[c];if(C&&(G.afterRender(),C=!1),r=c,d)a(G.target).stop().scrollTop(E),e&&G.after(c,o);else{if(x=!0,a().velocity?a(G.target).stop().velocity("scroll",{duration:G.scrollSpeed,easing:G.easing,offset:E,mobileHA:!1}):a(G.target).stop().animate({scrollTop:E},G.scrollSpeed,G.easing),b.location.hash.length&&G.sectionName&&b.console)try{a(b.location.hash).length&&console.warn("Scrollify warning: ID matches hash value - this will cause the page to anchor.")}catch(a){}a(G.target).promise().done(function(){x=!1,C=!1,e&&G.after(c,o)})}}}function f(a){function b(b){for(var c=0,d=a.slice(Math.max(a.length-b,1)),e=0;e<d.length;e++)c+=d[e];return Math.ceil(c/b)}var c=b(10),d=b(70);return c>=d}function g(a,b){for(var c=n.length;c>=0;c--)"string"==typeof a?n[c]===a&&(q=c,e(c,b,!0,!0)):c===a&&(q=c,e(c,b,!0,!0))}var h,i,j,k,l,m=[],n=[],o=[],p=[],q=0,r=0,s=1,t=!1,u=a(b),v=u.scrollTop(),w=!1,x=!1,y=!1,z=!1,A=[],B=(new Date).getTime(),C=!0,D=!1,E=0,F="onwheel"in c?"wheel":c.onmousewheel!==d?"mousewheel":"DOMMouseScroll",G={section:".section",sectionName:"section-name",interstitialSection:"",easing:"easeOutExpo",scrollSpeed:1100,offset:0,scrollbars:!0,target:"html,body",standardScrollElements:!1,setHeights:!0,overflowScroll:!0,updateHash:!0,touchScroll:!0,before:function(){},after:function(){},afterResize:function(){},afterRender:function(){}},H=function(d){function g(b){a().velocity?a(G.target).stop().velocity("scroll",{duration:G.scrollSpeed,easing:G.easing,offset:b,mobileHA:!1}):a(G.target).stop().animate({scrollTop:b},G.scrollSpeed,G.easing)}function r(){var b=G.section;p=[],G.interstitialSection.length&&(b+=","+G.interstitialSection),G.scrollbars===!1&&(G.overflowScroll=!1),a(b).each(function(b){var c=a(this);G.setHeights?c.is(G.interstitialSection)?p[b]=!1:c.css("height","auto").outerHeight()<u.height()||"hidden"===c.css("overflow")?(c.css({height:u.height()}),p[b]=!1):(c.css({height:c.height()}),G.overflowScroll?p[b]=!0:p[b]=!1):c.outerHeight()<u.height()||G.overflowScroll===!1?p[b]=!1:p[b]=!0})}function C(c,d){var f=G.section;G.interstitialSection.length&&(f+=","+G.interstitialSection),m=[],n=[],o=[],a(f).each(function(c){var d=a(this);c>0?m[c]=parseInt(d.offset().top)+G.offset:m[c]=parseInt(d.offset().top),G.sectionName&&d.data(G.sectionName)?n[c]="#"+d.data(G.sectionName).toString().replace(/ /g,"-"):d.is(G.interstitialSection)===!1?n[c]="#"+(c+1):(n[c]="#",c===a(f).length-1&&c>1&&(m[c]=m[c-1]+parseInt(d.height()))),o[c]=d;try{a(n[c]).length&&b.console&&console.warn("Scrollify warning: Section names can't match IDs - this will cause the browser to anchor.")}catch(a){}b.location.hash===n[c]&&(q=c,t=!0)}),!0===c&&e(q,!1,!1,!1)}function E(){return!p[q]||(v=u.scrollTop(),!(v>parseInt(m[q])))}function H(){return!p[q]||(v=u.scrollTop(),!(v<parseInt(m[q])+(o[q].outerHeight()-u.height())-28))}D=!0,a.easing.easeOutExpo=function(a,b,c,d,e){return b==e?c+d:d*(-Math.pow(2,-10*b/e)+1)+c},j={handleMousedown:function(){return z===!0||(w=!1,void(y=!1))},handleMouseup:function(){return z===!0||(w=!0,void(y&&j.calculateNearest(!1,!0)))},handleScroll:function(){return z===!0||(h&&clearTimeout(h),void(h=setTimeout(function(){return y=!0,w!==!1&&(w=!1,void j.calculateNearest(!1,!0))},200)))},calculateNearest:function(a,b){v=u.scrollTop();for(var c,d=1,f=m.length,g=0,h=Math.abs(m[0]-v);d<f;d++)c=Math.abs(m[d]-v),c<h&&(h=c,g=d);(H()&&g>q||E())&&(q=g,e(g,a,b,!1))},wheelHandler:function(c){if(z===!0)return!0;if(G.standardScrollElements&&(a(c.target).is(G.standardScrollElements)||a(c.target).closest(G.standardScrollElements).length))return!0;p[q]||c.preventDefault();var d=(new Date).getTime();c=c||b.event;var g=c.originalEvent.wheelDelta||-c.originalEvent.deltaY||-c.originalEvent.detail,h=Math.max(-1,Math.min(1,g));if(A.length>149&&A.shift(),A.push(Math.abs(g)),d-B>200&&(A=[]),B=d,x)return!1;if(h<0){if(q<m.length-1&&H()){if(!f(A))return!1;c.preventDefault(),q++,x=!0,e(q,!1,!0,!1)}}else if(h>0&&q>0&&E()){if(!f(A))return!1;c.preventDefault(),q--,x=!0,e(q,!1,!0,!1)}},keyHandler:function(a){return z===!0||x!==!0&&void(38==a.keyCode||33==a.keyCode?q>0&&E()&&(a.preventDefault(),q--,e(q,!1,!0,!1)):40!=a.keyCode&&34!=a.keyCode||q<m.length-1&&H()&&(a.preventDefault(),q++,e(q,!1,!0,!1)))},init:function(){G.scrollbars?(u.on("mousedown",j.handleMousedown),u.on("mouseup",j.handleMouseup),u.on("scroll",j.handleScroll)):a("body").css({overflow:"hidden"}),u.on(F,j.wheelHandler),u.on("keydown",j.keyHandler)}},k={touches:{touchstart:{y:-1,x:-1},touchmove:{y:-1,x:-1},touchend:!1,direction:"undetermined"},options:{distance:30,timeGap:800,timeStamp:(new Date).getTime()},touchHandler:function(b){if(z===!0)return!0;if(G.standardScrollElements&&(a(b.target).is(G.standardScrollElements)||a(b.target).closest(G.standardScrollElements).length))return!0;var c;if("undefined"!=typeof b&&"undefined"!=typeof b.touches)switch(c=b.touches[0],b.type){case"touchstart":k.touches.touchstart.y=c.pageY,k.touches.touchmove.y=-1,k.touches.touchstart.x=c.pageX,k.touches.touchmove.x=-1,k.options.timeStamp=(new Date).getTime(),k.touches.touchend=!1;case"touchmove":k.touches.touchmove.y=c.pageY,k.touches.touchmove.x=c.pageX,k.touches.touchstart.y!==k.touches.touchmove.y&&Math.abs(k.touches.touchstart.y-k.touches.touchmove.y)>Math.abs(k.touches.touchstart.x-k.touches.touchmove.x)&&(b.preventDefault(),k.touches.direction="y",k.options.timeStamp+k.options.timeGap<(new Date).getTime()&&0==k.touches.touchend&&(k.touches.touchend=!0,k.touches.touchstart.y>-1&&Math.abs(k.touches.touchmove.y-k.touches.touchstart.y)>k.options.distance&&(k.touches.touchstart.y<k.touches.touchmove.y?k.up():k.down())));break;case"touchend":k.touches[b.type]===!1&&(k.touches[b.type]=!0,k.touches.touchstart.y>-1&&k.touches.touchmove.y>-1&&"y"===k.touches.direction&&(Math.abs(k.touches.touchmove.y-k.touches.touchstart.y)>k.options.distance&&(k.touches.touchstart.y<k.touches.touchmove.y?k.up():k.down()),k.touches.touchstart.y=-1,k.touches.touchstart.x=-1,k.touches.direction="undetermined"))}},down:function(){q<m.length-1&&(H()&&q<m.length-1?(q++,e(q,!1,!0,!1)):Math.floor(o[q].height()/u.height())>s?(g(parseInt(m[q])+u.height()*s),s+=1):g(parseInt(m[q])+(o[q].height()-u.height())))},up:function(){q>=0&&(E()&&q>0?(q--,e(q,!1,!0,!1)):s>2?(s-=1,g(parseInt(m[q])+u.height()*s)):(s=1,g(parseInt(m[q]))))},init:function(){c.addEventListener&&G.touchScroll&&(c.addEventListener("touchstart",k.touchHandler,!1),c.addEventListener("touchmove",k.touchHandler,!1),c.addEventListener("touchend",k.touchHandler,!1))}},l={refresh:function(a,b){clearTimeout(i),i=setTimeout(function(){r(),C(b,!1),a&&G.afterResize()},400)},handleUpdate:function(){l.refresh(!1,!0)},handleResize:function(){l.refresh(!0,!1)},handleOrientation:function(){l.refresh(!0,!0)}},G=a.extend(G,d),r(),C(!1,!0),!0===t?e(q,!1,!0,!0):setTimeout(function(){j.calculateNearest(!0,!1)},200),m.length&&(j.init(),k.init(),u.on("resize",l.handleResize),c.addEventListener&&b.addEventListener("orientationchange",l.handleOrientation,!1))};return H.move=function(b){return b!==d&&(b.originalEvent&&(b=a(this).attr("href")),void g(b,!1))},H.instantMove=function(a){return a!==d&&void g(a,!0)},H.next=function(){q<n.length&&(q+=1,e(q,!1,!0,!0))},H.previous=function(){q>0&&(q-=1,e(q,!1,!0,!0))},H.instantNext=function(){q<n.length&&(q+=1,e(q,!0,!0,!0))},H.instantPrevious=function(){q>0&&(q-=1,e(q,!0,!0,!0))},H.destroy=function(){return!!D&&(G.setHeights&&a(G.section).each(function(){a(this).css("height","auto")}),u.off("resize",l.handleResize),G.scrollbars&&(u.off("mousedown",j.handleMousedown),u.off("mouseup",j.handleMouseup),u.off("scroll",j.handleScroll)),u.off(F,j.wheelHandler),u.off("keydown",j.keyHandler),c.addEventListener&&G.touchScroll&&(c.removeEventListener("touchstart",k.touchHandler,!1),c.removeEventListener("touchmove",k.touchHandler,!1),c.removeEventListener("touchend",k.touchHandler,!1)),m=[],n=[],o=[],void(p=[]))},H.update=function(){return!!D&&void l.handleUpdate()},H.current=function(){return o[q]},H.disable=function(){z=!0},H.enable=function(){z=!1,D&&j.calculateNearest(!1,!1)},H.isDisabled=function(){return z},H.setOptions=function(c){return!!D&&void("object"==typeof c?(G=a.extend(G,c),l.handleUpdate()):b.console&&console.warn("Scrollify warning: setOptions expects an object."))},a.scrollify=H,H});
+/*!
+ * jQuery Scrollify
+ * Version 1.0.19
+ *
+ * Requires:
+ * - jQuery 1.7 or higher
+ *
+ * https://github.com/lukehaas/Scrollify
+ *
+ * Copyright 2016, Luke Haas
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+if touchScroll is false - update index
+
+ */
+(function (global,factory) {
+  "use strict";
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['jquery'], function($) {
+      return factory($, global, global.document);
+    });
+  } else if (typeof module === 'object' && module.exports) {
+    // Node/CommonJS
+    module.exports = factory(require('jquery'), global, global.document);
+  } else {
+    // Browser globals
+    factory(jQuery, global, global.document);
+  }
+}(typeof window !== 'undefined' ? window : this, function ($, window, document, undefined) {
+  "use strict";
+  var heights = [],
+    names = [],
+    elements = [],
+    overflow = [],
+    index = 0,
+    currentIndex = 0,
+    interstitialIndex = 1,
+    hasLocation = false,
+    timeoutId,
+    timeoutId2,
+    $window = $(window),
+    portHeight,
+    top = $window.scrollTop(),
+    scrollable = false,
+    locked = false,
+    scrolled = false,
+    manualScroll,
+    swipeScroll,
+    util,
+    disabled = false,
+    scrollSamples = [],
+    scrollTime = new Date().getTime(),
+    firstLoad = true,
+    initialised = false,
+    destination = 0,
+    wheelEvent = 'onwheel' in document ? 'wheel' : document.onmousewheel !== undefined ? 'mousewheel' : 'DOMMouseScroll',
+    settings = {
+      //section should be an identifier that is the same for each section
+      section: ".section",
+      sectionName: "section-name",
+      interstitialSection: "",
+      easing: "easeOutExpo",
+      scrollSpeed: 1100,
+      offset: 0,
+      scrollbars: true,
+      target:"html,body",
+      standardScrollElements: false,
+      setHeights: true,
+      overflowScroll:true,
+      updateHash: true,
+      touchScroll:true,
+      before:function() {},
+      after:function() {},
+      afterResize:function() {},
+      afterRender:function() {}
+    };
+  function getportHeight() {
+    return ($window.height() + settings.offset);
+  }
+  function animateScroll(index,instant,callbacks,toTop) {
+    if(currentIndex===index) {
+      callbacks = false;
+    }
+    if(disabled===true) {
+      return true;
+    }
+    if(names[index]) {
+      scrollable = false;
+      if(firstLoad===true) {
+        settings.afterRender();
+        firstLoad = false;
+      }
+      if(callbacks) {
+        if( typeof settings.before == 'function' && settings.before(index,elements) === false ){
+          return true;
+        }
+      }
+      interstitialIndex = 1;
+      destination = heights[index];
+      if(firstLoad===false && currentIndex>index && toTop===false) {
+        //We're going backwards
+        if(overflow[index]) {
+          portHeight = getportHeight();
+
+          interstitialIndex = parseInt(elements[index].outerHeight()/portHeight);
+
+          destination = parseInt(heights[index])+(elements[index].outerHeight()-portHeight);
+        }
+      }
+
+
+      if(settings.updateHash && settings.sectionName && !(firstLoad===true && index===0)) {
+        if(history.pushState) {
+            try {
+              history.replaceState(null, null, names[index]);
+            } catch (e) {
+              if(window.console) {
+                console.warn("Scrollify warning: Page must be hosted to manipulate the hash value.");
+              }
+            }
+
+        } else {
+          window.location.hash = names[index];
+        }
+      }
+
+      currentIndex = index;
+      if(instant) {
+        $(settings.target).stop().scrollTop(destination);
+        if(callbacks) {
+          settings.after(index,elements);
+        }
+      } else {
+        locked = true;
+        if( $().velocity ) {
+          $(settings.target).stop().velocity('scroll', {
+            duration: settings.scrollSpeed,
+            easing: settings.easing,
+            offset: destination,
+            mobileHA: false
+          });
+        } else {
+          $(settings.target).stop().animate({
+            scrollTop: destination
+          }, settings.scrollSpeed,settings.easing);
+        }
+
+        if(window.location.hash.length && settings.sectionName && window.console) {
+          try {
+            if($(window.location.hash).length) {
+              console.warn("Scrollify warning: ID matches hash value - this will cause the page to anchor.");
+            }
+          } catch (e) {}
+        }
+        $(settings.target).promise().done(function(){
+          locked = false;
+          firstLoad = false;
+          if(callbacks) {
+            settings.after(index,elements);
+          }
+        });
+      }
+
+    }
+  }
+
+  function isAccelerating(samples) {
+    function average(num) {
+      var sum = 0;
+
+      var lastElements = samples.slice(Math.max(samples.length - num, 1));
+
+      for(var i = 0; i < lastElements.length; i++){
+          sum += lastElements[i];
+      }
+
+      return Math.ceil(sum/num);
+    }
+
+    var avEnd = average(10);
+    var avMiddle = average(70);
+
+    if(avEnd >= avMiddle) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  var scrollify = function(options) {
+    initialised = true;
+    $.easing['easeOutExpo'] = function(x, t, b, c, d) {
+      return (t==d) ? b+c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
+    };
+
+    manualScroll = {
+      handleMousedown:function() {
+        if(disabled===true) {
+          return true;
+        }
+        scrollable = false;
+        scrolled = false;
+      },
+      handleMouseup:function() {
+        if(disabled===true) {
+          return true;
+        }
+        scrollable = true;
+        if(scrolled) {
+          //instant,callbacks
+          manualScroll.calculateNearest(false,true);
+        }
+      },
+      handleScroll:function() {
+        if(disabled===true) {
+          return true;
+        }
+        if(timeoutId){
+          clearTimeout(timeoutId);
+        }
+
+        timeoutId = setTimeout(function(){
+          scrolled = true;
+          if(scrollable===false) {
+            return false;
+          }
+          scrollable = false;
+          //instant,callbacks
+          manualScroll.calculateNearest(false,true);
+        }, 200);
+      },
+      calculateNearest:function(instant,callbacks) {
+        top = $window.scrollTop();
+        var i =1,
+          max = heights.length,
+          closest = 0,
+          prev = Math.abs(heights[0] - top),
+          diff;
+        for(;i<max;i++) {
+          diff = Math.abs(heights[i] - top);
+
+          if(diff < prev) {
+            prev = diff;
+            closest = i;
+          }
+        }
+        if((atBottom() && closest>index) || atTop()) {
+          index = closest;
+          //index, instant, callbacks, toTop
+          animateScroll(closest,instant,callbacks,false);
+        }
+      },
+      wheelHandler:function(e) {
+        if(disabled===true) {
+          return true;
+        } else if(settings.standardScrollElements) {
+          if($(e.target).is(settings.standardScrollElements) || $(e.target).closest(settings.standardScrollElements).length) {
+            return true;
+          }
+        }
+        if(!overflow[index]) {
+          e.preventDefault();
+        }
+        var currentScrollTime = new Date().getTime();
+
+
+        e = e || window.event;
+        var value = e.originalEvent.wheelDelta || -e.originalEvent.deltaY || -e.originalEvent.detail;
+        var delta = Math.max(-1, Math.min(1, value));
+
+        //delta = delta || -e.originalEvent.detail / 3 || e.originalEvent.wheelDelta / 120;
+
+        if(scrollSamples.length > 149){
+          scrollSamples.shift();
+        }
+        //scrollSamples.push(Math.abs(delta*10));
+        scrollSamples.push(Math.abs(value));
+
+        if((currentScrollTime-scrollTime) > 200){
+          scrollSamples = [];
+        }
+        scrollTime = currentScrollTime;
+
+
+        if(locked) {
+          return false;
+        }
+        if(delta<0) {
+          if(index<heights.length-1) {
+            if(atBottom()) {
+              if(isAccelerating(scrollSamples)) {
+                e.preventDefault();
+                index++;
+                locked = true;
+                //index, instant, callbacks, toTop
+                animateScroll(index,false,true, false);
+              } else {
+                return false;
+              }
+            }
+          }
+        } else if(delta>0) {
+          if(index>0) {
+            if(atTop()) {
+              if(isAccelerating(scrollSamples)) {
+                e.preventDefault();
+                index--;
+                locked = true;
+                //index, instant, callbacks, toTop
+                animateScroll(index,false,true, false);
+              } else {
+                return false
+              }
+            }
+          }
+        }
+
+      },
+      keyHandler:function(e) {
+        if(disabled===true || document.activeElement.readOnly===false) {
+          return true;
+        }
+        if(locked===true) {
+          return false;
+        }
+        if(e.keyCode==38 || e.keyCode==33) {
+          if(index>0) {
+            if(atTop()) {
+              e.preventDefault();
+              index--;
+              //index, instant, callbacks, toTop
+              animateScroll(index,false,true,false);
+            }
+          }
+        } else if(e.keyCode==40 || e.keyCode==34) {
+          if(index<heights.length-1) {
+            if(atBottom()) {
+              e.preventDefault();
+              index++;
+              //index, instant, callbacks, toTop
+              animateScroll(index,false,true,false);
+            }
+          }
+        }
+      },
+      init:function() {
+        if(settings.scrollbars) {
+          $window.on('mousedown', manualScroll.handleMousedown);
+          $window.on('mouseup', manualScroll.handleMouseup);
+          $window.on('scroll', manualScroll.handleScroll);
+        } else {
+          $("body").css({"overflow":"hidden"});
+        }
+        $window.on(wheelEvent,manualScroll.wheelHandler);
+        //$(document).bind(wheelEvent,manualScroll.wheelHandler);
+        $window.on('keydown', manualScroll.keyHandler);
+      }
+    };
+
+    swipeScroll = {
+      touches : {
+        "touchstart": {"y":-1,"x":-1},
+        "touchmove" : {"y":-1,"x":-1},
+        "touchend"  : false,
+        "direction" : "undetermined"
+      },
+      options:{
+        "distance" : 30,
+        "timeGap" : 800,
+        "timeStamp" : new Date().getTime()
+      },
+      touchHandler: function(event) {
+        if(disabled===true) {
+          return true;
+        } else if(settings.standardScrollElements) {
+          if($(event.target).is(settings.standardScrollElements) || $(event.target).closest(settings.standardScrollElements).length) {
+            return true;
+          }
+        }
+        var touch;
+        if (typeof event !== 'undefined'){
+          if (typeof event.touches !== 'undefined') {
+            touch = event.touches[0];
+            switch (event.type) {
+              case 'touchstart':
+                swipeScroll.touches.touchstart.y = touch.pageY;
+                swipeScroll.touches.touchmove.y = -1;
+
+                swipeScroll.touches.touchstart.x = touch.pageX;
+                swipeScroll.touches.touchmove.x = -1;
+
+                swipeScroll.options.timeStamp = new Date().getTime();
+                swipeScroll.touches.touchend = false;
+              case 'touchmove':
+                swipeScroll.touches.touchmove.y = touch.pageY;
+                swipeScroll.touches.touchmove.x = touch.pageX;
+                if(swipeScroll.touches.touchstart.y!==swipeScroll.touches.touchmove.y && (Math.abs(swipeScroll.touches.touchstart.y-swipeScroll.touches.touchmove.y)>Math.abs(swipeScroll.touches.touchstart.x-swipeScroll.touches.touchmove.x))) {
+                  //if(!overflow[index]) {
+                    event.preventDefault();
+                  //}
+                  swipeScroll.touches.direction = "y";
+                  if((swipeScroll.options.timeStamp+swipeScroll.options.timeGap)<(new Date().getTime()) && swipeScroll.touches.touchend == false) {
+
+                    swipeScroll.touches.touchend = true;
+                    if (swipeScroll.touches.touchstart.y > -1) {
+
+                      if(Math.abs(swipeScroll.touches.touchmove.y-swipeScroll.touches.touchstart.y)>swipeScroll.options.distance) {
+                        if(swipeScroll.touches.touchstart.y < swipeScroll.touches.touchmove.y) {
+
+                          swipeScroll.up();
+
+                        } else {
+                          swipeScroll.down();
+
+                        }
+                      }
+                    }
+                  }
+                }
+                break;
+              case 'touchend':
+                if(swipeScroll.touches[event.type]===false) {
+                  swipeScroll.touches[event.type] = true;
+                  if (swipeScroll.touches.touchstart.y > -1 && swipeScroll.touches.touchmove.y > -1 && swipeScroll.touches.direction==="y") {
+
+                    if(Math.abs(swipeScroll.touches.touchmove.y-swipeScroll.touches.touchstart.y)>swipeScroll.options.distance) {
+                      if(swipeScroll.touches.touchstart.y < swipeScroll.touches.touchmove.y) {
+                        swipeScroll.up();
+
+                      } else {
+                        swipeScroll.down();
+
+                      }
+                    }
+                    swipeScroll.touches.touchstart.y = -1;
+                    swipeScroll.touches.touchstart.x = -1;
+                    swipeScroll.touches.direction = "undetermined";
+                  }
+                }
+              default:
+                break;
+            }
+          }
+        }
+      },
+      down: function() {
+
+        if(index<heights.length) {
+
+          if(atBottom() && index<heights.length-1) {
+
+            index++;
+            //index, instant, callbacks, toTop
+            animateScroll(index,false,true,false);
+          } else {
+            portHeight = getportHeight();
+            if(Math.floor(elements[index].height()/portHeight)>interstitialIndex) {
+
+              interstitialScroll(parseInt(heights[index])+(portHeight*interstitialIndex));
+              interstitialIndex += 1;
+
+            } else {
+              interstitialScroll(parseInt(heights[index])+(elements[index].outerHeight()-portHeight));
+            }
+
+          }
+        }
+      },
+      up: function() {
+        if(index>=0) {
+          if(atTop() && index>0) {
+
+            index--;
+            //index, instant, callbacks, toTop
+            animateScroll(index,false,true,false);
+          } else {
+
+            if(interstitialIndex>2) {
+              portHeight = getportHeight();
+
+              interstitialIndex -= 1;
+              interstitialScroll(parseInt(heights[index])+(portHeight*interstitialIndex));
+
+            } else {
+
+              interstitialIndex = 1;
+              interstitialScroll(parseInt(heights[index]));
+            }
+          }
+
+        }
+      },
+      init: function() {
+        if (document.addEventListener && settings.touchScroll) {
+          var eventListenerOptions = {
+            passive: false
+          };
+          document.addEventListener('touchstart', swipeScroll.touchHandler, eventListenerOptions);
+          document.addEventListener('touchmove', swipeScroll.touchHandler, eventListenerOptions);
+          document.addEventListener('touchend', swipeScroll.touchHandler, eventListenerOptions);
+        }
+      }
+    };
+
+
+    util = {
+      refresh:function(withCallback,scroll) {
+        clearTimeout(timeoutId2);
+        timeoutId2 = setTimeout(function() {
+          //retain position
+          sizePanels(true);
+          //scroll, firstLoad
+          calculatePositions(scroll,false);
+          if(withCallback) {
+              settings.afterResize();
+          }
+        },400);
+      },
+      handleUpdate:function() {
+        //callbacks, scroll
+        //changed from false,true to false,false
+        util.refresh(false,false);
+      },
+      handleResize:function() {
+        //callbacks, scroll
+        util.refresh(true,false);
+      },
+      handleOrientation:function() {
+        //callbacks, scroll
+        util.refresh(true,true);
+      }
+    };
+    settings = $.extend(settings, options);
+
+    //retain position
+    sizePanels(false);
+
+    calculatePositions(false,true);
+
+    if(true===hasLocation) {
+      //index, instant, callbacks, toTop
+      animateScroll(index,false,true,true);
+    } else {
+      setTimeout(function() {
+        //instant,callbacks
+        manualScroll.calculateNearest(true,false);
+      },200);
+    }
+    if(heights.length) {
+      manualScroll.init();
+      swipeScroll.init();
+
+      $window.on("resize",util.handleResize);
+      if (document.addEventListener) {
+        window.addEventListener("orientationchange", util.handleOrientation, false);
+      }
+    }
+    function interstitialScroll(pos) {
+      if( $().velocity ) {
+        $(settings.target).stop().velocity('scroll', {
+          duration: settings.scrollSpeed,
+          easing: settings.easing,
+          offset: pos,
+          mobileHA: false
+        });
+      } else {
+        $(settings.target).stop().animate({
+          scrollTop: pos
+        }, settings.scrollSpeed,settings.easing);
+      }
+    }
+
+    function sizePanels(keepPosition) {
+      if(keepPosition) {
+        top = $window.scrollTop();
+      }
+
+      var selector = settings.section;
+      overflow = [];
+      if(settings.interstitialSection.length) {
+        selector += "," + settings.interstitialSection;
+      }
+      if(settings.scrollbars===false) {
+        settings.overflowScroll = false;
+      }
+      portHeight = getportHeight();
+      $(selector).each(function(i) {
+        var $this = $(this);
+
+        if(settings.setHeights) {
+          if($this.is(settings.interstitialSection)) {
+            overflow[i] = false;
+          } else {
+            if(($this.css("height","auto").outerHeight()<portHeight) || $this.css("overflow")==="hidden") {
+              $this.css({"height":portHeight});
+
+              overflow[i] = false;
+            } else {
+
+              $this.css({"height":$this.height()});
+
+              if(settings.overflowScroll) {
+                overflow[i] = true;
+              } else {
+                overflow[i] = false;
+              }
+            }
+
+          }
+
+        } else {
+
+          if(($this.outerHeight()<portHeight) || (settings.overflowScroll===false)) {
+            overflow[i] = false;
+          } else {
+            overflow[i] = true;
+          }
+        }
+      });
+      if(keepPosition) {
+        $window.scrollTop(top);
+      }
+    }
+    function calculatePositions(scroll,firstLoad) {
+      var selector = settings.section;
+      if(settings.interstitialSection.length) {
+        selector += "," + settings.interstitialSection;
+      }
+      heights = [];
+      names = [];
+      elements = [];
+      $(selector).each(function(i){
+          var $this = $(this);
+          if(i>0) {
+            heights[i] = parseInt($this.offset().top) + settings.offset;
+          } else {
+            heights[i] = parseInt($this.offset().top);
+          }
+          if(settings.sectionName && $this.data(settings.sectionName)) {
+            names[i] = "#" + $this.data(settings.sectionName).toString().replace(/ /g,"-");
+          } else {
+            if($this.is(settings.interstitialSection)===false) {
+              names[i] = "#" + (i + 1);
+            } else {
+              names[i] = "#";
+              if(i===$(selector).length-1 && i>1) {
+                heights[i] = heights[i-1] + (parseInt($($(selector)[i-1]).outerHeight()) - parseInt($(window).height())) + parseInt($this.outerHeight());
+              }
+            }
+          }
+          elements[i] = $this;
+          try {
+            if($(names[i]).length && window.console) {
+              console.warn("Scrollify warning: Section names can't match IDs - this will cause the browser to anchor.");
+            }
+          } catch (e) {}
+
+          if(window.location.hash===names[i]) {
+            index = i;
+            hasLocation = true;
+          }
+
+      });
+
+      if(true===scroll) {
+        //index, instant, callbacks, toTop
+        animateScroll(index,false,false,false);
+      }
+    }
+
+    function atTop() {
+      if(!overflow[index]) {
+        return true;
+      }
+      top = $window.scrollTop();
+      if(top>parseInt(heights[index])) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    function atBottom() {
+      if(!overflow[index]) {
+        return true;
+      }
+      top = $window.scrollTop();
+      portHeight = getportHeight();
+
+      if(top<parseInt(heights[index])+(elements[index].outerHeight()-portHeight)-28) {
+
+        return false;
+
+      } else {
+        return true;
+      }
+    }
+  }
+
+  function move(panel,instant) {
+    var z = names.length;
+    for(;z>=0;z--) {
+      if(typeof panel === 'string') {
+        if (names[z]===panel) {
+          index = z;
+          //index, instant, callbacks, toTop
+          animateScroll(z,instant,true,true);
+        }
+      } else {
+        if(z===panel) {
+          index = z;
+          //index, instant, callbacks, toTop
+          animateScroll(z,instant,true,true);
+        }
+      }
+    }
+  }
+  scrollify.move = function(panel) {
+    if(panel===undefined) {
+      return false;
+    }
+    if(panel.originalEvent) {
+      panel = $(this).attr("href");
+    }
+    move(panel,false);
+  };
+  scrollify.instantMove = function(panel) {
+    if(panel===undefined) {
+      return false;
+    }
+    move(panel,true);
+  };
+  scrollify.next = function() {
+    if(index<names.length) {
+      index += 1;
+      //index, instant, callbacks, toTop
+      animateScroll(index,false,true,true);
+    }
+  };
+  scrollify.previous = function() {
+    if(index>0) {
+      index -= 1;
+      //index, instant, callbacks, toTop
+      animateScroll(index,false,true,true);
+    }
+  };
+  scrollify.instantNext = function() {
+    if(index<names.length) {
+      index += 1;
+      //index, instant, callbacks, toTop
+      animateScroll(index,true,true,true);
+    }
+  };
+  scrollify.instantPrevious = function() {
+    if(index>0) {
+      index -= 1;
+      //index, instant, callbacks, toTop
+      animateScroll(index,true,true,true);
+    }
+  };
+  scrollify.destroy = function() {
+    if(!initialised) {
+      return false;
+    }
+    if(settings.setHeights) {
+      $(settings.section).each(function() {
+        $(this).css("height","auto");
+      });
+    }
+    $window.off("resize",util.handleResize);
+    if(settings.scrollbars) {
+      $window.off('mousedown', manualScroll.handleMousedown);
+      $window.off('mouseup', manualScroll.handleMouseup);
+      $window.off('scroll', manualScroll.handleScroll);
+    }
+    $window.off(wheelEvent,manualScroll.wheelHandler);
+    $window.off('keydown', manualScroll.keyHandler);
+
+    if (document.addEventListener && settings.touchScroll) {
+      document.removeEventListener('touchstart', swipeScroll.touchHandler, false);
+      document.removeEventListener('touchmove', swipeScroll.touchHandler, false);
+      document.removeEventListener('touchend', swipeScroll.touchHandler, false);
+    }
+    heights = [];
+    names = [];
+    elements = [];
+    overflow = [];
+  };
+  scrollify.update = function() {
+    if(!initialised) {
+      return false;
+    }
+    util.handleUpdate();
+  };
+  scrollify.current = function() {
+    return elements[index];
+  };
+  scrollify.currentIndex = function() {
+    return index;
+  };
+  scrollify.disable = function() {
+    disabled = true;
+  };
+  scrollify.enable = function() {
+    disabled = false;
+    if (initialised) {
+      //instant,callbacks
+      manualScroll.calculateNearest(false,false);
+    }
+  };
+  scrollify.isDisabled = function() {
+    return disabled;
+  };
+  scrollify.setOptions = function(updatedOptions) {
+    if(!initialised) {
+      return false;
+    }
+    if(typeof updatedOptions === "object") {
+      settings = $.extend(settings, updatedOptions);
+      util.handleUpdate();
+    } else if(window.console) {
+      console.warn("Scrollify warning: setOptions expects an object.");
+    }
+  };
+  $.scrollify = scrollify;
+  return scrollify;
+}));

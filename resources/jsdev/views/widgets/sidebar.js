@@ -3,14 +3,14 @@
 **/
 define(
     /**
-    * RequireJS Resources loaded in this view.  
+    * RequireJS Resources loaded in this view.
     * If not avaialable in the globals file, they will be loaded via HTTP request before the View is instantiated
     **/
     [
     'Backbone',
     'models/RelaxAPI',
     'models/RelaxerHistory'
-    ], 
+    ],
     /**
     * Function arguments are the local resource variables for the above
     **/ 
@@ -45,15 +45,15 @@ define(
                 if( typeof( moduleAPIRoot ) === 'undefined' ) moduleAPIRoot = window.relax.baseUrl;
 
                 if( !_.isUndefined( options.apis ) ){
-                  _this.availableAPIs = options.apis;  
+                  _this.availableAPIs = options.apis;
                   _this.defaultAPI = options.default;
-                } 
+                }
 
                 if( !_.isUndefined( options.view ) ){
                     _this.View = options.view;
 
                     if( _.isUndefined( _this.View.Model ) ){
-                        _this.View.Model = APIModel;  
+                        _this.View.Model = APIModel;
                     }
 
                     _this.ViewModel = _this.View.Model;
@@ -70,7 +70,7 @@ define(
 							$( "#system-messages" ).append( '<p class="alert alert-danger">An error occurred while attempting to fetch the available APIS.  Please check the console for details.</a>' );
 							console.error( resp );
 						}
-					});     					
+					});
      			} else {
      				return _this.setupDefaults().setupSelectors().render();
      			}
@@ -105,9 +105,9 @@ define(
             	var _this = this;
 
             	_this.renderAPISelectors().then( function(){
-                    
+
                     if( _this.$el.hasClass( 'relaxer-sidebar' ) ){
-                    
+
                         _this.assignAPI( _this.defaultAPI );
                         $( "#myAPI" ).change();
                         _this.initializeRelaxerHistory();
@@ -124,11 +124,11 @@ define(
             ,renderAPISelectors:function(){
             	var _this = this;
                 var promise = new Promise( function( resolve,reject ){
-                   
+
                     if( typeof( _this.availableAPIs ) === 'undefined' ) return reject();
                     var selectorTemplate = _.template( $( "#api-selector-template" ).html() );
-                    $( ".mc-sidebar .api-selector" ).html( selectorTemplate( { "apis":_this.availableAPIs,"defaultAPI":_this.defaultAPI } ) ); 
-                    return resolve();               
+                    $( ".mc-sidebar .api-selector" ).html( selectorTemplate( { "apis":_this.availableAPIs,"defaultAPI":_this.defaultAPI } ) );
+                    return resolve();
                 } );
 
                 return promise;
@@ -143,7 +143,7 @@ define(
                 $( ".relaxer-resources", _this.$el ).html( resourceTemplate( {
                     "api":_this.ViewModel.attributes
                 } ) )
-                
+
             }
 
             /**
@@ -153,7 +153,7 @@ define(
                 var _this = this;
 
                 if( _.isUndefined( _this.View.HistoryModel ) ){
-                    
+
                     _this.View.HistoryModel = new HistoryModel();
 
                 }
@@ -172,12 +172,12 @@ define(
 
                 var historyTemplate = _.template( $( "#relaxer-resources-template" ).html() );
                 var $historyContainer = $( ".relaxer-history", _this.el );
-               
+
                 $historyContainer.empty().html( historyTemplate( {
                     "history":_this.HistoryModel.attributes.history
                 } ) );
             }
-            
+
             /**
 			* ----------------------------------------------
 			* Event Methods
@@ -241,16 +241,16 @@ define(
                 _this.ViewModel.fetch({
                     success:function( model, resp ){
 
-                        if( $( '.relaxer .relaxer-form' ).length ){                        
-                            history.pushState( null, null, moduleAPIRoot + "relaxer/" + selectedAPI  );   
+                        if( $( '.relaxer .relaxer-form' ).length ){
+                            history.pushState( null, null, moduleAPIRoot + "relaxer/" + selectedAPI  );
                         } else {
-                            history.pushState( null, null, moduleAPIRoot + "api/" + selectedAPI  );       
+                            history.pushState( null, null, moduleAPIRoot + "api/" + selectedAPI  );
                         }
 
                         if( _this.$el.hasClass( 'relaxer-sidebar' ) ){
                             _this.renderRelaxerResources();
                         } else {
-                            _this.View.render();    
+                            _this.View.render();
                         }
 
                     },
@@ -272,8 +272,8 @@ define(
                 var _this = this;
                 var $btn = $( e.currentTarget );
 
-                $.get( 
-                    
+                $.get(
+
                     $btn.data( 'link' ) + "/" + $( '[name="myAPI"]', _this.$el ).val(),
 
                     function( exportHTML ){
@@ -298,8 +298,7 @@ define(
 
                 //manually bind our buttons and fields, since they are outside of the scope of this sidebar
                 $( '.btnProcessImport', $modal ).on( 'click', function( e ){
-                   console.log( e );
-                   _this.onConfirmImportAPI( e.currentTarget ); 
+                   _this.onConfirmImportAPI( e.currentTarget );
                 });
 
                 $( '[name="apiName"]' ).on( 'change' ,function( e ){
@@ -308,10 +307,10 @@ define(
 
                 $( '[name="apiJSON"]' ).on( 'blur', function( e ){
                     if( $( e.currentTarget ).val().length ){
-                        $( e.currentTarget ).val( formatJSONRaw( $( e.currentTarget ).val().trim() ) );   
+                        $( e.currentTarget ).val( formatJSONRaw( $( e.currentTarget ).val().trim() ) );
                     }
                 });
-                
+
             }
 
 
@@ -335,14 +334,14 @@ define(
                 var enteredName = $apiName.val();
                 var $apiSelect = $( '[name="myAPI"]' );
                 var exists = false;
-                
+
                 $apiSelect.find( 'option' ).each( function( ){
 
                     if( $( this ).attr( 'value' ).toLowerCase() === enteredName.trim().toLowerCase() ) exists = true;
                 } );
 
                 if( exists ){
-                    $apiName.after( '<p class="alert alert-danger" style="margin-top: 10px">The API Name entered already exists.  You may not import an API that overwrites an existing one at this time.</p>' );    
+                    $apiName.after( '<p class="alert alert-danger" style="margin-top: 10px">The API Name entered already exists.  You may not import an API that overwrites an existing one at this time.</p>' );
                     $apiName.closest( '.modal-content' ).find('.modal-footer').find( '.btnProcessImport' ).prop( 'disabled', true );
                 } else {
                     $apiName.closest( '.modal-content' ).find('.modal-footer').find( '.btnProcessImport' ).prop( 'disabled', false );
@@ -362,8 +361,8 @@ define(
                 $( 'input,textarea' ).each( function(){
                     formData[ $( this ).attr( 'name' ) ]=$( this ).val();
                 });
-                $.post( 
-                    moduleAPIRoot + "apidoc", 
+                $.post(
+                    moduleAPIRoot + "apidoc",
                     formData
                 ).done( function( data){
                     $btn.find( 'i.fa-spin' ).remove();
@@ -378,27 +377,27 @@ define(
                                 _this.defaultAPI = model.attributes.default;
                                 _this.renderAPISelectors().then( function(){
                                     $( '[name="myAPI"]' ).after( '<p class="alert alert-success alert-dismissable" style="margin-top:10px">' + _this.alertDismiss + 'API '+ formData.apiName +' successfully created.  You may select it here to view the documentation.</p>' );
-                                    $( '[name="myAPI"]' ).focus();                                    
+                                    $( '[name="myAPI"]' ).focus();
                                 });
-                            },  
+                            },
                             error: function( model, resp ){
                                 $( "#system-messages" ).append( '<p class="alert alert-danger alert-dismissable" style="margin-top:10px">' + _this.alertDismiss + 'An error occurred while attempting to fetch the available APIS.  Please check the console for details.</a>' );
                                 console.error( resp );
                             }
-                        }); 
-                        
+                        });
+
                     } else {
 
                         $form.append( '<p class="alert alert-danger alert-dismissable" style="margin-top:10px">' + _this.alertDismiss + 'The API could not be reported due to the following reason: <strong><em>' + data.message + '</em></strong>. Please correct your errors and try again.' );
-                    
+
                     }
                 }).fail( function( data ){
                     $btn.find( 'i.fa-spin' ).remove();
                     if( !_.isUndefined( data.message ) ){
-                        $form.append( '<p class="alert alert-danger alert-dismissable">The API could not be reported due to the following reason: <strong><em>' + data.message + '</em></strong>. Please correct your errors and try again.' );    
+                        $form.append( '<p class="alert alert-danger alert-dismissable">The API could not be reported due to the following reason: <strong><em>' + data.message + '</em></strong>. Please correct your errors and try again.' );
                     } else {
-                        $form.append( '<p class="alert alert-danger alert-dismissable">An unexpected error occurred while attempting to create the API. Please check the logs for additional information.' ); 
-                    }   
+                        $form.append( '<p class="alert alert-danger alert-dismissable">An unexpected error occurred while attempting to create the API. Please check the logs for additional information.' );
+                    }
                 });
             }
 
@@ -412,7 +411,7 @@ define(
 
                 var location = $btn.data( 'link' );
                 var selectedAPI = $( '[name="myAPI"]', _this.el ).val();
-               
+
                 window.open( location + "/" + selectedAPI );
 
             }
@@ -426,11 +425,11 @@ define(
                 var $resourceSelector = $( e.currentTarget );
                 var resource = $resourceSelector.val().split( ";" );
                 var methodName = resource[ 0 ];
-                
+
                 if( methodName === 'null' ){
-                
-                    $( '[name="httpResource"]' ).val( '' );    
-                
+
+                    $( '[name="httpResource"]' ).val( '' );
+
                 } else {
 
                     var pathName = resource[ 1 ];
@@ -477,4 +476,4 @@ define(
 
         return View;
     }
-);		
+);

@@ -2,8 +2,11 @@
 
 ## 3.1.0
 
+* Updated all JS libraries
+* Updated npm libraries
+* Updated grunt to leverage new locations of module template
 * CommandBox Readiness for static assets
-* Fix console bug
+* Fix console logs left behind
 * Dropped lucee 4 support
 * Added acf2018 support
 * module layout updates
