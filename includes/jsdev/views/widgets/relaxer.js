@@ -49,6 +49,12 @@ define(
                 } else {
                     _this.baseHref = rootAssetPath;
                 }
+
+                if (_.isUndefined(moduleAPIRoot)) {
+                    _this.relaxBaseURL = "/relax";
+                } else {
+                    _this.relaxBaseURL = moduleAPIRoot;
+                }
                 
                 if( !_.isUndefined( options ) ){
                     _.each( _.keys( options ), function( optionKey ){
@@ -200,7 +206,7 @@ define(
                 var relaxerRequest = _this.marshallRelaxerRequest();
 
                 var relaxerOptions = {
-                    url: '/relax/relaxer/send',
+                    url: _this.relaxBaseURL + "/relaxer/send",
                     method: "POST",
                     data: JSON.stringify( relaxerRequest ),
                     complete: function( jqXHR, textStatus ){
