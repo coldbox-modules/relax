@@ -12,11 +12,11 @@
     </div>
     <div class="panel-body">
 
-    	<% 
+    	<%
     		var h = 0;
-    		_.each( history, function( historyItem ){ 
+    		_.each( history, function( historyItem ){
 
-    			console.log( historyItem );
+    			//console.log( historyItem );
 
     	%>
 
@@ -26,7 +26,7 @@
 
 		        <h3 class="panel-title" style="text-transform: lowercase">
 		        	<a role="button" data-toggle="collapse" href="#history_panel_<%=h%>" aria-expanded="false" aria-controls="history_panel_<%=h%>">
-		        		<small><i class="fa fa-chevron-down"></i></small>	
+		        		<small><i class="fa fa-chevron-down"></i></small>
 		        	</a>
 
 		        	<code><%= historyItem.request.resource %></code>
@@ -38,7 +38,7 @@
 
 		        </h3>
 
-		    </div>	
+		    </div>
 
 		    <div id="history_panel_<%=h%>" class="collapse panel-body">
 		    	<h4>Request</h4>
@@ -54,15 +54,15 @@
 			    		<dt>Request Parameters</dt>
 			    		<dd>
 			    			<ul class="list">
-			    				<% _.each( historyItem.request.data, function( param, key, data ){ %>	
+			    				<% _.each( historyItem.request.data, function( param, key, data ){ %>
 				    				<li>
 						    			<code><%= key %></code> : <code><%= param %></code>
-						    		</li> 
+						    		</li>
 			    				<% }) %>
 			    			</ul>
-			    				
+
 			    		</dd>
-		    			
+
 		    		<% } %>
 
 
@@ -71,15 +71,15 @@
 			    		<dt>Request Headers</dt>
 			    		<dd>
 			    			<ul class="list">
-			    				<% _.each( historyItem.request.headers, function( param, key, headers ){ %>	
+			    				<% _.each( historyItem.request.headers, function( param, key, headers ){ %>
 				    				<li>
 						    			<code><%= key %></code> : <code><%= param %></code>
-						    		</li> 
+						    		</li>
 			    				<% }) %>
 			    			</ul>
-			    				
+
 			    		</dd>
-		    			
+
 		    		<% } %>
 
 		    	</dl>
@@ -91,7 +91,7 @@
                         "status": responseEcho.status_code,
                         "statusText": responseEcho.status_text,
                         "responseText": responseEcho.filecontent,
-                        getAllResponseHeaders: function(){ 
+                        getAllResponseHeaders: function(){
                             return responseEcho.responseheader;
                         },
                         getResponseHeader: function( headerName ){
@@ -106,7 +106,7 @@
 
     	</div>
 
-    	<% 
+    	<%
 	    		h++;
 	    	});
     	%>
