@@ -1,30 +1,32 @@
 module.exports = function(grunt) {
 	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
+		pkg: grunt.file.readJSON( 'package.json' ),
+
 		watch: {
 			sass: {
-				files: ['includes/scss/*.{scss,sass}','includes/scss/**/*.{scss,sass}','includes/scss/**/**/*.{scss,sass}'],
+				files: ['resources/scss/*.{scss,sass}','resources/scss/**/*.{scss,sass}','resources/scss/**/**/*.{scss,sass}'],
 				tasks: ['sass:dist','sass:distTheme']
 			},
             jsView: {
-            	files: ['includes/jsdev/views/*.js','includes/jsdev/views/widgets/*.js'],
+            	files: ['resources/jsdev/views/*.js','resources/jsdev/views/widgets/*.js'],
             	tasks: ['uglify:viewJS']
             },
 
             jsModel: {
-            	files: ['includes/jsdev/models/*.js'],
+            	files: ['resources/jsdev/models/*.js'],
             	tasks: ['uglify:modelJS']
             },
 
             jsGlobals: {
             	files: [
-            		'includes/jsdev/app.js',
-            		'includes/jsdev/globals.js',
-            		'includes/jsdev/udf.js'
+            		'resources/jsdev/app.js',
+            		'resources/jsdev/globals.js',
+            		'resources/jsdev/udf.js'
             	],
             	tasks: ['requirejs:compile','uglify:viewJS','uglify:modelJS']
             }
 		},
+
 		sass: {
 			options: {
 				sourceMap: true,
@@ -32,7 +34,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-					'modules/relax/includes/css/relax.css': 'includes/scss/relax.scss',
+					'includes/css/relax.css' : 'resources/scss/relax.scss',
 				}
 			},
 			distTheme: {
@@ -42,9 +44,9 @@ module.exports = function(grunt) {
 			      sourcemap: false
 			    },
 			    files: {
-					'modules/relax/includes/css/theme.css': 'includes/scss/theme.scss',
-					'modules/relax/includes/css/relax.css': 'includes/scss/relax.scss',
-					'modules/relax/includes/css/export.css': 'includes/scss/export.scss'
+					'includes/css/theme.css': 'resources/scss/theme.scss',
+					'includes/css/relax.css': 'resources/scss/relax.scss',
+					'includes/css/export.css': 'resources/scss/export.scss'
 				}
 			 }
 		},
@@ -52,11 +54,11 @@ module.exports = function(grunt) {
 		requirejs: {
 		  compile: {
 		    options: {
-				baseUrl: "includes/jsdev",
+				baseUrl: "resources/jsdev",
 				mainConfigFile: "require.build.js",
-				wrap:true,
+				wrap: true,
 				optimize: "none",
-				dir:"modules/relax/includes/js",
+				dir: "includes/js",
 				// Define the modules to compile.
 				modules: [
 					//Core application libraries, including theme
@@ -85,9 +87,9 @@ module.exports = function(grunt) {
 			  	},
 			  	files: [{
 		          expand: true,
-			      cwd: 'includes/jsdev',
+			      cwd: 'resources/jsdev',
 		          src: 'views/**/*.js',
-		          dest: 'modules/relax/includes/js/'
+		          dest: 'includes/js/'
 			    }]
 		    },
 		    modelJS: {
@@ -100,18 +102,27 @@ module.exports = function(grunt) {
 			  	},
 			  	files: [{
 		          expand: true,
-			      cwd: 'includes/jsdev',
+			      cwd: 'resources/jsdev',
 		          src: 'models/**/*.js',
-		          dest: 'modules/relax/includes/js/'
+		          dest: 'includes/js/'
 			    }]
 		    }
 		}
 
 	});
-	grunt.loadNpmTasks('grunt-sass');
-	grunt.loadNpmTasks('grunt-contrib-requirejs');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.registerTask('default', ['sass:dist','sass:distTheme','requirejs:compile','uglify:viewJS','uglify:modelJS', 'watch']);
-	
+
+	grunt.loadNpmTasks( 'grunt-sass' );
+	grunt.loadNpmTasks( 'grunt-contrib-requirejs' );
+	grunt.loadNpmTasks( 'grunt-contrib-watch' );
+	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
+	grunt.registerTask( 'default', [
+		'sass:dist',
+		'sass:distTheme',
+		'requirejs:compile',
+		'uglify:viewJS',
+		'uglify:modelJS',
+		'watch'
+		]
+	);
+
 };

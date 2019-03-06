@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+     xmlns:creativeCommons="http://backend.userland.com/creativeCommonsRssModule"
+     version="2.0">
+   <channel>
+      <description>This combinations example shows the Creative Commons, Dublin Core and the Apple iTunes extensions all being used together in a single feed.</description>
+      <link>http://www.opsound.org/genre/blues/</link>
+      <title>OpSound Random Blues Tracks</title>
+      <docs>http://www.rssboard.org/rss-specification</docs>
+      <generator>FeedGenerator</generator>
+      <dc:subject>blues</dc:subject>
+      <dc:publisher>opsound</dc:publisher>
+      <item>
+         <title>WEST NILE PAPYRUS</title>
+         <description>Instrumental track with feelings of trance and a bit of Floyd. Just a 'sit back and vegetate on it' kind of thing.</description>
+         <link>http://www.dejunair.com/audio/download/mp3/West%20Nile%20Papyrus.mp3</link>
+         <category>samples</category>
+         <category>guitar</category>
+         <category>rock</category>
+         <category>trance</category>
+         <category>drums</category>
+         <category>bass</category>
+         <dc:creator>The Dejunair Project</dc:creator>
+         <itunes:author>The Dejunair Project</itunes:author>
+         <itunes:duration>7:12</itunes:duration>
+         <itunes:keywords>samples,guitar,rock,trance,drums,bass</itunes:keywords>
+         <itunes:subtitle>Instrumental track</itunes:subtitle>
+         <itunes:summary>Instrumental track with feelings of trance and a bit of Floyd. Just a 'sit back and vegetate on it' kind of thing.</itunes:summary>
+         <creativeCommons:license>http://creativecommons.org/licenses/by-sa/2.5/</creativeCommons:license>
+         <enclosure length="6533467" type="audio/mpeg"
+                    url="http://www.dejunair.com/audio/download/mp3/West%20Nile%20Papyrus.mp3"/>
+      </item>
+      <item>
+         <title>THE DEVIL IS CROSSING ME</title>
+         <description>there's just plain bad and then there's somebody who doesn't need regular sympathy</description>
+         <link>http://www.opsound.org/artist/thecolumbines/</link>
+         <category>blues</category>
+         <category>columbines</category>
+         <category>macking</category>
+         <category>spain</category>
+         <category>mackingspain</category>
+         <category>devil</category>
+         <dc:creator>The Columbines</dc:creator>
+         <itunes:author>The Columbines</itunes:author>
+         <itunes:duration>4:56</itunes:duration>
+         <itunes:keywords>blues,columbines,macking,spain,mackingspain,devil</itunes:keywords>
+         <itunes:subtitle>there's just plain bad</itunes:subtitle>
+         <itunes:summary>there's just plain bad and then there's somebody who doesn't need regular sympathy</itunes:summary>
+         <creativeCommons:license>http://creativecommons.org/licenses/by-sa/2.5/</creativeCommons:license>
+         <enclosure length="4643677" type="audio/mpeg"
+                    url="http://innerworlde.com/music/the%20devil%20is%20crossing%20me.mp3"/>
+      </item>
+   </channel>
+</rss>
