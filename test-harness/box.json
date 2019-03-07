@@ -1,0 +1,28 @@
+{
+    "name":"Tester",
+    "version":"0.0.0",
+    "slug":"tester",
+    "private":true,
+    "description":"",
+    "dependencies":{
+        "coldbox":"^5.0.0",
+        "swagger-sdk":"^1.0.4+59",
+        "wikitext":"^1.3.1+14",
+        "cbjavaloader":"^2.0.0+44",
+        "cbSwagger":"^1.4.1+70"
+    },
+    "devDependencies":{
+        "testbox":"^2.8.0"
+    },
+    "installPaths":{
+        "coldbox":"coldbox/",
+        "testbox":"testbox/",
+        "swagger-sdk":"modules/swagger-sdk/",
+        "wikitext":"modules/wikitext/",
+        "cbjavaloader":"modules/cbjavaloader/",
+        "cbSwagger":"modules/cbSwagger/"
+    },
+    "testbox":{
+        "runner":"http://localhost:60299/tests/runner.cfm"
+    }
+}
