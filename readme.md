@@ -1,7 +1,6 @@
 [![Build Status](https://travis-ci.org/coldbox-modules/coldbox-relax.svg?branch=development)](https://travis-ci.org/coldbox-modules/coldbox-relax)
 
-WELCOME TO COLDBOX RELAX
-========================================
+# WELCOME TO COLDBOX RELAX
 
 >RELAX = RESTFul Tools For Lazy Experts!
 
@@ -10,26 +9,28 @@ ColdBox Relax is a tool to help you document your projects faster. ColdBox Relax
 automagically model, document and test your RESTFul services. One can think of ColdBox Relax as a way to describe RESTFul web services, 
 test RESTFul web services, monitor RESTFul web services and document RESTFul web services–all while you relax!
 
-##LICENSE
+## LICENSE
 Apache License, Version 2.0.
 
-##IMPORTANT LINKS
-- Code: https://github.com/coldbox/coldbox-relax
+## IMPORTANT LINKS
+
+- Code: https://github.com/coldbox/relax
 - Issues: https://ortussolutions.atlassian.net/projects/RELAX/issues
 - Documentation: https://coldbox-relax.ortusbooks.com
 
-##SYSTEM REQUIREMENTS
-- Lucee 4.5+
-- ColdFusion 10+
+## SYSTEM REQUIREMENTS
 
-INSTRUCTIONS
-============
+- Lucee 45+
+- ColdFusion 11+
+
+## INSTRUCTIONS
 
 Just drop into your **modules** folder or use the box-cli to install
 
 `box install relax`
 
 ## Settings
+
 You will need to update the your `ColdBox.cfc` with a `relax` structure with your preferred settings for Relax.  
  
 ```
@@ -44,6 +45,7 @@ relax = {
 ```
 
 ## Modeling
+
 You can look at the samples inside of this module under the `models/resources` directory.  To start you can copy the `Relax.cfc` into your own project folder and then start spicing up the API via the RelaxDSL methods.
 
 
@@ -51,7 +53,9 @@ You can look at the samples inside of this module under the `models/resources` d
 Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
 www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
+
 #### HONOR GOES TO GOD ABOVE ALL
+
 Because of His grace, this project exists. If you don't like this, then don't read it, its not for you.
 
 >"Therefore being justified by faith, we have peace with God through our Lord Jesus Christ:
@@ -62,4 +66,5 @@ And hope maketh not ashamed; because the love of God is shed abroad in our heart
 Holy Ghost which is given unto us. ." Romans 5:5
 
 ### THE DAILY BREAD
+
  > "I am the way, and the truth, and the life; no one comes to the Father, but by me (JESUS)" Jn 14:1-12
