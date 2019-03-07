@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+   <channel>
+      <description>This is an example feed showing the whose item data is being feed from the CFARTGALLERY datasource</description>
+      <link>http://www.example.com</link>
+      <title>Art Gallery Customers, Query Example</title>
+      <docs>http://www.rssboard.org/rss-specification</docs>
+      <generator>FeedGenerator</generator>
+      <lastBuildDate>Thu, 18 Sep 2014 22:17:16 GMT</lastBuildDate>
+      <pubDate>Thu, 20 Mar 2008 03:53:00 GMT</pubDate>
+      <item>
+         <title>Smithers</title>
+         <description>4 Palm Dr</description>
+         <pubDate>Sun, 19 Sep 2004 07:00:00 GMT</pubDate>
+         <category>TX</category>
+         <guid isPermaLink="false">11</guid>
+      </item>
+      <item>
+         <title>Armstrong</title>
+         <description>76 120th</description>
+         <pubDate>Thu, 12 Aug 2004 07:00:00 GMT</pubDate>
+         <category>KS</category>
+         <guid isPermaLink="false">20</guid>
+      </item>
+      <item>
+         <title>Kissler</title>
+         <description>5673 Summit Ave</description>
+         <pubDate>Sun, 25 Jul 2004 07:00:00 GMT</pubDate>
+         <category>CA</category>
+         <guid isPermaLink="false">19</guid>
+      </item>
+      <item>
+         <title>Rice</title>
+         <description>34 First Lane</description>
+         <pubDate>Sat, 19 Jun 2004 07:00:00 GMT</pubDate>
+         <category>CA</category>
+         <guid isPermaLink="false">23</guid>
+      </item>
+      <item>
+         <title>Crow</title>
+         <description>45 54th Drive</description>
+         <pubDate>Sun, 13 Jun 2004 07:00:00 GMT</pubDate>
+         <category>TX</category>
+         <guid isPermaLink="false">18</guid>
+      </item>
+      <item>
+         <title>Anthony</title>
+         <description>1555 Quail St</description>
+         <pubDate>Tue, 25 May 2004 07:00:00 GMT</pubDate>
+         <category>CO</category>
+         <guid isPermaLink="false">17</guid>
+      </item>
+      <item>
+         <title>Day</title>
+         <description>689 Dell Ave</description>
+         <pubDate>Thu, 01 Apr 2004 07:00:00 GMT</pubDate>
+         <category>NM</category>
+         <guid isPermaLink="false">6</guid>
+      </item>
+      <item>
+         <title>Kunovic</title>
+         <description>4589 Main St</description>
+         <pubDate>Tue, 16 Mar 2004 07:00:00 GMT</pubDate>
+         <category>NY</category>
+         <guid isPermaLink="false">22</guid>
+      </item>
+      <item>
+         <title>Michaels</title>
+         <description>8999 1st Ave</description>
+         <pubDate>Tue, 16 Mar 2004 07:00:00 GMT</pubDate>
+         <category>AK</category>
+         <guid isPermaLink="false">16</guid>
+      </item>
+      <item>
+         <title>Lloyd</title>
+         <description>Scottsdale Circle</description>
+         <pubDate>Thu, 05 Feb 2004 07:00:00 GMT</pubDate>
+         <category>AZ</category>
+         <guid isPermaLink="false">10</guid>
+      </item>
+      <item>
+         <title>Kerns</title>
+         <description>34 Lincoln Way</description>
+         <pubDate>Fri, 30 Jan 2004 07:00:00 GMT</pubDate>
+         <category>MA</category>
+         <guid isPermaLink="false">15</guid>
+      </item>
+      <item>
+         <title>Downs</title>
+         <description>234 54th St</description>
+         <pubDate>Thu, 11 Dec 2003 07:00:00 GMT</pubDate>
+         <category>NY</category>
+         <guid isPermaLink="false">14</guid>
+      </item>
+      <item>
+         <title>Harvey</title>
+         <description>23 Land Park</description>
+         <pubDate>Wed, 09 Jul 2003 07:00:00 GMT</pubDate>
+         <category>WY</category>
+         <guid isPermaLink="false">13</guid>
+      </item>
+      <item>
+         <title>Smith</title>
+         <description>78 45th Ave</description>
+         <pubDate>Wed, 18 Jun 2003 07:00:00 GMT</pubDate>
+         <category>NV</category>
+         <guid isPermaLink="false">4</guid>
+      </item>
+      <item>
+         <title>Green</title>
+         <description>12 Gover St</description>
+         <pubDate>Tue, 10 Jun 2003 07:00:00 GMT</pubDate>
+         <category>CA</category>
+         <guid isPermaLink="false">1</guid>
+      </item>
+      <item>
+         <title>Franks</title>
+         <description>456 W. 6th</description>
+         <pubDate>Sun, 25 May 2003 07:00:00 GMT</pubDate>
+         <category>OK</category>
+         <guid isPermaLink="false">12</guid>
+      </item>
+      <item>
+         <title>Kunovic</title>
+         <description>3987 Frontage Road</description>
+         <pubDate>Sun, 16 Mar 2003 07:00:00 GMT</pubDate>
+         <category>MA</category>
+         <guid isPermaLink="false">21</guid>
+      </item>
+      <item>
+         <title>Carter</title>
+         <description>944 Eaton Way</description>
+         <pubDate>Wed, 25 Dec 2002 07:00:00 GMT</pubDate>
+         <category>CO</category>
+         <guid isPermaLink="false">8</guid>
+      </item>
+      <item>
+         <title>White</title>
+         <description>123 4th St</description>
+         <pubDate>Tue, 02 Jul 2002 07:00:00 GMT</pubDate>
+         <category>CO</category>
+         <guid isPermaLink="false">2</guid>
+      </item>
+      <item>
+         <title>Cardinal</title>
+         <description>234 Phoenix Way</description>
+         <pubDate>Tue, 28 Aug 2001 07:00:00 GMT</pubDate>
+         <category>AZ</category>
+         <guid isPermaLink="false">7</guid>
+      </item>
+      <item>
+         <title>Rose</title>
+         <description>11267 Green St</description>
+         <pubDate>Tue, 05 Jun 2001 07:00:00 GMT</pubDate>
+         <category>WA</category>
+         <guid isPermaLink="false">3</guid>
+      </item>
+      <item>
+         <title>Shumacher</title>
+         <description>988 Brownlee Way</description>
+         <pubDate>Tue, 22 May 2001 07:00:00 GMT</pubDate>
+         <category>CO</category>
+         <guid isPermaLink="false">5</guid>
+      </item>
+      <item>
+         <title>Masters</title>
+         <description>6 23rd</description>
+         <pubDate>Sat, 13 Jan 2001 07:00:00 GMT</pubDate>
+         <category>UT</category>
+         <guid isPermaLink="false">9</guid>
+      </item>
+   </channel>
+</rss>
