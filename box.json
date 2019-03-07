@@ -1,38 +1,40 @@
 {
-    "name": "ColdBox Relax",
-    "author": "Ortus Solutions <info@ortussolutions.com>",
-    "version": "3.1.0",
-    "slug": "relax",
-    "type": "modules",
-    "keywords": "RESTFul,modeling,web services",
-    "location": "https://downloads.ortussolutions.com/ortussolutions/coldbox-modules/coldbox-relax/@build.version@/coldbox-relax-@build.version@.zip",
-    "homepage": "https://github.com/coldbox-modules/relax",
-    "documentation": "https://coldbox-relax.ortusbooks.com",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/coldbox-modules/relax"
+    "name":"ColdBox Relax",
+    "author":"Ortus Solutions <info@ortussolutions.com>",
+    "version":"3.2.0",
+    "slug":"relax",
+    "type":"modules",
+    "keywords":"RESTFul,modeling,web services",
+    "location":"https://downloads.ortussolutions.com/ortussolutions/coldbox-modules/coldbox-relax/@build.version@/coldbox-relax-@build.version@.zip",
+    "homepage":"https://github.com/coldbox-modules/relax",
+    "documentation":"https://coldbox-relax.ortusbooks.com",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/coldbox-modules/relax"
     },
-    "bugs": "https://github.com/coldbox-modules/relax/issues",
-    "shortDescription": "RESTFul Tools For Lazy Experts",
-    "license": [{
-        "type": "Apache2",
-        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    }],
-    "contributors": [
+    "bugs":"https://github.com/coldbox-modules/relax/issues",
+    "shortDescription":"RESTFul Tools For Lazy Experts",
+    "license":[
+        {
+            "type":"Apache2",
+            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    ],
+    "contributors":[
         "Brad Wood <bdw429s@gmail.com>",
         "Curt Gratz <gratzc@compknowhow.com>",
         "Jon Clausen <jon_clausen@silowebworks.com>",
         "Evagoras Charalambous <evagoras@gmail.com>"
     ],
-    "dependencies": {
-        "cbjavaloader": "^1.4.0",
-        "cbswagger": "^1.2.1",
-        "wikitext": "^1.2.0"
+    "dependencies":{
+        "cbjavaloader":"^1.4.0",
+        "cbswagger":"^1.2.1",
+        "wikitext":"^1.2.0"
     },
-    "ignore": [
+    "ignore":[
         "**/.*",
         "tests"
-	],
+    ],
     "scripts":{
         "toMaster":"recipe build/toMaster.boxr"
     }
