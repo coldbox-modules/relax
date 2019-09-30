@@ -57,13 +57,6 @@ component extends="BaseHandler"{
 	}
 
 	/**
-	* OpenAPI/Swagger Documentation
-	*/
-	function openAPIDocs( event, rc, prc ){
-		event.setView( "home/openAPIDocs" );
-	}
-
-	/**
 	* Export Resource Doc
 	*/
 	function resourceDoc( event, rc, prc, resourceID, expandedDiv, boolean widget=false ){
