@@ -10,6 +10,7 @@
 ### Improvements
 
 * Migrated to use ColdBox 5 routers
+* Multiple UI Fixes on missing fonts
 
 ### Compat
 
