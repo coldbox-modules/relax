@@ -29,7 +29,7 @@
 					<cfif prc.settings.sessionsEnabled>
 						<!--- Import --->
 						<a href="javascript:void(0)"
-							data-toggle="tooltip" 
+							data-toggle="tooltip"
 							class="btn btn-primary btnImportAPI"
 						   	title="Import API">
 								<i class="fa fa-lg fa-cloud-upload"></i> Import
@@ -63,7 +63,7 @@
 						class="btn btn-primary btnExportFormat"
 						data-toggle="tooltip"
 						title="Export as PDF">
-						<i class="fa fa-lg fa-file-pdf-o"></i>
+						<i class="fa fa-lg fa-file-pdf"></i>
 					</a>
 					<!--- mediawiki --->
 					<a 	href="javascript:void(0)"
@@ -72,7 +72,7 @@
 						class="btn btn-primary btnExportFormat"
 						data-toggle="tooltip"
 					    title="Export as MediaWiki">
-						<i class="fa fa-lg fa-file-code-o"></i>
+						<i class="fa fa-lg fa-file-code"></i>
 					</a>
 					<!--- trac --->
 					<a 	href="javascript:void(0)"

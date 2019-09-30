@@ -5,7 +5,7 @@
 * Export handler
 */
 component extends="BaseHandler"{
-	
+
 	// DI
 	property name="wikitext"		inject="wikitext@wikitext";
 
@@ -48,10 +48,10 @@ component extends="BaseHandler"{
 			.slugify( prc.dsl[ "info" ][ "title" ] ) & " v" & prc.dsl[ "info" ][ "version" ];
 
 		// View
-		event.setView( 
-			name 	= "apidoc/cfTemplate/api-content", 
+		event.setView(
+			view 	= "apidoc/cfTemplate/api-content",
 			layout 	= "html",
-			args 	= { "api" : prc.dsl } 
+			args 	= { "api" : prc.dsl }
 		);
 	}
 
@@ -66,10 +66,10 @@ component extends="BaseHandler"{
 		prc.exportTitle 			= getInstance( "htmlhelper@coldbox" )
 			.slugify( prc.dsl[ "info" ][ "title" ] ) & " v" & prc.dsl[ "info" ][ "version" ];
 
-		event.setView( 
-			name 	= "apidoc/cfTemplate/api-content", 
+		event.setView(
+			view 	= "apidoc/cfTemplate/api-content",
 			layout 	= "pdf",
-			args 	= { "api" : prc.dsl } 
+			args 	= { "api" : prc.dsl }
 		)
 		.setHTTPHeader( name="Content-Disposition", value="inline; filename=#prc.exportTitle#.pdf" );
 	}

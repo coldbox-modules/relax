@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 4.0.0
+
+### Features
+
+* Open API v3.x Support
+* CBSwagger v2.x Support
+
+### Improvements
+
+* Migrated to use ColdBox 5 routers
+
+### Compat
+
+* cbswagger updates to version 2.0 to stay compliant with OpenAPI Spec
+* Dropped ACF 11 Support
+* Moved to use ColdBox `modulesettings` instead of root `relax` struct in the `config/ColdBox.cfc`.  Just move your configuration into the `moduleSettings` struct.
+
 ## 3.1.0
 
 * Updated all JS libraries
