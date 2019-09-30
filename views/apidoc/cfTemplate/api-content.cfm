@@ -71,15 +71,8 @@
 
             </dl>
 
-			<cfdump var="#api#"><cfabort>
             <h3>Service Entry Points</h3>
             <ul class="list-unstyled">
-                <li>
-                    <em>Default:</em>
-                    <a href="#( structKeyExists( api, "scheme" ) ? api[ "scheme" ]  & '://' : '//' )##api[ "host" ]#">
-                        #( structKeyExists( api, "scheme" ) ? api[ "scheme" ] & '://' : "//" )##api[ "host" ]#
-                    </a>
-                </li>
                 <cfif structkeyExists( api, "x-entryPoint" )>
                     <cfloop collection="#api['x-entryPoint']#" item="tierName">
                         <li><em>#titleCase( tierName )#:</em> <a href="#api[ "x-entryPoint" ][ tierName ]#">#api[ "x-entryPoint" ][ tierName ]#</a></li>
@@ -99,25 +92,10 @@
 
             </ul>
 
-            <h3>MIME Types Consumed</h3>
-
-            <ul>
-                <cfloop array="#api[ "consumes" ]#" index="type">
-                    <li>
-                        <code><span class="consumes-nav" data-mimetype="type">#type#</span></code>
-                    </li>
-                </cfloop>
-            </ul>
-
             <!--- API Return Formats --->
-            <h3>MIME Types Returned</h3>
-            <ul>
-                <cfloop array="#api[ "produces" ]#" index="type">
-                    <li>
-                        <code><span class="consumes-nav" data-mimetype="type">#type#</span></code>
-                    </li>
-                </cfloop>
-            </ul>
+			<cfif structKeyExists( api, "x-validExtensions" )>
+                <h3>Valid Format Extensions:  <code>#api[ "x-validExtensions" ]#</code></h3>
+            </cfif>
 
             <cfif structKeyExists( api, "x-extensionDetection" )>
                 <h3>Extension Detection:  <code>#api[ "x-extensionDetection" ]#</code></h3>

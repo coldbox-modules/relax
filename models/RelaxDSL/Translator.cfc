@@ -136,7 +136,7 @@ component accessors="true" singleton {
 	 **/
 	private void function processGlobalExtensions( required any dataCFC, required translation ){
 		var relax      = dataCFC.relax;
-		var extensions = [ "extensionDetection", "throwOnInvalidExtension", "entryPoint" ];
+		var extensions = [ "extensionDetection", "throwOnInvalidExtension", "entryPoint", "validExtensions" ];
 
 		for ( var ext in extensions ) {
 			if ( structKeyExists( relax, ext ) ) {
