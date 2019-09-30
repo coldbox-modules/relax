@@ -5,7 +5,7 @@ www.ortussolutions.com
 ********************************************************************************
 */
 component extends="BaseHandler"{
-	
+
 	//HTTP STATUS CODES
 	STATUS = {
 		"CREATED"           : 201,
@@ -22,24 +22,22 @@ component extends="BaseHandler"{
 	};
 
 
-	function preHandler( event, action, eventArguments, rc, prc ){
-
+	function preHandler( event, action, eventarguments, rc, prc ){
 		event.noLayout();
 		rc.format = "JSON";
-		super.preHandler(argumentCollection=arguments);
+		super.preHandler( argumentCollection=arguments );
 		rc.data = {};
 		rc.statusCode = STATUS.NOT_FOUND;
-		
 	}
 
-	function postHandler( event, action, eventArguments, rc, prc){
+	function postHandler( event, action, eventarguments, rc, prc){
 
-		event.renderData( 
-			type=rc.format, 
-			data=rc.data, 
-			statusCode=rc.statusCode, 
+		event.renderData(
+			type=rc.format,
+			data=rc.data,
+			statusCode=rc.statusCode,
 			statusMessage=structKeyExists(rc,'statusMessage')?rc.statusMessage:"Success"
-		);  
+		);
 
 	}
 
@@ -51,16 +49,14 @@ component extends="BaseHandler"{
 		if( structKeyExists( rc, "api" ) ){
 
 			if( rc.api != 'cbswagger' ){
-				marshallAPIDocument( argumentCollection=ARGUMENTS );			
+				marshallAPIDocument( argumentCollection=arguments );
 			} else {
 				rc.data = getInstance( "RoutesParser@cbswagger" ).createDocFromRoutes().getNormalizedDocument();
 				rc.statusCode = STATUS.SUCCESS;
 			}
-		
+
 		} else {
-		
-			marshallAPIs(argumentCollection=arguments);
-		
+			marshallAPIs( argumentCollection=arguments );
 		}
 
 	}
@@ -70,15 +66,15 @@ component extends="BaseHandler"{
 	**/
 	function create( event, rc, prc ){
 
-		var serviceResponse = APIService.processAPIImport( ARGUMENTS.rc );
-		
+		var serviceResponse = APIService.processAPIImport( arguments.rc );
+
 		if( serviceResponse.success ){
-		
+
 			rc.data = serviceResponse.data;
 			rc.statusCode = STATUS.CREATED;
-		
+
 		} else {
-		
+
 			rc.data = {
 				"message": serviceResponse.message,
 				"errors" : serviceResponse.errors,
@@ -113,7 +109,7 @@ component extends="BaseHandler"{
 		};
 		rc.statusCode = STATUS.NOT_IMPLEMENTED;
 	}
-	
+
 	private function marshallAPIs( event, rc, prc ){
 		var availableAPIs = APIService.listAPIs();
 
@@ -125,31 +121,31 @@ component extends="BaseHandler"{
 
 		for( var API in availableAPIs ){
 			if( API.type == 'cbswagger' ){
-				rc.data.apis[ API.name ] = deserializeJSON( API.attributes );	
+				rc.data.apis[ API.name ] = deserializeJSON( API.attributes );
 			} else {
-				rc.data.apis[ API.name ] = APIService.loadAPI( API.name ).getDocumentObject().getDocument()[ "info" ];	
+				rc.data.apis[ API.name ] = APIService.loadAPI( API.name ).getDocumentObject().getDocument()[ "info" ];
 			}
 			rc.data.apis[ API.name ][ "href" ] = '/relax/apidoc/' & API.name;
 		}
-		
+
 	}
 
 	/**
 	* Marshall an API Document Response
 	**/
-	private function marshallAPIDocument( event, rc, prc, struct APIDoc){
+	private function marshallAPIDocument( event, rc, prc, struct APIDoc ){
 		try {
-			
-			if( !isNull( ARGUMENTS.APIDoc ) ){
-			
-				rc.data = ARGUMENTS.APIDoc;
-			
+
+			if( !isNull( arguments.APIDoc ) ){
+
+				rc.data = arguments.APIDoc;
+
 			} else{
-			
-				rc.data = APIService.loadAPI(rc.api).getNormalizedDocument();	
-			
+
+				rc.data = APIService.loadAPI( rc.api ).getNormalizedDocument();
+
 			}
-			
+
 			rc.statusCode = STATUS.SUCCESS;
 
 		} catch ( any e ) {
