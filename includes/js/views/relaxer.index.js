@@ -1,4 +1,4 @@
-/*! Copyright 2019 - Ortus Solutions (Compiled: 06-03-2019) */
+/*! Copyright 2019 - Ortus Solutions (Compiled: 30-09-2019) */
 
 define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/RelaxAPI" ], function(Backbone, RelaxerWidget, SidebarWidget, APIModel) {
     "use strict";

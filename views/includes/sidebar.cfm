@@ -63,7 +63,7 @@
 						class="btn btn-primary btnExportFormat"
 						data-toggle="tooltip"
 						title="Export as PDF">
-						<i class="fa fa-lg fa-file-pdf"></i>
+						<i class="fa fa-lg fa-file-pdf-o"></i>
 					</a>
 					<!--- mediawiki --->
 					<a 	href="javascript:void(0)"
@@ -72,7 +72,7 @@
 						class="btn btn-primary btnExportFormat"
 						data-toggle="tooltip"
 					    title="Export as MediaWiki">
-						<i class="fa fa-lg fa-file-code"></i>
+						<i class="fa fa-lg fa-file-code-o"></i>
 					</a>
 					<!--- trac --->
 					<a 	href="javascript:void(0)"
