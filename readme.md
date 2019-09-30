@@ -10,6 +10,7 @@ automagically model, document and test your RESTFul services. One can think of C
 test RESTFul web services, monitor RESTFul web services and document RESTFul web services–all while you relax!
 
 ## LICENSE
+
 Apache License, Version 2.0.
 
 ## IMPORTANT LINKS
