@@ -1,7 +1,7 @@
 {
     "name":"ColdBox Relax",
     "author":"Ortus Solutions <info@ortussolutions.com>",
-    "version":"4.0.0",
+    "version":"4.1.0",
     "slug":"relax",
     "type":"modules",
     "keywords":"RESTFul,modeling,web services",
