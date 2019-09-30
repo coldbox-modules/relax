@@ -29,7 +29,7 @@
 					<cfif prc.settings.sessionsEnabled>
 						<!--- Import --->
 						<a href="javascript:void(0)"
-							data-toggle="tooltip" 
+							data-toggle="tooltip"
 							class="btn btn-primary btnImportAPI"
 						   	title="Import API">
 								<i class="fa fa-lg fa-cloud-upload"></i> Import

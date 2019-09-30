@@ -6,7 +6,7 @@
 component accessors=true{
 
 	// DI
-	property name="settings" 		inject="coldbox:setting:relax";
+	property name="settings" 		inject="coldbox:moduleSettings:relax";
 	property name="moduleConfig" 	inject="coldbox:moduleconfig:relax";
 	property name="APIService"		inject="id:APIService@relax";
 

@@ -12,7 +12,7 @@
   "dependencies": {
     "jquery": "latest",
     "bootstrap-sass": "latest",
-    "font-awesome-sass": "latest",
+    "font-awesome-sass": "^4",
     "html5shiv": "latest",
     "jsonlint": "latest",
     "modernizr": "latest",

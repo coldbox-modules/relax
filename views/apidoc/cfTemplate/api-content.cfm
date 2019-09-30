@@ -18,26 +18,26 @@
                             <ul>
                             <cfloop collection="#api[ "info" ][ "contact" ]#" item="contactKey">
                                 <li class="list-unstyled">
-                                    <strong>#titleCase( contactKey )#:</strong> 
-                                    
-                                    <cfif findNoCase( "http", api[ "info" ][ "contact" ][ contactKey ] )>    
+                                    <strong>#titleCase( contactKey )#:</strong>
+
+                                    <cfif findNoCase( "http", api[ "info" ][ "contact" ][ contactKey ] )>
                                         <a href="#api[ "info" ][ "contact" ][ contactKey ]#" target="_blank">
                                     </cfif>
 
                                         #api[ "info" ][ "contact" ][ contactKey ]#
-                                    
+
                                     <cfif findNoCase( "http", api[ "info" ][ "contact" ][ contactKey ] )>
                                         </a>
                                     </cfif>
                                 </li>
 
                             </cfloop>
-                            
+
                             </ul>
                         </dd>
                 </cfif>
                 <cfif structKeyExists( api[ "info" ], 'license' ) && structKeyExists( api[ "info" ][ "license" ], "url" )>
-                    <dt class="text-info">License: 
+                    <dt class="text-info">License:
                         <a href="#api[ "info" ][ "license" ].url#">
                             <cfif structKeyExists( api[ "info" ][ "license" ], "name" ) && len( api[ "info" ][ "license" ].name )>
                                 #api[ "info" ][ "license" ].name#
@@ -61,7 +61,7 @@
                 </cfif>
 
                 <cfif structKeyExists( api, "externalDocs" ) && structKeyExists( api[ "externalDocs" ], "url" )>
-                    <dt class="text-info">External Docs: 
+                    <dt class="text-info">External Docs:
                         <a href="#api[ "externalDocs" ][ "url" ]#">
                             #( ( structKeyExists( api[ "externalDocs" ], "description" ) && len( api[ "externalDocs" ][ "description" ] ) ) ? api[ "externalDocs" ][ "description" ] : api[ "externalDocs" ][ "url" ] )#
                             <i class="fa fa-globe"></i>
@@ -73,18 +73,12 @@
 
             <h3>Service Entry Points</h3>
             <ul class="list-unstyled">
-                <li>
-                    <em>Default:</em> 
-                    <a href="#( structKeyExists( api, "scheme" ) ? api[ "scheme" ]  & '://' : '//' )##api[ "host" ]#">
-                        #( structKeyExists( api, "scheme" ) ? api[ "scheme" ] & '://' : "//" )##api[ "host" ]#
-                    </a>
-                </li>
                 <cfif structkeyExists( api, "x-entryPoint" )>
                     <cfloop collection="#api['x-entryPoint']#" item="tierName">
                         <li><em>#titleCase( tierName )#:</em> <a href="#api[ "x-entryPoint" ][ tierName ]#">#api[ "x-entryPoint" ][ tierName ]#</a></li>
                     </cfloop>
                 </cfif>
-                
+
             </ul>
 
             <!--- Paths --->
@@ -95,32 +89,17 @@
             <cfloop collection="#api[ "paths" ]#" item="key">
                 <li><code><a class="path-nav" href="###api[ "paths" ][ key ][ "x-resourceId" ]#">#key#</a></code></li>
             </cfloop>
-            
-            </ul>
 
-            <h3>MIME Types Consumed</h3>
-            
-            <ul>
-                <cfloop array="#api[ "consumes" ]#" index="type">
-                    <li>
-                        <code><span class="consumes-nav" data-mimetype="type">#type#</span></code>
-                    </li>
-                </cfloop>
             </ul>
 
             <!--- API Return Formats --->
-            <h3>MIME Types Returned</h3>
-            <ul>
-                <cfloop array="#api[ "produces" ]#" index="type">
-                    <li>
-                        <code><span class="consumes-nav" data-mimetype="type">#type#</span></code>
-                    </li>
-                </cfloop>
-            </ul>
+			<cfif structKeyExists( api, "x-validExtensions" )>
+                <h3>Valid Format Extensions:  <code>#api[ "x-validExtensions" ]#</code></h3>
+            </cfif>
 
             <cfif structKeyExists( api, "x-extensionDetection" )>
                 <h3>Extension Detection:  <code>#api[ "x-extensionDetection" ]#</code></h3>
-            </cfif> 
+            </cfif>
 
             <cfif structKeyExists( api, "x-throwOnInvalidExtension" )>
                 <h3>Throws on Invalid Extension:  <code>#api[ "x-throwOnInvalidExtension" ]#</code></h3>
@@ -174,7 +153,7 @@
                                     <p>#toParagraphFormat( definition.description )#</p>
                                 <cfelse>
                                     <p>Definition description unavailable.</p>
-                                </cfif>                                            
+                                </cfif>
                             </td>
 
                         </tr>
@@ -182,20 +161,20 @@
                             <tr class="definition optional" id="#definitionUid#">
                                 <td colspan="3">
                                     <p>
-                                        
-                                        <strong>Authorization URL:</strong> 
+
+                                        <strong>Authorization URL:</strong>
                                         <a href="#definition.authorizationUrl#">#definition.authorizationUrl#</a>
                                         <br>
-                                        
+
                                         <cfif structKeyExists( definition, 'tokenUrl' )>
                                             strong>Token URL</strong> <a href="#definition.tokenUrl#">#definition.tokenUrl#</a><br>
                                         </cfif>
-                                        
+
                                         <strong>OAuth Flow</strong> <code>#definition.flow#</code><br>
 
                                     </p>
                                     <strong>Scopes:</strong><br>
-                                    
+
                                     <cfif prc.pdf ?: false>
                                         <code>#serializeJSON( definition.scopes )#</code>
                                     <cfelse>
@@ -205,20 +184,20 @@
                             </tr>
                         </cfif>
                     </cfloop>
-                </table>                    
+                </table>
             </cfif>
-            
+
             <cfif structKeyExists( api, 'parameter' )>
                 <!--- API Global Parameters --->
                 <h3>Global Parameters</h3>
                 #paramTemplate( { "entity":api } )#
             </cfif>
-        
-            #renderView( 
-                view='apidoc/cfTemplate/x-attributes', 
-                args={"entity":api} 
+
+            #renderView(
+                view='apidoc/cfTemplate/x-attributes',
+                args={"entity":api}
             )#
-            
+
             <div class="clearfix"></div>
 
         </div>
@@ -228,9 +207,9 @@
         <cfloop array="#structKeyArray( api[ "paths" ] )#" index="pathKey">
             <!--- ACF Compatibility Fix for a null pointer exception --->
             <cfscript>
-                writeOutput( renderView( 
-                    view    = 'apidoc/cfTemplate/api-path', 
-                    args    = { 
+                writeOutput( renderView(
+                    view    = 'apidoc/cfTemplate/api-path',
+                    args    = {
                         "api" : api,
                         "key" : pathKey,
                         "path": api[ "paths" ][ pathKey ]

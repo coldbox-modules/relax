@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/coldbox-modules/coldbox-relax.svg?branch=development)](https://travis-ci.org/coldbox-modules/coldbox-relax)
+[![Build Status](https://travis-ci.org/coldbox-modules/relax.svg?branch=development)](https://travis-ci.org/coldbox-modules/relax)
 
 # WELCOME TO COLDBOX RELAX
 
@@ -10,37 +10,40 @@ automagically model, document and test your RESTFul services. One can think of C
 test RESTFul web services, monitor RESTFul web services and document RESTFul web services–all while you relax!
 
 ## LICENSE
+
 Apache License, Version 2.0.
 
 ## IMPORTANT LINKS
 
 - Code: https://github.com/coldbox/relax
 - Issues: https://ortussolutions.atlassian.net/projects/RELAX/issues
-- Documentation: https://coldbox-relax.ortusbooks.com
+- Documentation: https://relax.ortusbooks.com
 
 ## SYSTEM REQUIREMENTS
 
-- Lucee 45+
-- ColdFusion 11+
+- Lucee 5+
+- ColdFusion 2016+
 
 ## INSTRUCTIONS
 
-Just drop into your **modules** folder or use the box-cli to install
+Use CommandBox to install:
 
 `box install relax`
 
 ## Settings
 
-You will need to update the your `ColdBox.cfc` with a `relax` structure with your preferred settings for Relax.  
+You will need to update the your `ColdBox.cfc` with a `relax` structure under the `moduleSettings` struct with your preferred settings for Relax.  
  
-```
-relax = {
-    // The location of the relaxed APIs, defaults to models.resources
-    APILocation = "modules.relax.models.resources",
-    // Default API to load, name of the directory inside of resources
-    defaultAPI = "myapi",
-    // History stack size, the number of history items to track in the RelaxURL
-    maxHistory = 10
+```js
+moduleSettings = {
+	relax = {
+		// The location of the relaxed APIs, defaults to models.resources
+		APILocation = "modules.relax.models.resources",
+		// Default API to load, name of the directory inside of resources
+		defaultAPI = "myapi",
+		// History stack size, the number of history items to track in the RelaxURL
+		maxHistory = 10
+	}
 };
 ```
 
@@ -54,7 +57,7 @@ Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
 www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 
-#### HONOR GOES TO GOD ABOVE ALL
+### HONOR GOES TO GOD ABOVE ALL
 
 Because of His grace, this project exists. If you don't like this, then don't read it, its not for you.
 
