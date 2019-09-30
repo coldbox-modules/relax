@@ -79,12 +79,12 @@
 	                <li <cfif event.getCurrentEvent() eq "relax:home.index">class="active"</cfif>>
 	                    <a href="#event.buildLink( prc.xehHome )#"><i class="fa fa-desktop"></i><span>API Manager</span></a>
 	                </li>
-	                <li <cfif event.getCurrentHandler() eq "relax:relaxer">class="active"</cfif>>
+	                <li <cfif event.getCurrentHandler() eq "relaxer">class="active"</cfif>>
 	                    <a href="#event.buildLink( prc.xehRelaxer )#" title="Pronounced 'Relax-ER'"><i class="fa fa-flask"></i><span>API Test Tool</span></a>
 	                </li>
 
                     <li <cfif event.getCurrentAction() eq "OpenAPIDocs">class="active"</cfif>>
-                        <a href="#event.buildLink( prc.xehOpenAPIDocs )#" ><i class="fa fa-rocket"></i><span>OpenAPI Docs</span></a>
+                        <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md" target="_blank"><i class="fa fa-rocket"></i><span>OpenAPI Docs</span></a>
                     </li>
 
 	                <li>
