@@ -1,16 +1,16 @@
 <cfoutput>
 	<div id="#args.resourceId#-#args.key#" class="method-panel panel panel-primary">
-			
+
 		<div class="panel-heading">
 			<h3 class="panel-title methodHeader">
-				<strong>#args.key#</strong> 
+				<strong>#args.key#</strong>
 			</h3>
 		</div>
 
 		<div class="panel-body">
 			<div class="col-xs-12">
 				<cfif structKeyExists( args.response, "description" ) and len( args.response[ "description" ] )>
-					
+
 					<h4 class="panel-subtitle text-primary">Description:</h4>
 					<p>#toParagraphFormat( args.response[ "description" ] )#</p>
 					<hr>
@@ -18,10 +18,10 @@
 				</cfif>
 			</div>
 			<!--- Hide Schema Examples in PDF --->
-			<cfif 
-				( 
-					structKeyExists( args.response, "schema" ) 
-					or structKeyExists( args.response, "examples" ) 
+			<cfif
+				(
+					structKeyExists( args.response, "schema" )
+					or structKeyExists( args.response, "examples" )
 				)
 				and
 				( !structKeyExists( prc, "pdf" )
@@ -36,14 +36,14 @@
 						<cfset tabIds[ "schemaUID" ] = "schema" & createUUID()>
 						<div class="panel-heading">
 							<h3 class="panel-title schemaHeader">
-								<strong>Schema Definition</strong> 
+								<strong>Schema Definition</strong>
 							</h3>
 						</div>
 
 						<div class="panel-body schema-definition">
 							#renderView( view="apidoc/cfTemplate/schema", args={ "entity": args.response } )#
 						</div>
-						
+
 					</cfif>
 
 					<cfif structKeyExists( args.response, "examples" )>
@@ -56,7 +56,7 @@
 
 							<div class="panel-heading">
 								<h3 class="panel-title schemaHeader">
-									<strong>#mimetype#</strong> 
+									<strong>#mimetype#</strong>
 								</h3>
 							</div>
 
@@ -68,12 +68,12 @@
 												schemaExample = encodeForHTML( isSimpleValue( args.response.examples[ mimetype ] ) ? args.response.examples[ mimetype ] :  serializeXML( args.response.examples[ mimetype ] ) );
 												break;
 											default:
-												schemaExample = isSimpleValue( args.response.examples[ mimetype ] ) ? args.response.examples[ mimetype ] : serializeJSON( args.response.examples[ mimetype ] );
+												schemaExample = isSimpleValue( args.response.examples[ mimetype ] ) ? args.response.examples[ mimetype ] : encodeForHTML( serializeJSON( args.response.examples[ mimetype ] ) );
 
 										}
 									</cfscript>
 
-									
+
 									<cfif prc.pdf ?: false>
 		                                <code>#schemaExample#</code>
 		                            <cfelse>

@@ -1,0 +1,37 @@
+{
+    "name":"swagger-sdk",
+    "shortDescription":"The Swagger Software Development Kit for the Coldbox Platform",
+    "version":"2.0.0-snapshot",
+    "author":"Jon Clausen <jon_clausen@silowebworks.com>",
+    "slug":"swagger-sdk",
+    "type":"modules",
+    "keywords":"Swagger,OpenAPI,API Documentation",
+    "location":"https://downloads.ortussolutions.com/ortussolutions/coldbox-modules/swagger-sdk/2.0.0/swagger-sdk-2.0.0.zip",
+    "homepage":"https://github.com/coldbox-modules/swagger-sdk",
+    "documentation":"https://github.com/coldbox-modules/swagger-sdk/wiki",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/coldbox-modules/swagger-sdk"
+    },
+    "bugs":"https://github.com/coldbox-modules/swagger-sdk/issues",
+    "license":[
+        {
+            "type":"Apache2",
+            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    ],
+    "contributors":[
+        "Luis Majano <lmajano@ortussolutions.com>"
+    ],
+    "dependencies":{
+        "cbjavaloader":">0.0.9"
+    },
+    "ignore":[
+        "**/.*",
+        "test-harness",
+        "*/.md"
+    ],
+    "scripts":{
+        "toMaster":"recipe build/toMaster.boxr"
+    }
+}

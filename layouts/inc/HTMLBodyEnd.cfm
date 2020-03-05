@@ -47,6 +47,9 @@
 <script type="text/template" id="parameter-template">
     <cfinclude template="#prc.root#/views/apidoc/_template/parameter.html"/>
 </script>
+<script type="text/template" id="request-body-template">
+    <cfinclude template="#prc.root#/views/apidoc/_template/request-body.html"/>
+</script>
 <script type="text/template" id="example-template">
     <cfinclude template="#prc.root#/views/apidoc/_template/example.html"/>
 </script>

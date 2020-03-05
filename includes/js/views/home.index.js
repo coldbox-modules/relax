@@ -1,4 +1,4 @@
-/*! Copyright 2019 - Ortus Solutions (Compiled: 30-09-2019) */
+/*! Copyright 2020 - Ortus Solutions (Compiled: 04-03-2020) */
 
 define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/RelaxAPI", "clipboard", "messenger", "scrollify" ], function(Backbone, Relaxer, SidebarWidget, APIModel, Clipboard, Messenger, scrollify) {
     "use strict";

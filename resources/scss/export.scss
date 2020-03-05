@@ -5,7 +5,7 @@
 //global variables
 @import "variables";
 // Variables, Mixins
-@import "theme/_variables.scss";   
+@import "theme/_variables.scss";
 @import "theme/_mixins.scss";
 
 // Greyscale for exports
@@ -38,15 +38,15 @@ $dangerColor:			$brand-danger;
 */
 
 
-@import "theme/_base.scss"; 
+@import "theme/_base.scss";
 @import "theme/_badges.scss";
-@import "theme/_backgrounds.scss";  
+@import "theme/_backgrounds.scss";
 @import "theme/_buttons.scss";
-@import "theme/_forms.scss"; 
-@import "theme/_main-content.scss";  
-@import "theme/_icons.scss"; 
+@import "theme/_forms.scss";
+@import "theme/_main-content.scss";
+@import "theme/_icons.scss";
 @import "theme/_pages.scss";
-@import "theme/_panels.scss";  
+@import "theme/_panels.scss";
 @import "theme/_tiles.scss";
 
 @page {
@@ -56,7 +56,7 @@ $dangerColor:			$brand-danger;
 
 body.export{
 
-	padding: 20px; 
+	padding: 20px;
 
 	pre{
 		border: 1px #ccc solid;
@@ -68,7 +68,7 @@ body.export{
 		white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
 		white-space: -pre-wrap;      /* Opera 4-6 */
 		white-space: -o-pre-wrap;    /* Opera 7 */
-		word-wrap: break-word; 
+		word-wrap: break-word;
 	}
 
 	code{
@@ -76,7 +76,7 @@ body.export{
 		white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
 		white-space: -pre-wrap;      /* Opera 4-6 */
 		white-space: -o-pre-wrap;    /* Opera 7 */
-		word-wrap: break-word; 
+		word-wrap: break-word;
 	}
 
 	margin: 13mm 5mm 13mm 5mm;
@@ -86,10 +86,10 @@ body.export{
         -fs-table-paginate: paginate;
         tr{
         		page-break-inside: avoid!important;
-        		-webkit-region-break-inside: avoid; 
+        		-webkit-region-break-inside: avoid;
         	th,td{
         		page-break-inside: avoid!important;
-        		-webkit-region-break-inside: avoid; 	
+        		-webkit-region-break-inside: avoid;
         	}
         }
     }
