@@ -1,5 +1,6 @@
 <cfscript>
-    api = args.api;
+	api = args.api;
+	pathKeys = api[ "paths" ].keyArray().sort( function(a, b){ return compare( ucase( a ), ucase( b ) );} );
 </cfscript>
 <cfoutput>
     <div>
@@ -86,7 +87,7 @@
 
            <ul>
 
-            <cfloop collection="#api[ "paths" ]#" item="key">
+            <cfloop array="#pathKeys#" index="key">
                 <li><code><a class="path-nav" href="###api[ "paths" ][ key ][ "x-resourceId" ]#">#key#</a></code></li>
             </cfloop>
 
@@ -204,7 +205,7 @@
 
         <h2>API Path Reference:</h2>
 
-        <cfloop array="#structKeyArray( api[ "paths" ] )#" index="pathKey">
+        <cfloop array="#pathKeys#" index="pathKey">
             <!--- ACF Compatibility Fix for a null pointer exception --->
             <cfscript>
                 writeOutput( renderView(

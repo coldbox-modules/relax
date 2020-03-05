@@ -1,9 +1,19 @@
 <%
-//console.log( api );
-var pathKeys = _.keys(api.paths);
+var pathKeys = _.keys(api.paths).sort( pathLengthSort );
 var responseCodeTemplate = _.template( $( "#httpcodes-template" ).html() );
 var securityDefinitionsTemplate = _.template( $( "#security-definitions-template" ).html() );
 var paramTemplate = _.template( $( "#parameter-template" ).html() );
+var pathLengthSort =  function( a, b ){
+	var A = a.toUpperCase();
+	var B = b.toUpperCase();
+	if (A < B) {
+		return -1;
+	} else if (A > B) {
+		return 1;
+	} else {
+		return 0;
+	}
+};
 %>
 <p class="hidden-print">
     The <em>Relax DSL</em> is loaded for your API: <code><%= api.id %></code>.
