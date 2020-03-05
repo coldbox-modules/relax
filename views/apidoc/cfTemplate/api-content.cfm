@@ -70,17 +70,25 @@
                     </dt>
                 </cfif>
 
-            </dl>
+			</dl>
 
-            <h2>Service Entry Points</h2>
-            <ul class="list-unstyled">
-                <cfif structkeyExists( api, "x-entryPoint" )>
-                    <cfloop collection="#api['x-entryPoint']#" item="tierName">
-                        <li><em>#titleCase( tierName )#:</em> <a href="#api[ "x-entryPoint" ][ tierName ]#">#api[ "x-entryPoint" ][ tierName ]#</a></li>
-                    </cfloop>
-                </cfif>
+			<cfif structKeyExists( api, "servers" )>
+				<h2>Servers</h2>
+				<ul class="list-unstyled">
+					<cfloop array="#api.servers#" index="server">
+						<li><strong><a href="#server.url#">#server.url#</a></strong> - #server.description# </li>
+					</cfloop>
+				</ul>
+			</cfif>
 
-            </ul>
+			<cfif structkeyExists( api, "x-entryPoint" ) or structKeyExists( api, "host" )>
+				<h2>Service Entry Points</h2>
+				<ul class="list-unstyled">
+					<cfloop collection="#api['x-entryPoint']#" item="tierName">
+						<li><em>#titleCase( tierName )#:</em> <a href="#api[ "x-entryPoint" ][ tierName ]#">#api[ "x-entryPoint" ][ tierName ]#</a></li>
+					</cfloop>
+				</ul>
+			</cfif>
 
             <!--- Paths --->
             <h2>Service Available Paths</h2>

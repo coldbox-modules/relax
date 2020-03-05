@@ -110,7 +110,16 @@ var pathLengthSort =  function( a, b ){
                                 </a>
                             </dt>
                         <% } %>
-                    </dl>
+					</dl>
+
+					<% if( !_.isUndefined( api[ "servers" ] ) ) { %>
+						<h2>Servers</h2>
+						<ul class="list-unstyled">
+							<% _.each( api[ "servers" ] , function( server ){ %>
+								<li><strong><a href="<%= server.url %>"><%= server.url %></a></strong> - <%= server.description %> </li>
+							<% } ) %>
+						</ul>
+					<% } %>
 
                     <h3>Service Entry Points</h3>
                     <ul class="list-unstyled">
