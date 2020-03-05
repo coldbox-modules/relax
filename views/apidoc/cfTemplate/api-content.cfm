@@ -109,17 +109,17 @@
             <cfif structKeyExists( api, "securityDefinitions" )>
                 <!-- Security Definitions -->
                 <h3>Security Definitions</h3>
-                <table class="definition-list table table-striped">
+                <table class="definition-list table table-striped" cellpadding="10">
                     <tr class="text-muted">
-                        <th class="definition-column key" style="text-align:left">
+                        <th class="definition-column key" style="text-align:left" valign="top">
                             Name
                         </th>
 
-                        <th class="definition column type" style="text-align:left">
+                        <th class="definition column type" style="text-align:left" valign="top">
                             Type
                         </th>
 
-                        <th class="definition column description" style="text-align:left">
+                        <th class="definition column description" style="text-align:left" valign="top">
                             Description
                         </th>
                     </tr>
@@ -128,11 +128,11 @@
                         <cfset definitionUid = createUUID()>
                         <tr class="definition optional">
 
-                            <td class="definition-column key">
-                                <code>#structKeyExists( definition, "name" ) ? definition.name : definitionKey#</code>
+                            <td class="definition-column key" valign="top">
+                                <code>#definitionKey#</code>
                             </td>
 
-                            <td class="definition column type">
+                            <td class="definition column type" valign="top">
                                 <cfif structKeyExists( definition, "type" )>
                                     <code># definition.type #</code>
                                 <cfelse>
@@ -140,7 +140,7 @@
                                 </cfif>
                             </td>
 
-                            <td class="definition column description">
+                            <td class="definition column description" valign="top">
                                 <cfif definition.type EQ 'oauth2'>
                                     <a href="###definitionUid#" class="pull-right" data-toggle="collapse" aria-expanded="false">
                                         <small><i class="fa fa-chevron-down"></i></small>
@@ -148,12 +148,12 @@
                                 </cfif>
 
                                 <cfif structKeyExists( definition, "in" )>
-                                    <p>Provided in the <code>#definition.in#</code> of the request</p>
+                                    <em>Provided in the <code>#definition.in#</code> of the request</em><br>
                                 </cfif>
                                 <cfif structKeyExists( definition, 'description' )>
-                                    <p>#toParagraphFormat( definition.description )#</p>
+                                    #toParagraphFormat( definition.description )#
                                 <cfelse>
-                                    <p>Definition description unavailable.</p>
+                                    Definition description unavailable.
                                 </cfif>
                             </td>
 
