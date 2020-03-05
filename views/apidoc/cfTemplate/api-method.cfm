@@ -1,17 +1,17 @@
 <cfoutput>
 	<div id="#args.method[ "x-resourceId" ]#" class="method-panel panel panel-info">
-			
+
 		<div class="panel-heading">
 			<h3 class="panel-title methodHeader">
-				<strong>#args.key#</strong> 
+				<strong>#args.key#</strong>
 			</h3>
 		</div>
 
 		<div class="panel-body">
 			<div class="col-xs-12">
-				
+
 				<cfif structKeyExists( args.method, "description" ) && len( args.method[ "description" ] )>
-					
+
 					<h4 class="panel-subtitle text-primary">Description:</h4>
 
 					#toParagraphFormat( args.method[ "description" ] )#
@@ -19,7 +19,7 @@
 				</cfif>
 
 				<cfif structKeyExists( args.method, "operationId" )>
-					
+
 					<h4 class="panel-subtitle text-primary">Internal Operation: <small class="text-muted">(e.g. Handler.Action)</small></h4>
 
 					<code>#args.method[ "operationId" ]#</code>
@@ -29,17 +29,33 @@
 
 				<cfif structKeyExists( args.method, "parameters" ) and isArray( args.method[ "parameters" ] )>
 					<h4 class="panel-subtitle text-primary">Parameters:</h4>
-					#renderView( 
-						view = "apidoc/cfTemplate/parameters", 
-						args = { "entity" : args.method } 
+					#renderView(
+						view = "apidoc/cfTemplate/parameters",
+						args = { "entity" : args.method }
 					)#
-					<hr>					
+					<hr>
+				</cfif>
+
+				<cfif structKeyExists( args.method, "requestBody" )>
+					<h4 class="panel-subtitle text-primary">Request Body:</h4>
+					<cfif structKeyExists( args.method.requestBody, "description" )>
+						<h5>Description: #args.method.requestBody.description#</h5>
+					</cfif>
+
+					<h5>Required: <pre>#(args.method.requestBody.required ? 'true' : 'false')#</pre></h5>
+					#renderView(
+						view = "apidoc/cfTemplate/request-body",
+						args = { "entity" : args.method }
+					)#
+					<hr>
 				</cfif>
 
 
+
+
             	#renderView( view='apidoc/cfTemplate/x-attributes', args={"entity":args.method,"headerNode":"h4"} )#
-				
-            	<cfif 
+
+            	<cfif
             		!structIsEmpty( args.method[ "responses" ] )
             		and
             		arrayLen( structKeyArray( args.method[ "responses" ] ) ) GT 1
@@ -53,22 +69,22 @@
 	            	<h4 class="panel-subtitle text-primary">Responses:</h4>
 	            	<cfloop array="#structKeyArray( args.method[ "responses" ] )#" index="responseKey">
 		            	<cfif isNumeric( responseKey ) or responseKey eq 'default'>
-			            	#renderView( 
-			            		view="apidoc/cfTemplate/response", 
+			            	#renderView(
+			            		view="apidoc/cfTemplate/response",
 			            		args={
 				            		"resourceId": args.method["x-resourceId"],
 									"path":args.key,
 									"key":responseKey,
 									"response":args.method.responses[ responseKey ]
-				            	} 
+				            	}
 			            	)#
 		            	</cfif>
 	            	</cfloop>
-					
+
             	</cfif>
 
 				<!--- Hide Schema Examples in PDF --->
-            	<cfif 
+            	<cfif
             		structKeyExists( args.method, "x-request-samples" )
             		and
             		arrayLen( structKeyArray( args.method[ "x-request-samples" ] ) ) GT 1
@@ -100,10 +116,10 @@
 											#mimetype#
 										</a>
 									</li>
-									
+
 
 								</cfloop>
-								
+
 							</ul>
 
 							<div class="tab-content">
@@ -113,7 +129,7 @@
 										if( typeRef EQ 'json' ) typeRef = 'javascript';
 									</cfscript>
 								</cfloop>
-									
+
 									<div id="#tabIds[typeRef]#" class="tab-pane fade sample-example">
 										<div class="panel panel-solid-default">
 											<pre class="language-#typeRef#">

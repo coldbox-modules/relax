@@ -4,10 +4,10 @@
 	var typeRef;
 %>
 <div id="<%=resourceId + '-' + key %>" class="method-panel panel panel-primary">
-		
+
 	<div class="panel-heading">
 		<h3 class="panel-title methodHeader">
-			<strong><%=key%></strong> 
+			<strong><%=key%></strong>
 			<a class="pull-right btToggleMethod" role="button" data-toggle="collapse" href="#panel_<%=resourceId + '-' + key %>" aria-expanded="false" aria-controls="panel_<%=resourceId + '-' + key %>">
 				<i class="fa fa-chevron-down"></i>
 			</a>
@@ -23,33 +23,38 @@
 			<% } %>
 		</div>
 
-		<% 
-			if( !_.isUndefined( response.schema ) || !_.isUndefined( response.examples ) ){  
+		<%
+			if( !_.isUndefined( response.schema ) || !_.isUndefined( response.examples ) ){
 				var tabIds = {};
-		%>	
+		%>
 			<div class="col-xs-12 schema-container">
 				<h4 class="panel-subtitle text-primary">Schema and Examples:</h4>
-						
+
 				<div class="schema-tabs">
 					<ul class="nav nav-tabs" role="tablist">
-						<% if( !_.isUndefined( response.schema ) ){  
+						<% if( !_.isUndefined( response.schema ) ){
 							tabIds.schemaUID = _.uniqueId("schema");
-						%>	
+						%>
 							<li role="presentation" class="active">
 								<a href="#<%=tabIds.schemaUID%>" data-toggle="tab" aria-controls="<%=tabIds.schemaUID%>">Schema Definition</a>
 							</li>
 						<% } %>
 						<% if( !_.isUndefined( response.examples ) ) { %>
-							<% 
-								_.each( response.examples, function( example, mimetype ){ 
+							<%
+								var exampleIndex = 0;
+								_.each( response.examples, function( example, mimetype ){
 									typeRef = mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
 									if( typeRef === 'json' ) typeRef = 'javascript';
 									tabIds[ typeRef ] = _.uniqueId( "example" );
 							%>
-							<li role="presentation">
+							<li role="presentation" class="<%=_.isUndefined( response.schema ) && exampleIndex === 0 ? 'active' : '' %>">
 								<a href="#<%=tabIds[ typeRef ]%>" data-toggle="tab" aria-controls="<%=tabIds[ typeRef ]%>"><%=mimetype%></a>
 							</li>
-							<% }); %>
+							<%
+								exampleIndex++;
+
+								});
+							%>
 						<% } %>
 					</ul>
 
@@ -60,19 +65,23 @@
 							</div>
 						<% } %>
 						<% if( !_.isUndefined( response.examples ) ) { %>
-							<% 
-								_.each( response.examples, function( example, mimetype ){ 
+							<%
+								var exampleIndex = 0;
+								_.each( response.examples, function( example, mimetype ){
 									typeRef = mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
 									if( typeRef === 'json' ) typeRef = 'javascript';
 							%>
-								
-								<div id="<%=tabIds[typeRef]%>" class="tab-pane fade schema-example">
+
+								<div id="<%=tabIds[typeRef]%>" class="tab-pane fade schema-example <%=_.isUndefined( response.schema ) && exampleIndex === 0 ? 'in active' : '' %>">
 									<div class="panel panel-solid-default">
 										<pre class="language-<%=typeRef%>"><%= formatAPIExample( example, mimetype ) %></pre>
 									</div>
 								</div>
 
-							<% }); %>
+							<%
+								exampleIndex++;
+								});
+							%>
 						<% } %>
 					</div><!-- /.tab-content -->
 				</div><!-- /.schema-tabs -->

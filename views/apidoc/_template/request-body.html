@@ -1,0 +1,53 @@
+<%
+ var requestBody = entity.requestBody;
+ var ucaseCompare = function( a, b ){
+	var A = a.toUpperCase();
+	var B = b.toUpperCase();
+	if (A < B) {
+	  return -1;
+	} else if (A > B) {
+	  return 1;
+	} else {
+		return 0;
+	}
+ }
+%>
+
+<% Object.keys( requestBody.content ).sort( ucaseCompare ).forEach( function( key ){ %>
+	<div id="<%=entity["x-resourceId"] + '-requestBody-' + key.split( '/' ).pop() %>" class="method-panel panel panel-info">
+		<div class="panel-heading">
+			<h3 class="panel-title methodHeader">
+				<strong><%=key%></strong>
+				<a class="pull-right btToggleMethod" role="button" data-toggle="collapse" href="#panel_<%=entity["x-resourceId"] + '-requestBody-' + key.split( '/' ).pop() %>" aria-expanded="false" aria-controls="panel_<%=entity["x-resourceId"] + '-requestBody-' + key.split( '/' ).pop() %>">
+					<i class="fa fa-chevron-down"></i>
+				</a>
+			</h3>
+		</div>
+		<div id="panel_<%=entity["x-resourceId"] + '-requestBody-' + key.split( '/' ).pop() %>" class="collapse panel-body">
+			<ul class="col-xs-12 list-unstyled">
+				<%
+					if( requestBody.content[ key ].schema && requestBody.content[ key ].schema.properties ){
+						Object.keys( requestBody.content[ key ].schema.properties ).sort( ucaseCompare ).forEach( function( param ){
+							var definition = requestBody.content[ key ].schema.properties[ param ];
+				%>
+				<li>
+					<strong><code><%= param %></code></strong>
+					<ul class="list-unstyled" padding-left="20px">
+						<li><strong>Type:</strong></storng><%= definition.type || 'N/A' %></li>
+						<% if( definition.description ){ %>
+						<li>
+							<strong>Description:</strong><br>
+							<p><%= definition.description %></p>
+						</li>
+						<% } %>
+					</ul>
+				</li>
+				<%
+					} )
+				}
+				%>
+			</ul>
+		</div>
+	</div>
+<% } ) %>
+

@@ -2,6 +2,14 @@
 
 ## 4.0.0
 
+### Improvements
+
+* Added suport for OpenAPIv3 `requestBody` schema
+* UI enhancements to sample code displays in HTML format
+
+
+## 4.0.0
+
 ### Features
 
 * Open API v3.x Support
