@@ -1,4 +1,4 @@
-/*! Copyright 2020 - Ortus Solutions (Compiled: 04-03-2020) */
+/*! Copyright 2020 - Ortus Solutions (Compiled: 05-03-2020) */
 
 define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/RelaxAPI", "clipboard", "messenger", "scrollify" ], function(Backbone, Relaxer, SidebarWidget, APIModel, Clipboard, Messenger, scrollify) {
     "use strict";
@@ -80,7 +80,7 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
         renderPaths: function(paths, $container) {
             var _this = this;
             var pathTemplate = _.template($("#path-template").html());
-            _.each(_.keys(paths), function(pathKey) {
+            _.each(_.keys(paths).sort(_this.alphaSort), function(pathKey) {
                 $container.append(pathTemplate({
                     key: pathKey,
                     path: paths[pathKey]
@@ -92,6 +92,17 @@ define([ "Backbone", "views/widgets/relaxer", "views/widgets/sidebar", "models/R
                 _this.expandHash();
                 _this.renderClipboardIndicators();
             }, 1500);
+        },
+        alphaSort: function(a, b) {
+            var A = a.toUpperCase();
+            var B = b.toUpperCase();
+            if (A < B) {
+                return -1;
+            } else if (A > B) {
+                return 1;
+            } else {
+                return 0;
+            }
         },
         renderContainerUI: function($container) {
             var _this = this;

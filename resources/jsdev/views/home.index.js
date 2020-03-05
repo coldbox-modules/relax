@@ -3,7 +3,7 @@
 **/
 define(
     /**
-    * RequireJS Resources loaded in this view.  
+    * RequireJS Resources loaded in this view.
     * If not avaialable in the globals file, they will be loaded via HTTP request before the View is instantiated
     **/
     [
@@ -41,7 +41,7 @@ define(
             ,events:{
 
                 "click .btnCopyDocumentLink" : "onCopyResourceLink"
-            
+
             }
 
             /**
@@ -55,7 +55,7 @@ define(
 
                 _this.setupDefaults().then( function( model ){
                     return _this.setupSelectors().render();
-                
+
                 });
             }
 
@@ -87,19 +87,19 @@ define(
                             _this.availableAPIs = _.clone(model.attributes.apis);
                             //instantiate the sidebar
                             if( $( ".mc-sidebar" ).length > 0 ){
-                                
+
                                 _this.sidebar = new SidebarWidget( {
                                     "view":_this,
                                     "apis":model.attributes.apis,
-                                    "default": _.isUndefined( _this.activeAPI ) ? model.attributes.default : _this.activeAPI   
-                                } );   
-                                
+                                    "default": _.isUndefined( _this.activeAPI ) ? model.attributes.default : _this.activeAPI
+                                } );
+
                             }
 
                             _this.defaultAPI = model.attributes.default;
 
                             if( _.isUndefined( _this.activeAPI ) ) _this.activeAPI = _this.defaultAPI;
-                            
+
                             //pull our single API
                             _this.Model.clear().set( 'id', _this.activeAPI );
                             _this.Model.fetch({
@@ -110,14 +110,14 @@ define(
                                     console.debug( "API Load failed" );
                                     console.debug( err );
                                     return reject( _this.Model );
-                                }   
+                                }
                             });
 
                         }
                         ,error: function( model, resp ){
                             return reject( _this.Model );
                         }
-                    }); 
+                    });
                 });
 
                 return promise;
@@ -172,11 +172,11 @@ define(
             **/
             ,renderPaths: function( paths, $container ){
                 var _this = this;
-                var pathTemplate = _.template( $( "#path-template" ).html() );
-                _.each( _.keys(paths), function( pathKey ){ 
+				var pathTemplate = _.template( $( "#path-template" ).html() );
+                _.each( _.keys(paths).sort( _this.alphaSort ), function( pathKey ){
                     $container.append( pathTemplate( { "key":pathKey , "path":paths[ pathKey ] } ) );
                 });
-                
+
                 setTimeout( function(  ){
                     _this.renderContainerUI( $container );
                     _this.assignAnchorLinksToWindow();
@@ -184,8 +184,18 @@ define(
                     _this.renderClipboardIndicators();
                 }, 1500);
 
-            }
-            
+			}
+			,alphaSort : function( a, b ){
+				var A = a.toUpperCase();
+				var B = b.toUpperCase();
+				if (A < B) {
+					return -1;
+				} else if (A > B) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
             /**
             * Renders the default UI elements of a container ( e.g. tooltips, code formatting )
             * @param $container     The target container jQuery object
@@ -196,7 +206,7 @@ define(
                     $( this ).tooltip();
                 });
                 $( 'pre[class*="language-"],code[class*="language-"]' ).each( function(){
-                    Prism.highlightElement(this); 
+                    Prism.highlightElement(this);
                 });
             }
 
@@ -219,16 +229,16 @@ define(
                          }
 
                         var $btn = $linkHeader.prepend( clipBtnTemplate( { "link":link } ) );
-                        
+
                         var clipboard = new Clipboard( $btn[0], {
                             text: function(trigger) {
                                 return link;
                             }
                         } );
 
-                        _this.renderContainerUI( $linkHeader );     
+                        _this.renderContainerUI( $linkHeader );
                     }
-                   
+
                 } );
 
             }
@@ -269,7 +279,7 @@ define(
                        $link.attr( 'href', window.location.pathname + window.location.search + hash );
                        $link.on( 'click', function(  ){
                             if( !$( this ).is( '[aria-controls]' ) ){
-                                _this.expandHash( hash );   
+                                _this.expandHash( hash );
                             }
                        } );
                    }
@@ -317,7 +327,7 @@ define(
                     var i = 1;
                     $domParents.each( function(){
                         var $parent = $( this );
-                        if( $parent.not( ":visible" ) && ( $parent.is( ".collapse:not(.in)" ) || $parent.is( '.tab-pane:not(.active)' ) ) ){ 
+                        if( $parent.not( ":visible" ) && ( $parent.is( ".collapse:not(.in)" ) || $parent.is( '.tab-pane:not(.active)' ) ) ){
                             $( '[aria-controls="' + $parent.attr( 'id' ) + '"]' ).click();
                         } else if( $parent.not( ":visible" ) ) {
                             $parent.css( 'display', 'block' );
@@ -326,7 +336,7 @@ define(
                         i++;
 
                         if( i === totalParents ){
-                            resolve();      
+                            resolve();
                         }
                     });
 
@@ -334,10 +344,10 @@ define(
 
                 return promise;
             }
-            
+
 
         });
 
         return new View;
     }
-);		
+);
