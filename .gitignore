@@ -15,3 +15,4 @@ test-harness/modules/**
 
 # log files
 logs/**
+modules/**
