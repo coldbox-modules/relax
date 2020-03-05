@@ -6,15 +6,15 @@
     <div>
         <div id="overview" class="active service-summary">
             <!--- Service Title and Description --->
-            <h2>#api[ "info" ][ "title" ]#</h2>
+            <h1>#api[ "info" ][ "title" ]#</h1>
             <cfif structKeyExists( api[ "info" ], "version") && len(api[ "info" ][ "version" ])>
-                <h4>Version: <span class="label label-primary">#api[ "info" ][ "version" ]#</span></h4>
+                <h3>Version: <span class="label label-primary">#api[ "info" ][ "version" ]#</span></h3>
             </cfif>
             <dl>
-                <dt class="text-info">Introduction:</dt>
+                <dt class="text-info"><strong>Introduction:</strong></dt>
                 <dd>#toParagraphFormat( api[ "info" ][ "description" ] )#</dd>
                 <cfif structKeyExists( api[ "info" ], "contact" ) && !structIsEmpty( api[ "info" ][ "contact" ] )>
-                        <dt class="text-info">Contact:</dt>
+                        <dt class="text-info"><strong>Contact:</strong></dt>
                         <dd class="address">
                             <ul>
                             <cfloop collection="#api[ "info" ][ "contact" ]#" item="contactKey">
@@ -38,7 +38,7 @@
                         </dd>
                 </cfif>
                 <cfif structKeyExists( api[ "info" ], 'license' ) && structKeyExists( api[ "info" ][ "license" ], "url" )>
-                    <dt class="text-info">License:
+                    <dt class="text-info"><strong>License:</strong>
                         <a href="#api[ "info" ][ "license" ].url#">
                             <cfif structKeyExists( api[ "info" ][ "license" ], "name" ) && len( api[ "info" ][ "license" ].name )>
                                 #api[ "info" ][ "license" ].name#
@@ -72,7 +72,7 @@
 
             </dl>
 
-            <h3>Service Entry Points</h3>
+            <h2>Service Entry Points</h2>
             <ul class="list-unstyled">
                 <cfif structkeyExists( api, "x-entryPoint" )>
                     <cfloop collection="#api['x-entryPoint']#" item="tierName">
@@ -83,7 +83,7 @@
             </ul>
 
             <!--- Paths --->
-            <h3>Service Available Paths</h3>
+            <h2>Service Available Paths</h2>
 
            <ul>
 
@@ -95,20 +95,20 @@
 
             <!--- API Return Formats --->
 			<cfif structKeyExists( api, "x-validExtensions" )>
-                <h3>Valid Format Extensions:  <code>#api[ "x-validExtensions" ]#</code></h3>
+                <h2>Valid Format Extensions:  <code>#api[ "x-validExtensions" ]#</code></h2>
             </cfif>
 
             <cfif structKeyExists( api, "x-extensionDetection" )>
-                <h3>Extension Detection:  <code>#api[ "x-extensionDetection" ]#</code></h3>
+                <h2>Extension Detection:  <code>#api[ "x-extensionDetection" ]#</code></h2>
             </cfif>
 
             <cfif structKeyExists( api, "x-throwOnInvalidExtension" )>
-                <h3>Throws on Invalid Extension:  <code>#api[ "x-throwOnInvalidExtension" ]#</code></h3>
+                <h2>Throws on Invalid Extension:  <code>#api[ "x-throwOnInvalidExtension" ]#</code></h2>
             </cfif>
 
             <cfif structKeyExists( api, "securityDefinitions" )>
                 <!-- Security Definitions -->
-                <h3>Security Definitions</h3>
+                <h2>Security Definitions</h2>
                 <table class="definition-list table table-striped" cellpadding="10">
                     <tr class="text-muted">
                         <th class="definition-column key" style="text-align:left" valign="top">
@@ -141,7 +141,7 @@
                             </td>
 
                             <td class="definition column description" valign="top">
-                                <cfif definition.type EQ 'oauth2'>
+                                <cfif definition.type EQ 'oauth1'>
                                     <a href="###definitionUid#" class="pull-right" data-toggle="collapse" aria-expanded="false">
                                         <small><i class="fa fa-chevron-down"></i></small>
                                     </a>
@@ -158,7 +158,7 @@
                             </td>
 
                         </tr>
-                        <cfif definition.type EQ 'oauth2'>
+                        <cfif definition.type EQ 'oauth1'>
                             <tr class="definition optional" id="#definitionUid#">
                                 <td colspan="3">
                                     <p>
@@ -190,7 +190,7 @@
 
             <cfif structKeyExists( api, 'parameter' )>
                 <!--- API Global Parameters --->
-                <h3>Global Parameters</h3>
+                <h2>Global Parameters</h2>
                 #paramTemplate( { "entity":api } )#
             </cfif>
 
@@ -203,7 +203,7 @@
 
         </div>
 
-        <h2>API Path Reference:</h2>
+        <h1>API Path Reference:</h1>
 
         <cfloop array="#pathKeys#" index="pathKey">
             <!--- ACF Compatibility Fix for a null pointer exception --->
