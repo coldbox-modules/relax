@@ -138,55 +138,61 @@ component accessors="true" singleton {
 	 * @name The API to load
 	 */
 	function loadAPI( required name ){
-		var APIDirectory = variables.settings.APILocationExpanded & "/" & arguments.name & "/";
+        if ( arguments.name == "cbswagger" ) {
+            variables.APIDefinitions[ arguments.name ] = wirebox.getInstance( "RoutesParser@cbswagger" )
+                .createDocFromRoutes()
+                .getNormalizedDocument();
+        } else {
+            var APIDirectory = variables.settings.APILocationExpanded & "/" & arguments.name & "/";
 
-		// determine if we have a legacy DSL configuration
-		if ( fileExists( APIDirectory & "Relax.cfc" ) ) {
-			var dataCFC = createObject( "component", variables.settings.APILocation & ".#arguments.name#.Relax" );
-		} else if ( fileExists( variables.settings.APILocationExpanded & "/#arguments.name#/Relax.json" ) ) {
-			var dataCFC = deserializeJSON( fileRead( APIDirectory & "Relax.json" ) );
-		}
+            // determine if we have a legacy DSL configuration
+            if ( fileExists( APIDirectory & "Relax.cfc" ) ) {
+                var dataCFC = createObject( "component", variables.settings.APILocation & ".#arguments.name#.Relax" );
+            } else if ( fileExists( variables.settings.APILocationExpanded & "/#arguments.name#/Relax.json" ) ) {
+                var dataCFC = deserializeJSON( fileRead( APIDirectory & "Relax.json" ) );
+            }
 
-		// If we have a configure() then call it
-		if ( !isNull( dataCFC ) && structKeyExists( dataCFC, "configure" ) ) {
-			processConfiguration( dataCFC );
-		}
+            // If we have a configure() then call it
+            if ( !isNull( dataCFC ) && structKeyExists( dataCFC, "configure" ) ) {
+                processConfiguration( dataCFC );
+            }
 
-		// Process Legacy Definitions
-		if ( !isNull( dataCFC ) && isLegacyAPI( dataCFC ) ) {
-			/**
-			 * Legacy RelaxDSL API Checks
-			 * @deprecated 	v3.0.0
-			 * @eol			v4.0.0
-			 **/
-			loadDSLAPI( dataCFC );
-			// Store the definitions
-			variables.APIDefinitions[ arguments.name ] = getWirebox()
-				.getInstance( "DSLTranslator@relax" )
-				.translate( dataCFC );
-		}
-		// Open API Definitions
-		else {
-			if ( !isNull( dataCFC ) && structKeyExists( dataCFC.relax, "definition" ) ) {
-				variables.APIDefinitions[ arguments.name ] = loadOpenAPI( APIDirectory & dataCFC.relax.definition );
-			} else if ( isNull( dataCFC ) ) {
-				var mimeExtensions = [
-					"json",
-					"json.cfm",
-					"yaml",
-					"yaml.cfm"
-				];
-				// perform our naming convention type checks checks
-				for ( var ext in mimeExtensions ) {
-					if ( fileExists( APIDirectory & arguments.name & "." & ext ) ) {
-						variables.APIDefinitions[ arguments.name ] = loadOpenAPI(
-							APIDirectory & arguments.name & "." & ext
-						);
-						break;
-					}
-				}
-			}
-		}
+            // Process Legacy Definitions
+            if ( !isNull( dataCFC ) && isLegacyAPI( dataCFC ) ) {
+                /**
+                 * Legacy RelaxDSL API Checks
+                 * @deprecated 	v3.0.0
+                 * @eol			v4.0.0
+                 **/
+                loadDSLAPI( dataCFC );
+                // Store the definitions
+                variables.APIDefinitions[ arguments.name ] = getWirebox()
+                    .getInstance( "DSLTranslator@relax" )
+                    .translate( dataCFC );
+            }
+            // Open API Definitions
+            else {
+                if ( !isNull( dataCFC ) && structKeyExists( dataCFC.relax, "definition" ) ) {
+                    variables.APIDefinitions[ arguments.name ] = loadOpenAPI( APIDirectory & dataCFC.relax.definition );
+                } else if ( isNull( dataCFC ) ) {
+                    var mimeExtensions = [
+                        "json",
+                        "json.cfm",
+                        "yaml",
+                        "yaml.cfm"
+                    ];
+                    // perform our naming convention type checks checks
+                    for ( var ext in mimeExtensions ) {
+                        if ( fileExists( APIDirectory & arguments.name & "." & ext ) ) {
+                            variables.APIDefinitions[ arguments.name ] = loadOpenAPI(
+                                APIDirectory & arguments.name & "." & ext
+                            );
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
 		// Store user's selection
 		if ( getSessionsEnabled() ) {
