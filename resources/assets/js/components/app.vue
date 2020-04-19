@@ -1,27 +1,23 @@
 <template>
-	<div id="main-content" class="row">
-			<div class="col-md-9 pull-left">
-				<div class="api-content">
-					<div v-if="!availableAPIs" id="mc-loader" class="text-center">
+	<div>
+		<section class="content-wrapper">
+			<section id="main-content" class="container-fluid">
+				<div class="row">
+					<div v-if="!availableAPIs" class="content-header container-fluid">
 						<h4 class="text-muted">Get ready to kick back and... <em>Relax</em>!</h4>
 						<p>
 							<i class="fa fa-spin fa-spinner fa-2x text-muted"></i>
 						</p>
 					</div>
-					<div v-else-if="!api">
-
-					</div>
 					<api-content v-else :api="api"></api-content>
-				</div>
-
-			</div> <!-- /.main-content -->
-
-			<div class="col-md-3 pull-right">
-				<relax-sidebar></relax-sidebar>
-			</div>
-
-	</div> <!-- end .row -->
-
+				</div> <!-- end .row -->
+			</section>
+		</section>
+		<!-- Control Sidebar -->
+		<aside class="control-sidebar control-sidebar-dark" style="padding: 20px">
+			<relax-sidebar></relax-sidebar>
+		</aside>
+	</div>
 </template>
 <script>
 import ApiContent from "@/components/api/api-content";

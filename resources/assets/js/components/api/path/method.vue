@@ -1,20 +1,24 @@
 <template>
-<div :id="method['x-resourceId']" class="method-panel panel panel-info">
+<div :id="method['x-resourceId']" class="method-card card card-lightblue">
 
-	<div class="panel-heading">
-		<h3 class="panel-title methodHeader">
-			<strong>{{verb}}</strong>
-			<a class="pull-right btToggleMethod" role="button" data-toggle="collapse" :href="`#panel_${method['x-resourceId']}`" aria-expanded="false" :aria-controls="`panel_${method['x-resourceId']}`">
-				<i class="fa fa-chevron-down"></i>
-			</a>
+	<div class="card-header d-flex p-0">
+		<h3 class="card-title p-3 methodHeader">
+			<strong>{{verb.toUpperCase()}}</strong>
 		</h3>
+		<ul class="nav nav-pills ml-auto p-2">
+			<li class="nav-item">
+				<a class="nav-link btToggleMethod" role="button" data-toggle="collapse" :href="`#card_${method['x-resourceId']}`" aria-expanded="false" :aria-controls="`card_${method['x-resourceId']}`">
+					<i class="fa fa-chevron-down"></i>
+				</a>
+			</li>
+		</ul>
 	</div>
 
-	<div :id="`panel_${method['x-resourceId']}`" class="collapse panel-body">
+	<div :id="`card_${method['x-resourceId']}`" class="collapse card-body">
 		<div class="col-xs-12">
 
 			<div v-if="method.description">
-				<h4 class="panel-subtitle text-primary">Description:</h4>
+				<h4 class="card-subtitle text-secondary">Description:</h4>
 
 				<p v-html="method.description.HTMLBreakLines()"></p>
 
@@ -22,18 +26,18 @@
 			</div>
 
 			<div v-if="method.operationId">
-				<h4 class="panel-subtitle text-primary">Internal Operation: <small class="text-muted">(e.g. Handler.Action)</small></h4>
+				<h4 class="card-subtitle text-secondary">Internal Operation: <small class="text-muted">(e.g. Handler.Action)</small></h4>
 				<code>{{ method.operationId }}</code>
 				<hr>
 			</div>
 			<div v-if="method.parameters && method.parameters.length">
-				<h4 class="panel-subtitle text-primary">Parameters:</h4>
+				<h4 class="card-subtitle text-secondary">Parameters:</h4>
 				<parameters :parameters="method.parameters"></parameters>
 				<hr>
 			</div>
 
 			<div v-if="method.requestBody">
-				<h4 class="panel-subtitle text-primary">Request Body:</h4>
+				<h4 class="card-subtitle text-secondary">Request Body:</h4>
 				<ul class="list-unstyled">
 					<li><strong>Description:</strong> {{ method.requestBody.description }}</li>
 					<li><strong>Required:</strong> <code>{{ method.requestBody.required ? 'true' : 'false' }}</code></li>
@@ -42,10 +46,10 @@
 				<hr>
 			</div>
 
-			<x-attributes :entity="method" header-type="h4"></x-attributes>
+			<x-attributes :entity="method" header-type="h4" header-class="text-secondary"></x-attributes>
 
 			<div v-if="Object.keys( method.responses ).length">
-				<h4 class="panel-subtitle text-primary">Responses:</h4>
+				<h4 class="card-subtitle text-secondary">Responses:</h4>
 				<div
 					v-for="responseKey in filteredResponseKeys"
 					:key="`response_${method['x-resourceId']}_${responseKey}`"
@@ -61,16 +65,16 @@
 
 			<div v-if="method[ 'x-request-samples' ]">
 				<div class="col-xs-12 schema-container">
-					<h4 class="panel-subtitle text-primary">Sample Responses:</h4>
+					<h4 class="card-subtitle text-secondary">Sample Responses:</h4>
 					<p>{{ method[ "x-request-samples" ].description }}</p>
 					<div class="sample-tabs">
-						<b-tabs class="tab-wrapper panel panel-default" content-class="panel-body" nav-wrapper-class="panel-heading">
+						<b-tabs class="tab-wrapper card card-default" content-class="card-body" nav-wrapper-class="card-header">
 							<b-tab
 								v-for="(example, mimetype, index) in method[ 'x-request-samples' ].examples"
 								:key="`example_control_${mimetype}_${index}`"
 								:title="mimetype"
 							>
-								<div class="panel panel-solid-default">
+								<div class="card card-solid-default">
 									<prism :language="mimeLang( mimetype )" :code="formatAPIExample( example, mimetype )"></prism>
 								</div>
 							</b-tab>

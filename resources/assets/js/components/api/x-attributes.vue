@@ -1,6 +1,6 @@
 <template>
 	<div class="x-attributes" v-if="xAttributes.length">
-		<component :is="headerClass" class="text-primary">Extended Attributes:</component>
+		<component :is="headerType" :class="`card-subtitle ${headerClass}`">Extended Attributes:</component>
 		<table class="table-striped col-xs-12">
 			<tr>
 				<th width="40%">Name</th>
@@ -29,9 +29,13 @@ export default{
 		entity : {
 			type : Object
 		},
-		headerClass : {
+		headerType : {
 			type : String,
 			default : 'h3'
+		},
+		headerClass : {
+			type : String,
+			default : ''
 		}
 	},
 	data(){

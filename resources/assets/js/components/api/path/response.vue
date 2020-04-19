@@ -1,24 +1,28 @@
 <template>
-	<div :id="resourceId + '-' + responseKey" class="method-panel panel panel-primary">
+	<div :id="resourceId + '-' + responseKey" class="method-card card card-gray">
 
-		<div class="panel-heading">
-			<h3 class="panel-title methodHeader">
-				<strong>{{responseKey}}</strong>
-				<a class="pull-right btToggleMethod" role="button" data-toggle="collapse" :href="`#panel_${resourceId}-${responseKey}`" aria-expanded="false" :aria-controls="`panel_${resourceId}-${responseKey}`">
-					<i class="fa fa-chevron-down"></i>
-				</a>
+		<div class="card-header d-flex p-0">
+			<h3 class="card-title p-3 pathHeader">
+				{{responseKey.toTitleCase()}}
 			</h3>
+			<ul class="nav nav-pills ml-auto p-2">
+				<li class="nav-item">
+					<a class="nav-link btToggleMethod" role="button" data-toggle="collapse" :href="`#card_${resourceId}-${responseKey}`" aria-expanded="false" :aria-controls="`card_${resourceId}-${responseKey}`">
+						<i class="fa fa-chevron-down"></i>
+					</a>
+				</li>
+			</ul>
 		</div>
 
-		<div :id="`panel_${resourceId}-${responseKey}`" class="collapse panel-body">
+		<div :id="`card_${resourceId}-${responseKey}`" class="collapse card-body">
 			<div class="col-xs-12" v-if="markedResponse.description">
-					<h4 class="panel-subtitle text-primary">Description:</h4>
+					<h4 class="card-subtitle text-secondary">Description:</h4>
 					<p v-html="markedResponse.description.HTMLBreakLines()"></p>
 					<hr>
 			</div>
 
 			<div class="col-xs-12 schema-container" v-if="markedResponse.schema || markedResponse.examples">
-				<h4 class="panel-subtitle text-primary">Schema and Examples:</h4>
+				<h4 class="card-subtitle text-secondary">Schema and Examples:</h4>
 
 				<div class="schema-tabs">
 					<ul class="nav nav-tabs" role="tablist">
@@ -35,24 +39,24 @@
 					</ul>
 
 					<div class="tab-content">
-							<div v-if="markedResponse.schema" :id="`${markedResponse.schema.tabId}`" class="tab-pane fade in active schema-definition">
-								<schema-template :schema="markedResponse.schema"></schema-template>
+							<div v-if="markedResponse.schema" :id="`${markedResponse.schema.tabId}`" class="schema-definition">
+								<schema-template :schema="response.schema"></schema-template>
 							</div>
 							<div
 								v-for="( example, mimetype, exampleIndex ) in ( markedResponse.examples || {} )"
 								:key="`response_example_link_${exampleIndex}`"
 								:id="example.tabId"
-								:class="{ 'tab-pane' : true, 'fade' : true, 'schema-example' : true, 'in active' : !markedResponse.schema && exampleIndex === 0 }"
+								class="schema-example"
 							>
-								<div class="panel panel-solid-default">
+								<div class="card card-solid-default">
 									<prism :language="mimeLang( mimetype )" :code="formatAPIExample( example, mimetype )"></prism>
 								</div>
 							</div>
 					</div><!-- /.tab-content -->
 				</div><!-- /.schema-tabs -->
 			</div><!-- /.schema-container -->
-		</div><!-- /.panel-body -->
-	</div><!-- /.panel -->
+		</div><!-- /.card-body -->
+	</div><!-- /.card -->
 </template>
 <script>
 import { cloneDeep } from "lodash";
@@ -67,7 +71,7 @@ export default {
 	props : {
 		resourceId : {
 			type : String,
-			required : true
+			default: String.prototype.uuid()
 		},
 		verb : {
 			type : String,

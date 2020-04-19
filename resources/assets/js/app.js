@@ -3,6 +3,7 @@
 import '@/extensions/String';
 import 'bootstrap';
 import "icheck";
+require( 'admin-lte' );
 const store = require( "@/store/global" ).default;
 import App from "@/components/app";
 import { TabsPlugin } from 'bootstrap-vue';

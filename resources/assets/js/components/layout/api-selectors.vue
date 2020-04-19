@@ -1,9 +1,7 @@
 <template>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">Available Relax APIs</h3>
-		</div>
-		<div class="panel-body">
+	<div>
+		<h5 class="mb-1">Available Relax APIs</h5>
+		<div class="mb-1">
 			Load another API:<br/>
 			<p class="text-center">
 				<b-form-select

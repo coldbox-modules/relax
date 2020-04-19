@@ -146,6 +146,10 @@ component extends="BaseHandler"{
 
 			}
 
+			if( !structKeyExists( rc.data, "basePath" ) ){
+				rc.data[ "basePath" ] = '/';
+			}
+
 			rc.statusCode = STATUS.SUCCESS;
 
 		} catch ( any e ) {
