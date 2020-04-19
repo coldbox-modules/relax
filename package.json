@@ -17,7 +17,6 @@
     "icheck": "^1.0.2",
     "jquery": "^3.4.1",
     "jsdom-global": "^3.0.2",
-    "jsonlint": "^1.6.3",
     "lodash": "^4.17.15",
     "mocha": "^6.2.2",
     "mocha-webpack": "^2.0.0-beta.0",

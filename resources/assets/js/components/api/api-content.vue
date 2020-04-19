@@ -6,7 +6,7 @@
 
 		<div class="panel panel-default">
 			<div id="api-content-tabs" class="panel-body">
-				<b-tabs content-class="tab-wrapper">
+				<b-tabs class="tab-wrapper panel panel-primary" content-class="panel-body" nav-wrapper-class="panel-heading">
 					<b-tab title="Service Overview" active>
 						<api-info :api="api"></api-info>
 					</b-tab>

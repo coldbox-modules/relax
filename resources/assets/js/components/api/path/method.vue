@@ -64,7 +64,7 @@
 					<h4 class="panel-subtitle text-primary">Sample Responses:</h4>
 					<p>{{ method[ "x-request-samples" ].description }}</p>
 					<div class="sample-tabs">
-						<b-tabs content-class="tab-wrapper">
+						<b-tabs class="tab-wrapper panel panel-default" content-class="panel-body" nav-wrapper-class="panel-heading">
 							<b-tab
 								v-for="(example, mimetype, index) in method[ 'x-request-samples' ].examples"
 								:key="`example_control_${mimetype}_${index}`"
