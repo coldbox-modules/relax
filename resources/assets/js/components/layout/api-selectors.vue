@@ -16,8 +16,8 @@
 	</div>
 </template>
 <script>
-import { mapState } from "vuex";
 import { BFormSelect } from 'bootstrap-vue';
+import { mapGetters, mapState } from "vuex";
 export default{
 	components: {
 		BFormSelect
@@ -38,13 +38,16 @@ export default{
 					text : state.availableAPIs[key].title + '(' + key + ')'
 				}
 			} )
-		})
+		}),
+		...mapGetters( [ 'requestedAPI' ] )
 	},
 	methods : {
 		onAPISelected( e ){
-			console.log( e );
 			this.$store.dispatch( "selectAPI", this.selected );
 		}
+	},
+	mounted(){
+		Vue.set( this, "selected", this.requestedAPI || this.defaultAPI  );
 	}
 }
 </script>

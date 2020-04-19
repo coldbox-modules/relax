@@ -1,5 +1,6 @@
 const relaxAPI = require( "@/api/relax" ).default;
 import Vuex from 'vuex';
+import { parseRequestParams } from "@/util/udf";
 Vue.use(Vuex);
 
 export default new Vuex.Store(
@@ -10,7 +11,8 @@ export default new Vuex.Store(
 			defaultAPI : null
 		},
 		getters : {
-			relaxAPI : () => relaxAPI
+			relaxAPI : () => relaxAPI,
+			requestedAPI : () => parseRequestParams().api
 		},
 		mutations: {
 			updateState(state, payload) {

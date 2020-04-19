@@ -11,8 +11,8 @@
 						<strong>{{ xAttribute.name }}</strong>
 					</td>
 					<td>
-						<prism v-if="brushType( xAttribute )" :langugae="brushType( xAttribute )" :code="attributeValue( xAttribute )"></prism>
-						<span v-else>{{attributeValue( xAttribute )}}</span>
+						<prism v-if="getBrushType( xAttribute )" :language="getBrushType( xAttribute )" :code="getAttributeValue( xAttribute )"></prism>
+						<span v-else>{{getAttributeValue( xAttribute )}}</span>
 					</td>
 				</tr>
 		</table>
@@ -45,15 +45,16 @@ export default{
 			return Object.keys( self.entity )
 						.filter( key => self.omitted.indexOf( key ) == -1 && key.indexOf( "x-" ) > -1 )
 						.reduce( ( acc, key ) => {
-							let attributeArray = nodeName.split( '-' );
-							attributeArray.splice( 0, 1 );
+							let attributeArray = key.split( '-' );
+							attributeArray.shift();
 							let attributeName = attributeArray.join( ' ' ).toTitleCase();
 							acc.push(
 								{
-									name : attriubuteName,
+									name : attributeName,
 									value : self.entity[ key ]
 								}
-							)
+							);
+							return acc;
 						}, [] );
 		}
 	},
