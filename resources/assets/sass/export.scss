@@ -1,53 +1,17 @@
 /**
 *  This is our lighter-weight theme file for PDF and HTML exports
 **/
-
 //global variables
-@import "variables";
-// Variables, Mixins
-@import "theme/_variables.scss";
-@import "theme/_mixins.scss";
-
-// Greyscale for exports
-$brand-primary:         #333;
-$primaryColor:			$brand-primary;
-$brand-success:         #666666;
-$successColor:			$brand-success;
-$brand-info:            #696969;
-$infoColor:				$brand-info;
-$brand-warning:         #999999;
-$warningColor:			$brand-warning;
-$brand-default:			#cccccc;
-$defaultColor:			$brand-default;
-$brand-danger:          #d9534f;
-$dangerColor:			$brand-danger;
-
-//Select Bootstrap Libraries
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
-
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/badges";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/panels";
-
-/*
- *
- *   SpaceLab Theme - Select imports
- *
-*/
+@import "includes/variables";
 
 
-@import "theme/_base.scss";
-@import "theme/_badges.scss";
-@import "theme/_backgrounds.scss";
-@import "theme/_buttons.scss";
-@import "theme/_forms.scss";
-@import "theme/_main-content.scss";
-@import "theme/_icons.scss";
-@import "theme/_pages.scss";
-@import "theme/_panels.scss";
-@import "theme/_tiles.scss";
+//External Libs
+$control-sidebar-width : 350px;
+@import '~admin-lte/build/scss/AdminLTE.scss';
+@import '~bootstrap-vue/src/index';
+@import "~font-awesome/scss/font-awesome";
+@import '~icheck/skins/all.css';
+@import '~prismjs/themes/prism-okaidia.css';
 
 @page {
   size: 8.5in 11in;/* width height */
