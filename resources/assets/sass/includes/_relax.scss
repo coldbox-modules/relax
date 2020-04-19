@@ -23,17 +23,6 @@ fieldset{ margin: 10px 0px 10px 0px;}
 .nav-tabs > li > a:hover {
 	background-color: #eaeaea;
 }
-/** Syntax Highlighter Updates */
-pre, .syntaxhighlighter code{
-	font-size: 14px !important;
-	margin: 10px 0px;
-}
-div.syntaxhighlighter{
-	border: 1px solid #ccc;
-	padding: 5px;
-}
-div.syntaxhighlighter div.container:after,
-div.syntaxhighlighter div.container:before{ display: block !important;}
 
 body:not(.print){
 
