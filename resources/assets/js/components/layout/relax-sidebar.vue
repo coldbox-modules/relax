@@ -1,40 +1,40 @@
-<cfoutput>
-	<!--- Sidebar --->
-	<div class="col-md-3 mc-sidebar">
+<template>
+	<div class="mc-sidebar">
 		<div class="panel panel-default api-selector">
-	        <div class="panel-body">
+	        <div v-if="!availableAPIs" class="panel-body">
 	        	<p class="text-center">
 	        		Loading Available APIs... <br>
 	        		<i class="fa fa-spin fa-spinner"></i>
 	        	</p>
 	        </div>
+			<api-selectors v-else></api-selectors>
 	    </div>
 
 	    <div class="panel panel-default">
 	        <div class="panel-heading">
-	            <h3 class="panel-title">API Export<cfif prc.settings.sessionsEnabled>/Import</cfif></h3>
+	            <h3 class="panel-title">API Export<span v-if="globalData.sessionEnabled">/Import</span></h3>
 	        </div>
 	        <div class="panel-body">
-	        	You can export your Relaxed Service API to JSON<cfif prc.settings.sessionsEnabled> and also import one</cfif>.<br/><br/>
+	        	You can export your Relaxed Service API to JSON<span v-if="globalData.sessionEnabled"> and also import one</span>.<br/><br/>
 
 				<p class="text-center">
 					<!--- Export --->
 					<a href="javascript:void(0)"
-						data-link="#event.buildLink( prc.xehExportAPI )#"
+						:data-link="globalData.url.exportAPI"
 						class="btn btn-primary btnExportJSON"
 					   	title="Export API">
 							<i class="fa fa-lg fa-cloud-download"></i> Export
 					</a>
 
-					<cfif prc.settings.sessionsEnabled>
-						<!--- Import --->
-						<a href="javascript:void(0)"
-							data-toggle="tooltip"
-							class="btn btn-primary btnImportAPI"
-						   	title="Import API">
-								<i class="fa fa-lg fa-cloud-upload"></i> Import
-						</a>
-					</cfif>
+					<!--- Import --->
+					<a
+						v-if="globalData.sessionEnabled"
+						href="javascript:void(0)"
+						data-toggle="tooltip"
+						class="btn btn-primary btnImportAPI"
+						title="Import API">
+							<i class="fa fa-lg fa-cloud-upload"></i> Import
+					</a>
 				</p>
 	        </div>
 	    </div>
@@ -50,7 +50,7 @@
 					<!--- html --->
 					<a 	href="javascript:void(0)"
 						data-format="html"
-						data-link="#event.buildLink( prc.xehExportHTML )#"
+						:data-link="globalData.url.exportHTML"
 						class="btn btn-primary btnExportFormat"
 						data-toggle="tooltip"
 					   	title="Export as HTML">
@@ -59,7 +59,7 @@
 					<!--- pdf --->
 					<a 	href="javascript:void(0)"
 						data-format="pdf"
-						data-link="#event.buildLink( prc.xehExportPDF )#"
+						:data-link="globalData.url.exportPDF"
 						class="btn btn-primary btnExportFormat"
 						data-toggle="tooltip"
 						title="Export as PDF">
@@ -68,7 +68,7 @@
 					<!--- mediawiki --->
 					<a 	href="javascript:void(0)"
 						data-format="trac"
-						data-link="#event.buildLink( prc.xehExportWiki )#"
+						:data-link="globalData.url.exportWiki"
 						class="btn btn-primary btnExportFormat"
 						data-toggle="tooltip"
 					    title="Export as MediaWiki">
@@ -77,7 +77,7 @@
 					<!--- trac --->
 					<a 	href="javascript:void(0)"
 						data-format="trac"
-						data-link="#event.buildLink( prc.xehExportTrac )#"
+						:data-link="globalData.url.exportTrac"
 						class="btn btn-primary btnExportFormat"
 						data-toggle="tooltip"
 					    title="Export as TracMarkup">
@@ -94,7 +94,7 @@
 	        <div class="panel-body">
 	        	<div class="text-center">
 	            	<a href="http://www.ortussolutions.com" target="_blank" title="The Gurus behind ColdBox">
-						<img src="#prc.root#/includes/static/images/ortus-top-logo.png" alt="Ortus Solutions" border="0" class="img-thumbnail"/>
+						<img :src="`${globalData.rootPath}/includes/static/images/ortus-top-logo.png`" alt="Ortus Solutions" border="0" class="img-thumbnail"/>
 					</a>
 				</div>
 
@@ -106,7 +106,19 @@
 				to help!</p>
 	        </div>
 	    </div>
-
-	</div> <!--- end sidebar column --->
-
-</cfoutput>
+	</div>
+</template>
+<script>
+import ApiSelectors from "@/components/layout/api-selectors";
+import { mapState } from "vuex";
+export default {
+	components : {
+		ApiSelectors
+	},
+	computed : {
+		...mapState({
+			availableAPIs : state => state.availableAPIs
+		})
+	}
+}
+</script>

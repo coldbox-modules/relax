@@ -15,6 +15,7 @@
 <cfinclude template="inc/HTMLHead.cfm"/>
 
 <body class="off-canvas <cfif !args.print>animated fadeIn><cfelse>print</cfif>" <cfif args.print>style="background-color: white"</cfif>>
+
    <cfif args.print>
        <a href="javascript:void(0)" id="btnCopyGeneratedSource" class="btn btn-default pull-right" data-toggle="tooltip" data-placement="bottom" title="Copy generated source to clipboard"><i class="fa fa-clipboard"></i></a>
    </cfif>
@@ -24,7 +25,7 @@
             <!--logo start-->
             <div class="brand">
                 <a href="#event.buildLink( prc.xehHome )#" class="logo">
-                    <img src="#prc.root#/includes/images/ColdBoxLogo2015-Solo_50.png" title="ColdBox"/>
+                    <img src="#prc.root#/includes/static/images/ColdBoxLogo2015-Solo_50.png" title="ColdBox"/>
                     <span>Relax</span>
                 </a>
             </div>

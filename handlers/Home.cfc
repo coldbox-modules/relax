@@ -13,20 +13,6 @@ component extends="BaseHandler"{
 	* Home
 	*/
 	function index( event, rc, prc ){
-
-		// Exit Handlers
-		prc.xehResourceDoc  = "relax/Home/resourceDoc";
-		prc.xehLoadAPI		= "relax/Home/loadAPI";
-		prc.xehExportHTML 	= "relax/Export/html";
-		prc.xehExportPDF 	= "relax/Export/pdf";
-		prc.xehExportwiki 	= "relax/Export/mediawiki";
-		prc.xehExportTrac 	= "relax/Export/trac";
-		prc.xehExportAPI	= "relax/Export/api";
-		prc.xehImportAPI	= "relax/Import/api";
-
-		// Expanded div for resource holders
-		prc.expandedResourceDivs = false;
-
 		// set view
 		event.setView( "home/index" );
 	}
