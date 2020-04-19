@@ -7,7 +7,6 @@ const urlRoot = moduleAPIRoot + 'apidoc';
 const defaultAPI = Axios.create({
 	baseURL: urlRoot,
 	headers : {
-
 	  "Content-Type" : "application/json"
 	}
 });
