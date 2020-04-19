@@ -1,19 +1,23 @@
 <template>
-	<div :id="path['x-resourceId']" class="path-panel panel panel-primary">
+	<div :id="path['x-resourceId']" class="path-card card card-primary">
 		<!--- Path Title --->
-		<div class="panel-heading">
-			<h3 class="panel-title pathHeader">
-				{{route}}
-				<a class="pull-right btTogglePath" role="button" data-toggle="collapse" :href="`#panel_${path['x-resourceId']}`" aria-expanded="false" :aria-controls="`panel_${path['x-resourceId']}`">
-					<i class="fa fa-chevron-down"></i>
-				</a>
+		<div class="card-header d-flex p-0">
+			<h3 class="card-title p-3 pathHeader">
+				{{route.toUpperCase()}}
 			</h3>
+			<ul class="nav nav-pills ml-auto p-2">
+				<li class="nav-item">
+					<a class="nav-link btnTogglePath" role="button" data-toggle="collapse" :href="`#card_${path['x-resourceId']}`" aria-expanded="false" :aria-controls="`card_${path['x-resourceId']}`">
+						<i class="fa fa-chevron-down"></i>
+					</a>
+				</li>
+			</ul>
 		</div>
 
 		<!--- Div Content --->
-		<div :id="`panel_${path['x-resourceId']}`" class="collapse panel-body">
-			<x-attributes :entity="path" header-type="h4"></x-attributes>
-			<h4 class="panel-subtitle text-muted">Methods:</h4>
+		<div :id="`card_${path['x-resourceId']}`" class="collapse card-body">
+			<x-attributes :entity="path" header-type="h4" header-class="text-secondary"></x-attributes>
+			<h4 class="card-subtitle text-muted">Methods:</h4>
 			<div class="col-xs-12">
 				<method
 					v-for="verb in methodKeys"

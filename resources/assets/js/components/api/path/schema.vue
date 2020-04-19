@@ -1,5 +1,5 @@
 <template>
-	<div class="panel panel-solid-default">
+	<div class="card card-solid-default">
 		<prism language="json" :code="formatJSONRaw( JSON.stringify( schema ) )"></prism>
 	</div>
 </template>

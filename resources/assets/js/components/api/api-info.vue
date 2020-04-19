@@ -1,11 +1,11 @@
 <template>
 	<div id="overview" class="service-summary">
-		<!--- Service Title and Description --->
-		<h2>{{ api.info.title }}</h2>
 		<h4 v-if="api.info.version && !isNaN( api.info.version )">Version: <span class="label label-primary">{{ api.info.version }}</span></h4>
+
+		<h2 v-if="api.info.description">Introduction</h2>
+		<p v-if="api.info.description" v-html="api.info.description.HTMLBreakLines()"></p>
+
 		<dl>
-			<dt class="text-info">Introduction:</dt>
-			<dd v-html="api.info.description.HTMLBreakLines()"></dd>
 
 			<dt v-if="api.info.contact && Object.keys( api.info.contact ).length" class="text-info">Contact:</dt>
 			<dd v-if="api.info.contact && Object.keys( api.info.contact ).length" class="address">
@@ -88,42 +88,51 @@
 		<!--- Paths --->
 		<h3>Service Available Paths</h3>
 
-		<p>
+		<nav class="nav">
 			<a
 				v-for="key in pathKeys"
 				:key="`path_link_${key}`"
-				class="btn btn-xs btn-primary path-nav"
+				class="nav-link btn btn-sm btn-primary"
+				style="margin-right:10px; margin-bottom: 10px"
 				:href="`#${api.paths[ key ][ 'x-resourceId' ]}`"
 			>{{ key }}</a>
-		</p>
+		</nav>
 
 		<h3>MIME Types Consumed</h3>
-		<p>
-			<span
-				v-for="type in api.consumes"
-				:key="`consumes_${type}`"
-				class="label label-primary consumes-nav"
-				data-mimetype="type"
-			>
-				{{ type }}
-			</span>
+		<p v-if="api.consumes">
+			<nav class="nav">
+				<span
+					v-for="type in api.consumes"
+					:key="`consumes_${type}`"
+					class="nav-item"
+					style="margin-right:15px"
+					data-mimetype="type"
+				>
+				<code>{{ type }}</code>
+				</span>
+			</nav>
 		</p>
+		<p v-else><nav class="nav"><span class="nav-item"><code>application/json</code></span></nav></p>
 		<!--- API Return Formats --->
 		<h3>MIME Types Returned</h3>
-		<p>
-			<span
-				v-for="type in api.produces"
-				:key="`produces_${type}`"
-				class="label label-primary consumes-nav"
-				data-mimetype="type"
-			>
-				{{ type }}
-			</span>
+		<p v-if="api.produces">
+			<nav class="nav">
+				<span
+					v-for="type in api.produces"
+					:key="`produces_${type}`"
+					class="nav-item"
+					style="margin-right:15px"
+					data-mimetype="type"
+				>
+					<code>{{ type }}</code>
+				</span>
+			</nav>
 		</p>
+		<p v-else><nav class="nav"><span class="nav-item"><code>application/json</code></span></nav></p>
 
-		<h3 v-if="api[ 'x-extensionDetection' ]">Extension Detection:  <code>{{ api[ "x-extensionDetection"] }}</code></h3>
+		<h3 v-if="api[ 'x-extensionDetection' ]">Extension Detection:  {{ api[ "x-extensionDetection"] ? 'Yes' : 'No' }}</h3>
 
-		<h3 v-if="api[ 'x-throwOnInvalidExtension' ]">Throws on Invalid Extension:  <code>{{ api[ "x-throwOnInvalidExtension"] }}</code></h3>
+		<h3 v-if="api[ 'x-throwOnInvalidExtension' ]">Throws on Invalid Extension:  {{ api[ "x-throwOnInvalidExtension"] ? 'Yes' : 'No' }}</h3>
 
 		<div v-if="api.securityDefinitions">
 			<h3>Security Definitions</h3>
@@ -165,7 +174,7 @@ export default {
 		windowProtocol : () => window.location.protocol
 	},
 	methods : {
-		isURL : ( item ) => item.indexOf( "http" ) === 0,
+		isURL : ( item ) => item ? item.indexOf( "http" ) === 0 : false,
 		pathLengthSort : ( a, b ) => {
 			let A = a.toUpperCase();
 			let B = b.toUpperCase();

@@ -4,17 +4,17 @@
 			v-for="( content, contentKey ) in requestBody.content"
 			:key="resourceId( contentKey )"
 			:id="resourceId( contentKey )"
-			class="method-panel panel panel-info"
+			class="method-card card card-info"
 		>
-			<div class="panel-heading">
-				<h3 class="panel-title methodHeader">
+			<div class="card-header">
+				<h3 class="card-title methodHeader">
 					<strong>{{contentKey}}</strong>
-					<a class="pull-right btToggleMethod" role="button" data-toggle="collapse" :href="`#panel_${resourceId( contentKey )}`" aria-expanded="false" :aria-controls="`panel_${resourceId( contentKey )}`">
+					<a class="pull-right btToggleMethod" role="button" data-toggle="collapse" :href="`#card_${resourceId( contentKey )}`" aria-expanded="false" :aria-controls="`card_${resourceId( contentKey )}`">
 						<i class="fa fa-chevron-down"></i>
 					</a>
 				</h3>
 			</div>
-			<div :id="`panel_${resourceId( contentKey )}`" class="collapse panel-body">
+			<div :id="`card_${resourceId( contentKey )}`" class="collapse card-body">
 				<ul v-if="content.schema && content.schema.properties" class="col-xs-12 list-unstyled">
 					<li
 						v-for="param in Object.keys( content.schema.properties ).sort( ucaseCompare )"

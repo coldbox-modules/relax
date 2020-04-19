@@ -3,46 +3,9 @@
 
 
 //External Libs
-@import '~bootstrap/scss/bootstrap';
+$control-sidebar-width : 350px;
+@import '~admin-lte/build/scss/AdminLTE.scss';
 @import '~bootstrap-vue/src/index';
 @import "~font-awesome/scss/font-awesome";
 @import '~icheck/skins/all.css';
 @import '~prismjs/themes/prism-okaidia.css';
-
-// Variables, Mixins
-@import "theme/variables";
-@import "theme/mixins";
-
-@import "theme/base";
-@import "theme/badges";
-@import "theme/backgrounds";
-@import "theme/breadcrumbs";
-@import "theme/buttons";
-@import "theme/calendar";
-@import "theme/forms";
-@import "theme/header";
-@import "theme/main-content";
-@import "theme/sidebars";
-@import "theme/sliders";
-@import "theme/tiles";
-@import "theme/charts";
-@import "theme/colors";
-@import "theme/icons";
-@import "theme/mail";
-@import "theme/maps";
-@import "theme/modals";
-@import "theme/nestable-sortable";
-@import "theme/pages";
-@import "theme/pagination";
-@import "theme/panels";
-@import "theme/progress-bars";
-@import "theme/sidebars";
-@import "theme/sliders";
-@import "theme/tabs";
-@import "theme/tiles";
-@import "theme/wizard";
-@import "theme/switch";
-@import "theme/media-queries";
-
-@import "includes/relax";
-
