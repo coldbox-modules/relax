@@ -24,7 +24,8 @@ component{
 	this.dependencies		= [ "cbjavaloader", "cbswagger", "wikitext" ];
 	// App Helpers
 	this.applicationHelper = [
-		"models/mixins/textFormat.cfm"
+		"models/mixins/textFormat.cfm",
+		"models/mixins/elixirPath.cfm"
 	];
 
 	/**
@@ -49,6 +50,10 @@ component{
 		layoutSettings = {
 			defaultLayout = "relax.cfm"
 		};
+
+		interceptors = [
+			{ class="relax.interceptors.GlobalData" }
+		];
 	}
 
 	/**

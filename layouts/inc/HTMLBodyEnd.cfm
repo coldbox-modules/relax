@@ -25,82 +25,14 @@
     </div>
 </script>
 
-<!-- Underscore Template Objects -->
-<script type="text/template" id="api-content-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/api-content.html"/>
-</script>
-<script type="text/template" id="path-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/path.html"/>
-</script>
-<script type="text/template" id="method-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/method.html"/>
-</script>
-<script type="text/template" id="response-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/response.html"/>
-</script>
-<script type="text/template" id="httpcodes-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/httpcodes.html"/>
-</script>
-<script type="text/template" id="response-code-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/httpcodes.html"/>
-</script>
-<script type="text/template" id="parameter-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/parameter.html"/>
-</script>
-<script type="text/template" id="request-body-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/request-body.html"/>
-</script>
-<script type="text/template" id="example-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/example.html"/>
-</script>
-<script type="text/template" id="schema-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/schema.html"/>
-</script>
-<script type="text/template" id="security-definitions-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/security-definitions.html"/>
-</script>
-<script type="text/template" id="relaxer-form-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/relaxer-form.html"/>
-</script>
-<script type="text/template" id="relaxer-response-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/relaxer-response.html"/>
-</script>
-<script type="text/template" id="x-attributes-template">
-    <cfinclude template="#prc.root#/views/apidoc/_template/x-attributes.html"/>
-</script>
-
 <!-- dynamic assets -->
 <cfoutput>
-    <!-- RJS Runtime -->
-    <script src="#prc.root#/includes/js/require.js" type="application/javascript"></script>
-    <script type="application/javascript">
-        require( [ '#prc.root#/includes/js/es6-shim.js' ], function(){
-            require( [ '#prc.root#/includes/js/globals.js' ], function( globals ){
-                require.config( {
-                   baseUrl : '#prc.root#/includes/js/',
-                } );
-                window[ "_" ]       = _;
-                window[ "relax" ]   = {
-                    baseUrl         : "#prc.root#/",
-                    apiDocBaseUrl   : "#prc.root#/apidoc"
-                };
-                require(
-                    [
-                        '#prc.root#/includes/js/jsonlint.js',
-                        '#prc.root#/includes/js/app.js',
-                        '#prc.root#/includes/js/prism.js',
-                        '#prc.root#/includes/js/udf.js'
-                    ],
-                    function(){
-                    <!--- loop around the jsAppendList, to add page specific js --->
-                    <cfloop array="#prc.runtimeAssets.js#" index="js">
-                        require( [ '#js#' ] );
-                    </cfloop>
-                    }
-                );
-            });
-        });
-    </script>
+	<script>
+		window.relaxGlobalData = #serializeJSON( prc.relaxGlobalData, false, listFindNoCase( "Lucee", server.coldfusion.productname ) ? "utf-8" : false )#
+	</script>
+	<script type="application/javascript" src="#relaxElixirPath( "js/runtime.js" )#"></script>
+	<script type="application/javascript" src="#relaxElixirPath( "js/vendor.js" )#"></script>
+	<script type="application/javascript" src="#relaxElixirPath( "js/app.js" )#"></script>
 </cfoutput>
 
 <!-- Fonts -->

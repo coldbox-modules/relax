@@ -1,5 +1,9 @@
 .vscode
 
+includes/*
+!includes/static
+!includes/helpers
+
 .artifacts/**
 .tmp/**
 

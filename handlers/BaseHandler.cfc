@@ -14,8 +14,6 @@ component accessors=true{
 	* Pre handler
 	*/
 	function preHandler( event, rc, prc ){
-		// module root
-		prc.root 			= event.getModuleRoot();
 		// settings
 		prc.settings 		= variables.settings;
 		// exit handlers
