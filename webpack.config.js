@@ -43,7 +43,8 @@ elixir.config.mergeConfig({
 });
 
 module.exports = elixir(function(mix) {
-    mix.sass( "app.scss" )
-       .vue( "app.js" );
+	mix.sass( "app.scss" )
+		.sass( "export.scss" )
+		.vue( "app.js" );
 
 });
