@@ -1,8 +1,6 @@
 /**
 * Global Functions and UDFS
 **/
-const jsonlint = require( "jsonlint" );
-
 /**
 * Populates and opens a modal from a remote URL
 * @url      The URL to load
@@ -66,6 +64,10 @@ export const getQueryVariable = function( variable ) {
     }
 }
 
+export const getLangFromMimetype = function( mimetype ){
+	return mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
+}
+
 
 /**
 * Formats an API Example from a given mimetype
@@ -119,14 +121,7 @@ export const formatJSON = function( id ){
 export const formatJSONRaw = function( jsonData ){
     if( !jsonData.length ){ return ''; }
     try{
-        var result = jsonlint.parse( jsonData );
-
-        if (result) {
-            // Reformat and replace double-escaped slashes:
-            return JSON.stringify(result, false, 4).replace(/\\\\/g, "\\");
-        }
-
-        return jsonData;
+        return JSON.stringify( JSON.parse( jsonData ), null, 4 ).replace(/\\\\/g, "\\");
     }
     catch(e){
         console.error(e);

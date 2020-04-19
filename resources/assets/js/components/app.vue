@@ -26,8 +26,7 @@
 <script>
 import ApiContent from "@/components/api/api-content";
 import RelaxSidebar from "@/components/layout/relax-sidebar";
-import { parseRequestParams } from "@/util/udf";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
 	components : {
@@ -39,14 +38,16 @@ export default {
 			{
 				api : state => state.APIDoc,
 				availableAPIs : state => state.availableAPIs,
+				defaultAPI : state => state.defaultAPI,
 				activeAPI : state => state.activeAPI
 			}
-		)
+		),
+		...mapGetters([ 'requestedAPI' ] )
 	},
 	mounted(){
 		this.$store.dispatch( "fetchAvailableAPIs" ).then( () => {
-			if( this.activeAPI ){
-				this.$store.dispatch( "selectAPI", this.activeAPI )
+			if( !this.activeAPI ){
+				this.$store.dispatch( "selectAPI", this.requestedAPI || this.defaultAPI )
 			}
 		} );
 	}

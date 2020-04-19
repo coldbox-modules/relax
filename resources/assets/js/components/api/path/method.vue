@@ -91,7 +91,7 @@ import RequestBody from "@/components/api/path/request-body";
 import XAttributes from "@/components/api/x-attributes";
 import Prism from 'vue-prismjs';
 import { uniqueId } from "lodash";
-import { formatAPIExample } from "@/util/udf";
+import { formatAPIExample, getLangFromMimetype } from "@/util/udf";
 export default{
 	components : {
 		Parameters,
@@ -126,11 +126,8 @@ export default{
 		filteredResponseKeys(){ return Object.keys( this.filteredResponses ) }
 	},
 	methods : {
-		mimeLang : ( mimetype ) => {
-			typeRef = mimetype.split('/')[ mimetype.split( '/' ).length-1 ];
-			if( typeRef === 'json' ) typeRef = 'javascript';
-			return typeRef;
-		}
+		mimeLang : getLangFromMimetype,
+		formatAPIExample : formatAPIExample
 	}
 
 }
