@@ -8,7 +8,9 @@ export default new Vuex.Store(
 		state : {
 			globalData : window.relaxGlobalData,
 			availableAPIs : null,
-			defaultAPI : null
+			defaultAPI : null,
+			APIDoc : null,
+			activeAPI : null
 		},
 		getters : {
 			relaxAPI : () => relaxAPI,
@@ -34,7 +36,10 @@ export default new Vuex.Store(
 
 					} )
 			} ),
-			selectAPI: ( context, key ) => context.dispatch( "fetchAPI", key ).then( result => context.commit( "updateState", { key : "APIDoc", value : result.data }) ),
+			selectAPI: ( context, key ) => context.dispatch( "fetchAPI", key ).then( result => {
+				context.commit( "updateState", { key : "activeAPI", value : key } )
+				context.commit( "updateState", { key : "APIDoc", value : result.data } )
+			} ),
 			fetchAPI : ( context, key ) => relaxAPI.get.fetchAPI( key )
 		}
 	}

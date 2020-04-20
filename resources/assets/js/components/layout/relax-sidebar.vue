@@ -14,7 +14,8 @@
 
 			<p class="text-center">
 				<!--- Export --->
-				<a href="javascript:void(0)"
+				<a href="javascript:;"
+					@click="onExportAPIJSON"
 					:data-link="globalData.url.exportAPI"
 					class="btn btn-primary btnExportJSON"
 					title="Export API">
@@ -24,7 +25,8 @@
 				<!--- Import --->
 				<a
 					v-if="globalData.sessionEnabled"
-					href="javascript:void(0)"
+					href="javascript:;"
+					@click="onShowImportAPI"
 					data-toggle="tooltip"
 					class="btn btn-primary btnImportAPI"
 					title="Import API">
@@ -41,7 +43,8 @@
 			<!--- Export Commands --->
 			<p class="text-center">
 				<!--- html --->
-				<a 	href="javascript:void(0)"
+				<a 	href="javascript:;"
+					@click="onExportFormat"
 					data-format="html"
 					:data-link="globalData.url.exportHTML"
 					class="btn btn-primary btnExportFormat"
@@ -50,7 +53,8 @@
 					<i class="fa fa-lg fa-html5"></i>
 				</a>
 				<!--- pdf --->
-				<a 	href="javascript:void(0)"
+				<a 	href="javascript:;"
+					@click="onExportFormat"
 					data-format="pdf"
 					:data-link="globalData.url.exportPDF"
 					class="btn btn-primary btnExportFormat"
@@ -59,7 +63,8 @@
 					<i class="fa fa-lg fa-file-pdf-o"></i>
 				</a>
 				<!--- mediawiki --->
-				<a 	href="javascript:void(0)"
+				<a 	href="javascript:;"
+					@click="onExportFormat"
 					data-format="trac"
 					:data-link="globalData.url.exportWiki"
 					class="btn btn-primary btnExportFormat"
@@ -68,7 +73,8 @@
 					<i class="fa fa-lg fa-file-code-o"></i>
 				</a>
 				<!--- trac --->
-				<a 	href="javascript:void(0)"
+				<a 	href="javascript:;"
+					@click="onExportFormat"
 					data-format="trac"
 					:data-link="globalData.url.exportTrac"
 					class="btn btn-primary btnExportFormat"
@@ -102,6 +108,9 @@
 import ApiSelectors from "@/components/layout/api-selectors";
 import { mapState } from "vuex";
 export default {
+	mixins : [
+		require( "@/components/mixins/import-export" ).default
+	],
 	components : {
 		ApiSelectors
 	},
@@ -109,6 +118,9 @@ export default {
 		...mapState({
 			availableAPIs : state => state.availableAPIs
 		})
+	},
+	methods : {
+
 	}
 }
 </script>

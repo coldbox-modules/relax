@@ -3,8 +3,8 @@
     <div class="modal-dialog modal-lg" id="modal-dialog">
         <div class="modal-content" id="remoteModelContent">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3>Loading...</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
                 <i class="fa fa-spinner fa-spin fa-lg fa-4x"></i>
@@ -16,8 +16,8 @@
 <script type="text/html" id="modal-template">
     <div class="modal-content" id="remoteModelContent">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h3>Loading...</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
             <i class="fa fa-spinner fa-spin fa-lg fa-4x"></i>

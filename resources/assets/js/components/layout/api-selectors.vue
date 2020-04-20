@@ -5,7 +5,7 @@
 			Load another API:<br/>
 			<p class="text-center">
 				<b-form-select
-					v-model="selected"
+					:value="selected"
 					:options="apiOptions"
 					@change="onAPISelected"
 				></b-form-select>
@@ -20,13 +20,9 @@ export default{
 	components: {
 		BFormSelect
 	},
-	data(){
-		return {
-			selected : null
-		}
-	},
 	computed : {
 		...mapState({
+			selected : state => state.activeAPI,
 			availableAPIs : state => state.availableAPIs,
 			APIDoc : state => state.APIDoc,
 			defaultAPI : state => state.defaultAPI,
@@ -40,12 +36,9 @@ export default{
 		...mapGetters( [ 'requestedAPI' ] )
 	},
 	methods : {
-		onAPISelected( e ){
-			this.$store.dispatch( "selectAPI", this.selected );
+		onAPISelected( api ){
+			this.$store.dispatch( "selectAPI", api );
 		}
-	},
-	mounted(){
-		Vue.set( this, "selected", this.requestedAPI || this.defaultAPI  );
 	}
 }
 </script>
