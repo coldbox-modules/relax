@@ -9,12 +9,12 @@
 	<div class="modal-body">
 		<p>
 			Below you can see the JSON representation of your API.  Relax uses the <a href="https://openapis.org/">Swagger/OpenAPI Specification</a>, so this representation is compatible with any third party tools which accept that specification.
-		</p>	
+		</p>
 		<textarea name="exportJSON" id="exportJSON" class="form-control" rows="20">#prc.jsonAPI#</textarea>
 		<hr/>
 
 	</div>
-	
+
 	<div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		<a href="##" onclick="downloadJSON()" class="btn btn-primary">Download</a>

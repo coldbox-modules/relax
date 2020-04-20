@@ -17,17 +17,24 @@
 		<aside class="control-sidebar control-sidebar-dark" style="padding: 20px">
 			<relax-sidebar></relax-sidebar>
 		</aside>
+		<!-- Utility Modals -->
+		<import-modal></import-modal>
+		<export-modal></export-modal>
 	</div>
 </template>
 <script>
 import ApiContent from "@/components/api/api-content";
 import RelaxSidebar from "@/components/layout/relax-sidebar";
+import ImportModal from "@/components/forms/api-import-modal";
+import ExportModal from "@/components/forms/api-export-modal";
 import { mapState, mapGetters } from "vuex";
 
 export default {
 	components : {
 		ApiContent,
-		RelaxSidebar
+		RelaxSidebar,
+		ImportModal,
+		ExportModal
 	},
 	computed : {
 		...mapState(
