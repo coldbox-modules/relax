@@ -1,0 +1,322 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "contact": {},
+        "termsOfService": "",
+        "version": "",
+        "license": {},
+        "title": "My RESTFul Service",
+        "description": "A very cool RESTFul Service"
+    },
+    "servers": [
+        {
+            "url": "http://dev.myapi.com",
+            "description": "DEV"
+        },
+        {
+            "url": "http://www.myapi.com",
+            "description": "PRODUCTION"
+        }
+    ],
+    "paths": {
+        "/api/users": {
+            "put": {
+                "x-coldbox-handler": "rest.user",
+                "parameters": [],
+                "x-resourceId": "423bb48aee1fdd4188d0437fd34b3a37",
+                "operationId": "rest.user.list",
+                "responses": {
+                    "x-resourceId": "a9f0a3a63fe6b5bd954760c6ac09e85c"
+                },
+                "description": "Returns all users"
+            },
+            "x-resourceId": "5dd78a14d6e453994bd4d5c563f90e04",
+            "get": {
+                "x-coldbox-handler": "rest.user",
+                "parameters": [],
+                "x-resourceId": "20bab3eff0b870b1f3138093f84ffc8e",
+                "operationId": "rest.user.list",
+                "responses": {
+                    "x-resourceId": "a9f0a3a63fe6b5bd954760c6ac09e85c"
+                },
+                "description": "Returns all users"
+            },
+            "post": {
+                "x-coldbox-handler": "rest.user",
+                "parameters": [],
+                "x-resourceId": "5cb14ce2dfbed7be9370e932362111ba",
+                "operationId": "rest.user.list",
+                "responses": {
+                    "x-resourceId": "a9f0a3a63fe6b5bd954760c6ac09e85c"
+                },
+                "description": "Returns all users"
+            }
+        },
+        "/api/myResource": {
+            "x-resourceId": "c4c000ce2d6075b2f442c39c5834bbb2",
+            "get": {
+                "x-coldbox-handler": "rest.myUser",
+                "parameters": [],
+                "x-resourceId": "b9644301f7e1e557b3f63f1df8f9da50",
+                "operationId": "rest.myUser",
+                "responses": {
+                    "x-resourceId": "a9f0a3a63fe6b5bd954760c6ac09e85c"
+                },
+                "description": "Returns of my available resources"
+            },
+            "post": {
+                "x-coldbox-handler": "rest.myUser",
+                "parameters": [],
+                "x-resourceId": "752d1e616a6d0dfa1524d4fd827ebf19",
+                "operationId": "rest.myUser",
+                "responses": {
+                    "x-resourceId": "a9f0a3a63fe6b5bd954760c6ac09e85c"
+                },
+                "description": "Returns of my available resources"
+            }
+        },
+        "/api/user/{username}": {
+            "put": {
+                "x-coldbox-handler": "rest.user",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "username",
+                        "type": "string",
+                        "x-defaultValue": "",
+                        "description": "The resource username to interact with"
+                    },
+                    {
+                        "required": true,
+                        "in": "formData",
+                        "name": "firstName",
+                        "type": "string",
+                        "description": "The user firstname. Only used on PUT and POST operations"
+                    },
+                    {
+                        "required": true,
+                        "in": "formData",
+                        "name": "lastName",
+                        "type": "string",
+                        "description": "The user lastname. Only used on PUT and POST operations"
+                    },
+                    {
+                        "required": false,
+                        "in": "formData",
+                        "name": "email",
+                        "type": "string",
+                        "description": "The user email. Only used on PUT and POST operations"
+                    }
+                ],
+                "x-resourceId": "20a39f01ddab3c47ae9b61a87bb3eaef",
+                "operationId": "rest.user.{'get':'view','post':'create','put':'update','delete','remove'}",
+                "responses": {
+                    "x-resourceId": "a9f0a3a63fe6b5bd954760c6ac09e85c"
+                },
+                "description": "The representation for system users.  You can also interact with creation, updating and deletion via this resource"
+            },
+            "x-resourceId": "2163611f9de439f64b77aededadcd326",
+            "get": {
+                "x-coldbox-handler": "rest.user",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "username",
+                        "type": "string",
+                        "x-defaultValue": "",
+                        "description": "The resource username to interact with"
+                    }
+                ],
+                "x-resourceId": "41a531c92e771514f7f3ae973a50ade7",
+                "operationId": "rest.user.{'get':'view','post':'create','put':'update','delete','remove'}",
+                "responses": {
+                    "x-resourceId": "a9f0a3a63fe6b5bd954760c6ac09e85c"
+                },
+                "description": "The representation for system users.  You can also interact with creation, updating and deletion via this resource"
+            },
+            "delete": {
+                "x-coldbox-handler": "rest.user",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "username",
+                        "type": "string",
+                        "x-defaultValue": "",
+                        "description": "The resource username to interact with"
+                    }
+                ],
+                "x-resourceId": "b72f4b14a1c422c589e14b5400f1829b",
+                "operationId": "rest.user.{'get':'view','post':'create','put':'update','delete','remove'}",
+                "responses": {
+                    "x-resourceId": "a9f0a3a63fe6b5bd954760c6ac09e85c"
+                },
+                "description": "The representation for system users.  You can also interact with creation, updating and deletion via this resource"
+            },
+            "post": {
+                "x-coldbox-handler": "rest.user",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "username",
+                        "type": "string",
+                        "x-defaultValue": "",
+                        "description": "The resource username to interact with"
+                    },
+                    {
+                        "required": true,
+                        "in": "formData",
+                        "name": "firstName",
+                        "type": "string",
+                        "description": "The user firstname. Only used on PUT and POST operations"
+                    },
+                    {
+                        "required": true,
+                        "in": "formData",
+                        "name": "lastName",
+                        "type": "string",
+                        "description": "The user lastname. Only used on PUT and POST operations"
+                    },
+                    {
+                        "required": false,
+                        "in": "formData",
+                        "name": "email",
+                        "type": "string",
+                        "description": "The user email. Only used on PUT and POST operations"
+                    }
+                ],
+                "x-resourceId": "89a4cede37f15fbd5ff1bbbaec48eb3e",
+                "operationId": "rest.user.{'get':'view','post':'create','put':'update','delete','remove'}",
+                "responses": {
+                    "x-resourceId": "a9f0a3a63fe6b5bd954760c6ac09e85c"
+                },
+                "description": "The representation for system users.  You can also interact with creation, updating and deletion via this resource"
+            }
+        },
+        "/api/tables/{action}": {
+            "x-resourceId": "170810066fc87804d4a6a08dba26fc95",
+            "get": {
+                "x-coldbox-handler": "rest.table",
+                "parameters": [],
+                "x-resourceId": "96148eae1c77b5237b9344ddee6dc7c0",
+                "operationId": "rest.table",
+                "responses": {
+                    "x-resourceId": "a9f0a3a63fe6b5bd954760c6ac09e85c"
+                },
+                "description": "Returns table actions"
+            }
+        },
+        "/api/user": {
+            "x-resourceId": "d2425574595d4e326a17a88cef917034",
+            "get": {
+                "x-coldbox-handler": "rest.user",
+                "parameters": [
+                    {
+                        "required": false,
+                        "in": "query",
+                        "name": "userID",
+                        "type": "string",
+                        "description": "The userID of the User record."
+                    },
+                    {
+                        "required": false,
+                        "in": "query",
+                        "name": "username",
+                        "type": "string",
+                        "description": "The username of the User record."
+                    }
+                ],
+                "x-resourceId": "f2345b19ba7c3b061c490ba2e42c7330",
+                "operationId": "rest.user",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        },
+                        "description": "The following will be returned when the format requested is JSON."
+                    },
+                    "default": {
+                        "content": {
+                            "application/xml": {
+                                "schema": {}
+                            }
+                        },
+                        "description": "The following will be returned when the format requested is XML."
+                    },
+                    "x-resourceId": "a9f0a3a63fe6b5bd954760c6ac09e85c"
+                },
+                "description": "User resource."
+            },
+            "post": {
+                "x-coldbox-handler": "rest.user",
+                "parameters": [
+                    {
+                        "required": false,
+                        "in": "formData",
+                        "name": "userID",
+                        "type": "string",
+                        "description": "The userID of the User record."
+                    },
+                    {
+                        "required": false,
+                        "in": "formData",
+                        "name": "username",
+                        "type": "string",
+                        "description": "The username of the User record."
+                    }
+                ],
+                "x-resourceId": "e1b3f5bec92ad2667234472c246f780c",
+                "operationId": "rest.user",
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        },
+                        "description": "The following will be returned when the format requested is JSON."
+                    },
+                    "default": {
+                        "content": {
+                            "application/xml": {
+                                "schema": {}
+                            }
+                        },
+                        "description": "The following will be returned when the format requested is XML."
+                    },
+                    "x-resourceId": "a9f0a3a63fe6b5bd954760c6ac09e85c"
+                },
+                "description": "User resource."
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "apikey": {
+                "in": "header",
+                "name": "apikey",
+                "type": "http",
+                "description": "The apikey needed for request authentication."
+            }
+        }
+    },
+    "security": [],
+    "tags": [],
+    "externalDocs": {
+        "url": "",
+        "description": ""
+    },
+    "x-extensionDetection": true,
+    "x-throwOnInvalidExtension": false,
+    "x-entryPoint": {
+        "DEV": "http://dev.myapi.com",
+        "PRODUCTION": "http://www.myapi.com"
+    },
+    "x-validExtensions": "xml,json,jsont,wddx,html",
+    "basePath": "/"
+}
