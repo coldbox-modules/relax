@@ -81,12 +81,17 @@
 				</ul>
 			</cfif>
 
-			<cfif structkeyExists( api, "x-entryPoint" ) or structKeyExists( api, "host" )>
+			<cfif structkeyExists( api, "x-entryPoint" )>
 				<h2>Service Entry Points</h2>
 				<ul class="list-unstyled">
 					<cfloop collection="#api['x-entryPoint']#" item="tierName">
 						<li><em>#titleCase( tierName )#:</em> <a href="#api[ "x-entryPoint" ][ tierName ]#">#api[ "x-entryPoint" ][ tierName ]#</a></li>
 					</cfloop>
+				</ul>
+			<cfelseif structKeyExists( api, "host" )>
+				<h2>Service Entry Points</h2>
+				<ul class="list-unstyled">
+					<li><em>Host:</em> <code>#api[ "host" ]#</code></li>
 				</ul>
 			</cfif>
 

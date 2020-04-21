@@ -4,16 +4,16 @@
 
 <cfloop array="#requestBody.content.keyArray()#" index="key">
 	<cfoutput>
-	<div id="#(entity["x-resourceId"] & '-requestBody-' & listLast( key, '/' ))#" class="method-panel panel panel-info">
-		<div class="panel-heading">
-			<h3 class="panel-title methodHeader">
+	<div id="#(entity["x-resourceId"] & '-requestBody-' & listLast( key, '/' ))#" class="method-box box box-info">
+		<div class="box-header">
+			<h3 class="box-title methodHeader">
 				<strong>#key#</strong>
-				<a class="pull-right btToggleMethod" role="button" data-toggle="collapse" href="##panel_#(entity["x-resourceId"] & '-requestBody-' & listLast( key, '/' ))#" aria-expanded="false" aria-controls="panel_#(entity["x-resourceId"] & '-requestBody-' & listLast( key, '/' ))#">
+				<a class="pull-right btToggleMethod" role="button" data-toggle="collapse" href="##box_#(entity["x-resourceId"] & '-requestBody-' & listLast( key, '/' ))#" aria-expanded="false" aria-controls="box_#(entity["x-resourceId"] & '-requestBody-' & listLast( key, '/' ))#">
 					<i class="fa fa-chevron-down"></i>
 				</a>
 			</h3>
 		</div>
-		<div id="panel_#(entity["x-resourceId"] & '-requestBody-' & listLast( key, '/' ))#" class="collapse panel-body">
+		<div id="box_#(entity["x-resourceId"] & '-requestBody-' & listLast( key, '/' ))#" class="box-body">
 			<ul class="col-xs-12 list-unstyled">
 				<cfif structKeyExists( requestBody.content[ key ], "schema" ) && structKeyExists( requestBody.content[ key ].schema, "properties" )>
 					<cfscript>
