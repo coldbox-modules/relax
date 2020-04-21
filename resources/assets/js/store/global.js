@@ -73,6 +73,9 @@ export default new Vuex.Store(
 			selectAPI: ( context, key ) => context.dispatch( "fetchAPI", key ).then( result => {
 				context.commit( "updateState", { key : "activeAPI", value : key } )
 				context.commit( "updateState", { key : "APIDoc", value : result.data } )
+				if( window.location.href.indexOf( '/api/' + key ) === -1 ){
+					window.history.pushState( key , result.data.info.title, context.state.globalData.url.moduleRoot + '/api/' + key );
+				}
 			} ),
 			fetchAPI : ( context, key ) => relaxAPI.get.fetchAPI( key )
 		}

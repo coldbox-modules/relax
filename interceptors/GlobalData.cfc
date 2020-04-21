@@ -20,6 +20,7 @@ component {
 			"expandAll" : prc.expandedResourceDivs,
 			"sessionEnabled" : getInstance( "APIService@relax" ).getSessionsEnabled(),
 			"url" : {
+				"moduleRoot" : replacenocase( event.buildLink( linkTo='relax', ssl=event.isSSL() ), "/index.cfm", "" ),
 				"resourceDoc" : event.buildLink( prc.xehResourceDoc ),
 				"loadAPI" : event.buildLink( prc.xehLoadAPI ),
 				"exportHTML" : event.buildLink( prc.xehExportHTML ),
