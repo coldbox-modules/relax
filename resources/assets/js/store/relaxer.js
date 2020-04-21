@@ -1,21 +1,18 @@
-import VuexPersist from 'vuex-persist';
-import localForage from "localforage";
+
 import relaxAPI from "@/api/relax";
 import { cloneDeep } from "lodash";
 
-const vuexPersist = new VuexPersist({
-	key: 'relaxer',
-	storage: localForage,
-	reducer : ( state ) => { return {
-		history : state.relaxer.history
-	} }
-})
-
 export default {
 		namespaced: true,
-		plugins: [ vuexPersist.plugin ],
 		state : {
 			currentRequest : {
+				resource: "",
+				tierURL: "",
+				method : "GET",
+				headers : [],
+				params : []
+			},
+			blankRequest : {
 				resource: "",
 				tierURL: "",
 				method : "GET",
@@ -39,29 +36,25 @@ export default {
 
                 if( typeof( responseEcho.status_code ) === 'undefined' ){
 
-					var responseObjct = {
+					var responseObject = {
+						"request" : cloneDeep( state.currentRequest ),
 						"status": 500,
 						"statusText": "Application Error",
 						"responseText": responseEcho.errordetail ? responseEcho.errordetail : responseEcho.error,
 						"error" : true,
-                        getAllResponseHeaders: function(){return {}},
-                        getResponseHeader: function( headerName ){return null}
+						"response" : responseEcho
 					}
 
                 } else {
 
                     //reformat our echo to emulate a jqXHR object
                     var responseObject = {
+						"request" : cloneDeep( state.currentRequest ),
 						"error" : false,
                         "status": responseEcho.status_code,
                         "statusText": responseEcho.status_text,
-                        "responseText": responseEcho.filecontent,
-                        getAllResponseHeaders: function(){
-                            return responseEcho.responseheader;
-                        },
-                        getResponseHeader: function( headerName ){
-                            return responseEcho.responseheader[ headerName ];
-                        }
+						"responseText": responseEcho.filecontent,
+						"response" : responseEcho
 					}
 				}
 
@@ -83,6 +76,12 @@ export default {
 			},
 			removeDynamicField( state, type, index ){
 				state.currentRequest[ type ].splice( index, 1 );
+			},
+			clearHistory( state ){
+				state.history.splice( 0, state.history.length );
+			},
+			removeHistoryItem( state, index ){
+				state.history.splice( index, 1 );
 			}
 		},
 		actions : {
@@ -94,9 +93,12 @@ export default {
 				if( payload.resource.indexOf( "/" ) === 0 ){
 					payload.resource = payload.tierURL + payload.resource;
 				}
-				relaxAPI.post.relaxer( payload )
-						.then( ( xhr ) => {
-							context.commit( "appendReponse", xhr )
+				return relaxAPI.post.relaxer( payload )
+						.then( ( response ) => {
+							context.commit( "appendReponse", response );
+						} )
+						.catch( ( err ) => {
+							context.commit( "appendReponse", err );
 						} );
 			}
 		}

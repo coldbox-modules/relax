@@ -11,8 +11,12 @@
 			<code>{{ historyItem.request.resource }}</code>
 
 			<!--- Replay Command --->
-			<a href="javascript:void(0)" class="btnReplayHistoryIndex pull-right" data-toggle="tooltip" title="Replay this request">
-				<i class="fa fa-retweet"></i>
+			<a @click="onRemoveHistoryItem" class="btn btn-default text-muted pull-right" style="margin-left: 10px" data-toggle="tooltip" title="Remove this history item">
+				<i class="fa fa-trash"></i>
+			</a>
+			<a @click="onReplayHistoryItem" class="btn btn-info pull-right" data-toggle="tooltip" title="Replay this request">
+				<i v-if="isReplaying" class="fa fa-spin fa-spinner"></i>
+				<i v-else class="fa fa-retweet"></i>
 			</a>
 
 		</h3>
@@ -32,10 +36,10 @@
 			<dd v-if="!isEmpty( historyItem.request.data )">
 				<ul class="list">
 						<li
-							v-for="( param, paramKey ) in historyItem.request.data"
-							:key="`request_data_${itemIndex}_${paramKey}`"
+							v-for="( param, index ) in historyItem.request.data"
+							:key="`request_data_${index}_${param.name}`"
 						>
-							<code>{{ key }}</code> : <code>{{ param }}</code>
+							<code>{{ param.name }}</code> : <code>{{ param.value }}</code>
 						</li>
 				</ul>
 
@@ -45,10 +49,10 @@
 			<dd v-if="!isEmpty( historyItem.request.headers )">
 				<ul class="list">
 						<li
-							v-for="( param, paramKey ) in historyItem.request.headers"
-							:key="`request_headers_${itemIndex}_${paramKey}`"
+							v-for="(header, index ) in historyItem.request.headers"
+							:key="`request_headers_${index}_${header.name}`"
 						>
-							<code>{{ paramKey }}</code> : <code>{{ param }}</code>
+							<code>{{ header.name }}</code> : <code>{{ header.value }}</code>
 						</li>
 				</ul>
 
@@ -58,7 +62,7 @@
 
 		<h4>Response</h4>
 
-		<response-template :response="responseObject"></response-template>
+		<response-template :response="historyItem"></response-template>
 
 	</div>
 
@@ -70,6 +74,11 @@
 	export default{
 		components: {
 			ResponseTemplate
+		},
+		data(){
+			return {
+				isReplaying : false
+			}
 		},
 		props : {
 			historyItem : {
@@ -87,18 +96,24 @@
 				var responseObject = {
 					"status": responseEcho.status_code,
 					"statusText": responseEcho.status_text,
-					"responseText": responseEcho.filecontent,
-					getAllResponseHeaders: function(){
-						return responseEcho.responseheader;
-					},
-					getResponseHeader: function( headerName ){
-						return responseEcho.responseheader[ headerName ];
-					}
+					"responseText": responseEcho.filecontent
 				}
 			}
 		},
 		methods : {
-			isEmpty : isEmpty
+			isEmpty : isEmpty,
+			onReplayHistoryItem(){
+				var self = this;
+				Vue.set( this, "isReplaying", true );
+				this.$store.commit( "relaxer/updateState", { key : "currentRequest", value : this.historyItem.request } );
+				this.$store.dispatch( "relaxer/sendRelaxerRequest" ).then( () => {
+					Vue.set( self, "isReplaying", false );
+					$( "#relaxer-last-response" )[0].scrollIntoView();
+				} );
+			},
+			onRemoveHistoryItem(){
+				this.$store.commit( "relaxer/removeHistoryItem", this.itemIndex );
+			}
 		}
 	}
 </script>

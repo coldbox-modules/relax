@@ -1,5 +1,5 @@
 <template>
-	<div id="resultsBox" class="container-fluid">
+	<div class="container-fluid">
 		<div class="box box-default">
 			<div class="box-body">
 				<div class="card card-secondary card-outline card-tabs">
@@ -15,19 +15,19 @@
 									<tr>
 										<th width="200" class="text-right">Response Status</th>
 										<td>
-											Status Code: <code>response.status</code><br>
+											Status Code: <code>{{response.status}}</code><br>
 											<span v-if="response.statusText.length">
 												Status Text: <code>{{ response.statusText }}</code>
 											</span>
 										</td>
 									</tr>
 									<tr
-										v-for="( header, headerKey ) in response.getAllResponseHeaders()"
+										v-for="( header, headerKey ) in allResponseHeaders"
 										:key="`response_header_${headerKey}`"
 									>
 										<th class="text-right">{{headerKey}}</th>
 										<td>
-											{{response.getResponseHeader( headerKey )}}
+											{{getResponseHeader( headerKey )}}
 										</td>
 									</tr>
 								</table>
@@ -46,7 +46,7 @@
 </template>
 <script>
 import { uniqueId } from "lodash";
-import { formatAPIExample, getLangFromMimetype } from "@/util/udf";
+import { formatAPIExample, getLangFromMimetype, getResponseHeader, getAllResponseHeaders } from "@/util/udf";
 import Prism from 'vue-prismjs';
 export default{
 	components : {
@@ -66,12 +66,14 @@ export default{
 		}
 	},
 	computed : {
-		contentType(){ return this.response.getResponseHeader( "Content-Type" ) },
-		mimetype(){ return this.contentType ? this.response.getResponseHeader( "Content-Type" ).split( ";" )[ 0 ] : 'text/html' },
-		langRef(){ return getLangFromMimetype( this.mimetype ) }
+		contentType(){ return getResponseHeader( this.response, "Content-Type" ) },
+		mimetype(){ return this.contentType ? getResponseHeader( this.response, "Content-Type" ).split( ";" )[ 0 ] : 'text/html' },
+		langRef(){ return getLangFromMimetype( this.mimetype ) },
+		allResponseHeaders(){ return getAllResponseHeaders( this.response ) }
 	},
 	methods : {
-		formatAPIExample : formatAPIExample
+		formatAPIExample : formatAPIExample,
+		getResponseHeader( headerName ){ return getResponseHeader( this.response, headerName ) }
 	}
 }
 </script>

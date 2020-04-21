@@ -220,3 +220,26 @@ export const renderXAttributes = function(
         "headerNode":headerNode
     } );
 }
+
+/**
+ * Relaxer response header utils
+ *
+ */
+
+/**
+ * Gets all response headers from the response object
+ * @param {} responseObj
+ */
+export const getAllResponseHeaders = function( responseObj ){
+	return responseObj.response.responseheader;
+}
+
+/**
+ * Gets an individual response header value
+ *
+ * @param {} responseObj
+ * @param {} headerName
+ */
+export const getResponseHeader = function( responseObj, headerName ){
+	return responseObj.response.responseheader[ headerName ];
+}

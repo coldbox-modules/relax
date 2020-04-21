@@ -22,6 +22,12 @@ export default{
 			type : Object,
 			required : true
 		}
+	},
+	mounted(){
+		if( window.location.hash ){
+			var self = this;
+			Vue.nextTick( function(){ self.$emit( "hash-present" ) } );
+		}
 	}
 }
 </script>

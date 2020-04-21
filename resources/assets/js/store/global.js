@@ -4,8 +4,40 @@ import { parseRequestParams } from "@/util/udf";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
+import RelaxerStore from "@/store/relaxer";
+
+import VuexPersistence from 'vuex-persist';
+import localForage from "localforage";
+
+//first define a plugin that emits when the state has been persisted
+const vuexPersistEmitter = () => {
+    return store => {
+        store.subscribe(mutation => {
+            if (mutation.type === 'RESTORE_MUTATION') {
+                store._vm.$root.$emit( 'storageReady' );
+            }
+        });
+    }
+};
+
+const relaxerStorage = new VuexPersistence({
+	key: 'relax',
+	strictMode : true,
+	asyncStorage : true,
+	storage: localForage,
+	modules: [ 'relaxer' ]
+})
+
+
 export default new Vuex.Store(
 	{
+		modules : {
+			relaxer : RelaxerStore
+		},
+		plugins : [
+			relaxerStorage.plugin,
+			vuexPersistEmitter()
+		],
 		state : {
 			globalData : window.relaxGlobalData,
 			availableAPIs : null,
@@ -18,6 +50,7 @@ export default new Vuex.Store(
 			requestedAPI : () => parseRequestParams().api
 		},
 		mutations: {
+			RESTORE_MUTATION: relaxerStorage.RESTORE_MUTATION,
 			updateState(state, payload) {
 				Vue.set(state, payload.key, payload.value);
 			},

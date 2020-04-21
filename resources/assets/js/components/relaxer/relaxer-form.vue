@@ -1,10 +1,10 @@
 <template>
-	<form class="relaxerForm form-block container-fluid" action="javascript:void(0)">
+	<form id="relaxer-form" class="relaxerForm form-block container-fluid" action="javascript:void(0)">
 
 		<div class="input-group input-group-lg mb-3">
 			<div class="input-group-prepend">
 				<div class="input-group-prepend">
-					<button type="button" style="min-width:100px" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+					<button type="button" style="min-width:100px" class="btn btn-info btn-flat dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 						{{relaxer.method}}
 					</button>
 					<ul class="dropdown-menu">
@@ -19,7 +19,7 @@
 			</div>
 			<input title="The resource to hit" type="text" name="httpResource" class="httpResource form-control" v-model="relaxer.resource" />
 			<div class="input-group-append">
-				<button type="button" class="btn btn-success btn-flat btnSendRequest" @click="onRelaxerSend" title="Send Request">Send <i class="fa fa-paper-plane"></i></button>
+				<button type="button" class="btn btn-success btn-flat btnSendRequest" @click="onRelaxerSend" title="Send Request">Send <i v-if="isSending" class="fa fa-spin fa-spinner"></i></i><i v-else class="fa fa-paper-plane"></i></button>
 			</div>
 		</div>
 
@@ -34,9 +34,9 @@
 			</select>
 		</div>
 
-		<div class="card card-primary">
+		<div class="card card-dark">
 			<div class="card-header d-flex p-0">
-				<h3 class="card-title p-3">
+				<h3 class="card-title p-3 container text-center">
 					<a title="Advanced Settings" data-toggle="collapse" :href="`#${advancedSettingsUID}`" aria-expanded="false" :aria-controls="advancedSettingsUID">
 						<i class="fa fa-gears"></i> Show Advanced Options
 					</a>
@@ -44,16 +44,17 @@
 			</div>
 			<div :id="advancedSettingsUID" class="collapse card-body  advancedSettings">
 				<!--- HTTP Headers --->
-				<fieldset class="requestHeaders">
-					<legend>
-						<a data-toggle="collapse" :href="`#${headersUID}`" aria-expanded="false" :aria-controls="headersUID">
-						Request Headers
-							<i class="pull-right fa fa-caret-down"></i>
-						</a>
-					</legend>
+				<div class="method-card card card-gray">
+					<div class="card-header d-flex p-0">
+						<h3 class="card-title p-3 container text-center">
+							<a data-toggle="collapse" :href="`#${headersUID}`" aria-expanded="false" :aria-controls="headersUID">
+								Request Headers
+								<i class="pull-right fa fa-caret-down"></i>
+							</a>
+						</h3>
+					</div>
 
-					<!--- Headers Holder --->
-					<div :id="headersUID" class="httpHeaders collapse">
+					<div :id="headersUID" class="httpHeaders collapse card-body">
 						<dynamic-field
 							v-for="( item, index ) in currentHeaders"
 							:key="`dynamic_headers_${index}`"
@@ -62,21 +63,21 @@
 						></dynamic-field>
 						<!--- Add Header --->
 						<div class="clearfix" style="margin-top:15px"></div>
-						<button type="button" class="btn btn-default btn-sm dynamicAdd" data-type="headers" title="Add Header" id="addHeaderButton" @click="addDynamicItem"><i class="fa fa-plus"></i></button>
+						<button type="button" class="btn btn-info btn-sm dynamicAdd" data-type="headers" title="Add Header" id="addHeaderButton" @click="addDynamicItem"><i class="fa fa-plus"></i></button>
 					</div>
-				</fieldset>
+				</div>
 
-				<!--- Query Params --->
-				<fieldset class="requestParams">
-					<legend>
-						<a data-toggle="collapse" :href="`#${paramsUID}`" aria-expanded="false" :aria-controls="paramsUID">
-						Request Parameters
-							<i class="pull-right fa fa-caret-down"></i>
-						</a>
-					</legend>
+				<div class="method-card card card-gray">
+					<div class="card-header d-flex p-0">
+						<h3 class="card-title p-3 container text-center">
+							<a data-toggle="collapse" :href="`#${paramsUID}`" aria-expanded="false" :aria-controls="paramsUID">
+								Request Parameters
+								<i class="pull-right fa fa-caret-down"></i>
+							</a>
+						</h3>
+					</div>
 
-					<!--- Parameters Holder --->
-					<div :id="paramsUID" class="httpParameters collapse">
+					<div :id="paramsUID" class="httpParameters collapse card-body">
 						<dynamic-field
 							v-for="( item, index ) in currentParameters"
 							:key="`dynamic_params_${index}`"
@@ -85,41 +86,45 @@
 						></dynamic-field>
 						<!--- Add Header --->
 						<div class="clearfix" style="margin-top:15px"></div>
-						<button type="button" class="btn btn-default btn-sm dynamicAdd" data-type="params" title="Add Parameter" id="addParameterButton" @click="addDynamicItem"><i class="fa fa-plus"></i></button>
+						<button type="button" class="btn btn-info btn-sm dynamicAdd" data-type="params" title="Add Parameter" id="addParameterButton" @click="addDynamicItem"><i class="fa fa-plus"></i></button>
 					</div>
-				</fieldset>
+				</div>
 
-				<!--- HTTP Proxy --->
-				<fieldset>
-					<legend>
-						<a data-toggle="collapse" :href="`#${proxyUID}`" aria-expanded="false" :aria-controls="proxyUID">
-						HTTP Proxy Settings
-							<i class="pull-right fa fa-caret-down"></i>
-						</a>
-					</legend>
-					<div class="collapse" :id="proxyUID">
+				<div class="method-card card card-gray">
+					<div class="card-header d-flex p-0">
+						<h3 class="card-title p-3 container text-center">
+							<a data-toggle="collapse" :href="`#${proxyUID}`" aria-expanded="false" :aria-controls="proxyUID">
+								HTTP Proxy Settings
+								<i class="pull-right fa fa-caret-down"></i>
+							</a>
+						</h3>
+					</div>
+
+					<div class="collapse card-body" :id="proxyUID">
 						Host:
 						<input title="HTTP Proxy"  type="text" class="form-control" name="httpProxy" id="httpProxy"  size="30" :value="relaxer.httpProxy" />
 						Port:
 						<input title="HTTP Proxy Port"  type="text" class="form-control" name="httpProxyPort" id="httpProxyPort" size="30" :value="relaxer.httpProxyPort" />
 					</div>
-				</fieldset>
+				</div>
 
-				<!--- HTTP Basic Auth --->
-				<fieldset>
-					<legend>
-						<a data-toggle="collapse" :href="`#${authUID}`" aria-expanded="false" :aria-controls="authUID">
-						HTTP Authentication Settings
-							<i class="pull-right fa fa-caret-down"></i>
-						</a>
-					</legend>
-					<div class="collapse" :id="authUID">
+				<div class="method-card card card-gray">
+					<div class="card-header d-flex p-0">
+						<h3 class="card-title p-3 container text-center">
+							<a data-toggle="collapse" :href="`#${authUID}`" aria-expanded="false" :aria-controls="authUID">
+								HTTP Authentication Settings
+								<i class="pull-right fa fa-caret-down"></i>
+							</a>
+						</h3>
+					</div>
+
+					<div class="collapse card-body" :id="authUID">
 						Username:
 						<input title="Username"  type="text" class="form-control" name="username" id="username" size="30" :value="relaxer.authUsername" />
 						Password:
 						<input title="Password"  type="text" class="form-control" name="password" id="password" size="30" :value="relaxer.authPassword" />
 					</div>
-				</fieldset>
+				</div>
 			</div>
 		</div>
 	</form>
@@ -141,6 +146,7 @@ export default{
 	},
 	data(){
 		return {
+			isSending : false,
 			headersUID : uniqueId( "headers" ),
 			paramsUID : uniqueId( "params" ),
 			proxyUID : uniqueId( "proxy" ),
@@ -152,7 +158,7 @@ export default{
 	computed : {
 		...mapState({
 			relaxer : state => state.relaxer.currentRequest,
-			currentParameters : state => state.relaxer.currentRequest.parameters || [],
+			currentParameters : state => state.relaxer.currentRequest.params || [],
 			currentHeaders : state => state.relaxer.currentRequest.headers || [],
 		}),
 		methodOptions(){
@@ -167,21 +173,10 @@ export default{
 	methods: {
 		onRelaxerSend: function( e ){
 			var self = this;
-			var $btn = $( e.currentTarget );
 
-			$( "#relaxer-response-error" ).remove();
+			Vue.set( self, "isSending", true );
 
-			//save our html so we can use it when the request is done
-			var btnDefaultHTML = $btn.html();
-			$btn.find( 'i' ).removeClass( 'fa-paper-plane' ).addClass( 'fa-spin fa-spinner' );
-			if( $( ".advancedSettings", self.$el ).hasClass( "in" ) ) $( ".advancedSettings", self.$el ).removeClass( "in" );
-			//show the loader
-			$( ".relaxer-results", self.$el ).html( self.loaderMsg );
-
-			var self = this;
-			var relaxerRequest = self.marshallRelaxerRequest();
-
-			this.$store.dispatch( "relaxer/sendRelaxerRequest" ).then( () => $btn.html( btnDefaultHTML ) );
+			this.$store.dispatch( "relaxer/sendRelaxerRequest" ).then( () => Vue.set( self, "isSending", false ) );
 
 		},
 		marshallRelaxerRequest: function(){

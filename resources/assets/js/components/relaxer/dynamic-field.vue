@@ -1,5 +1,5 @@
 <template>
-	<div class="dynamicField">
+	<div class="dynamicField box" style="margin-top: 10px">
 		<div class="col-xs-12 clearfix">
 			<div class="col-xs-12 col-sm-1 col-xs-1 pull-right" style="vertical-align:middle">
 				<button class="pull-right btn btn-danger btn-flat dynamicRemove" @click="onRemoveField"><i class="fa fa-remove"></i></button>

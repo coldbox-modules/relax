@@ -5,8 +5,6 @@
     <title>ColdBox Relax - RESTful Tools For Lazy Experts</title>
     <!--- favicon --->
     <link href="#prc.root#/includes/static/images/ortus-mini-icon.png" rel="shortcut icon" type="image/png" />
-    <!--- SES --->
-	<base href="#replacenocase( event.buildLink( linkTo='', ssl=event.isSSL() ), "index.cfm", "" )#"/>
 	<!--- View Port --->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<cfoutput>

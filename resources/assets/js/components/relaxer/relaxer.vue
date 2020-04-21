@@ -19,8 +19,11 @@
 							<div class="container-fluid">
 								<div class="card card-secondary card-outline">
 									<div class="card-body row container-fluid">
+										<a id="relaxer-form-top"></a>
 										<relaxer-form></relaxer-form>
+										<a id="relaxer-last-response"></a>
 										<relaxer-response v-if="lastResponse" :response="lastResponse"></relaxer-response>
+										<a id="relaxer-history-top"></a>
 										<relaxer-history></relaxer-history>
 									</div>
 								</div>
@@ -41,7 +44,6 @@ import RelaxerSidebar from "@/components/relaxer/relaxer-sidebar";
 import RelaxerForm from "@/components/relaxer/relaxer-form";
 import RelaxerHistory from "@/components/relaxer/relaxer-history";
 import RelaxerResponse from "@/components/relaxer/relaxer-response";
-import RelaxerStore from "@/store/relaxer";
 import { mapState, mapGetters } from "vuex";
 export default{
 	components : {
@@ -59,13 +61,22 @@ export default{
 		}),
 		...mapGetters([ 'requestedAPI' ] )
 	},
+	created(){
+		var self = this;
+		self.$store._vm.$root.$on( 'storageReady', () => {
+			// Reset the localforage state
+			this.$store.commit( "relaxer/updateState", { key : "currentRequest", value : this.$store.state.relaxer.blankRequest } );
+			this.$store.commit( "relaxer/updateState", { key : "lastResponse", value : null } );
+		})
+	},
 	mounted(){
-		this.$store.registerModule( "relaxer", RelaxerStore );
+
 		this.$store.dispatch( "fetchAvailableAPIs" ).then( () => {
 			if( !this.activeAPI ){
 				this.$store.dispatch( "selectAPI", this.requestedAPI || this.defaultAPI )
 			}
 		} );
+
 	}
 }
 </script>
