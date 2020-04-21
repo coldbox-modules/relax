@@ -1,6 +1,7 @@
-const relaxAPI = require( "@/api/relax" ).default;
-import Vuex from 'vuex';
+import relaxAPI from "@/api/relax";
 import { parseRequestParams } from "@/util/udf";
+
+import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store(

@@ -55,9 +55,6 @@ component extends="BaseHandler"{
 		rc.parameterNames 	= listToArray( rc.parameterNames );
 		rc.parameterValues 	= listToArray( rc.parameterValues );
 
-		// Get request history
-		prc.requestHistory = relaxerService.getHistory();
-		
 		// display relaxer
 		event.setView( "relaxer/index" );
 	}
@@ -74,26 +71,26 @@ component extends="BaseHandler"{
 				payload[ "params" ] = payload.data;
 				structDelete( payload, "data" );
 			}
-			
+
 			// deserialize our incoming json packet of request data
 			prc.results = relaxerService.send( argumentCollection = payload );
 
 		} catch( Any e ){
 			prc.results[ 'mimeType' ] = "application/json";
-				
+
 			if( getSetting( "environment" ) != 'production' ){
-				
+
 				prc.results[ 'error' ] = "Error sending relaxed request! #e.message# #e.detail# #e.stackTrace#";
 				prc.results[ 'message' ] = "Error sending relaxed request! #e.message# #e.detail# #e.tagContext.toString()#";
-				
+
 			} else {
 
 				prc.results[ 'error' ] = "Invalid request. Please correct the URL and parameters of your endpoint and try again";
-			
+
 			}
 
 			log.error( prc.results.error, e );
-		
+
 		}
 
 		event.renderData( data=prc.results, type="json" );

@@ -1,7 +1,6 @@
 var app = function() {
 
     var init = function() {
-
         tooltips();
         toggleMenuLeft();
         toggleMenuRight();

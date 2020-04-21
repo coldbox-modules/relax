@@ -15,6 +15,9 @@ export const finalAPI = {
 	get: {
 		listAPIs : ( params ) => defaultAPI.get( '', { params : params } ),
 		fetchAPI :  ( id, params ) => defaultAPI.get( '/' + id, { params : params } )
+	},
+	post: {
+		relaxer : ( params ) => defaultAPI( { url: '/relax/relaxer/send', method: 'POST', data : JSON.stringify( params ), baseURL: '' } )
 	}
 };
 

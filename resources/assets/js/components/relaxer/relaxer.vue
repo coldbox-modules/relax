@@ -1,53 +1,71 @@
 <template>
-
+	<div>
+		<section class="content-wrapper">
+			<section id="main-content" class="container-fluid">
+				<div class="row">
+					<div v-if="!availableAPIs || !api" class="content-header container-fluid">
+						<h4 class="text-muted">Loading available APIs...</h4>
+						<p>
+							<i class="fa fa-spin fa-spinner fa-2x text-muted"></i>
+						</p>
+					</div>
+					<div v-else class="api-content container-fluid">
+						<div class="content-header container-fluid">
+							<div class="container-fluid">
+								<h1 class="m-0 text-dark">Relax API Test Tool: {{api.info.title}}</h1>
+							</div>
+						</div>
+						<section class="content container-fluid">
+							<div class="container-fluid">
+								<div class="card card-secondary card-outline">
+									<div class="card-body row container-fluid">
+										<relaxer-form></relaxer-form>
+										<relaxer-response v-if="lastResponse" :response="lastResponse"></relaxer-response>
+										<relaxer-history></relaxer-history>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div> <!-- end .row -->
+			</section>
+		</section>
+		<!-- Control Sidebar -->
+		<aside class="control-sidebar control-sidebar-dark" style="padding: 20px">
+			<relaxer-sidebar></relaxer-sidebar>
+		</aside>
+	</div>
 </template>
 <script>
+import RelaxerSidebar from "@/components/relaxer/relaxer-sidebar";
+import RelaxerForm from "@/components/relaxer/relaxer-form";
+import RelaxerHistory from "@/components/relaxer/relaxer-history";
+import RelaxerResponse from "@/components/relaxer/relaxer-response";
+import RelaxerStore from "@/store/relaxer";
+import { mapState, mapGetters } from "vuex";
 export default{
-
-	methods : {
-		/**
-        * Renders the Relaxer resources container
-        **/
-		renderRelaxerResources:function(){
-			var _this = this;
-			var resourceTemplate = _.template( $( "#relaxer-resources-template" ).html() );
-			$( ".relaxer-resources", _this.$el ).html( resourceTemplate( {
-				"api":_this.ViewModel.attributes
-			} ) )
-
-		}
-
-		/**
-		* Initializes the relaxer history model
-		**/
-		,initializeRelaxerHistory:function(){
-			var _this = this;
-
-			if( _.isUndefined( _this.View.HistoryModel ) ){
-
-				_this.View.HistoryModel = new HistoryModel();
-
+	components : {
+		RelaxerSidebar,
+		RelaxerForm,
+		RelaxerHistory,
+		RelaxerResponse
+	},
+	computed : {
+		...mapState({
+			api : state => state.APIDoc,
+			availableAPIs : state => state.availableAPIs,
+			defaultAPI : state => state.defaultAPI,
+			lastResponse : state => state.relaxer.lastResponse
+		}),
+		...mapGetters([ 'requestedAPI' ] )
+	},
+	mounted(){
+		this.$store.registerModule( "relaxer", RelaxerStore );
+		this.$store.dispatch( "fetchAvailableAPIs" ).then( () => {
+			if( !this.activeAPI ){
+				this.$store.dispatch( "selectAPI", this.requestedAPI || this.defaultAPI )
 			}
-
-			//when the relaxer history changes, re-render in the sidebar
-			_this.View.HistoryModel.on( 'change:history', function(){
-				_this.renderRelaxerHistory();
-			});
-		}
-
-		/**
-		* Renders the Relaxer history
-		**/
-		,renderRelaxerHistory:function(){
-			var _this = this;
-
-			var historyTemplate = _.template( $( "#relaxer-resources-template" ).html() );
-			var $historyContainer = $( ".relaxer-history", _this.el );
-
-			$historyContainer.empty().html( historyTemplate( {
-				"history":_this.HistoryModel.attributes.history
-			} ) );
-		}
+		} );
 	}
 }
 </script>
