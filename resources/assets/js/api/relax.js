@@ -12,6 +12,7 @@ const defaultAPI = Axios.create({
 });
 
 export const finalAPI = {
+	apiInstance : defaultAPI,
 	get: {
 		listAPIs : ( params ) => defaultAPI.get( '', { params : params } ),
 		fetchAPI :  ( id, params ) => defaultAPI.get( '/' + id, { params : params } )

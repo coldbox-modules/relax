@@ -54,9 +54,9 @@
 				</a>
 				<!--- pdf --->
 				<a 	href="javascript:;"
-					@click="onExportFormat"
+					@click="onExportPDF"
 					data-format="pdf"
-					:data-link="globalData.url.exportPDF"
+					:data-link="globalData.url.exportHTML"
 					class="btn btn-primary btnExportFormat"
 					data-toggle="tooltip"
 					title="Export as PDF">

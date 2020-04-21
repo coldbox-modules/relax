@@ -11,10 +11,12 @@ require( 'admin-lte' );
 import App from "@/components/app";
 import Relaxer from "@/components/relaxer/relaxer";
 import { TabsPlugin } from 'bootstrap-vue';
+import VuejsDialog from "vuejs-dialog";
 const store = require( "@/store/global" ).default;
 
 Vue.mixin( require('@/components/mixins/commons').default );
 Vue.use( TabsPlugin );
+Vue.use( VuejsDialog );
 
 const relax = new Vue( {
 	el        : "#app",

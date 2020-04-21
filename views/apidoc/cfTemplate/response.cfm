@@ -1,22 +1,22 @@
 <cfoutput>
-	<div id="#args.resourceId#-#args.key#" class="method-panel panel panel-primary">
+	<div id="#args.resourceId#-#args.key#" class="method-box box box-primary">
 
-		<div class="panel-heading">
-			<h3 class="panel-title methodHeader">
+		<div class="box-header">
+			<h3 class="box-title methodHeader">
 				<strong>#args.key#</strong>
 			</h3>
 		</div>
 
-		<div class="panel-body">
-			<div class="col-xs-12">
-				<cfif structKeyExists( args.response, "description" ) and len( args.response[ "description" ] )>
+		<div class="box-body">
+			<cfif structKeyExists( args.response, "description" ) and len( args.response[ "description" ] )>
+				<div class="col-xs-12">
 
-					<h4 class="panel-subtitle text-primary">Description:</h4>
-					<p>#toParagraphFormat( args.response[ "description" ] )#</p>
-					<hr>
+						<h4 class="box-subtitle text-primary">Description:</h4>
+						<p>#toParagraphFormat( args.response[ "description" ] )#</p>
+						<hr>
+				</div>
 
-				</cfif>
-			</div>
+			</cfif>
 			<!--- Hide Schema Examples in PDF --->
 			<cfif
 				(
@@ -31,16 +31,16 @@
 			>
 				<cfset tabIds = {} >
 				<div class="col-xs-12 schema-container">
-					<h4 class="panel-subtitle text-primary">Schema and Examples:</h4>
+					<h4 class="box-subtitle text-primary">Schema and Examples:</h4>
 					<cfif structKeyExists( args.response, "schema" )>
 						<cfset tabIds[ "schemaUID" ] = "schema" & createUUID()>
-						<div class="panel-heading">
-							<h3 class="panel-title schemaHeader">
+						<div class="box-header">
+							<h3 class="box-title schemaHeader">
 								<strong>Schema Definition</strong>
 							</h3>
 						</div>
 
-						<div class="panel-body schema-definition">
+						<div class="box-body schema-definition">
 							#renderView( view="apidoc/cfTemplate/schema", args={ "entity": args.response } )#
 						</div>
 
@@ -54,14 +54,14 @@
 								tabIds[ typeRef ] = "example" & createUUID();
 							</cfscript>
 
-							<div class="panel-heading">
-								<h3 class="panel-title schemaHeader">
+							<div class="box-header">
+								<h3 class="box-title schemaHeader">
 									<strong>#mimetype#</strong>
 								</h3>
 							</div>
 
-							<div class="panel-body schema-example">
-								<div class="panel panel-solid-default">
+							<div class="box-body schema-example">
+								<div class="box box-solid-default">
 									<cfscript>
 										switch( typeRef ){
 											case "xml":
@@ -87,7 +87,7 @@
 					</cfif>
 				</div><!-- /.schema-container -->
 			</cfif>
-		</div><!-- /.panel-body -->
+		</div><!-- /.box-body -->
 
-	</div><!-- /.panel -->
+	</div><!-- /.box -->
 </cfoutput>

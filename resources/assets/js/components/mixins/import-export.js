@@ -1,5 +1,6 @@
 import { mapState }  from "vuex";
 import { formatJSONRaw } from "@/util/udf";
+import { cloneDeep } from "lodash";
 export default {
 	data(){
 		return {
@@ -114,7 +115,24 @@ export default {
 			var $btn = $( e.currentTarget );
 			var location = $btn.data( 'link' );
 			window.open( location + "/" + this.$store.state.activeAPI );
+		}
 
+		,onExportPDF: function( e ){
+			var self = this;
+			var $btn = $( e.currentTarget );
+			var location = $btn.data( 'link' );
+			this.$dialog.confirm(
+				'<p>In previous versions of Relax a PDF was generated directly from the server.</p><p>Due to poor HTML5 support in PDF generation, the most reliable way to generate a PDF is to open the HTML version and then print the contents to a PDF.</p><p>Do you wish to proceed?</p>',
+				{
+					html: true,
+					okText: 'Proceed',
+					cancelText: 'Cancel',
+					animation: 'zoom' // Available: "zoom", "bounce", "fade"
+				}
+			)
+			.then(function(dialog) {
+				window.open( location + "/" + self.$store.state.activeAPI );
+			});
 		}
 
 		/**
