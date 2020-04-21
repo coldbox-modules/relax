@@ -3,7 +3,7 @@
 **/
 define(
     /**
-    * RequireJS Resources loaded in this view.  
+    * RequireJS Resources loaded in this view.
     * If not avaialable in the globals file, they will be loaded via HTTP request before the View is instantiated
     **/
     [
@@ -55,7 +55,7 @@ define(
                 } else {
                     _this.relaxBaseURL = moduleAPIRoot;
                 }
-                
+
                 if( !_.isUndefined( options ) ){
                     _.each( _.keys( options ), function( optionKey ){
                         _this[ optionKey ] = options[ optionKey ];
@@ -130,7 +130,7 @@ define(
                     var errorMessage = responseEcho.errordetail ? responseEcho.errordetail : responseEcho.error;
                     $container.html('<div class="clearfix"></div>');
                     $container.after( '<p id="relaxer-response-error" class="alert alert-danger">There was an error servicing your request.  The response received was: <em>' +errorMessage+ '</em></p>' )
-                    
+
                 } else {
 
                     //reformat our echo to emulate a jqXHR object
@@ -138,7 +138,7 @@ define(
                         "status": responseEcho.status_code,
                         "statusText": responseEcho.status_text,
                         "responseText": responseEcho.filecontent,
-                        getAllResponseHeaders: function(){ 
+                        getAllResponseHeaders: function(){
                             return responseEcho.responseheader;
                         },
                         getResponseHeader: function( headerName ){
@@ -148,7 +148,7 @@ define(
 
                     $container.html( _this.relaxerResponseTemplate( {"response":responseObject} ) );
                     _this.renderContainerUI( $container );
-   
+
                 }
             }
 
@@ -159,19 +159,19 @@ define(
             ,getRelaxerFormData: function(){
                 var _this = this;
                 var relaxerData = {
-                    
+
                     "api":_this.APIDocument,
-                    
+
                     "relaxer":{
                         "method":"",
                         "endpoint":"",
-                        "extensionDetection":false    
+                        "extensionDetection":false
                     }
                 }
 
                 return relaxerData;
             }
-            
+
             /**
 			* ----------------------------------------------
 			* Events
@@ -194,14 +194,14 @@ define(
                 var $btn = $( e.currentTarget );
 
                 $( "#relaxer-response-error" ).remove();
-                
+
                 //save our html so we can use it when the request is done
                 var btnDefaultHTML = $btn.html();
                 $btn.find( 'i' ).removeClass( 'fa-paper-plane' ).addClass( 'fa-spin fa-spinner' );
                 if( $( ".advancedSettings", _this.$el ).hasClass( "in" ) ) $( ".advancedSettings", _this.$el ).removeClass( "in" );
                 //show the loader
                 $( ".relaxer-results", _this.$el ).html( _this.loaderMsg );
-                
+
                 var _this = this;
                 var relaxerRequest = _this.marshallRelaxerRequest();
 
@@ -225,7 +225,7 @@ define(
                 };
                 relaxerOptions.error = relaxerOptions.success;
 
-                $.ajax( relaxerOptions ); 
+                $.ajax( relaxerOptions );
             }
 
             /**
@@ -266,7 +266,7 @@ define(
                     var $dynamicField = $( '.httpParameters .dynamicField', _this.$relaxerForm  ).last();
                     $( '[name="parameterName"]', $dynamicField ).val( paramName );
                     $( '[name="parameterValue"]', $dynamicField ).val( paramValue );
-                    
+
                 } );
 
                 $( '[name="httpResource"]', _this.$relaxerForm ).focus();
@@ -292,7 +292,7 @@ define(
                     $field.remove();
                 });
             }
-            
+
             /**
             * Marshalls the relaxer response for the view
             **/
@@ -320,12 +320,12 @@ define(
                 if( $( '[name="password"]', _this.$relaxerForm ).val().length > 0 ){
                     request.authPassword = $( '[name="password"]', _this.$relaxerForm ).val();
                 }
-                
+
                 $( ".requestHeaders", _this.$relaxerForm ).find(".dynamicField").each( function(){
                     var $headerContainer = $( this );
                     request.headers[ $headerContainer.find( '[name="headerName"]' ).val() ] = $headerContainer.find( '[name="headerValue"]' ).val();
                 });
-                
+
                 $( ".requestParams", _this.$relaxerForm ).find(".dynamicField").each( function(){
                     var $paramContainer = $( this );
                     request.data[ $paramContainer.find( '[name="parameterName"]' ).val() ] = $paramContainer.find( '[name="parameterValue"]' ).val();
@@ -347,7 +347,7 @@ define(
                     "fieldType":fieldType
                 } ) );
             }
-            
+
             /**
             * Renders a history item
             **/
@@ -355,20 +355,20 @@ define(
                 var _this = this;
                 var historyTemplate = _.template( $( "#relaxer-history-template" ).html() );
                 var $historyContainer = $( '.relaxer-history', _this.el );
-                
+
                 $historyContainer.empty();
 
                 if( _.isUndefined( _this.HistoryModel.attributes.history ) ) return;
 
                 if( _this.HistoryModel.attributes.history.length > 0 ){
                     try{
-                        $historyContainer.html( 
+                        $historyContainer.html(
                             historyTemplate( {
                                "history"            : _this.HistoryModel.attributes.history,
                                "responseTemplate"   : _.template( $( "#relaxer-response-template" ).html() )
                             } )
                         );
-                        _this.renderContainerUI( $historyContainer );   
+                        _this.renderContainerUI( $historyContainer );
                     } catch( err ){
                         localStorage.removeItem( 'RelaxerStoredHistory' );
                         $historyContainer.append( '<p class="alert alert-danger">Oops! There was an error in rendering your relaxer history.  We may have received some bad information from a recent request that could not be parsed. As a result, we have had to clear your history data in order to continue.</p>' );
@@ -390,9 +390,9 @@ define(
                     _this.HistoryModel.attributes.history = [];
 
                     localStorage.removeItem( 'RelaxerStoredHistory' );
-                    
+
                     _this.renderHistory();
-                    
+
                     $historyContainer.show();
 
                 });
@@ -408,10 +408,10 @@ define(
                     $( this ).tooltip();
                 });
                 $( 'pre[class*="language-"],code[class*="language-"]' ).each( function(){
-                    Prism.highlightElement(this); 
+                    Prism.highlightElement(this);
                 });
             }
-            
+
             //Miscellaneous Templates
             ,loaderMsg:'\
                 <div id="bottomCenteredLoader">\
@@ -425,4 +425,4 @@ define(
 
         return Relaxer;
     }
-);		
+);

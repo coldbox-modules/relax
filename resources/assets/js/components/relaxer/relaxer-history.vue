@@ -5,7 +5,7 @@
 			<h3 class="box-title">
 				Request History
 
-				<a href="javascript:void(0)" class="btnClearHistory pull-right" data-toggle="tooltip" title="Clear the request history">
+				<a @click="onClearHistory" class="btnClearHistory pull-right" data-toggle="tooltip" title="Clear the request history">
 					<i class="fa fa-recycle"></i>
 				</a>
 
@@ -32,6 +32,11 @@ export default{
 		...mapState( {
 			history : state => state.relaxer.history
 		} )
+	},
+	methods : {
+		onClearHistory(){
+			this.$store.commit( "relaxer/clearHistory" );
+		}
 	}
 
 }

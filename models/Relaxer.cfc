@@ -82,13 +82,17 @@ component accessors="true" singleton {
 
 		// Add Headers
 		for ( var header in arguments.headers ) {
-			HTTPService.addParam( type = "header", name = header.name, value = header.value );
+			if( header.keyExists( "name" ) && len( header.name ) ){
+				HTTPService.addParam( type = "header", name = header.name, value = header.value );
+			}
 		}
 
 		// Add Form Parameters
 		for ( var param in arguments.params ) {
-			var paramType = arguments.method == "GET" ? "URL" : "formField";
-			HTTPService.addParam( type = paramType, name = param.name, value = param.value );
+			if( param.keyExists( "name" ) && len( param.name ) ){
+				var paramType = arguments.method == "GET" ? "URL" : "formField";
+				HTTPService.addParam( type = paramType, name = param.name, value = param.value );
+			}
 		}
 
 		if ( len( arguments.body ) ) {
