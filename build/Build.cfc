@@ -17,19 +17,21 @@ component{
 
         // Source Excludes Not Added to final binary
         variables.excludes      = [
+			".vscode",
+			".editorconfig",
             ".gitignore",
             ".travis.yml",
             ".artifacts",
             ".tmp",
+            ".DS_Store",
+			".git",
+			".gitattributes",
 			"build",
 			"modules",
 			"node_modules",
 			"resources",
             "test-harness",
-            ".DS_Store",
-			".git",
-			".gitattributes",
-			".gitignore",
+            "tests",
 			"Developer.md",
 			"package.json",
 			"package-lock.json",
@@ -185,7 +187,12 @@ component{
      */
     function docs( required projectName, version="1.0.0", outputDir=".tmp/apidocs" ){
         // Generate Docs
-        print.greenLine( "Generating API Docs, please wait..." ).toConsole();
+		print.greenLine( "Generating API Docs, please wait..." ).toConsole();
+
+		if( directoryExists( arguments.outputDir ) ){
+			directoryDelete( arguments.outputDir, true );
+		}
+
         directoryCreate( arguments.outputDir, true, true );
 
         command( 'docbox generate' )

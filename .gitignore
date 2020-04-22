@@ -16,6 +16,7 @@ test-harness/docbox/**
 test-harness/testbox/**
 test-harness/logs/**
 test-harness/modules/**
+build/results.json
 
 # log files
 logs/**

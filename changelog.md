@@ -1,6 +1,25 @@
 # CHANGELOG
 
-## 4.0.0
+## 4.1.0
+
+### Improvements
+
+* Converts the UI from a BackboneJS implementation to VueJS
+* Performance improvements in rendering large APIs
+* Theme and nested objects updated for better meta/list rendering and display
+
+## Features
+
+* Adds additional support for OpenAPI v3 schema definitions ( content, items )
+* Adds auto-generation of examples from schema from examples defined within items/properties, when not explicitly provided
+
+
+### Compat
+
+* Removes the direct export of PDF documents due to lack of HTML5 support w/in CFDocument.  Export button now routes to HTML after providing PDF print instructions
+* Additional OpenAPI v3.x support
+
+## 4.0.1
 
 ### Improvements
 

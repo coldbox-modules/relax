@@ -5,21 +5,14 @@
     "private":true,
     "description":"",
     "dependencies":{
-        "coldbox":"^5.0.0",
-        "cbjavaloader":"^2",
-        "cbswagger":"^2",
-        "wikitext":"^1.3"
+        "coldbox":"^5.0.0"
     },
     "devDependencies":{
         "testbox":"^3.0.0"
     },
     "installPaths":{
         "coldbox":"coldbox/",
-        "testbox":"testbox/",
-        "swagger-sdk":"modules/swagger-sdk/",
-        "wikitext":"modules/wikitext/",
-        "cbjavaloader":"modules/cbjavaloader/",
-        "cbSwagger":"modules/cbSwagger/"
+        "testbox":"testbox/"
     },
     "testbox":{
         "runner":"http://localhost:60299/tests/runner.cfm"
