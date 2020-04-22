@@ -64,7 +64,7 @@
 					<p>#args.schema["description"]#</p>
 				</cfif>
 
-				<cfif args.showExample && !isNull( args.propertiesExample ) >
+				<cfif args.showExample && !isNull( args.propertiesExample ) && !structIsEmpty( args.propertiesExample ) >
 					<div class="example box">
 						<h5 class="box-header">Example:</h5>
 						<div class="box-body">

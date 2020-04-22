@@ -77,12 +77,6 @@
             		!structIsEmpty( args.method[ "responses" ] )
             		and
             		arrayLen( structKeyArray( args.method[ "responses" ] ) ) GT 1
-            		and
-            		(
-            			!structKeyExists( prc, "pdf" )
-            			or
-            			!prc.pdf
-            		)
             	>
 	            	<h4 class="card-subtitle text-primary">Responses:</h4>
 	            	<cfloop array="#structKeyArray( args.method[ "responses" ] )#" index="responseKey">
@@ -106,12 +100,6 @@
             		structKeyExists( args.method, "x-request-samples" )
             		and
             		arrayLen( structKeyArray( args.method[ "x-request-samples" ] ) ) GT 1
-            		and
-            		(
-            			!structKeyExists( prc, "pdf" )
-            			or
-            			!prc.pdf
-            		)
             	>
             		<cfscript>
 	            		tabIds = {};

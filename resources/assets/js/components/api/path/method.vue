@@ -76,7 +76,7 @@
 
 			<x-attributes :entity="method" header-type="h4" header-class="text-secondary"></x-attributes>
 
-			<div v-if="Object.keys( method.responses ).length">
+			<div v-if="method.responses && Object.keys( method.responses ).length">
 				<h4 class="card-subtitle text-secondary">Responses:</h4>
 				<div
 					v-for="responseKey in filteredResponseKeys"
