@@ -18,7 +18,7 @@ branches:
   - development
   - master
 
-dist: trusty
+dist: bionic
 
 sudo: required
 
@@ -30,9 +30,10 @@ before_install:
 
 install:
   # Install Commandbox
-  - sudo apt-get update && sudo apt-get --assume-yes install rsync jq commandbox
+  - sudo apt-get update && sudo apt-get --assume-yes install rsync jq commandbox nodejs npm
   # Install CommandBox Supporting Librarires
   - box install commandbox-cfconfig,commandbox-dotenv,commandbox-docbox
+  - npm install && npm run prod
   # If using auto-publish, you will need to provide your API token with this line:
   - box config set endpoints.forgebox.APIToken=$FORGEBOX_API_TOKEN > /dev/null
 

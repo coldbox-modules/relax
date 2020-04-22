@@ -21,10 +21,23 @@ component{
             ".travis.yml",
             ".artifacts",
             ".tmp",
-            "build",
+			"build",
+			"modules",
+			"node_modules",
+			"resources",
             "test-harness",
             ".DS_Store",
-            ".git"
+			".git",
+			".gitattributes",
+			".gitignore",
+			"Developer.md",
+			"package.json",
+			"package-lock.json",
+			"server.json",
+			"webpack.config.js",
+			".cfformat.json",
+			".cflintrc"
+
         ];
 
         // Cleanup + Init Build Directories
