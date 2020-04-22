@@ -18,9 +18,9 @@
 			<div class="col-xs-12" v-if="markedResponse.description">
 					<h4 class="card-subtitle text-secondary">Description:</h4>
 					<p v-html="markedResponse.description.HTMLBreakLines()"></p>
-					<hr>
 			</div>
 
+			<!-- Swagger 2.x specification -->
 			<div class="col-xs-12 schema-container" v-if="markedResponse.schema || markedResponse.examples">
 				<h4 class="card-subtitle text-secondary">Schema and Examples:</h4>
 
@@ -54,6 +54,26 @@
 							</div>
 					</div><!-- /.tab-content -->
 				</div><!-- /.schema-tabs -->
+			</div><!-- /.schema-container -->
+
+			<!-- Swagger 3.x specification -->
+			<div class="col-xs-12 schema-container" v-if="markedResponse.content && Object.keys( markedResponse.content ).length">
+				<h4 class="card-subtitle text-secondary">Content Types:</h4>
+				<div class="box">
+					<b-tabs :fill="true" class="container-fluid" nav-wrapper-class="text-secondary">
+						<b-tab
+							v-for="( content, mimetype ) in markedResponse.content"
+							:key="resourceId + '-' + responseKey + '-content-' + mimetype"
+							:title="mimetype"
+							title-link-class="text-secondary box-title"
+						>
+							<div class="schema-definition">
+								<schema-template :lang="mimeLang( mimetype )" :schema="content.schema"></schema-template>
+							</div>
+
+						</b-tab>
+					</b-tabs>
+				</div>
 			</div><!-- /.schema-container -->
 		</div><!-- /.card-body -->
 	</div><!-- /.card -->

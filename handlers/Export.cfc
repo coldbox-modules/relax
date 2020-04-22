@@ -59,19 +59,7 @@ component extends="BaseHandler"{
 	* Export as PDF
 	*/
 	function pdf( event, rc, prc ){
-		// args setup
-		prc.pdf 					= true;
-		prc.expandedResourceDivs 	= true;
-
-		prc.exportTitle 			= getInstance( "htmlhelper@coldbox" )
-			.slugify( prc.dsl[ "info" ][ "title" ] ) & " v" & prc.dsl[ "info" ][ "version" ];
-
-		event.setView(
-			view 	= "apidoc/cfTemplate/api-content",
-			layout 	= "pdf",
-			args 	= { "api" : prc.dsl }
-		)
-		.setHTTPHeader( name="Content-Disposition", value="inline; filename=#prc.exportTitle#.pdf" );
+		return this.html( argumentCollection=arguments );
 	}
 
 	/**

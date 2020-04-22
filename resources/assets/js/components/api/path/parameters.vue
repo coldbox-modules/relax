@@ -44,7 +44,7 @@
 
 				<tr v-if="param.schema" :id="parentResourceId">
 					<td colspan="5" style="vertical-align:top;">
-						<prism language="json" :code="formatJSONRaw( JSON.stringify( param.schema ) ).trim()"></prism>
+						<schema-template :schema="param.schema"></schema-template>
 					</td>
 				</tr>
 
@@ -56,9 +56,11 @@
 <script>
 import { formatJSONRaw } from "@/util/udf";
 import Prism from 'vue-prismjs';
+import SchemaTemplate from "@/components/api/path/schema";
 export default{
 	components: {
-		Prism
+		Prism,
+		SchemaTemplate
 	},
 	props : {
 		parameters : {

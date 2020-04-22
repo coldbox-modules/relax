@@ -16,6 +16,14 @@
 
 	<div :id="`card_${method['x-resourceId']}`" class="collapse card-body">
 		<div class="col-xs-12">
+			<h4 v-if="method.deprecated" class="card-subtitle text-secondary"><em>Deprecated</em></h4>
+			<div v-if="method.summary">
+				<h4 class="card-subtitle text-secondary">Summary:</h4>
+
+				<p v-html="method.summary.HTMLBreakLines()"></p>
+
+				<hr>
+			</div>
 
 			<div v-if="method.description">
 				<h4 class="card-subtitle text-secondary">Description:</h4>
@@ -42,8 +50,28 @@
 					<li><strong>Description:</strong> {{ method.requestBody.description }}</li>
 					<li><strong>Required:</strong> <code>{{ method.requestBody.required ? 'true' : 'false' }}</code></li>
 				</ul>
-				<request-body :entity="method"></request-body>
-				<hr>
+				<!-- Swagger 3.x specification -->
+				<div class="col-xs-12 schema-container" v-if="method.requestBody.content && Object.keys( method.requestBody.content ).length">
+					<h4 class="card-subtitle text-secondary">Content Types:</h4>
+					<b-tabs :fill="true" class="container-fluid" nav-wrapper-class="text-secondary">
+						<b-tab
+							v-for="( content, mimetype ) in method.requestBody.content"
+							:key="method['x-resourceId'] + '-requestBody-' + mimetype"
+							:title="mimetype"
+							title-link-class="text-secondary box-title"
+						>
+							<div class="schema-definition">
+								<schema-template :lang="mimeLang( mimetype )" :schema="content.schema"></schema-template>
+							</div>
+							<div v-if="content.example" class="example box">
+								<h5 class="box-header">Example</h5>
+								<div class="box-body">
+									<prism language="json" :code="formatJSONRaw( JSON.stringify( content.example ) )"></prism>
+								</div>
+							</div>
+						</b-tab>
+					</b-tabs>
+				</div>
 			</div>
 
 			<x-attributes :entity="method" header-type="h4" header-class="text-secondary"></x-attributes>
@@ -91,8 +119,8 @@
 <script>
 import Parameters from "@/components/api/path/parameters";
 import ResponseTemplate from "@/components/api/path/response";
-import RequestBody from "@/components/api/path/request-body";
 import XAttributes from "@/components/api/x-attributes";
+import SchemaTemplate from "@/components/api/path/schema";
 import Prism from 'vue-prismjs';
 import { uniqueId } from "lodash";
 import { formatAPIExample, getLangFromMimetype } from "@/util/udf";
@@ -100,7 +128,7 @@ export default{
 	components : {
 		Parameters,
 		ResponseTemplate,
-		RequestBody,
+		SchemaTemplate,
 		XAttributes,
 		Prism
 	},

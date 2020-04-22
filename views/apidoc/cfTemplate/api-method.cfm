@@ -12,6 +12,17 @@
 
 		<div class="card-body">
 			<div class="col-xs-12">
+				<cfif structKeyExists( args.method, "deprecated" ) && args.method[ "deprecated" ]>
+					<h4 class="card-subtitle text-primary"><em>Deprecated</em></h4>
+				</cfif>
+
+				<cfif structKeyExists( args.method, "summary" ) && len( args.method[ "summary" ] )>
+
+					<h4 class="card-subtitle text-primary">Summary:</h4>
+
+					#toParagraphFormat( args.method[ "summary" ] )#
+
+				</cfif>
 
 				<cfif structKeyExists( args.method, "description" ) && len( args.method[ "description" ] )>
 
@@ -58,9 +69,6 @@
 					)#
 					<hr>
 				</cfif>
-
-
-
 
             	#renderView( view='apidoc/cfTemplate/x-attributes', args={"entity":args.method,"headerNode":"h4"} )#
 
