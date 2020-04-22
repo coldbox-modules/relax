@@ -1,0 +1,19 @@
+{
+    "basicAuthentication": {
+      "description":"Basic username/password authentication provided via authentication headers. This security scheme is stateless and requires re-authentication on every request",
+      "type": "http",
+      "scheme" : "basic",
+      "name" : "Basic"
+    },
+    "tokenAuthentication": {
+      "description":"Authentication provided by an API key.  This security scheme is stateless and requires re-authentication on every request",
+      "type": "apiKey",
+      "name": "Bearer",
+      "in": "header"
+    },
+    "loginAuthentication" : {
+      "description" : "Authentication by providing a username/password in the request body.  This security scheme is stateful and requires support for cookies.",
+      "type" : "http",
+      "in"   : "body"
+    }
+}

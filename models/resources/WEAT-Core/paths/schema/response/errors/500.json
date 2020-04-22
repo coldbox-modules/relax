@@ -1,0 +1,5 @@
+{
+	"error"      : true,
+	"errorText"  : "Variable B is undefined.",
+	"errorDetail": "Key only provided when running outside of production.  A serialized stack trace will be provided by this key"
+}

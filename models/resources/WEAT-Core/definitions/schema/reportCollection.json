@@ -1,0 +1,245 @@
+{
+  "results": [
+    "373E51C2-6373-4458-98D8-7104C8C48A46",
+    "CE64FDE5-B10F-4CDB-9342-7651B7C9AAFE",
+    "00B0D75C-E3A9-40C3-A74C-62CE2F3371B4"
+  ],
+  "meta": {
+    "pagination": {
+      "pages": 1,
+      "maxrows": 50,
+      "page": 1,
+      "totalRecords": 3
+    }
+  },
+  "resultsMap": {
+    "CE64FDE5-B10F-4CDB-9342-7651B7C9AAFE": {
+      "modifiedTime": "2017-08-25T00:50:59+00:00",
+      "discipline": "firearms",
+      "currentApproval": {
+        "statusChangeTime": "2017-05-12T13:52:00+00:00",
+        "approvalStatus": "Approved",
+        "modifiedTime": "2017-08-25T00:50:59+00:00",
+        "id": "9888e1b7-c0d9-4c07-af1e-f52a2c435a7d",
+        "createdTime": "2017-08-25T00:50:59+00:00",
+        "statusChangeBy": {
+          "mobilePhone": "",
+          "VOIP": "",
+          "firstName": "weat",
+          "href": "/security/api/v1/users/7849b01a-41c4-4697-88a9-fb7aff5240a5",
+          "email": "weat.admin@afgn.centcom.isaf.cmil.mil",
+          "jobTitleID": "",
+          "middleName": "",
+          "lastName": "admin",
+          "username": "weat.admin",
+          "title": "",
+          "id": "7849b01a-41c4-4697-88a9-fb7aff5240a5",
+          "rankAbbreviation": "",
+          "emailSIPR": "",
+          "emailNIPR": ""
+        },
+        "isActive": true
+      },
+      "classification": {
+        "colorHex": "#238F30",
+        "colorName": "blue",
+        "id": "9fde5112-8acc-4eb1-830d-747cc7160a25",
+        "level": 2,
+        "name": "Confidential",
+        "abbreviation": "C"
+      },
+      "href": "/api/v1/discipline/firearms/reports/CE64FDE5-B10F-4CDB-9342-7651B7C9AAFE",
+      "id": "CE64FDE5-B10F-4CDB-9342-7651B7C9AAFE",
+      "createdTime": "2017-08-25T00:50:59+00:00",
+      "isActive": true,
+      "isAccredited": true,
+      "case": {
+        "parentCase": {},
+        "modifiedTime": "2017-08-25T00:50:56+00:00",
+        "justifiedPriority": {
+          "description": "Green Priority Level",
+          "displayOrder": 1,
+          "id": "0727b97f-a8ad-42d9-9675-8480426c4204",
+          "isActive": true,
+          "name": "Green"
+        },
+        "associations": [],
+        "classification": {
+          "colorHex": "#238F30",
+          "colorName": "blue",
+          "id": "9fde5112-8acc-4eb1-830d-747cc7160a25",
+          "level": 2,
+          "name": "Confidential",
+          "abbreviation": "C"
+        },
+        "href": "/api/v1/cases/A2171AD1-CFB9-4EB3-8884-8DD1A573ADE9",
+        "id": "A2171AD1-CFB9-4EB3-8884-8DD1A573ADE9",
+        "createdTime": "2017-08-25T00:50:56+00:00",
+        "internalID": "GFXC-17-0062",
+        "isActive": true,
+        "type": {
+          "modifiedTime": "2017-08-25T00:36:15+00:00",
+          "legacyId": 1,
+          "id": "dbee1a74-8639-422d-802f-281a70069163",
+          "createdTime": "2017-08-25T00:36:15+00:00",
+          "isActive": true,
+          "cases": "",
+          "name": "ACME Report"
+        },
+        "releasableTo": ""
+      }
+    },
+    "00B0D75C-E3A9-40C3-A74C-62CE2F3371B4": {
+      "modifiedTime": "2017-08-25T00:50:49+00:00",
+      "discipline": "firearms",
+      "currentApproval": {
+        "statusChangeTime": "2017-06-16T12:57:52+00:00",
+        "approvalStatus": "Approved",
+        "modifiedTime": "2017-08-25T00:50:49+00:00",
+        "id": "aa5a4eb2-ac39-45f7-a5f9-fa176c26c3e3",
+        "createdTime": "2017-08-25T00:50:49+00:00",
+        "statusChangeBy": {
+          "mobilePhone": "",
+          "VOIP": "",
+          "firstName": "weat",
+          "href": "/security/api/v1/users/7849b01a-41c4-4697-88a9-fb7aff5240a5",
+          "email": "weat.admin@afgn.centcom.isaf.cmil.mil",
+          "jobTitleID": "",
+          "middleName": "",
+          "lastName": "admin",
+          "username": "weat.admin",
+          "title": "",
+          "id": "7849b01a-41c4-4697-88a9-fb7aff5240a5",
+          "rankAbbreviation": "",
+          "emailSIPR": "",
+          "emailNIPR": ""
+        },
+        "isActive": true
+      },
+      "classification": {
+        "colorHex": "#238F30",
+        "colorName": "blue",
+        "id": "9fde5112-8acc-4eb1-830d-747cc7160a25",
+        "level": 2,
+        "name": "Confidential",
+        "abbreviation": "C"
+      },
+      "href": "/api/v1/discipline/firearms/reports/00B0D75C-E3A9-40C3-A74C-62CE2F3371B4",
+      "id": "00B0D75C-E3A9-40C3-A74C-62CE2F3371B4",
+      "createdTime": "2017-08-25T00:50:49+00:00",
+      "isActive": true,
+      "isAccredited": true,
+      "case": {
+        "parentCase": {},
+        "modifiedTime": "2017-08-25T00:50:48+00:00",
+        "justifiedPriority": {
+          "description": "Green Priority Level",
+          "displayOrder": 1,
+          "id": "0727b97f-a8ad-42d9-9675-8480426c4204",
+          "isActive": true,
+          "name": "Green"
+        },
+        "associations": [],
+        "classification": {
+          "colorHex": "#238F30",
+          "colorName": "blue",
+          "id": "9fde5112-8acc-4eb1-830d-747cc7160a25",
+          "level": 2,
+          "name": "Confidential",
+          "abbreviation": "C"
+        },
+        "href": "/api/v1/cases/8C938EFC-8115-458A-962B-1C3E4930DDA1",
+        "id": "8C938EFC-8115-458A-962B-1C3E4930DDA1",
+        "createdTime": "2017-08-25T00:50:48+00:00",
+        "internalID": "GFXC-17-0061",
+        "isActive": true,
+        "type": {
+          "modifiedTime": "2017-08-25T00:36:15+00:00",
+          "legacyId": 1,
+          "id": "dbee1a74-8639-422d-802f-281a70069163",
+          "createdTime": "2017-08-25T00:36:15+00:00",
+          "isActive": true,
+          "cases": "",
+          "name": "ACME Report"
+        },
+        "releasableTo": ""
+      }
+    },
+    "373E51C2-6373-4458-98D8-7104C8C48A46": {
+      "modifiedTime": "2017-08-25T00:51:10+00:00",
+      "discipline": "firearms",
+      "currentApproval": {
+        "statusChangeTime": "2017-05-03T11:12:24+00:00",
+        "approvalStatus": "Approved",
+        "modifiedTime": "2017-08-25T00:51:10+00:00",
+        "id": "1d5de0b4-ec48-411b-b3ee-4764ca7287ad",
+        "createdTime": "2017-08-25T00:51:10+00:00",
+        "statusChangeBy": {
+          "mobilePhone": "",
+          "VOIP": "",
+          "firstName": "weat",
+          "href": "/security/api/v1/users/7849b01a-41c4-4697-88a9-fb7aff5240a5",
+          "email": "weat.admin@afgn.centcom.isaf.cmil.mil",
+          "jobTitleID": "",
+          "middleName": "",
+          "lastName": "admin",
+          "username": "weat.admin",
+          "title": "",
+          "id": "7849b01a-41c4-4697-88a9-fb7aff5240a5",
+          "rankAbbreviation": "",
+          "emailSIPR": "",
+          "emailNIPR": ""
+        },
+        "isActive": true
+      },
+      "classification": {
+        "colorHex": "#238F30",
+        "colorName": "blue",
+        "id": "9fde5112-8acc-4eb1-830d-747cc7160a25",
+        "level": 2,
+        "name": "Confidential",
+        "abbreviation": "C"
+      },
+      "href": "/api/v1/discipline/firearms/reports/373E51C2-6373-4458-98D8-7104C8C48A46",
+      "id": "373E51C2-6373-4458-98D8-7104C8C48A46",
+      "createdTime": "2017-08-25T00:51:10+00:00",
+      "isActive": true,
+      "isAccredited": true,
+      "case": {
+        "parentCase": {},
+        "modifiedTime": "2017-08-25T00:51:08+00:00",
+        "justifiedPriority": {
+          "description": "Green Priority Level",
+          "displayOrder": 1,
+          "id": "0727b97f-a8ad-42d9-9675-8480426c4204",
+          "isActive": true,
+          "name": "Green"
+        },
+        "associations": [],
+        "classification": {
+          "colorHex": "#238F30",
+          "colorName": "blue",
+          "id": "9fde5112-8acc-4eb1-830d-747cc7160a25",
+          "level": 2,
+          "name": "Confidential",
+          "abbreviation": "C"
+        },
+        "href": "/api/v1/cases/00AB95A3-39FB-4EB3-95E5-2DE65DF28107",
+        "id": "00AB95A3-39FB-4EB3-95E5-2DE65DF28107",
+        "createdTime": "2017-08-25T00:51:08+00:00",
+        "internalID": "GFXC-17-0063",
+        "isActive": true,
+        "type": {
+          "modifiedTime": "2017-08-25T00:36:15+00:00",
+          "legacyId": 1,
+          "id": "dbee1a74-8639-422d-802f-281a70069163",
+          "createdTime": "2017-08-25T00:36:15+00:00",
+          "isActive": true,
+          "cases": "",
+          "name": "ACME Report"
+        },
+        "releasableTo": ""
+      }
+    }
+  }
+}

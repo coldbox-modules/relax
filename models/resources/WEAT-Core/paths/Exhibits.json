@@ -1,0 +1,388 @@
+{
+  "list": {
+    "description": "Retrieves/searches a list of cases",
+    "operationId": "WEATCoreAPIv1:CaseExhbits.list",
+    "parameters": [
+      {
+        "name": "caseId",
+        "in": "url",
+        "description": "The case id (GUID) provided in the URL",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "[property]",
+        "in": "query",
+        "description": "All available simple-value properties ( top-level keys of the Exhibit record ) may be provided in the query string to allow for search based filtering",
+        "required": false,
+        "type": "string",
+        "example": "&documentNumber=1.2.0"
+      },
+      {
+        "name": "classification",
+        "in": "query",
+        "description": "A single classification ID (PK) or comma-delimited list of classification IDs to filter the case results",
+        "required": false,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "sortOrder",
+        "in": "query",
+        "description": "The property sort order for the returned result set, may include ASC/DESC specifier",
+        "required": false,
+        "type": "string",
+        "x-default": "createdTime DESC"
+      }
+    ],
+    "responses": {
+      "default": {
+        "description": "Returns an empty response",
+        "schema": {
+          "$ref": "schema/response/emptyCollection.json"
+        }
+      },
+      "200": {
+        "description": "The exhibit list was retrieved successfully",
+        "schema": {
+          "$ref": "schema/response/exhibits/CaseExhibits.index.json"
+        }
+      },
+      "404": {
+        "description": "The case could not be found",
+        "schema": {
+          "$ref": "schema/response/errors/404.json"
+        }
+      }
+    }
+  },
+  "tree": {
+    "description": "Retrieves the exhibits for a case in a recursive tree format, beginning with top-level exhibits down through all nested children",
+    "operationId": "WEATCoreAPIv1:CaseExhbits.list",
+    "parameters": [
+      {
+        "name": "caseID",
+        "in": "url",
+        "description": "The case id (GUID) provided in the URL",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      }
+    ],
+    "responses": {
+      "default": {
+        "description": "Returns an empty response",
+        "schema": {
+          "$ref": "schema/response/emptyCollection.json"
+        }
+      },
+      "200": {
+        "description": "The tree was retrieved successfully",
+        "schema": {
+          "$ref": "schema/response/exhibits/CaseExhibits.tree.json"
+        }
+      },
+      "404": {
+        "description": "The case could not be found",
+        "schema": {
+          "$ref": "schema/response/errors/404.json"
+        }
+      }
+    }
+  },
+  "add": {
+    "description": "Creates a new Exhbit",
+    "operationId": "WEATCoreAPIv1:CaseExhbits.add",
+    "parameters": [
+      {
+        "name": "caseId",
+        "in": "url",
+        "description": "The identifier of the associated case",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "description",
+        "in": "query",
+        "description": "A description of the exhibit",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "name": "mediaItems",
+        "in": "query",
+        "description": "An array of media keys to assign to the newly created exhibit",
+        "required": false,
+        "type": "array",
+        "format": "guid"
+      },
+      {
+        "name": "quantity",
+        "in": "query",
+        "description": "The quantity of the exhibits",
+        "required": false,
+        "type": "integer"
+      },
+      {
+        "name": "itemNumber",
+        "in": "query",
+        "description": "The non-weat item number (e.g. inventory reference number) to assign to the exhibit",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "name": "documentNumber",
+        "in": "query",
+        "description": "A semver document number for the exhibit.  If not provided, this will be generated automatically from the exhibits position in the tree",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "name": "displayOrder",
+        "in": "query",
+        "description": "The display order within the siblings of the exhibit.  If not provided, this will be generated automatically from the exhibits position in the tree",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "name": "custodian",
+        "in": "query",
+        "description": "The identifier value of a user to assign as custodian of the exhibit. If not provided, defaults to the current user.",
+        "required": false,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "custodyComment",
+        "in": "query",
+        "description": "The comment for the initial custody assignment. If not provided, defaults to &ldquo;Initial custody assignment&rdquo;",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "name": "inventoryDescription",
+        "in": "query",
+        "description": "The inventory item description. Used to provide specific data regarding the physical item.  The response item updated is `inventoryItem.description`",
+        "required": false,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "classification",
+        "in": "query",
+        "description": "A single classification ID (PK) or comma-delimited list of classification IDs to assign to the exhibit.",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      }
+    ],
+    "responses": {
+      "201": {
+        "description": "Exhibit successfully created",
+        "schema": {
+          "$ref": "schema/response/exhibits/CaseExhibits.tree.json"
+        }
+      },
+      "404": {
+        "description": "The case could not be found",
+        "schema": {
+          "$ref": "schema/response/errors/404.json"
+        }
+      },
+      "417": {
+        "description": "Expectation failure.",
+        "schema": {
+          "$ref": "schema/response/errors/417.json"
+        }
+      }
+    }
+  },
+  "get": {
+    "description": "Retrieves a single case entity",
+    "operationId": "WEATCoreAPIv1:CaseExhbits.get",
+    "parameters": [
+      {
+        "name": "caseId",
+        "in": "url",
+        "description": "The identifier of the associated case",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "exhibitId",
+        "in": "url",
+        "description": "The identifier of the exhibit",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Resource retrieived",
+        "schema": {
+          "$ref": "schema/response/exhibits/CaseExhibits.entity.json"
+        }
+      },
+      "404": {
+        "description": "Entity not found",
+        "schema": {
+          "$ref": "schema/response/errors/404.json"
+        }
+      }
+    }
+  },
+  "update": {
+    "description": "Updates the exhibit, inventory item and custodial relationship",
+    "operationId": "WEATCoreAPIv1:CaseExhbits.index",
+    "parameters": [
+      {
+        "name": "caseId",
+        "in": "url",
+        "description": "The identifier of the associated case",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "exhibitId",
+        "in": "url",
+        "description": "The identifier of the exhibit",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "description",
+        "in": "query",
+        "description": "A description of the exhibit",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "name": "mediaItems",
+        "in": "query",
+        "description": "An array of media keys to assign to the newly created exhibit",
+        "required": false,
+        "type": "array",
+        "format": "guid"
+      },
+      {
+        "name": "quantity",
+        "in": "query",
+        "description": "The quantity of the exhibits",
+        "required": false,
+        "type": "integer"
+      },
+      {
+        "name": "itemNumber",
+        "in": "query",
+        "description": "The non-weat item number (e.g. inventory reference number) to assign to the exhibit",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "name": "documentNumber",
+        "in": "query",
+        "description": "A semver document number for the exhibit.  If not provided, this will be generated automatically from the exhibits position in the tree",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "name": "displayOrder",
+        "in": "query",
+        "description": "The display order within the siblings of the exhibit.  If not provided, this will be generated automatically from the exhibits position in the tree",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "name": "custodian",
+        "in": "query",
+        "description": "The identifier value of a user to assign as custodian of the exhibit",
+        "required": false,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "custodyComment",
+        "in": "query",
+        "description": "The comment for the new custody assignment.  If a new custodian is provided the comment applies to the new custody transfer.  If no new custoday assignment, this is applied to the current custody entry.",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "name": "inventoryDescription",
+        "in": "query",
+        "description": "The inventory item description. Used to provide specific data regarding the physical item. The response item updated is `inventoryItem.description`",
+        "required": false,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "classification",
+        "in": "query",
+        "description": "A single classification ID (PK) or comma-delimited list of classification IDs to assign to the exhibit.",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      }
+    ],
+    "responses": {
+      "404": {
+        "description": "Entity not found",
+        "schema": {
+          "$ref": "schema/response/errors/404.json"
+        }
+      },
+      "200": {
+        "description": "Resource updated sucessfully",
+        "schema": {
+          "$ref": "schema/response/exhibits/CaseExhibits.entity.json"
+        }
+      }
+    }
+  },
+  "delete": {
+    "description": "Retrieves a list of products",
+    "operationId": "WEATCoreAPIv1:CaseExhbits.index",
+    "parameters": [
+      {
+        "name": "caseId",
+        "in": "url",
+        "description": "The identifier of the associated case",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "exhibitId",
+        "in": "url",
+        "description": "The identifier of the exhibit",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      }
+    ],
+    "responses": {
+      "default": {
+        "description": "Entity not found",
+        "schema": {
+          "$ref": "schema/response/errors/404.json"
+        }
+      },
+      "204": {
+        "description": "Resource deleted successfully. No content remains",
+        "schema": {}
+      },
+      "404": {
+        "description": "Entity not found",
+        "schema": {
+          "$ref": "schema/response/errors/404.json"
+        }
+      }
+    }
+  }
+}

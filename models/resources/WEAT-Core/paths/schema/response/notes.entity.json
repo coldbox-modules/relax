@@ -1,0 +1,30 @@
+{
+  "modifiedTime": "2017-09-24T15:02:21+00:00",
+  "modifiedBy": {},
+  "legacyID": "",
+  "exhibit": "/api/v1/cases/c7970ad6-6f4d-4711-b4cf-6f26410bdfa1/exhibits/23184690-cf1d-4af5-9274-9af6b428d7bb",
+  "classification": "",
+  "href": "/api/v1/cases/c7970ad6-6f4d-4711-b4cf-6f26410bdfa1/exhibits/23184690-cf1d-4af5-9274-9af6b428d7bb/notes/ab5dcb72-5cd6-4b44-9646-dafbaf048a0a",
+  "id": "ab5dcb72-5cd6-4b44-9646-dafbaf048a0a",
+  "createdTime": "2017-09-24T15:02:21+00:00",
+  "content": "This is my test note to get",
+  "isActive": true,
+  "createdBy": {
+    "mobilePhone": "",
+    "VOIP": "",
+    "firstName": "weat",
+    "href": "/security/api/v1/users/757d0453-40ba-4a78-b231-77a0d1f3a28d",
+    "email": "weat.admin@afgn.centcom.isaf.cmil.mil",
+    "jobTitleID": "",
+    "middleName": "",
+    "lastName": "admin",
+    "username": "weat.admin",
+    "title": "",
+    "id": "757d0453-40ba-4a78-b231-77a0d1f3a28d",
+    "avatar": "",
+    "rankAbbreviation": "",
+    "emailSIPR": "",
+    "emailNIPR": ""
+  },
+  "modelName": ""
+}

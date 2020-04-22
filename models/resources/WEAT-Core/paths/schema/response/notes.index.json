@@ -1,0 +1,107 @@
+{
+  "results": [
+    "a50f7893-e2d6-4978-8d8a-cfc04989b96e",
+    "96bfcd64-5622-4e5c-beb3-87010463ef2f",
+    "ce70761f-de94-48c9-a8bc-dcaa23eca076"
+  ],
+  "meta": {
+    "pagination": {
+      "pages": 1,
+      "maxrows": 50,
+      "page": 1,
+      "totalRecords": 3
+    }
+  },
+  "resultsMap": {
+    "ce70761f-de94-48c9-a8bc-dcaa23eca076": {
+      "modifiedTime": "2017-09-24T15:00:41+00:00",
+      "modifiedBy": {},
+      "legacyID": "",
+      "exhibit": "/api/v1/cases/0eba9cff-c96c-4bd0-acd1-d46cfde4195a/exhibits/debe5e98-a52c-4eaa-a22a-4601bbc93b83",
+      "classification": "",
+      "href": "/api/v1/cases/0eba9cff-c96c-4bd0-acd1-d46cfde4195a/exhibits/debe5e98-a52c-4eaa-a22a-4601bbc93b83/notes/ce70761f-de94-48c9-a8bc-dcaa23eca076",
+      "id": "ce70761f-de94-48c9-a8bc-dcaa23eca076",
+      "createdTime": "2017-09-24T15:00:41+00:00",
+      "content": "This is test note number 1",
+      "isActive": true,
+      "createdBy": {
+        "mobilePhone": "",
+        "VOIP": "",
+        "firstName": "weat",
+        "href": "/security/api/v1/users/757d0453-40ba-4a78-b231-77a0d1f3a28d",
+        "email": "weat.admin@afgn.centcom.isaf.cmil.mil",
+        "jobTitleID": "",
+        "middleName": "",
+        "lastName": "admin",
+        "username": "weat.admin",
+        "title": "",
+        "id": "757d0453-40ba-4a78-b231-77a0d1f3a28d",
+        "avatar": "",
+        "rankAbbreviation": "",
+        "emailSIPR": "",
+        "emailNIPR": ""
+      },
+      "modelName": ""
+    },
+    "a50f7893-e2d6-4978-8d8a-cfc04989b96e": {
+      "modifiedTime": "2017-09-24T15:00:41+00:00",
+      "modifiedBy": {},
+      "legacyID": "",
+      "exhibit": "/api/v1/cases/0eba9cff-c96c-4bd0-acd1-d46cfde4195a/exhibits/debe5e98-a52c-4eaa-a22a-4601bbc93b83",
+      "classification": "",
+      "href": "/api/v1/cases/0eba9cff-c96c-4bd0-acd1-d46cfde4195a/exhibits/debe5e98-a52c-4eaa-a22a-4601bbc93b83/notes/a50f7893-e2d6-4978-8d8a-cfc04989b96e",
+      "id": "a50f7893-e2d6-4978-8d8a-cfc04989b96e",
+      "createdTime": "2017-09-24T15:00:41+00:00",
+      "content": "This is test note number 3",
+      "isActive": true,
+      "createdBy": {
+        "mobilePhone": "",
+        "VOIP": "",
+        "firstName": "weat",
+        "href": "/security/api/v1/users/757d0453-40ba-4a78-b231-77a0d1f3a28d",
+        "email": "weat.admin@afgn.centcom.isaf.cmil.mil",
+        "jobTitleID": "",
+        "middleName": "",
+        "lastName": "admin",
+        "username": "weat.admin",
+        "title": "",
+        "id": "757d0453-40ba-4a78-b231-77a0d1f3a28d",
+        "avatar": "",
+        "rankAbbreviation": "",
+        "emailSIPR": "",
+        "emailNIPR": ""
+      },
+      "modelName": ""
+    },
+    "96bfcd64-5622-4e5c-beb3-87010463ef2f": {
+      "modifiedTime": "2017-09-24T15:00:41+00:00",
+      "modifiedBy": {},
+      "legacyID": "",
+      "exhibit": "/api/v1/cases/0eba9cff-c96c-4bd0-acd1-d46cfde4195a/exhibits/debe5e98-a52c-4eaa-a22a-4601bbc93b83",
+      "classification": "",
+      "href": "/api/v1/cases/0eba9cff-c96c-4bd0-acd1-d46cfde4195a/exhibits/debe5e98-a52c-4eaa-a22a-4601bbc93b83/notes/96bfcd64-5622-4e5c-beb3-87010463ef2f",
+      "id": "96bfcd64-5622-4e5c-beb3-87010463ef2f",
+      "createdTime": "2017-09-24T15:00:41+00:00",
+      "content": "This is test note number 2",
+      "isActive": true,
+      "createdBy": {
+        "mobilePhone": "",
+        "VOIP": "",
+        "firstName": "weat",
+        "href": "/security/api/v1/users/757d0453-40ba-4a78-b231-77a0d1f3a28d",
+        "email": "weat.admin@afgn.centcom.isaf.cmil.mil",
+        "jobTitleID": "",
+        "middleName": "",
+        "lastName": "admin",
+        "username": "weat.admin",
+        "title": "",
+        "id": "757d0453-40ba-4a78-b231-77a0d1f3a28d",
+        "avatar": "",
+        "rankAbbreviation": "",
+        "emailSIPR": "",
+        "emailNIPR": ""
+      },
+      "modelName": ""
+    }
+  }
+}

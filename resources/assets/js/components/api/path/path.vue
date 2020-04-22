@@ -3,7 +3,7 @@
 		<!--- Path Title --->
 		<div class="card-header d-flex p-0">
 			<h3 class="card-title p-3 pathHeader">
-				{{route.toUpperCase()}}
+				{{route}}
 			</h3>
 			<ul class="nav nav-pills ml-auto p-2">
 				<li class="nav-item">

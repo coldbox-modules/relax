@@ -1,0 +1,215 @@
+{
+  "openapi": "3.0",
+  "info": {
+    "contact": {
+      "name": "Ortus Solutions",
+      "url": "https://ortussolutions.com",
+      "email": "info@ortussolutions.com"
+    },
+    "version": "1.0",
+    "license": {
+      "name": "Confidential"
+    },
+    "title": "WEAT-Security API v1",
+    "description": "WEAT-Security Module API Documentation for the Weapons Exploitation Analysis Tool"
+  },
+  "host": "local.weat.navy.mil",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json",
+    "multipart/form-data",
+    "application/x-www-form-urlencoded"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "$ref": "SecuritySchemes.json"
+  },
+  "paths": {
+    "/security/api/v1/authentication": {
+      "head": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "operationId": "delete",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "operationId": "add",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "options": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/security/api/v1/users": {
+      "head": {
+        "description": "",
+        "operationId": "index",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "operationId": "add",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "operationId": "index",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "options": {
+        "description": "",
+        "operationId": "index",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/security/api/v1/users/{id}": {
+      "head": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "operationId": "delete",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "options": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "operationId": "update",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "description": "",
+        "operationId": "update",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/security/api/v1/users/{id}/permissions": {
+      "put": {
+        "description": "",
+        "operationId": "update",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/security/api/v1/users/{id}/roles": {
+      "put": {
+        "description": "",
+        "operationId": "update",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  }
+}

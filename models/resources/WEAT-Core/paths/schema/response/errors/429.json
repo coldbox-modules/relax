@@ -1,0 +1,4 @@
+{
+	"error"   :true,
+	"messages":["You have exceeded the allowed number of requests for this resource"]
+}

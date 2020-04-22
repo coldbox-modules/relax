@@ -1,0 +1,158 @@
+{
+	"list":{
+		"x-Coldbox-Handler":"WEATCoreAPIv1:Cases",
+		"description": "Retrieves/searches a list of cases",
+        "operationId": "list",
+        "parameters": [
+        	{
+            "name"       : "internalID",
+            "in"         : "query",
+            "description": "The internal case ID - provided in request payload",
+            "required"   : false,
+            "type"       : "string",
+            "format"     : "guid"
+	        },
+        	{
+            "name"       : "priority",
+            "in"         : "query",
+            "description": "A single priority ID (PK) or comma-delimited list of priority IDs to filter the case results",
+            "required"   : false,
+            "type"       : "string"
+	        },
+        	{
+            "name"       : "classification",
+            "in"         : "query",
+            "description": "A single classification ID (PK) or comma-delimited list of classification IDs to filter the case results",
+            "required"   : false,
+            "type"       : "string"
+	        },
+          {
+            "name"       : "sortOrder",
+            "in"         : "query",
+            "description": "The property sort order for the returned result set, may include ASC/DESC specifier",
+            "required"   : false,
+            "type"       : "string",
+            "format"     : "guid",
+            "x-default"  : "createdTime DESC"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Returns an empty response",
+            "schema"     : {"$ref":"schema/response/emptyCollection.json"}
+          },
+          "200":{
+            "description":"Resources retrieved successfully",
+            "schema"     :{"$ref":"schema/response/cases.list.json"}
+          }
+        }
+	},
+	"add":{
+		"x-Coldbox-Handler":"WEATCoreAPIv1:Cases",
+		"description": "Creates a new case",
+        "operationId": "add",
+        "parameters" : [],
+        "responses"  : {
+          "default"  : {
+            "description":"Expectation failure",
+            "schema"     :{"$ref":"schema/response/errors/417.json"}
+          },
+          "201"      : {
+            "description":"Resource created successfully",
+            "schema"     :{"$ref":"schema/response/case.json"}
+          },
+          "417"      : {
+            "description":"Expectation failure",
+            "schema"     :{"$ref":"schema/response/errors/417.json"}
+          }
+        }	
+	},
+	"get":{
+		"x-Coldbox-Handler":"WEATCoreAPIv1:Cases",
+		"description": "Retrieves a single case entity",
+        "operationId" : "get",
+        "parameters"  : [
+        	{
+            "name"       : "id",
+            "in"         : "url",
+            "description": "The id of the case resource",
+            "required"   : true,
+            "type"       : "string",
+            "format"     : "guid"
+	        }
+        ],
+        "responses": {
+          "default": {
+            "description" : "Entity not found",
+            "schema"      : {"$ref":"schema/response/errors/404.json"}
+          },
+          "200":{
+          	"description" : "Resource retrieived",
+          	"schema"      : {"$ref":"schema/response/case.json"}
+          },
+          "404": {
+            "description" : "Entity not found",
+            "schema"      : {"$ref":"schema/response/errors/404.json"}
+          }
+        }
+	},
+	"update":{
+		"x-Coldbox-Handler":"WEATCoreAPIv1:Cases",
+		"description": "Retrieves a list of products",
+        "operationId" : "index",
+        "parameters"  : [
+        	{
+            "name"       : "id",
+            "in"         : "url",
+            "description": "The id of the case resource",
+            "required"   : true,
+            "type"       : "string",
+            "format"     : "guid"
+	        }
+	      ],
+        "responses" : {
+          "default" : {
+            "description": "Entity not found",
+            "schema"     : {"$ref":"schema/response/errors/404.json"}
+          },
+          "404": {
+            "description": "Entity not found",
+            "schema"     : {"$ref":"schema/response/errors/404.json"}
+          },
+          "200":{
+            "description":"Resource updated sucessfully",
+            "schema"     :{"$ref":"schema/response/case.json"}
+          }
+        }
+	},
+	"delete":{
+		"x-Coldbox-Handler":"WEATCoreAPIv1:Cases",
+		"description": "Retrieves a list of products",
+        "operationId" : "index",
+        "parameters"  : [
+        	{
+            "name"       : "id",
+            "in"         : "url",
+            "description": "The id of the case resource",
+            "required"   : true,
+            "type"       : "string",
+            "format"     : "guid"
+	        }
+        ],
+        "responses" : {
+          "default" : {
+            "description": "Entity not found",
+            "schema"     : {"$ref":"schema/response/errors/404.json"}
+          },
+          "204"     : {
+            "description":"Resource deleted successfully. No content remains",
+            "schema"     :{}
+          },
+          "404"     : {
+            "description": "Entity not found",
+            "schema"     : {"$ref":"schema/response/errors/404.json"}
+          }
+        }
+		
+	}
+}

@@ -1,0 +1,84 @@
+{
+  "quantity": 1,
+  "documentNumber": "1.0.0",
+  "legacyID": "",
+  "classification": {
+    "colorHex": "#238F30",
+    "colorName": "green",
+    "id": "20677236-ac39-4e31-a318-5fcb6547aff9",
+    "level": 1,
+    "name": "Unclassified",
+    "abbreviation": "U"
+  },
+  "displayOrder": 0,
+  "mediaItems": {
+    "results": [
+      "00eafc41-469c-45dd-8955-163881300785"
+    ],
+    "resultsMap": {
+      "00eafc41-469c-45dd-8955-163881300785": {
+        "loc": "",
+        "fileSizeBytes": 554328,
+        "annotations": "",
+        "src": "/media/00eafc41-469c-45dd-8955-163881300785.jpg",
+        "legacyID": "",
+        "classification": "",
+        "exhibits": "",
+        "isActive": true,
+        "name": "Test Case Exhibits Media Object",
+        "case": "",
+        "modifiedTime": "2017-09-24T01:21:47+00:00",
+        "description": "Testing 123",
+        "reports": "",
+        "id": "00eafc41-469c-45dd-8955-163881300785",
+        "createdTime": "2017-09-24T01:21:47+00:00",
+        "uploadFileName": "",
+        "createdBy": {
+          "mobilePhone": "",
+          "VOIP": "",
+          "firstName": "weat",
+          "href": "/security/api/v1/users/757d0453-40ba-4a78-b231-77a0d1f3a28d",
+          "email": "weat.admin@afgn.centcom.isaf.cmil.mil",
+          "jobTitleID": "",
+          "middleName": "",
+          "lastName": "admin",
+          "username": "weat.admin",
+          "title": "",
+          "id": "757d0453-40ba-4a78-b231-77a0d1f3a28d",
+          "avatar": "",
+          "rankAbbreviation": "",
+          "emailSIPR": "",
+          "emailNIPR": ""
+        },
+        "modelName": ""
+      }
+    }
+  },
+  "href": "/api/v1/cases/610cb642-a958-4b7e-9faf-567db621f767/exhibits/1c1f7a21-8b12-4982-ab30-9e1a464fc921",
+  "isActive": true,
+  "case": "/api/v1/cases/610cb642-a958-4b7e-9faf-567db621f767",
+  "notes": {
+    "results": [],
+    "resultsMap": {}
+  },
+  "modifiedTime": "2017-09-24T01:21:48+00:00",
+  "inventoryItem": {
+    "notes": {
+      "results": [],
+      "resultsMap": {}
+    },
+    "modifiedTime": "2017-09-24T01:21:47+00:00",
+    "modifiedBy": "",
+    "description": "",
+    "legacyID": "",
+    "id": "5d7c5a37-dc65-438a-90f9-ebc04925db7a",
+    "createdTime": "2017-09-24T01:21:47+00:00",
+    "custodian": {},
+    "isActive": true,
+    "createdBy": ""
+  },
+  "description": "",
+  "id": "1c1f7a21-8b12-4982-ab30-9e1a464fc921",
+  "createdTime": "2017-09-24T01:21:48+00:00",
+  "itemNumber": 1
+}

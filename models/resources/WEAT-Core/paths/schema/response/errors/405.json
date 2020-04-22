@@ -1,0 +1,4 @@
+{
+	"error"   :true,
+	"messages":["Invalid HTTP Method Execution of ( /api/v1/features/dosomething ): GET"]
+}

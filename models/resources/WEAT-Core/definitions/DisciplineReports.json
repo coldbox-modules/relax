@@ -1,0 +1,433 @@
+{
+  "reports-collection-parameters" : [ 
+    {
+      "name"       : "searchString",
+      "in"         : "query",
+      "description": "A search string to filter text columns associated with the reports to be returned",
+      "required"   : false,
+      "type"       : "string"
+    },
+    {
+      "name"       : "priority",
+      "in"         : "query",
+      "description": "The priority name or associated priority identifier ( guid ) of the reports to be returned.",
+      "required"   : false,
+      "type"       : "string"
+    },
+    {
+      "name"       : "incidentType",
+      "in"         : "query",
+      "description": "The indident type name or associated type identifier ( guid ) of the reports to be returned.",
+      "required"   : false,
+      "type"       : "string"
+    },
+    {
+      "name"       : "status",
+      "in"         : "query",
+      "description": "The report status name or associated status identifier ( guid ) of the reports to be returned.",
+      "required"   : false,
+      "type"       : "string"
+    },
+    {
+      "name"       : "triageDateStart",
+      "in"         : "query",
+      "description": "A starting date of the triage report to filter and restrict the reports being returned.  Must be accompanied by a <code>triageEndDate</code> parameter.",
+      "required"   : false,
+      "type"       : "string"
+    },
+    {
+      "name"       : "triageDateEnd",
+      "in"         : "query",
+      "description": "An ending date of the triage report to filter and restrict the reports being returned. Must be accompanied by a <code>triageStartDate</code> parameter.",
+      "required"   : false,
+      "type"       : "string"
+    },
+    {
+      "name"       : "[propertyName]",
+      "in"         : "query",
+      "description": "If a property name of a discipline report is provided, the search will be filtered according to that property name.  If the relationship is a simple value, a text filter will be applied.  If the relationship is a 'to-one' relationship, a primary key of the relationship is required for matching.",
+      "required"   : false,
+      "type"       : "string"
+    }
+  ],
+  "report-crud-parameters" : [ 
+
+  ],
+	"reports-collection" : {
+      "head": {
+        "description": "Verifies the availability of the collection endpoint",
+        "operationId": "index",
+        "parameters": { "#ref" : "#reports-collection-parameters" },
+        "responses": {
+          "200": {
+            "description": "The endpoint is available"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new report within the associated discipline",
+        "operationId": "add",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "The report was successfully created. Returns a serialized representation of the entity created (generic example provided below).",
+            "schema" : { "$ref" : "schema/report.json" }
+
+          }
+        }
+      },
+      "get": {
+        "description": "Lists and searches a collection of discipline report",
+        "operationId": "index",
+        "parameters": { "#ref" : "#reports-collection-parameters" },
+        "responses": {
+          "200": {
+            "description": "",
+            "schema" : { "$ref" : "schema/reportCollection.json" }
+          },
+          "417" : {
+            "description" : "An expectation for the request failed.  The request could not be processed. This error usually occurs when a singular parameter of a dependent pair is missing ( e.g. triageStartDate/triageEndDate )",
+            "schema" : { "$ref" : "../paths/schema/response/errors/417.json" }
+          },
+          "500" : {
+            "description" : "An internal error occurred.  The request could not be processed.",
+            "schema" : { "$ref" : "../paths/schema/response/errors/500.json" }
+          }
+        }
+      },
+      "options": {
+        "description": "",
+        "operationId": "index",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Provides a definition of this resource"
+          }
+        }
+      }
+	},
+	"reports-entity" : {
+      "head": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The report resource endpoint is found and available for consumption"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "operationId": "delete",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "The report was successfully deleted. No content is returned upon success"
+          },
+          "404" : {
+            "description" : "The requested entity could not be found",
+            "schema" : { "$ref" : "../paths/schema/response/errors/404.json" }
+          },
+          "403" : {
+            "description" : "The authenticated user is not authorized for the requested operation",
+            "schema" : { "$ref" : "../paths/schema/response/errors/403.json" }
+          },
+          "500" : {
+            "description" : "An internal error occurred.  The request could not be processed.",
+            "schema" : { "$ref" : "../paths/schema/response/errors/500.json" }
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The report was successfully retrieved. The report serialization is provided as the response.",
+            "schema" : { "$ref" : "schema/report.json" }
+          },
+          "404" : {
+            "description" : "The requested entity could not be found",
+            "schema" : { "$ref" : "../paths/schema/response/errors/404.json" }
+          },
+          "403" : {
+            "description" : "The authenticated user is not authorized for the requested operation",
+            "schema" : { "$ref" : "../paths/schema/response/errors/403.json" }
+          },
+          "500" : {
+            "description" : "An internal error occurred.  The request could not be processed.",
+            "schema" : { "$ref" : "../paths/schema/response/errors/500.json" }
+          }
+        }
+      },
+      "options": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Provides an API definition for the path requested"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "operationId": "update",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The report was successfully overwritten by the provided payload. The updated report serialization is provided as the response.",
+            "schema" : { "$ref" : "schema/report.json" }
+          },
+          "404" : {
+            "description" : "The requested entity could not be found",
+            "schema" : { "$ref" : "../paths/schema/response/errors/404.json" }
+          },
+          "403" : {
+            "description" : "The authenticated user is not authorized for the requested operation",
+            "schema" : { "$ref" : "../paths/schema/response/errors/403.json" }
+          },
+          "500" : {
+            "description" : "An internal error occurred.  The request could not be processed.",
+            "schema" : { "$ref" : "../paths/schema/response/errors/500.json" }
+          }
+        }
+      },
+      "patch": {
+        "description": "",
+        "operationId": "update",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The granular update to the report was processed successfully. The updated report serialization is provided as the response.",
+            "schema" : { "$ref" : "schema/report.json" }
+          },
+          "404" : {
+            "description" : "The requested entity could not be found",
+            "schema" : { "$ref" : "../paths/schema/response/errors/404.json" }
+          },
+          "403" : {
+            "description" : "The authenticated user is not authorized for the requested operation",
+            "schema" : { "$ref" : "../paths/schema/response/errors/403.json" }
+          },
+          "500" : {
+            "description" : "An internal error occurred.  The request could not be processed.",
+            "schema" : { "$ref" : "../paths/schema/response/errors/500.json" }
+          }
+        }
+      }
+	},
+	"approvals" : {
+		"post": {
+	        "description": "",
+	        "operationId": "add",
+	        "parameters": [],
+	        "responses": {
+	          "201": {
+	            "description": "The report approval was successfully added as the current state of the report."
+	          }
+	        }
+	    }
+	},
+	"notes-collection" : {
+      "head": {
+        "description": "",
+        "operationId": "index",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "operationId": "add",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "operationId": "index",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "options": {
+        "description": "",
+        "operationId": "index",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+	},
+	"notes-entity" : {
+		"head": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "operationId": "delete",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "options": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "operationId": "update",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "description": "",
+        "operationId": "update",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+	},
+	"note-attachments-collection" : {
+		
+      "head": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "operationId": "createAttachment",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "operationId": "get",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+	},
+	"note-attachments-entity" : {
+		"head": {
+        "description": "",
+        "operationId": "getAttachment",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "operationId": "deleteAttachment",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "operationId": "getAttachment",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "options": {
+        "description": "",
+        "operationId": "getAttachment",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "operationId": "updateAttachment",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "description": "",
+        "operationId": "updateAttachments",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+	}
+}

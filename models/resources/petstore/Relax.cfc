@@ -17,7 +17,7 @@ component output="false" {
 		// our first place before even building it, we spec it out.
 		this.relax = {
 			// Our relative link to the definition representation file for this resource - JSON or YAML
-			definition : "petstore.json" // definition = "petstore.yaml"
+			definition : "petstore.yaml" // definition = "petstore.yaml"
 		};
 	}
 

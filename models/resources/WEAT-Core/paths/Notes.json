@@ -1,0 +1,203 @@
+{
+  "index": {
+    "description": "Lists the avilable notes",
+    "operationId": "index",
+    "parameters": [
+      {
+        "name": "[Owning Entity ID]",
+        "in": "url",
+        "description": "Notation paths require the presence of the owning entity identifier for assignment.  For example, for case notation, this would be the case identifier.  For exhibits, this would be the exhibit identifier.",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "[property]",
+        "in": "query",
+        "description": "All available simple-value properties ( top-level keys of the Note record ) may be provided in the query string to allow for search based filtering.",
+        "required": false,
+        "type": "string",
+        "example": "&content=here+is+my+text"
+      },
+      {
+        "name": "classification",
+        "in": "query",
+        "description": "A single classification ID (PK) or comma-delimited list of classification IDs to filter the note results",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "name": "sortOrder",
+        "in": "query",
+        "description": "The property sort order for the returned result set, may include ASC/DESC specifier",
+        "required": false,
+        "type": "string",
+        "x-default": "createdTime DESC"
+      }
+    ],
+    "responses": {
+      "default": {
+        "description": "Returns an empty response",
+        "schema": {
+          "$ref": "schema/response/emptyCollection.json"
+        }
+      },
+      "200": {
+        "description": "The notes were retreived successfully",
+        "schema": {
+          "$ref": "schema/response/notes.index.json"
+        }
+      },
+      "404": {
+        "description": "The owning entity, as provided in the url, could not be found",
+        "schema": {
+          "$ref": "schema/response/errors/404.json"
+        }
+      }
+    }
+  },
+  "get": {
+    "description": "Retrieves a specified note",
+    "operationId": "get",
+    "parameters": [
+      {
+        "name": "noteId",
+        "in": "url",
+        "description": "The unique identifier of the note",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "The note was retreived successfully",
+        "schema": {
+          "$ref": "schema/response/notes.entity.json"
+        }
+      },
+      "404": {
+        "description": "The note requested could not be found",
+        "schema": {
+          "$ref": "schema/response/errors/404.json"
+        }
+      }
+    }
+  },
+  "add": {
+    "description": "Adds a new note.  The note will be attributed to the user making the addition request.",
+    "operationId": "add",
+    "parameters": [
+      {
+        "name": "content",
+        "in": "query",
+        "description": "The content of the note",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "name": "classification",
+        "in": "query",
+        "description": "The classification of the note.  Defaults to the classification of the owning entity.",
+        "required": false,
+        "type": "string",
+        "format": "guid"
+      }
+    ],
+    "responses": {
+      "201": {
+        "description": "The note was created successfully",
+        "schema": {
+          "$ref": "schema/response/notes.entity.json"
+        }
+      },
+      "404": {
+        "description": "The note requested could not be found",
+        "schema": {
+          "$ref": "schema/response/errors/404.json"
+        }
+      },
+      "417": {
+        "description": "Expectation failure",
+        "schema": {
+          "$ref": "schema/response/errors/417.json"
+        }
+      }
+    }
+  },
+  "update": {
+    "description": "",
+    "operationId": "update",
+    "parameters": [
+      {
+        "name": "noteId",
+        "in": "url",
+        "description": "The unique identifier of the note",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      },
+      {
+        "name": "content",
+        "in": "query",
+        "description": "The content of the note",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "name": "classification",
+        "in": "query",
+        "description": "The classification of the note.  Defaults to the classification of the owning entity.",
+        "required": false,
+        "type": "string",
+        "format": "guid"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "The note was successfully updated",
+        "schema": {
+          "$ref": "schema/response/notes.entity.json"
+        }
+      },
+      "404": {
+        "description": "The note requested could not be found",
+        "schema": {
+          "$ref": "schema/response/errors/404.json"
+        }
+      },
+      "417": {
+        "description": "Expectation failure",
+        "schema": {
+          "$ref": "schema/response/errors/417.json"
+        }
+      }
+    }
+  },
+  "delete": {
+    "description": "Deletes a note",
+    "operationId": "delete",
+    "parameters": [
+      {
+        "name": "noteId",
+        "in": "url",
+        "description": "The unique identifier of the note",
+        "required": true,
+        "type": "string",
+        "format": "guid"
+      }
+    ],
+    "responses": {
+      "204": {
+        "description": "Note deleted successfully. No content remains",
+        "schema": {}
+      },
+      "404": {
+        "description": "Note not found",
+        "schema": {
+          "$ref": "schema/response/errors/404.json"
+        }
+      }
+    }
+  }
+}

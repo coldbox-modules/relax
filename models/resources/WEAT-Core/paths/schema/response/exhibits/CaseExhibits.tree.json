@@ -1,0 +1,91 @@
+{
+  "results": [
+    "86926c7e-adf0-4add-8d3e-a9623fba3c7d"
+  ],
+  "resultsMap": {
+    "86926c7e-adf0-4add-8d3e-a9623fba3c7d": {
+      "quantity": 1,
+      "documentNumber": "1.0.0",
+      "legacyID": "",
+      "classification": {
+        "colorHex": "#238F30",
+        "colorName": "green",
+        "id": "20677236-ac39-4e31-a318-5fcb6547aff9",
+        "level": 1,
+        "name": "Unclassified",
+        "abbreviation": "U"
+      },
+      "displayOrder": 0,
+      "mediaItems": {
+        "results": [
+          "6644d933-b8e6-4266-b8d6-61f14e9b9d46"
+        ],
+        "resultsMap": {
+          "6644d933-b8e6-4266-b8d6-61f14e9b9d46": {
+            "loc": "",
+            "fileSizeBytes": 554328,
+            "annotations": "",
+            "src": "/media/6644d933-b8e6-4266-b8d6-61f14e9b9d46.jpg",
+            "legacyID": "",
+            "classification": "",
+            "exhibits": "",
+            "isActive": true,
+            "name": "Test Case Exhibits Media Object",
+            "case": "",
+            "modifiedTime": "2017-09-24T01:19:50+00:00",
+            "description": "Testing 123",
+            "reports": "",
+            "id": "6644d933-b8e6-4266-b8d6-61f14e9b9d46",
+            "createdTime": "2017-09-24T01:19:50+00:00",
+            "uploadFileName": "",
+            "createdBy": {
+              "mobilePhone": "",
+              "VOIP": "",
+              "firstName": "weat",
+              "href": "/security/api/v1/users/757d0453-40ba-4a78-b231-77a0d1f3a28d",
+              "email": "weat.admin@afgn.centcom.isaf.cmil.mil",
+              "jobTitleID": "",
+              "middleName": "",
+              "lastName": "admin",
+              "username": "weat.admin",
+              "title": "",
+              "id": "757d0453-40ba-4a78-b231-77a0d1f3a28d",
+              "avatar": "",
+              "rankAbbreviation": "",
+              "emailSIPR": "",
+              "emailNIPR": ""
+            },
+            "modelName": ""
+          }
+        }
+      },
+      "href": "/api/v1/cases/d3315392-fa83-4eab-ab43-0210f338c252/exhibits/86926c7e-adf0-4add-8d3e-a9623fba3c7d",
+      "isActive": true,
+      "case": "/api/v1/cases/d3315392-fa83-4eab-ab43-0210f338c252",
+      "notes": {
+        "results": [],
+        "resultsMap": {}
+      },
+      "modifiedTime": "2017-09-24T01:19:50+00:00",
+      "inventoryItem": {
+        "notes": {
+          "results": [],
+          "resultsMap": {}
+        },
+        "modifiedTime": "2017-09-24T01:19:50+00:00",
+        "modifiedBy": "",
+        "description": "",
+        "legacyID": "",
+        "id": "14802eec-cb03-4370-abfa-d9a4c5caa4c8",
+        "createdTime": "2017-09-24T01:19:50+00:00",
+        "custodian": {},
+        "isActive": true,
+        "createdBy": ""
+      },
+      "description": "",
+      "id": "86926c7e-adf0-4add-8d3e-a9623fba3c7d",
+      "createdTime": "2017-09-24T01:19:50+00:00",
+      "itemNumber": 1
+    }
+  }
+}
