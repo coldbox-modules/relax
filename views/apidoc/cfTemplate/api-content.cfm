@@ -76,7 +76,7 @@
 				<h2>Servers</h2>
 				<ul class="list-unstyled">
 					<cfloop array="#api.servers#" index="apiServer">
-						<li><strong><a href="#apiServer.url#">#apiServer.url#</a></strong> - #apiServer.description# </li>
+						<li><strong><a href="#apiServer.url#">#apiServer.url#</a></strong><cfif structKeyExists( server, "description" )> - #apiServer.description# </cfif></li>
 					</cfloop>
 				</ul>
 			</cfif>

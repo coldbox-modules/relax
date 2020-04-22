@@ -5,7 +5,7 @@
 			<title>#prc.exportTitle#</title>
 			<!-- Normalize our CSS for portability -->
 			<style type="text/css">
-			<cfinclude template="#prc.root#/includes/css/export.css"/>
+			<cfinclude template="#relaxElixirPath( "css/export.css" )#"/>
 			</style>
 			<!-- Fonts -->
 			<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>

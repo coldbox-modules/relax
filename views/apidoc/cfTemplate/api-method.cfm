@@ -62,6 +62,7 @@
 						<h5>Description: #args.method.requestBody.description#</h5>
 					</cfif>
 
+					<cfparam name="args.method.requestBody.required" default="true"/>
 					<h5>Required: <pre>#(args.method.requestBody.required ? 'true' : 'false')#</pre></h5>
 					#renderView(
 						view = "apidoc/cfTemplate/request-body",
