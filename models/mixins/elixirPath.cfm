@@ -19,11 +19,11 @@
         if( fileIsHref ){
         	var href = "/" & arguments.fileName;
         } else {
-        	var href = "#mapping#/#includesLocation#/#arguments.fileName#";
+        	var href = "/#includesLocation#/#arguments.fileName#";
             //remove preceeding slash to find the key
         }
 
-        var key = right( href, len( href )-1 );
+		var key = right( href, len( href )-1 );
 
         if ( ! fileExists( filePath ) ) {
             return href;
@@ -48,10 +48,10 @@
         var json = deserializeJSON( fileContents );
 
         if ( ! structKeyExists( json, key ) ) {
-            return href;
+            return fileIsHref ? href : mapping & href;
         }
 
-        return "#json[ key ]#";
+        return fileIsHref ? "#json[ key ]#" : "#mapping##json[ key ]#";
 
 	}
 
