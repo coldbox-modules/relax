@@ -18,6 +18,12 @@ test-harness/logs/**
 test-harness/modules/**
 build/results.json
 
+# Only our packaged apis should be included
+models/resources
+!models/resources/forgebox
+!models/resources/myapi
+!models/resources/petstore
+
 # log files
 logs/**
 modules/**
