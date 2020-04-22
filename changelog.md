@@ -12,6 +12,7 @@
 
 * Adds additional support for OpenAPI v3 schema definitions ( content, items )
 * Adds auto-generation of examples from schema from examples defined within items/properties, when not explicitly provided
+* Adds a module setting to exclude APIs from display listings
 
 
 ### Compat

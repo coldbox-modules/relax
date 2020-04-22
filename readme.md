@@ -41,7 +41,9 @@ moduleSettings = {
 		APILocation = "modules.relax.models.resources",
 		// Default API to load, name of the directory inside of resources
 		defaultAPI = "myapi",
-		// History stack size, the number of history items to track in the RelaxURL
+		// APIs to be excluded from display - may be a list or an array and items may include Regex
+		exclude         = "",
+		// History stack size, the number of history items to retain in the Relaxer test tool
 		maxHistory = 10
 	}
 };

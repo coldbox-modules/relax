@@ -37,13 +37,15 @@ component{
 			// The mapped location of the API definitions
 			APILocation 	= "#moduleMapping#.models.resources",
 			// The default API to load within the RELAX UI
-			defaultAPI 		= "myapi",
-			// Whether to enable session storage for history and preferences ( deprecated, as UI now uses JS localStorage )
-			sessionsEnabled	= getApplicationMetadata().sessionManagement,
+			defaultAPI 		= "petstore",
+			// APIs to be excluded from display - may be a list or an array and items may include Regex
+			exclude         = "",
 			// The number of history items in the session storage ( deprecated )
 			maxHistory		= 10,
-			// Whether to cache the API Service as a singleton, preventing each request from loading
-			cache 			= false
+			// Whether to cache the API Service as a singleton, preventing each request from reloading changes
+			cache 			= false,
+			// Whether to enable session storage for history and preferences ( deprecated, as UI now uses JS localStorage )
+			sessionsEnabled	= getApplicationMetadata().sessionManagement
 		};
 
 		// Layout Settings

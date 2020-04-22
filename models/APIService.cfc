@@ -11,6 +11,7 @@ component accessors="true" singleton {
 	property name="log"           inject="logbox:logger:{this}";
 	property name="moduleService" inject="coldbox:moduleService";
 	property name="templateCache" inject="cachebox:template";
+	property name="moduleSettings" inject="coldbox:moduleSettings:relax";
 
 	/**
 	 * Storage for API Definitions
@@ -44,15 +45,20 @@ component accessors="true" singleton {
 	 * Get a listing of all the APIs in the resources folder
 	 */
 	query function listAPIs(){
+		var excludes = variables.moduleSettings.exclude;
+		if( isSimpleValue( excludes ) ) excludes = listToArray( excludes );
+
 		var apiListing = directoryList(
 			variables.settings.APILocationExpanded,
 			false,
 			"query",
-			"",
+			function( path ){
+				return !excludes.len() ? true : !reMatchNoCase( excludes.toList( '|' ), path ).len()
+			},
 			"asc"
 		);
 
-		if ( moduleService.isModuleRegistered( "cbswagger" ) ) {
+		if ( moduleService.isModuleRegistered( "cbswagger" ) && ! excludes.contains( "cbswagger" ) ) {
 			var definition = wirebox
 				.getInstance( "RoutesParser@cbswagger" )
 				.createDocFromRoutes()
