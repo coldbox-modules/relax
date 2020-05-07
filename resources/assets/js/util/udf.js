@@ -92,7 +92,9 @@ export const formatAPIExample = function(
             if( typeof( example ) === 'object' ){
                 return formatJSONRaw( JSON.stringify( example ) ).trim();
             } else {
-                return formatJSONRaw( example ).trim();
+				// we need to double parse escaped JSON
+				let parsed = JSON.parse( JSON.parse( example ) );
+				return formatJSONRaw( JSON.stringify( example ) ).trim();
             }
         default:
             if( typeof( example ) === 'object' || typeof( example ) === 'array' ){

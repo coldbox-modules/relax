@@ -16,8 +16,8 @@
 
 		<div :id="`card_${resourceId}-${responseKey}`" class="collapse card-body">
 			<div class="col-xs-12" v-if="markedResponse.description">
-					<h4 class="card-subtitle text-secondary">Description:</h4>
-					<p v-html="markedResponse.description.HTMLBreakLines()"></p>
+				<h4 class="card-subtitle text-secondary">Description:</h4>
+				<p v-html="markedResponse.description.HTMLBreakLines()"></p>
 			</div>
 
 			<!-- Swagger 2.x specification -->

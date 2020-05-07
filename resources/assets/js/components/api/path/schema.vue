@@ -2,41 +2,46 @@
 	<div class="box">
 		<!-- OpenAPI 3.x -->
 		<div v-if="schema.items">
+			<h4 class="card-subtitle text-secondary">Items:</h4>
+			<schema-template :schema="schema.items" :showExample="!schema.example"></schema-template>
 			<div v-if="schema.example" class="example box">
-				<h5 class="box-header">Example:</h5>
+				<h4 class="box-header">Example:</h4>
 				<div class="box-body">
 					<prism :language="lang" :code="schema.example"></prism>
 				</div>
 			</div>
-			<h4 class="card-subtitle text-secondary">Items:</h4>
-			<schema-template :schema="schema.items" :showExample="!schema.example"></schema-template>
 		</div>
 		<div v-else-if="schema.type || schema.properties">
-			<h5 class="box-header">{{schema.title}}</h5>
-			<h5 v-if="schema.type" class="box-header">Type: <code>{{schema.type}}</code></h5>
-			<h5 v-if="schema.default" class="box-header">Default Value: <code>{{schema.default}}</code></h5>
-			<h5 v-if="schema.enum" class="box-header">
-				Accepted Values:
-				<ul>
-					<li v-for="available in schema.enum" :key="`schema_available_${available}`"><code>{{available}}</code></li>
-				</ul>
-			</h5>
-			<h5 v-if="schema.required" class="box-header">Required: <code>{{schema.required}}</code></h5>
-			<h5 v-if="schema.description" class="box-header">Description:</h5>
-			<p v-if="schema.description" v-html="schema.description.HTMLBreakLines()"></p>
-
-			<div v-if="showExample && propertiesExample && Object.keys( propertiesExample ).length" class="example box">
-				<h5 class="box-header">Example:</h5>
-				<div class="box-body">
-					<prism :language="lang" :code="propertiesExample"></prism>
-				</div>
-			</div>
-
-			<div v-if="schema.properties" class="box">
-				<h5 class="box-header">Properties:</h5>
-				<prism language="json" :code="formatJSONRaw( JSON.stringify( condensedProperties ) )"></prism>
-			</div>
-
+			<table class="table table-condensed">
+				<thead v-if="detectedColumns.length">
+					<tr>
+						<th class="text-secondary" v-for="column in detectedColumns" :key="`schema_column_${column.key}`">{{column.label}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-if="detectedColumns.length">
+						<td v-for="column in detectedColumns" :key="`schema_column_row_${column.key}`"><code>{{schema[ column.key ]}}</code></td>
+					</tr>
+					<tr v-if="schema.properties" class="properties">
+						<th class="text-secondary">Properties:</th>
+						<td :colspan="detectedColumns.length ? detectedColumns.length - 1 : 1">
+							<schema-properties :properties="schema.properties"></schema-properties>
+						</td>
+					</tr>
+					<tr v-if="showExample && propertiesExample && Object.keys( propertiesExample ).length" class="example">
+						<th class="text-secondary">Example:</th>
+						<td :colspan="detectedColumns.length ? detectedColumns.length - 1 : 1">
+							<prism :language="lang" :code="formatAPIExample( propertiesExample, lang )"></prism>
+						</td>
+					</tr>
+					<tr v-if="unhandledSchema">
+						<th class="text-secondary"><strong><span v-if="detectedColumns.length">Additional </span>Constraints:</strong></th>
+						<td :colspan="detectedColumns.length ? detectedColumns.length - 1 : 1">
+							<prism language="json" :code="formatJSONRaw( JSON.stringify( unhandledSchema ) )"></prism>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		<!-- OpenAPI 2.x -->
 		<div v-else class="card card-solid-default">
@@ -46,16 +51,48 @@
 </template>
 <script>
 import Prism from 'vue-prismjs';
-import { formatJSONRaw, objectToXML, formatXML, escapeHtml } from "@/util/udf";
+import SchemaProperties from "@/components/api/path/schema-properties";
+import { formatJSONRaw, formatAPIExample, objectToXML, formatXML, escapeHtml } from "@/util/udf";
 export default{
 	name : 'schema-template',
 	data(){
 		return {
-			simpleValues : [ "title", "description", "summary", "required", "format"  ]
+			simpleValues : [ "title", "description", "summary", "required", "format"  ],
+			availableColumns : [
+				{
+					"key" : "title",
+					"label" : "Title"
+				},
+				{
+					"key" : "type",
+					"label" : "Type"
+				},
+				{
+					"key" : "format",
+					"label" : "Format"
+				},
+				{
+					"key" : "default",
+					"label" : "Default Value"
+				},
+				{
+					"key" : "enum",
+					"label" : "Accepted Values"
+				},
+				{
+					"key" : "required",
+					"label" : "Required"
+				},
+				{
+					"key" : "description",
+					"label" : "Description"
+				}
+			]
 		}
 	},
 	components: {
-		Prism
+		Prism,
+		SchemaProperties
 	},
 	props : {
 		schema : {
@@ -99,10 +136,22 @@ export default{
 			if( !this.schema.properties ) return undefined;
 			var properties = this.schema.properties;
 			return this.formatForLang( this.schemaPropertiesToExample( properties ) );
+		},
+		detectedColumns(){
+			var self = this;
+			return this.availableColumns.filter( col => Object.keys( self.schema ).indexOf( col.key ) > -1 );
+		},
+		unhandledSchema(){
+			var self = this;
+			var exclude = [ 'name', 'key' ];
+			let remainingKeys = Object.keys( this.schema ).filter( key => exclude.indexOf( key ) == -1 && self.detectedColumns.map( col => col.key ).indexOf( key ) == -1 );
+			if( !remainingKeys.length ) return null;
+			return remainingKeys.reduce( ( acc, key ) => acc[ key ] = self.schema[ key ], {} );
 		}
 	},
 	methods : {
 		formatJSONRaw : formatJSONRaw,
+		formatAPIExample : formatAPIExample,
 		schemaPropertiesToExample : ( properties ) => Object.keys( properties )
 														.filter( key => !!properties[ key ].example )
 														.reduce(

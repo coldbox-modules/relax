@@ -7,7 +7,7 @@
 				</tr>
 			</thead>
 			<tbody
-				v-for="( param, index ) in normalizedParams"
+				v-for="( param, index ) in normalizedProperties"
 				:key="`param_${index}`"
 			>
 				<tr>
@@ -27,7 +27,7 @@
 						<span v-else-if="col.key == 'required'" style="vertical-align:top">
 							<i :class="`fa fa-${ param.required ? 'check-circle text-danger' : 'circle-o text-muted' }`" v-b-tooltip.hover :title="`This parameter is ${ param.required ? 'required' : 'optional' }`"></i>
 						</span>
-						<span v-else style="vertical-align:top"><code>{{ param[ col.key ] }}</code></span>
+						<span v-else style="vertical-align:top"><code v-if="param[ col.key ]">{{ param[ col.key ] }}</code></span>
 					</td>
 				</tr>
 
@@ -48,14 +48,13 @@ import { formatJSONRaw } from "@/util/udf";
 import Prism from 'vue-prismjs';
 import SchemaTemplate from "@/components/api/path/schema";
 export default{
-	name : 'parameters',
 	components: {
 		Prism,
 		SchemaTemplate
 	},
 	props : {
-		parameters : {
-			type : Array,
+		properties : {
+			type : Object,
 			required: true
 		},
 		parentResourceId : {
@@ -97,16 +96,17 @@ export default{
 		detectedColumns(){
 			var self = this;
 			return this.columnDefinitions.filter(
-				def => self.normalizedParams.reduce( ( acc, param ) => {
+				def => self.normalizedProperties.reduce( ( acc, param ) => {
 					Object.keys( param ).forEach( key => { if( acc.indexOf( key ) == -1 ) acc.push( key ) } );
 					return acc;
 				}, [] ).indexOf( def.key ) > -1
 			)
 		},
-		normalizedParams(){
+		normalizedProperties(){
 			var self = this;
-			return this.parameters.reduce( ( acc, param ) => {
-				let normalized = Object.assign( {}, param );
+			return Object.keys( this.properties ).reduce( ( acc, propKey ) => {
+				let normalized = Object.assign( {}, self.properties[ propKey ] );
+				normalized[ "name" ] = propKey;
 				if( normalized.schema ){
 					Object.keys( normalized.schema ).forEach( key => normalized[ key ] = normalized.schema[ key ] );
 				}
