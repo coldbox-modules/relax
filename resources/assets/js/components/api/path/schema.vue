@@ -12,29 +12,31 @@
 			</div>
 		</div>
 		<div v-else-if="schema.type || schema.properties">
-			<table class="table table-condensed">
-				<thead v-if="detectedColumns.length">
+			<table class="table table-condensed col-xs-12">
+				<thead v-if="detectedColumns.length > 2">
 					<tr>
 						<th class="text-secondary" v-for="column in detectedColumns" :key="`schema_column_${column.key}`">{{column.label}}</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr v-if="detectedColumns.length">
-						<td v-for="column in detectedColumns" :key="`schema_column_row_${column.key}`"><code>{{schema[ column.key ]}}</code></td>
+						<td v-for="column in detectedColumns" :key="`schema_column_row_${column.key}`" :colspan="detectedColumns.length <= 2 ? 2 : 1">
+							<strong v-if="detectedColumns.length <= 2">{{column.label}}:</strong> <code>{{schema[ column.key ]}}</code>
+						</td>
 					</tr>
 					<tr v-if="schema.properties" class="properties">
 						<th class="text-secondary">Properties:</th>
-						<td :colspan="detectedColumns.length ? detectedColumns.length - 1 : 1">
+						<td :colspan="detectedColumns.length ? detectedColumns.length - 1 : undefined">
 							<schema-properties :properties="schema.properties"></schema-properties>
 						</td>
 					</tr>
-					<tr v-if="showExample && propertiesExample && Object.keys( propertiesExample ).length" class="example">
+					<tr v-if="showExample && propertiesExample && Object.keys( JSON.parse( propertiesExample ) ).length" class="example">
 						<th class="text-secondary">Example:</th>
 						<td :colspan="detectedColumns.length ? detectedColumns.length - 1 : 1">
 							<prism :language="lang" :code="formatAPIExample( propertiesExample, lang )"></prism>
 						</td>
 					</tr>
-					<tr v-if="unhandledSchema">
+					<tr v-if="Object.keys( unhandledSchema ).length">
 						<th class="text-secondary"><strong><span v-if="detectedColumns.length">Additional </span>Constraints:</strong></th>
 						<td :colspan="detectedColumns.length ? detectedColumns.length - 1 : 1">
 							<prism language="json" :code="formatJSONRaw( JSON.stringify( unhandledSchema ) )"></prism>
@@ -143,10 +145,17 @@ export default{
 		},
 		unhandledSchema(){
 			var self = this;
-			var exclude = [ 'name', 'key' ];
-			let remainingKeys = Object.keys( this.schema ).filter( key => exclude.indexOf( key ) == -1 && self.detectedColumns.map( col => col.key ).indexOf( key ) == -1 );
-			if( !remainingKeys.length ) return null;
-			return remainingKeys.reduce( ( acc, key ) => acc[ key ] = self.schema[ key ], {} );
+			var exclude = [ 'name', 'key', 'type', 'description', 'properties' ];
+			let remainingKeys = Object.keys( this.schema ).reduce(
+				( acc, key ) => {
+					if( exclude.indexOf( key ) == -1 && acc.indexOf( key ) == -1 ){
+						acc.push( key )
+					}
+					return acc;
+				}
+			, [] );
+			if( !remainingKeys.length ) return {};
+			return remainingKeys.reduce( ( acc, key ) => { if( remainingKeys.indexOf( key ) > -1 ) acc[ key ] = self.schema[ key ]; return acc; }, {} );
 		}
 	},
 	methods : {
