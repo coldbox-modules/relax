@@ -5,7 +5,7 @@
 			<h3 class="box-title">
 				Request History
 
-				<a @click="onClearHistory" class="btnClearHistory pull-right" data-toggle="tooltip" title="Clear the request history">
+				<a @click="onClearHistory" class="btnClearHistory pull-right" v-b-tooltip.hover title="Clear the request history">
 					<i class="fa fa-recycle"></i>
 				</a>
 

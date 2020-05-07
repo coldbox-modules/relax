@@ -14,6 +14,13 @@
 		<div v-else-if="schema.type || schema.properties">
 			<h5 class="box-header">{{schema.title}}</h5>
 			<h5 v-if="schema.type" class="box-header">Type: <code>{{schema.type}}</code></h5>
+			<h5 v-if="schema.default" class="box-header">Default Value: <code>{{schema.default}}</code></h5>
+			<h5 v-if="schema.enum" class="box-header">
+				Accepted Values:
+				<ul>
+					<li v-for="available in schema.enum" :key="`schema_available_${available}`"><code>{{available}}</code></li>
+				</ul>
+			</h5>
 			<h5 v-if="schema.required" class="box-header">Required: <code>{{schema.required}}</code></h5>
 			<h5 v-if="schema.description" class="box-header">Description:</h5>
 			<p v-if="schema.description" v-html="schema.description.HTMLBreakLines()"></p>

@@ -122,7 +122,7 @@ export default {
 			var $btn = $( e.currentTarget );
 			var location = $btn.data( 'link' );
 			this.$dialog.confirm(
-				'<p>In previous versions of Relax a PDF was generated directly from the server.</p><p>Due to poor HTML5 support in PDF generation, the most reliable way to generate a PDF is to open the HTML version and then print the contents to a PDF.</p><p>Do you wish to proceed?</p>',
+				'<p>In previous versions of Relax a PDF was generated directly from the server.</p><p>Due to poor HTML5 support in server-side PDF generation, the most reliable way to generate a PDF is to open the HTML version and then print the contents to a PDF.</p><p>Do you wish to proceed?</p>',
 				{
 					html: true,
 					okText: 'Proceed',

@@ -27,7 +27,7 @@
 					v-if="globalData.sessionEnabled"
 					href="javascript:;"
 					@click="onShowImportAPI"
-					data-toggle="tooltip"
+					v-b-tooltip.hover
 					class="btn btn-primary btnImportAPI"
 					title="Import API">
 						<i class="fa fa-lg fa-cloud-upload"></i> Import
@@ -48,7 +48,7 @@
 					data-format="html"
 					:data-link="globalData.url.exportHTML"
 					class="btn btn-primary btnExportFormat"
-					data-toggle="tooltip"
+					v-b-tooltip.hover
 					title="Export as HTML">
 					<i class="fa fa-lg fa-html5"></i>
 				</a>
@@ -58,7 +58,7 @@
 					data-format="pdf"
 					:data-link="globalData.url.exportHTML"
 					class="btn btn-primary btnExportFormat"
-					data-toggle="tooltip"
+					v-b-tooltip.hover
 					title="Export as PDF">
 					<i class="fa fa-lg fa-file-pdf-o"></i>
 				</a>
@@ -68,7 +68,7 @@
 					data-format="trac"
 					:data-link="globalData.url.exportWiki"
 					class="btn btn-primary btnExportFormat"
-					data-toggle="tooltip"
+					v-b-tooltip.hover
 					title="Export as MediaWiki">
 					<i class="fa fa-lg fa-file-code-o"></i>
 				</a>
@@ -78,7 +78,7 @@
 					data-format="trac"
 					:data-link="globalData.url.exportTrac"
 					class="btn btn-primary btnExportFormat"
-					data-toggle="tooltip"
+					v-b-tooltip.hover
 					title="Export as TracMarkup">
 					<i class="fa fa-lg fa-paw"></i>
 				</a>

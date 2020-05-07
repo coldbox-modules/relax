@@ -11,10 +11,10 @@
 			<code>{{ historyItem.request.resource }}</code>
 
 			<!--- Replay Command --->
-			<a @click="onRemoveHistoryItem" class="btn btn-default text-muted pull-right" style="margin-left: 10px" data-toggle="tooltip" title="Remove this history item">
+			<a @click="onRemoveHistoryItem" class="btn btn-default text-muted pull-right" style="margin-left: 10px" v-b-tooltip.hover title="Remove this history item">
 				<i class="fa fa-trash"></i>
 			</a>
-			<a @click="onReplayHistoryItem" class="btn btn-info pull-right" data-toggle="tooltip" title="Replay this request">
+			<a @click="onReplayHistoryItem" class="btn btn-info pull-right" v-b-tooltip.hover title="Replay this request">
 				<i v-if="isReplaying" class="fa fa-spin fa-spinner"></i>
 				<i v-else class="fa fa-retweet"></i>
 			</a>

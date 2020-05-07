@@ -14,6 +14,9 @@ import { TabsPlugin } from 'bootstrap-vue';
 import VuejsDialog from "vuejs-dialog";
 const store = require( "@/store/global" ).default;
 
+import { TooltipPlugin } from 'bootstrap-vue';
+Vue.use( TooltipPlugin );
+
 Vue.mixin( require('@/components/mixins/commons').default );
 Vue.use( TabsPlugin );
 Vue.use( VuejsDialog );

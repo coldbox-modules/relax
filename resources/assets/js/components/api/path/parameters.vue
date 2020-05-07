@@ -35,14 +35,14 @@
 					</td>
 
 					<td style="vertical-align:top;">
-					<i :class="`fa fa-${ param.required ? 'check-circle text-danger' : 'circle-o text-muted' }`" data-toggle="tooltip" :title="`This parameter is ${ param.required ? 'required' : 'optional' }`"></i>
+					<i :class="`fa fa-${ param.required ? 'check-circle text-danger' : 'circle-o text-muted' }`" v-b-tooltip.hover :title="`This parameter is ${ param.required ? 'required' : 'optional' }`"></i>
 						<a v-if="param.schema" :href="`#${parentResourceId}_${param.name}`" class="pull-right" data-toggle="collapse" aria-expanded="false" :aria-controls="`${parentResourceId}_${param.name}`">
 							<small><i class="fa fa-chevron-down"></i></small>
 						</a>
 					</td>
 				</tr>
 
-				<tr v-if="param.schema" :id="parentResourceId">
+				<tr v-if="param.schema" :id="`${parentResourceId}_${param.name}`" class="collapse">
 					<td colspan="5" style="vertical-align:top;">
 						<schema-template :schema="param.schema"></schema-template>
 					</td>
