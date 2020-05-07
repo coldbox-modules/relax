@@ -30,7 +30,7 @@ before_install:
 
 install:
   # Install Commandbox
-  - sudo apt-get update && sudo apt-get --assume-yes install rsync jq commandbox nodejs npm
+  - sudo apt-get update && sudo apt-get --assume-yes install rsync jq commandbox nodejs npm make
   # Install CommandBox Supporting Librarires
   - box install commandbox-cfconfig,commandbox-dotenv,commandbox-docbox
   - npm install && npm run prod
