@@ -7,10 +7,10 @@
 	args.schemaPropertiesToExample = function( properties ){
 		return structKeyArray( arguments.properties )
 						.filter( function( key ){
-							return structKeyExists( properties[ key ], "example" )
+							return structKeyExists( properties[ key ], "example" );
 						} )
 						.reduce( function( acc, key ){
-							acc[ key ] = properties[ key ][ "example" ]
+							acc[ key ] = properties[ key ][ "example" ];
 							return acc;
 						}, {} );
 	};

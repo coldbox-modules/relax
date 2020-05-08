@@ -85,7 +85,7 @@ component extends="BaseHandler"{
 			rc.content = renderView( view="apidoc/cfTemplate/api-content", args={"api":prc.dsl}, module="relax" );
 		}
 		var data = wikitext.toWiki( translator=arguments.type, html=rc.content );
-		event.setHTTPHeader( name="content-disposition", value='attachment; filename="#prc.loadedAPIName#.#lcase( arguments.type )#.txt"')
+		event.setHTTPHeader( name="content-disposition", value='attachment; filename="#prc.loadedAPIName#.#lcase( arguments.type )#.txt"');
 		event.renderData( type="text", data=data );
 	}
 

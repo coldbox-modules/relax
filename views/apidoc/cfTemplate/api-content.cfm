@@ -1,6 +1,7 @@
 <cfscript>
 	api = args.api;
-	pathKeys = api[ "paths" ].keyArray().sort( function(a, b){ return compare( ucase( a ), ucase( b ) );} );
+	pathKeys = api[ "paths" ].keyArray();
+	pathKeys.sort( function(a, b){ return compare( ucase( a ), ucase( b ) );} );
 </cfscript>
 <cfoutput>
     <div>

@@ -53,7 +53,7 @@ component accessors="true" singleton {
 			false,
 			"query",
 			function( path ){
-				return !excludes.len() ? true : !reMatchNoCase( excludes.toList( '|' ), path ).len()
+				return !excludes.len() ? true : !reMatchNoCase( excludes.toList( '|' ), path ).len();
 			},
 			"asc"
 		);
