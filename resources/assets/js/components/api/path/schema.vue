@@ -20,8 +20,8 @@
 				</thead>
 				<tbody>
 					<tr v-if="detectedColumns.length">
-						<td v-for="column in detectedColumns" :key="`schema_column_row_${column.key}`" :colspan="detectedColumns.length <= 2 ? 2 : 1">
-							<strong v-if="detectedColumns.length <= 2">{{column.label}}:</strong> <code>{{schema[ column.key ]}}</code>
+						<td v-for="column in detectedColumns" :key="`schema_column_row_${column.key}`" :colspan="detectedColumns.length < 2 ? 2 : 1">
+							<strong v-if="detectedColumns.length <= 2" class="text-secondary">{{column.label}}:</strong> <code>{{schema[ column.key ]}}</code>
 						</td>
 					</tr>
 					<tr v-if="schema.properties" class="properties">
@@ -30,7 +30,7 @@
 							<schema-properties :properties="schema.properties"></schema-properties>
 						</td>
 					</tr>
-					<tr v-if="showExample && propertiesExample && Object.keys( JSON.parse( propertiesExample ) ).length" class="example">
+					<tr v-if="showExample && propertiesExample && ( typeof( propertiesExample ) == 'string' && Object.keys( parseJSONObj( propertiesExample ) ).length )" class="example">
 						<th class="text-secondary">Example:</th>
 						<td :colspan="detectedColumns.length ? detectedColumns.length - 1 : 1">
 							<prism :language="lang" :code="formatAPIExample( propertiesExample, lang )"></prism>
@@ -169,6 +169,13 @@ export default{
 																return acc;
 															}, {}
 														),
+		parseJSONObj( item ){
+			try{
+				return typeof( item ) == 'object' ? item : JSON.parse( item );
+			}catch( e ){
+				return {};
+			}
+		},
 		formatForLang( obj ){
 			switch( this.lang ){
 				case "xml":
