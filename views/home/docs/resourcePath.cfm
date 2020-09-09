@@ -9,20 +9,20 @@
 		<a title="Print HTML Document"
 		   target="_blank"
 		   class="btn btn-info"
-		   href="#event.buildlink(linkTo=prc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=html")#">
+		   href="#event.buildlink(prc.xehResourceDoc & "?resourceID=" & thisResource.resourceID & "&print=html")#">
 			<i class="fa fa-print"></i>
 		</a>
 		&nbsp;
 		<a title="Print PDF"
 		   target="_blank"
 		   class="btn btn-info"
-		   href="#event.buildlink(linkTo=prc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=pdf")#">
+		   href="#event.buildlink(prc.xehResourceDoc & "?resourceID=" & thisResource.resourceID & "&print=pdf")#">
 			<i class="fa fa-file-pdf-o"></i>
 		</a>
 		&nbsp;
  		<a title="View Details"
  			class="btn btn-info"
- 			href="#event.buildlink(linkTo=prc.xehResourceDoc,queryString='resourceID='&thisResource.resourceID&"&print=relax")#">
+ 			href="#event.buildlink(prc.xehResourceDoc & "?resourceID=" & thisResource.resourceID & "&print=relax")#">
  			<i class="fa fa-file-text-o"></i>
  		</a>
 	</div>
