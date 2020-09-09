@@ -1,3 +1,9 @@
+/**
+ * Copyright Ortus Solutions, Corp, All rights reserved
+ * www.ortussolutions.com
+ * ---
+ * Global interception to setup request data
+ */
 component {
 	function preProcess( event, rc, prc ){
 		// module root
@@ -20,7 +26,7 @@ component {
 			"expandAll" : prc.expandedResourceDivs,
 			"sessionEnabled" : getInstance( "APIService@relax" ).getSessionsEnabled(),
 			"url" : {
-				"moduleRoot" : replacenocase( event.buildLink( linkTo='relax', ssl=event.isSSL() ), "/index.cfm", "" ),
+				"moduleRoot" : replacenocase( event.buildLink( 'relax' ), "/index.cfm", "" ),
 				"resourceDoc" : event.buildLink( prc.xehResourceDoc ),
 				"loadAPI" : event.buildLink( prc.xehLoadAPI ),
 				"exportHTML" : event.buildLink( prc.xehExportHTML ),
