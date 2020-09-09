@@ -1,3 +1,9 @@
+/**
+ * Copyright Ortus Solutions, Corp, All rights reserved
+ * www.ortussolutions.com
+ * ---
+ * Global interception to setup request data
+ */
 component {
 	function preProcess( event, rc, prc ){
 		// module root

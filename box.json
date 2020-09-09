@@ -35,12 +35,15 @@
         "**/.*",
         "tests"
     ],
-    "scripts":{
-        "toMaster":"recipe build/toMaster.boxr"
-    },
     "installPaths":{
         "cbjavaloader":"modules/cbjavaloader/",
         "cbSwagger":"modules/cbSwagger/",
         "wikitext":"modules/wikitext/"
+    },
+    "scripts": {
+    	"release": "recipe build/release.boxr",
+    	"format": "cfformat run config/,handlers/,interceptors/,models/,test-harness/tests/specs",
+    	"format:watch": "cfformat watch config/,handlers/,interceptors/,models/,test-harness/tests/specs ./.cfformat.json",
+    	"format:check": "cfformat check config/,handlers/,interceptors/,models/,test-harness/tests/specs"
     }
 }
