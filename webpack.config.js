@@ -1,10 +1,6 @@
 const elixir = require("coldbox-elixir");
 const webpack = require("webpack");
 
-Object.keys( process.env ).forEach( function( key ){
-	if( [ "NODE_ENV", "DEBUG" ].indexOf( key ) == -1 ) delete process.env[ key ];
-}  );
-
 elixir.config.mergeConfig({
     plugins: [
         // globally scoped items which need to be available in all templates
