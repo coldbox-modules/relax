@@ -1,6 +1,10 @@
 const elixir = require("coldbox-elixir");
 const webpack = require("webpack");
 
+Object.keys( process.env ).forEach( function( key ){
+	if( [ "NODE_ENV", "DEBUG" ].indexOf( key ) == -1 ) delete process.env[ key ];
+}  );
+
 elixir.config.mergeConfig({
     plugins: [
         // globally scoped items which need to be available in all templates
@@ -13,7 +17,7 @@ elixir.config.mergeConfig({
 			"window.Vue"   : ["vue/dist/vue.esm.js", "default"],
 			"Prism"        : "prismjs",
 			"window.Prism" : "prismjs"
-        })
+		})
 	],
 	// pack all of our images and fonts in as base64 to prevent URL pathing issues
 	module: {
