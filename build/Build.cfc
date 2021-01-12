@@ -230,7 +230,7 @@ component{
 		);
 
 		print
-			.greenLine( "Latest changelog file created at`" & variables.cwd & changelog-latest.md`" )
+			.greenLine( "Latest changelog file created at`" & variables.cwd & "changelog-latest.md`" )
 			.line()
 			.line( fileRead( variables.cwd & "changelog-latest.md" ) );
 	}
