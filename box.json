@@ -1,7 +1,7 @@
 {
     "name":"ColdBox Relax",
     "author":"Ortus Solutions <info@ortussolutions.com>",
-    "version":"4.1.1",
+    "version":"4.1.2",
     "slug":"relax",
     "type":"modules",
     "keywords":"RESTFul,modeling,web services",
@@ -40,10 +40,10 @@
         "cbSwagger":"modules/cbSwagger/",
         "wikitext":"modules/wikitext/"
     },
-    "scripts": {
-    	"release": "recipe build/release.boxr",
-    	"format": "cfformat run config/,handlers/,interceptors/,models/,test-harness/tests/specs",
-    	"format:watch": "cfformat watch config/,handlers/,interceptors/,models/,test-harness/tests/specs ./.cfformat.json",
-    	"format:check": "cfformat check config/,handlers/,interceptors/,models/,test-harness/tests/specs"
+    "scripts":{
+        "release":"recipe build/release.boxr",
+        "format":"cfformat run config/,handlers/,interceptors/,models/,test-harness/tests/specs",
+        "format:watch":"cfformat watch config/,handlers/,interceptors/,models/,test-harness/tests/specs ./.cfformat.json",
+        "format:check":"cfformat check config/,handlers/,interceptors/,models/,test-harness/tests/specs"
     }
 }
