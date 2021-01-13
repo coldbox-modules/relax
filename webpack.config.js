@@ -13,7 +13,7 @@ elixir.config.mergeConfig({
 			"window.Vue"   : ["vue/dist/vue.esm.js", "default"],
 			"Prism"        : "prismjs",
 			"window.Prism" : "prismjs"
-        })
+		})
 	],
 	// pack all of our images and fonts in as base64 to prevent URL pathing issues
 	module: {
