@@ -146,8 +146,7 @@ component accessors="true" singleton {
 	function loadAPI( required name ){
         if ( arguments.name == "cbswagger" ) {
             variables.APIDefinitions[ arguments.name ] = wirebox.getInstance( "RoutesParser@cbswagger" )
-                .createDocFromRoutes()
-                .getNormalizedDocument();
+                .createDocFromRoutes();
         } else {
             var APIDirectory = variables.settings.APILocationExpanded & "/" & arguments.name & "/";
 
