@@ -28,17 +28,17 @@
 				:key="`relaxer_resource_path_${pathName}`"
 				class="box box-default"
 			>
-				<div class="box-header" role="tab" :id="`heading-${path[ 'x-resourceId' ]}`">
+				<div class="box-header" role="tab" :id="`heading-${pathName}`">
 					<h4 class="box-title">
 						<a
 							data-toggle="collapse"
-							:href="`#tab-${path[ 'x-resourceId' ]}`"
+							:href="`#tab-${pathName}`"
 							aria-expanded="true"
-							:aria-controls="`tab-${path[ 'x-resourceId' ]}`"
+							:aria-controls="`tab-${pathName}`"
 						>{{pathName}}</a>
 					</h4>
 				</div>
-				<div :id="`tab-${path[ 'x-resourceId' ]}`" class="box-collapse collapse" role="tabbox" :aria-labelledby="`tab-${path[ 'x-resourceId' ]}`">
+				<div :id="`tab-${pathName}`" class="box-collapse collapse" role="tabbox" :aria-labelledby="`tab-${pathName}`">
 					<div class="box-body">
 						<!--- My Resources --->
 						<b-form-select

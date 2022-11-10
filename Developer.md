@@ -14,9 +14,9 @@ box install
 
 Then change directory to the `test-harness` directory and re-run `box install` to seed the coldbox application.  Once dependencies are installed and assets are compiled ( see below ), you can start the following servers from within the `test-harness` directory to browse the application:
 
-- `box server start name=lucee@5`
-- `box server start name=adobe@2016`
-- `box server start name=adobe@2018`
+- `box server start serverconfigFile=server-lucee@5.json`
+- `box server start serverconfigFile=server-adobe@2018.json`
+- `box server start serverconfigFile=server-adobe@2018.json`
 
 
 To compile the packed assets you can use the following webpack commands:

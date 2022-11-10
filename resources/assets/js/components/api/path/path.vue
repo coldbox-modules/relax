@@ -1,5 +1,5 @@
 <template>
-	<div :id="path['x-resourceId']" class="path-card card card-primary">
+	<div :id="`route_${routeId}`" class="path-card card card-primary">
 		<!--- Path Title --->
 		<div class="card-header d-flex p-0">
 			<h3 class="card-title p-3 pathHeader">
@@ -7,7 +7,7 @@
 			</h3>
 			<ul class="nav nav-pills ml-auto p-2">
 				<li class="nav-item">
-					<a class="nav-link btnTogglePath" role="button" data-toggle="collapse" :href="`#card_${path['x-resourceId']}`" aria-expanded="false" :aria-controls="`card_${path['x-resourceId']}`">
+					<a class="nav-link btnTogglePath" role="button" data-toggle="collapse" :href="`#card_${routeId}`" aria-expanded="false" :aria-controls="`card_${routeId}`">
 						<i class="fa fa-chevron-down"></i>
 					</a>
 				</li>
@@ -15,13 +15,13 @@
 		</div>
 
 		<!--- Div Content --->
-		<div :id="`card_${path['x-resourceId']}`" class="collapse card-body">
+		<div :id="`card_${routeId}`" class="collapse card-body">
 			<x-attributes :entity="path" header-type="h4" header-class="text-secondary"></x-attributes>
 			<h4 class="card-subtitle text-muted">Methods:</h4>
 			<div class="col-xs-12">
 				<method
 					v-for="verb in methodKeys"
-					:key="`method_${verb}_${path['x-resourceId']}`"
+					:key="`method_${verb}_${routeId}`"
 					:verb="verb"
 					:method="path[ verb ]"
 				></method>
@@ -54,6 +54,9 @@ export default {
 		}
 	},
 	computed : {
+		routeId(){
+			return this.route.replace(/[\W_]+/g,"-");
+		},
 		pathMethods(){
 			return this.httpMethodKeys.reduce( ( acc, key ) => {
 				if( this.path[ key ] ){

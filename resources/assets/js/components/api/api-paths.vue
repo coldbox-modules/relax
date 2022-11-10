@@ -3,7 +3,7 @@
 		<h3>Available Paths:</h3>
 		<api-path
 			v-for="pathKey in pathKeys"
-			:key="`path_node_${api.paths[ pathKey ][ 'x-resourceId' ]}`"
+			:key="`path_node_${pathKey}`"
 			:route="pathKey" :path="api.paths[ pathKey ]"
 		></api-path>
 	</div>

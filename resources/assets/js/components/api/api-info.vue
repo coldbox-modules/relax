@@ -94,7 +94,7 @@
 				:key="`path_link_${key}`"
 				class="nav-link btn btn-sm btn-primary"
 				style="margin-right:10px; margin-bottom: 10px"
-				:href="`#${api.paths[ key ][ 'x-resourceId' ]}`"
+				:href="`#${api.paths[ key ]}`"
 			>{{ key }}</a>
 		</nav>
 

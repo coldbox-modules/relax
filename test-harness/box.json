@@ -5,14 +5,20 @@
     "private":true,
     "description":"",
     "dependencies":{
-        "coldbox":"^5.0.0"
+        "coldbox":"^6",
+        "cbjavaloader":"^2",
+        "cbswagger":"be",
+        "wikitext":"^1.3"
     },
     "devDependencies":{
-        "testbox":"^3.0.0"
+        "testbox":"^4"
     },
     "installPaths":{
         "coldbox":"coldbox/",
-        "testbox":"testbox/"
+        "testbox":"testbox/",
+        "cbjavaloader":"modules/cbjavaloader/",
+        "cbSwagger":"modules/cbSwagger/",
+        "wikitext":"modules/wikitext/"
     },
     "testbox":{
         "runner":"http://localhost:60299/tests/runner.cfm"

@@ -3,9 +3,15 @@
 		<section class="content-wrapper">
 			<section id="main-content" class="container-fluid">
 				<div class="row">
-					<div v-if="!availableAPIs" class="content-header container-fluid">
-						<h4 class="text-muted">Get ready to kick back and... <em>Relax</em>!</h4>
-						<p>
+					<div v-if="!availableAPIs" class="content-header container-fluid mt-5">
+						<h4 class="text-muted text-center">Get ready to kick back and... <em>Relax</em>!</h4>
+						<p class="text-center">
+							<i class="fa fa-spin fa-spinner fa-2x text-muted"></i>
+						</p>
+					</div>
+					<div v-else-if="!api" class="content-header container-fluid mt-5">
+						<h4 class="text-muted text-center" v-text="`Loading API Document...`"></h4>
+						<p class="text-center">
 							<i class="fa fa-spin fa-spinner fa-2x text-muted"></i>
 						</p>
 					</div>

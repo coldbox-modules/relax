@@ -1,5 +1,5 @@
 <template>
-<div :id="method['x-resourceId']" class="method-card card card-lightblue">
+<div :id="method.operationId" class="method-card card card-lightblue">
 
 	<div class="card-header d-flex p-0">
 		<h3 class="card-title p-3 methodHeader">
@@ -7,14 +7,14 @@
 		</h3>
 		<ul class="nav nav-pills ml-auto p-2">
 			<li class="nav-item">
-				<a class="nav-link btToggleMethod" role="button" data-toggle="collapse" :href="`#card_${method['x-resourceId']}`" aria-expanded="false" :aria-controls="`card_${method['x-resourceId']}`">
+				<a class="nav-link btToggleMethod" role="button" data-toggle="collapse" :href="`#card_${method.operationId}`" aria-expanded="false" :aria-controls="`card_${method.operationId}`">
 					<i class="fa fa-chevron-down"></i>
 				</a>
 			</li>
 		</ul>
 	</div>
 
-	<div :id="`card_${method['x-resourceId']}`" class="collapse card-body">
+	<div :id="`card_${method.operationId}`" class="collapse card-body">
 		<div class="col-xs-12">
 			<h4 v-if="method.deprecated" class="card-subtitle text-secondary"><em>Deprecated</em></h4>
 			<div v-if="method.summary">
@@ -56,7 +56,7 @@
 					<b-tabs :fill="true" class="container-fluid" nav-wrapper-class="text-secondary">
 						<b-tab
 							v-for="( content, mimetype ) in method.requestBody.content"
-							:key="method['x-resourceId'] + '-requestBody-' + mimetype"
+							:key="method.operationId + '-requestBody-' + mimetype"
 							:title="mimetype"
 							title-link-class="text-secondary box-title"
 						>
@@ -80,10 +80,10 @@
 				<h4 class="card-subtitle text-secondary">Responses:</h4>
 				<div
 					v-for="responseKey in filteredResponseKeys"
-					:key="`response_${method['x-resourceId']}_${responseKey}`"
+					:key="`response_${method.operationId}_${responseKey}`"
 				>
 					<response-template
-						:resourceId="method[ 'x-resourceId' ]"
+						:resourceId="`response_${method.operationId}_${responseKey}_${verb}`"
 						:verb="verb"
 						:responseKey="responseKey"
 						:response="filteredResponses[ responseKey ]"

@@ -28,7 +28,7 @@
     ],
     "dependencies":{
         "cbjavaloader":"^2",
-        "cbswagger":"^2",
+        "cbswagger":"be",
         "wikitext":"^1.3"
     },
     "ignore":[

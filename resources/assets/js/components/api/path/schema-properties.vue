@@ -46,7 +46,10 @@
 <script>
 import { formatJSONRaw } from "@/util/udf";
 import Prism from 'vue-prismjs';
-import SchemaTemplate from "@/components/api/path/schema";
+import { defineAsyncComponent } from "vue";
+// Use this async to avoid a circular reference
+const SchemaTemplate = defineAsyncComponent( () => require( "@/components/api/path/schema" ).default );
+
 export default{
 	components: {
 		Prism,
