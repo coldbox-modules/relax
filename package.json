@@ -18,7 +18,7 @@
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.23.1",
     "chai": "^4.2.0",
-    "coldbox-elixir": "^4",
+    "coldbox-elixir": "^4.0.2",
     "font-awesome": "^4.7.0",
     "icheck": "^1.0.2",
     "jquery": "^3.5.1",
