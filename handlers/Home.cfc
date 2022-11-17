@@ -21,7 +21,7 @@ component extends="BaseHandler"{
 	* Home
 	*/
 	function relax( event, rc, prc ){
-		event.renderData( data=renderView( view="home/relax", module="relax" ) );
+		event.renderData( data=view( view="home/relax", module="relax" ) );
 	}
 
 	/**
@@ -67,7 +67,7 @@ component extends="BaseHandler"{
 
 		// set view for Rendering
 		if( arguments.widget ){
-			return renderView( view="home/docs/resourceDoc", module="relax" );
+			return view( view="home/docs/resourceDoc", module="relax" );
 		} else {
 			event.setView( view="home/docs/resourceDoc", layout="#rc.print#" );
 		}

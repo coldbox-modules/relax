@@ -33,7 +33,7 @@
 							</h3>
 						</div>
 
-						#renderView( view="apidoc/cfTemplate/schema", args={ "schema": args.response.schema } )#
+						#view( view="apidoc/cfTemplate/schema", args={ "schema": args.response.schema } )#
 
 					</cfif>
 
@@ -47,7 +47,7 @@
 								</div>
 								<div class="card-body">
 									<cfif structKeyExists( args.response.content[ mimetype ], "schema" ) && structKeyExists( args.response.content[ mimetype ].schema, "properties" )>
-									#renderView( view="apidoc/cfTemplate/schema", args={ "schema": args.response.content[ mimetype ].schema } )#
+									#view( view="apidoc/cfTemplate/schema", args={ "schema": args.response.content[ mimetype ].schema } )#
 									</cfif>
 								</div>
 							</div>

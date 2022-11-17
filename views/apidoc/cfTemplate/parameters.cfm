@@ -52,7 +52,7 @@
 
 					<cfif structKeyExists( param, "schema" )>
 						<td colspan="5" style="vertical-align:top;">
-							#renderView( view="apidoc/cfTemplate/schema", args={ "schema": param[ "schema" ] } )#
+							#view( view="apidoc/cfTemplate/schema", args={ "schema": param[ "schema" ] } )#
 						</td>
 					</cfif>
 

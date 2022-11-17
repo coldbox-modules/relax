@@ -12,7 +12,7 @@
 		</div>
 		<div id="card_#(args.entity["x-resourceId"] & '-requestBody-' & listLast( key, '/' ))#" class="card-body">
 			<cfif structKeyExists( requestBody.content[ key ], "schema" ) && structKeyExists( requestBody.content[ key ].schema, "properties" )>
-			#renderView( view="apidoc/cfTemplate/schema", args={ "schema": requestBody.content[ key ].schema } )#
+			#view( view="apidoc/cfTemplate/schema", args={ "schema": requestBody.content[ key ].schema } )#
 			</cfif>
 		</div>
 	</div>
