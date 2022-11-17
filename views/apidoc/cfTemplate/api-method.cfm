@@ -47,7 +47,7 @@
 							<h4 class="card-subtitle text-primary">Parameters:</h4>
 						</div>
 						<div class="card-body">
-							#renderView(
+							#view(
 								view = "apidoc/cfTemplate/parameters",
 								args = { "entity" : args.method }
 							)#
@@ -64,14 +64,14 @@
 
 					<cfparam name="args.method.requestBody.required" default="true"/>
 					<h5>Required: <pre>#(args.method.requestBody.required ? 'true' : 'false')#</pre></h5>
-					#renderView(
+					#view(
 						view = "apidoc/cfTemplate/request-body",
 						args = { "entity" : args.method }
 					)#
 					<hr>
 				</cfif>
 
-            	#renderView( view='apidoc/cfTemplate/x-attributes', args={"entity":args.method,"headerNode":"h4"} )#
+            	#view( view='apidoc/cfTemplate/x-attributes', args={"entity":args.method,"headerNode":"h4"} )#
 
             	<cfif
             		!structIsEmpty( args.method[ "responses" ] )
@@ -81,7 +81,7 @@
 	            	<h4 class="card-subtitle text-primary">Responses:</h4>
 	            	<cfloop array="#structKeyArray( args.method[ "responses" ] )#" index="responseKey">
 		            	<cfif isNumeric( responseKey ) or responseKey eq 'default'>
-			            	#renderView(
+			            	#view(
 			            		view="apidoc/cfTemplate/response",
 			            		args={
 				            		"resourceId": args.method["x-resourceId"],

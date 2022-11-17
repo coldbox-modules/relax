@@ -14,7 +14,7 @@
         <!--- Div Content --->
         <div class="card-body">
 
-            #renderView(
+            #view(
                 view = 'apidoc/cfTemplate/x-attributes',
                 args = { "entity" : args.path, "headerNode" : "h4" }
             )#
@@ -24,7 +24,7 @@
 
                 <cfloop array="#HTTPMethodKeys#" index="httpMethod">
                     <cfif structKeyExists( args.path, httpMethod )>
-                        #renderView(
+                        #view(
                             view = 'apidoc/cfTemplate/api-method',
                             args = {
                                 key     : ucase( httpMethod ),

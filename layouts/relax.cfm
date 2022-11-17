@@ -112,7 +112,7 @@
 	    </cfif>
 
 		<!--main content start-->
-	    #renderView()#
+	    #view()#
 	    <!--main content end-->
     </div>
 

@@ -101,7 +101,7 @@ component extends="BaseHandler"{
 	*/
 	any function resourceDoc( event, rc, prc ){
 		prc.body = runEvent( event="relax:home.resourceDoc", eventArguments={ widget=true } );
-		event.renderData( data=renderView( view="relaxer/resourceDoc", module="relax" ) );
+		event.renderData( data=view( view="relaxer/resourceDoc", module="relax" ) );
 	}
 
 	/**

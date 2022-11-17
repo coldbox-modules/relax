@@ -32,7 +32,7 @@ component extends="BaseHandler"{
 			event.setHTTPHeader( name="content-disposition", value='attachment; filename="#prc.loadedAPIName#.json"')
 				.renderData( data=prc.dsl, type="json" );
 		} else {
-			event.renderData( data=renderView( view="export/api", module="relax" ) );
+			event.renderData( data=view( view="export/api", module="relax" ) );
 		}
 	}
 
@@ -82,7 +82,7 @@ component extends="BaseHandler"{
 	private function toWikiMarkup( event, rc, prc, type ){
 		html( event, rc, prc );
 		if( !structKeyExists( rc, "content" ) ){
-			rc.content = renderView( view="apidoc/cfTemplate/api-content", args={"api":prc.dsl}, module="relax" );
+			rc.content = view( view="apidoc/cfTemplate/api-content", args={"api":prc.dsl}, module="relax" );
 		}
 		var data = wikitext.toWiki( translator=arguments.type, html=rc.content );
 		event.setHTTPHeader( name="content-disposition", value='attachment; filename="#prc.loadedAPIName#.#lcase( arguments.type )#.txt"');

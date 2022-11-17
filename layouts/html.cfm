@@ -14,7 +14,7 @@
 		<body class="export" style="background-color: white">
 			<div class="container">
 				<cfoutput>
-				#renderView()#
+				#view()#
 				</cfoutput>
 			</div>
 		</body>

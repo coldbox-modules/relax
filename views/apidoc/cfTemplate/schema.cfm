@@ -45,7 +45,7 @@
 					</div>
 				</cfif>
 				<h4 class="card-subtitle text-secondary">Items:</h4>
-				#renderView( view="apidoc/cfTemplate/schema", args={ "schema": args.schema[ "items" ], "showExample" : !structKeyExists( args.schema, "example" ) } )#
+				#view( view="apidoc/cfTemplate/schema", args={ "schema": args.schema[ "items" ], "showExample" : !structKeyExists( args.schema, "example" ) } )#
 			</div>
 		<cfelseif structKeyExists( args.schema, "type" ) OR structKeyExists( args.schema, "properties")>
 

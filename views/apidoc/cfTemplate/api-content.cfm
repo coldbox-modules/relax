@@ -208,7 +208,7 @@
                 #paramTemplate( { "entity":api } )#
             </cfif>
 
-            #renderView(
+            #view(
                 view='apidoc/cfTemplate/x-attributes',
                 args={"entity":api}
             )#
@@ -222,7 +222,7 @@
         <cfloop array="#pathKeys#" index="pathKey">
             <!--- ACF Compatibility Fix for a null pointer exception --->
             <cfscript>
-                writeOutput( renderView(
+                writeOutput( view(
                     view    = 'apidoc/cfTemplate/api-path',
                     args    = {
                         "api" : api,
