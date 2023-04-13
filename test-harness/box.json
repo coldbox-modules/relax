@@ -5,7 +5,7 @@
     "private":true,
     "description":"",
     "dependencies":{
-        "coldbox":"^6",
+        "coldbox":"be",
         "cbjavaloader":"^2",
         "cbswagger":"be",
         "wikitext":"^1.3"
