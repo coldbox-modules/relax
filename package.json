@@ -28,7 +28,7 @@
     "mocha": "^10.1.0",
     "mocha-loader": "^5.1.5",
     "popper.js": "^1.16.1",
-    "prismjs": "^1.29.0",
+    "prismjs": "^1.30.0",
     "sass": "^1.49.7",
     "sass-loader": "^8.0.2",
     "vue": "^2.7.14",
